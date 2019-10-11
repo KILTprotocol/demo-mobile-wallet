@@ -10,6 +10,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@polkadot/api": "^0.51.1",
+    "jsonabc": "^2.3.1",
     "react": "16.9.0",
     "react-native": "0.61.2"
   },
