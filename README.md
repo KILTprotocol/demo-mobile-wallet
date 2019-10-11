@@ -32,7 +32,40 @@ Follow the "Installing dependencies" step at https://facebook.github.io/react-na
   * Menu > Hardware > Shake gesture
   * Select Toggle inspector
 
-### Troubleshooting
+### Troubleshooting (how this project is created)
+
+* Ran `react-native init`.
+* Added the built KILT sdk-js as a folder (`kiltsdk`) in the root level of the app.
+* Ran the app, following the "How to run" instructions above.
+* Imported the KILT sdk-js in `App.js` to test it out (e.g. `import * as Kilt from './kiltsdk';`).
+* `❌ ERR Bundling failed` *Unable to resolve module `@polkadot/keyring` from `kiltsdk/identity/Identity.js`: @polkadot/keyring could not be found within the project.*
+* Added "@polkadot/api" to `package.json` and ran `yarn`. **Must be the same version as in the SDK** (^0.51.1").
+* `❌ ERR Bundling failed` *Unable to resolve module `jsonabc` from `kiltsdk/crypto/Crypto.js`: jsonabc could not be found within the project.*
+* Added "jsonabc" to `package.json` and ran `yarn`. **Must be the same version as in the SDK**.
+* `❌ ERR Bundling failed` *While trying to resolve module `jsonabc` from file `/Users/maudnals/Code/KILTDemoMobileWallet/kiltsdk/crypto/Crypto.js`, the package `/Users/maudnals/Code/KILTDemoMobileWallet/node_modules/jsonabc/package.json` was successfully found. However, this package itself specifies a `main` module field that could not be resolved.*
+* True, the file is missing. In `./node_modules/jsonabc`, ran `mkdir dist && npm run build`.
+* `❌ ERR Bundling failed` *Unable to resolve module `typescript-logging` from `kiltsdk/config/ConfigLog.js`: typescript-logging could not be found within the project.*
+* Added `typescript-logging` to `package.json` and ran `yarn`. **Must be the same version as in the SDK**.
+* `❌ ERR Bundling failed` *Error: Unable to resolve module `crypto` from `node_modules/@polkadot/wasm-crypto/crypto-polyfill.js`: crypto could not be found within the project.*
+* OK, that's the know issue with native node libraries (see). Ran `rn-nodeify --install --yarn`.
+* `shim.js` file created succesfully.
+  * Uncommented `require crypto` in `shim.js`;
+  * Imported `shim.js` at the top of `index.js` to make it available.
+* Added `rn-nodeify --install --yarn` as a postinstall step for convenience.
+* `❌ ERR Bundling failed` *TypeError: null is not an object (evaluating RNRandomBytes.seed)*.
+* Some libraries were not linked.
+  * Ran `react-native link` (https://github.com/tradle/rn-nodeify/issues/16).
+  * In `ios` folder ran `pod install` (https://github.com/react-native-community/react-native-device-info/issues/353). `Installing react-native-randombytes` logged on the terminal.
+  * Might need to remove `node_modules` and rerun `yarn` plus the two steps right above.
+* `❌ ERR Bundling failed` *TypeError: window.removeEventListener is not a function. (In 'window.removeEventListener("message", listener)', 'window.removeEventListener' is undefined) in ExtensionHelper.js:24:43*.
+* ... Not sure what this is.
+  * Issue created at https://github.com/mreuvers/typescript-logging/issues/43
+  * Temp fix: commented lines 24, 25 and 215 at `node_modules/typescript-logging/dist/commonjs/extension/ExtensionHelper.js`:
+
+  ```javascript
+    // window.removeEventListener("message", listener);
+    // window.addEventListener("message", listener);
+  ```
 
 ### More troubleshooting
 
