@@ -66,6 +66,8 @@ Follow the "Installing dependencies" step at https://facebook.github.io/react-na
     // window.removeEventListener("message", listener);
     // window.addEventListener("message", listener);
   ```
+  
+* ✅ OK, now runs properly.
 
 ### More troubleshooting
 
