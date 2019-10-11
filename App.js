@@ -24,6 +24,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import * as Kilt from './kiltsdk';
+
 const App: () => React$Node = () => {
   return (
     <>
@@ -44,6 +46,9 @@ const App: () => React$Node = () => {
               <Text style={styles.sectionDescription}>
                 Edit <Text style={styles.highlight}>App.js</Text> to change this
                 screen and then come back to see your edits.
+              </Text>
+              <Text style={styles.sectionTitle}>
+                {Kilt.Identity.generateMnemonic()}
               </Text>
             </View>
             <View style={styles.sectionContainer}>
