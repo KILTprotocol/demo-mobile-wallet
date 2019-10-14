@@ -1,12 +1,11 @@
 import React from 'react'
 import { View, Text } from 'react-native'
+import { mainViewContainer, sectionContainer } from './styles/utils.layout'
 import {
   bodyTxt,
   mainTitleTxt,
-  mainViewContainer,
-  sectionContainer,
   sectionTitleTxt,
-} from './styles/sharedStyles'
+} from './styles/utils.typography'
 import { Button } from 'react-native'
 
 class Introduction extends React.Component {

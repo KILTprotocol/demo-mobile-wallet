@@ -11,12 +11,12 @@ import FadeInView from './FadeInView'
 import {
   bodyEmphasizedTxt,
   bodyTxt,
-  mainViewContainer,
-  sectionContainer,
   sectionTitleTxt,
-} from './styles/sharedStyles'
+} from './styles/utils.typography'
+import { sectionContainer } from './styles/utils.layout'
 import { flexRowWrapLayout, flexRowEndLayout } from './styles/utils.layout'
 import { KILT_PURPLE_CLR } from './styles/consts.colors'
+import { mainViewContainer } from './styles/utils.layout'
 
 class IdentityCreation extends React.Component<{}, { mnemonic: string }> {
   static navigationOptions = {
