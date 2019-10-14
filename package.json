@@ -8,7 +8,7 @@
     "start": "react-native start",
     "postinstall": "rn-nodeify --install --yarn && cd node_modules/jsonabc && mkdir dist && npm run build",
     "test": "jest",
-    "lint": "eslint src/*",
+    "lint": "eslint src/*.ts",
     "style": "prettier -l src/**/*.ts"
   },
   "husky": {
