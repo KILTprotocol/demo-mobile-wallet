@@ -8,7 +8,7 @@
     "start": "react-native start",
     "postinstall": "rn-nodeify --install --yarn && cd node_modules/jsonabc && mkdir dist && npm run build",
     "test": "jest",
-    "lint": "eslint 'src/**'",
+    "lint": "eslint src/**",
     "style": "prettier -l src/**/*.ts"
   },
   "husky": {
@@ -61,6 +61,8 @@
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/runtime": "^7.6.3",
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
     "@react-native-community/eslint-config": "^0.0.5",
     "@types/react-native": "^0.60.19",
     "babel-jest": "^24.9.0",
