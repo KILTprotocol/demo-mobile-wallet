@@ -68,6 +68,7 @@ Follow the "Installing dependencies" step at https://facebook.github.io/react-na
   ```
   
 * ✅ OK, now runs properly.
+* Migrated to TypeScript by following the steps at https://facebook.github.io/react-native/blog/2018/05/07/using-typescript-with-react-native#migrating-to-typescript
 
 ### More troubleshooting
 
