@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { bodyTxt, flexRowLayout } from './styles/sharedStyles'
+import { bodyTxt } from './styles/utils.typography'
+import { flexRowLayout } from './styles/utils.layout'
 import { StepStatus } from './enums'
 import LoadingIndicator from './LoadingIndicator'
 import {
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapping = {
+const statusToUiMapping = {
   [StepStatus.NotStarted]: {
     component: <Text>.</Text>,
     txtStyle: styles.txtNotStarted,
@@ -59,8 +60,10 @@ const PreparationStep: React.FunctionComponent<Props> = ({
   status,
 }): JSX.Element => (
   <View style={flexRowLayout}>
-    <View style={iconContainer}>{mapping[status].component}</View>
-    <Text style={[bodyTxt, mapping[status].txtStyle]}>{description}</Text>
+    <View style={iconContainer}>{statusToUiMapping[status].component}</View>
+    <Text style={[bodyTxt, statusToUiMapping[status].txtStyle]}>
+      {description}
+    </Text>
   </View>
 )
 
