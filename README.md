@@ -4,6 +4,11 @@
 
 [Specs for the MVP version](http://docs.google.com/document/d/1NrqXnTXXCEe8IzIW-tE-jmZrYmqdzunqOVl1oShjUk8/edit#heading=h.skza63p9awqs)
 
+## Stack & Tools
+
+This project is built with react-native and is written in TypeScript.
+Utilities such as prettier, eslint and commit linting are set up.
+
 ## Dev setup
 
 ### Prerequisites
