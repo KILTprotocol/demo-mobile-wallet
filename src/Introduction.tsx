@@ -6,7 +6,7 @@ import {
   mainViewContainer,
   sectionContainer,
   sectionTitleTxt,
-} from './sharedStyles'
+} from './styles/sharedStyles'
 import { Button } from 'react-native'
 
 class Introduction extends React.Component {

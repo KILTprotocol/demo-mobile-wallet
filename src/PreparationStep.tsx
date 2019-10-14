@@ -1,8 +1,13 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import { bodyTxt, sectionContainer, flexRowLayout, test3 } from './sharedStyles'
+import {
+  bodyTxt,
+  sectionContainer,
+  flexRowLayout,
+  test3,
+} from './styles/sharedStyles'
 import { PulseIndicator } from 'react-native-indicators'
-import { KILT_ORANGE_CLR } from './consts.colors'
+import { KILT_ORANGE_CLR } from './styles/consts.colors'
 
 type Props = {
   stepName: String

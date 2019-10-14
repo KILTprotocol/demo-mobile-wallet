@@ -8,7 +8,7 @@ import {
   mainViewContainer,
   sectionContainer,
   sectionTitleTxt,
-} from './sharedStyles'
+} from './styles/sharedStyles'
 
 const FadeInView = ({ style, delay, children }) => {
   const [fadeAnim] = useState(new Animated.Value(0)) // Initial value for opacity: 0
@@ -64,7 +64,7 @@ class IdentityCreation extends React.Component {
           </Text>
         </View>
         <Button
-          title="I wrote it down >"
+          title="OK, I wrote it down >"
           onPress={() => navigate('Preparation')}
         />
       </View>
