@@ -1,46 +1,48 @@
-import React, { useState, useEffect } from 'react'
-import { Animated, View, Text, Button } from 'react-native'
+import React from 'react'
+import { View, Text, Button } from 'react-native'
 import * as Kilt from '@kiltprotocol/sdk-js'
+import Dialog, {
+  DialogButton,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+} from 'react-native-popup-dialog'
+import FadeInView from './FadeInView'
 import {
   bodyEmphasizedTxt,
   bodyTxt,
-  flexRowWrapLayout,
   mainViewContainer,
   sectionContainer,
   sectionTitleTxt,
 } from './styles/sharedStyles'
+import { flexRowWrapLayout, flexRowEndLayout } from './styles/utils.layout'
+import { KILT_PURPLE_CLR } from './styles/consts.colors'
 
-const FadeInView = ({ style, delay, children }) => {
-  const [fadeAnim] = useState(new Animated.Value(0)) // Initial value for opacity: 0
-
-  React.useEffect(() => {
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      delay: delay,
-      duration: 1100,
-    }).start()
-  }, [])
-
-  return (
-    <Animated.View // Special animatable View
-      style={{
-        ...style,
-        opacity: fadeAnim, // Bind opacity to animated value
-      }}>
-      {children}
-    </Animated.View>
-  )
-}
-
-class IdentityCreation extends React.Component {
+class IdentityCreation extends React.Component<{}, { mnemonic: string }> {
   static navigationOptions = {
     header: null,
   }
 
-  // todo no back navigation
-  render() {
+  state = {
+    mnemonic: Kilt.Identity.generateMnemonic(),
+    visible: false,
+  }
+
+  componentWillUnmount(): void {
+    this.closeDialog()
+  }
+
+  closeDialog(): void {
+    this.setState({ visible: false })
+  }
+
+  openDialog(): void {
+    this.setState({ visible: true })
+  }
+
+  render(): JSX.Element {
     const { navigate } = this.props.navigation
-    const mnemonic = Kilt.Identity.generateMnemonic()
+    const { mnemonic } = this.state
     return (
       <View style={mainViewContainer}>
         <View style={sectionContainer}>
@@ -48,7 +50,7 @@ class IdentityCreation extends React.Component {
           <View delay={Math.random() * 100}>
             <View style={flexRowWrapLayout}>
               {mnemonic.split(' ').map(word => (
-                <FadeInView delay={Math.random() * 900}>
+                <FadeInView delay={Math.random() * 900} duration={1100}>
                   <Text key={word} style={bodyEmphasizedTxt}>
                     {word}
                   </Text>
@@ -63,10 +65,43 @@ class IdentityCreation extends React.Component {
             KILT identity.
           </Text>
         </View>
-        <Button
-          title="OK, I wrote it down >"
-          onPress={() => navigate('Preparation')}
-        />
+        <View style={sectionContainer}>
+          <View style={flexRowEndLayout}>
+            <Button
+              title="OK, I wrote it down >"
+              onPress={() => {
+                this.openDialog()
+              }}
+              color={KILT_PURPLE_CLR}
+            />
+          </View>
+        </View>
+
+        <Dialog
+          visible={this.state.visible}
+          style={{ width: 0.8 }}
+          dialogTitle={
+            <DialogTitle title="Already wrote down your identity phrase?" />
+          }
+          footer={
+            <DialogFooter>
+              <DialogButton text="Cancel" onPress={() => this.closeDialog()} />
+              <DialogButton
+                text="Yes, continue"
+                onPress={() => {
+                  this.closeDialog()
+                  navigate('Preparation', {
+                    mnemonic: mnemonic,
+                  })
+                }}
+              />
+            </DialogFooter>
+          }
+          onTouchOutside={() => this.closeDialog()}>
+          <DialogContent style={{ width: 240, paddingTop: 24 }}>
+            <Text>...</Text>
+          </DialogContent>
+        </Dialog>
       </View>
     )
   }
