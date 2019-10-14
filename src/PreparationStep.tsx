@@ -1,31 +1,66 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
+import { bodyTxt, flexRowLayout } from './styles/sharedStyles'
+import { StepStatus } from './enums'
+import LoadingIndicator from './LoadingIndicator'
 import {
-  bodyTxt,
-  sectionContainer,
-  flexRowLayout,
-  test3,
-} from './styles/sharedStyles'
-import { PulseIndicator } from 'react-native-indicators'
-import { KILT_ORANGE_CLR } from './styles/consts.colors'
+  SUCCESS_CLR,
+  TXT_LIGHT_CLR,
+  ERROR_CLR,
+  TXT_DEFAULT_CLR,
+} from './styles/consts.colors'
 
 type Props = {
-  stepName: String
+  description: String
+  status: StepStatus
 }
 
-const indicatorStyle = {
+const iconContainer = {
   width: 24,
   marginRight: 12,
 }
 
+const styles = StyleSheet.create({
+  txtNotStarted: {
+    color: TXT_LIGHT_CLR,
+  },
+  txtSuccess: {
+    color: SUCCESS_CLR,
+  },
+  txtError: {
+    color: ERROR_CLR,
+  },
+  txtPending: {
+    color: TXT_DEFAULT_CLR,
+  },
+})
+
+const mapping = {
+  [StepStatus.NotStarted]: {
+    component: <Text>.</Text>,
+    txtStyle: styles.txtNotStarted,
+  },
+  [StepStatus.Pending]: {
+    component: <LoadingIndicator />,
+    txtStyle: styles.txtPending,
+  },
+  [StepStatus.Success]: {
+    component: <Text>✅</Text>,
+    txtStyle: styles.txtSuccess,
+  },
+  [StepStatus.Error]: {
+    component: <Text>❌</Text>,
+    txtStyle: styles.txtError,
+  },
+}
+
 const PreparationStep: React.FunctionComponent<Props> = ({
-  stepName,
+  description,
+  status,
 }): JSX.Element => (
   <View style={flexRowLayout}>
-    <View style={indicatorStyle}>
-      <PulseIndicator color={KILT_ORANGE_CLR} />
-    </View>
-    <Text style={bodyTxt}>{stepName}...</Text>
+    <View style={iconContainer}>{mapping[status].component}</View>
+    <Text style={[bodyTxt, mapping[status].txtStyle]}>{description}</Text>
   </View>
 )
 
