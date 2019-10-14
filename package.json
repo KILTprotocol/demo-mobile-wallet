@@ -6,9 +6,16 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "postinstall": "rn-nodeify --install --yarn && cd node_modules/jsonabc && mkdir dist && npm run build",
     "test": "jest",
-    "lint": "eslint .",
-    "postinstall": "rn-nodeify --install --yarn && cd node_modules/jsonabc && mkdir dist && npm run build"
+    "lint": "eslint 'src/**'",
+    "style": "prettier -l src/**/*.ts"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint && yarn style",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   },
   "dependencies": {
     "@kiltprotocol/sdk-js": "^0.15.0",
@@ -57,8 +64,9 @@
     "@react-native-community/eslint-config": "^0.0.5",
     "@types/react-native": "^0.60.19",
     "babel-jest": "^24.9.0",
-    "eslint-config-prettier": "^6.4.0",
     "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.4.0",
+    "husky": "^3.0.9",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.56.0",
     "react-test-renderer": "16.9.0",
