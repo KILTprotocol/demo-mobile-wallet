@@ -11,6 +11,7 @@
     "postinstall": "rn-nodeify --install --yarn && cd node_modules/jsonabc && mkdir dist && npm run build"
   },
   "dependencies": {
+    "@kiltprotocol/sdk-js": "^0.15.0",
     "@polkadot/api": "^0.51.1",
     "@tradle/react-native-http": "^2.0.0",
     "assert": "^1.1.1",
