@@ -2,6 +2,7 @@ import {
   TXT_DEFAULT_CLR,
   KILT_ORANGE_CLR,
   KILT_ORANGE_X_LIGHT_CLR,
+  KILT_PURPLE_CLR,
 } from './consts.colors'
 
 export const mainViewContainer = {
@@ -53,4 +54,8 @@ export const flexRowWrapLayout = {
 export const flexRowLayout = {
   flexDirection: 'row',
   alignItems: 'center',
+}
+
+export const btn = {
+  backgroundColor: KILT_PURPLE_CLR,
 }
