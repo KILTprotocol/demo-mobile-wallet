@@ -5,6 +5,7 @@ import { KILT_PURPLE_CLR } from '../sharedStyles/consts.colors'
 type Props = {
   title: string
   onPress: () => void
+  disabled?: boolean
 }
 
 const KiltButton: React.FunctionComponent<Props> = (

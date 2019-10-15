@@ -26,7 +26,7 @@ type State = {
   visible: boolean
 }
 
-class MnemonicCreationScreen extends React.Component<Props, State> {
+class MnemonicCreation extends React.Component<Props, State> {
   static navigationOptions = {
     header: null,
   }
@@ -89,4 +89,4 @@ class MnemonicCreationScreen extends React.Component<Props, State> {
   }
 }
 
-export default MnemonicCreationScreen
+export default MnemonicCreation

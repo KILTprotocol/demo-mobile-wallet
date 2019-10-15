@@ -5,7 +5,7 @@ import {
   NavigationScreenProp,
   NavigationState,
   NavigationParams,
-  NavigationScreenComponent,
+  NavigationComponent,
 } from 'react-navigation'
 import {
   mainViewContainer,
@@ -19,13 +19,16 @@ import {
 } from '../sharedStyles/utils.typography'
 import { MNEMONIC_CREATION } from '../_routes'
 
+interface IOptions {
+  header: any
+}
+
 interface IProps
   extends NavigationScreenProp<NavigationState, NavigationParams> {
-  navigationOptions: any
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
 }
 
-const IntroductionScreen: NavigationScreenComponent<IProps> = (
+const Introduction: NavigationComponent<IOptions, IProps> = (
   props: IProps
 ): JSX.Element => (
   <View style={mainViewContainer}>
@@ -47,8 +50,8 @@ const IntroductionScreen: NavigationScreenComponent<IProps> = (
   </View>
 )
 
-IntroductionScreen.navigationOptions = {
+Introduction.navigationOptions = {
   header: null,
 }
 
-export default IntroductionScreen
+export default Introduction

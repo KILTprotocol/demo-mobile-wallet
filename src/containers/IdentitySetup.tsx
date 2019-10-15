@@ -26,7 +26,7 @@ type State = {
   isNextBtnDisabled: boolean
 }
 
-class IdentitySetupScreen extends React.Component<Props, State> {
+class IdentitySetup extends React.Component<Props, State> {
   static navigationOptions = {
     header: null,
   }
@@ -160,4 +160,4 @@ class IdentitySetupScreen extends React.Component<Props, State> {
   }
 }
 
-export default IdentitySetupScreen
+export default IdentitySetup
