@@ -1,19 +1,19 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { bodyTxt } from './styles/utils.typography'
-import { flexRowLayout } from './styles/utils.layout'
-import { StepStatus } from './enums'
-import LoadingIndicator from './sharedComponents/LoadingIndicator'
+import { bodyTxt } from '../sharedStyles/utils.typography'
+import { flexRowLayout } from '../sharedStyles/utils.layout'
 import {
   SUCCESS_CLR,
   TXT_LIGHT_CLR,
   ERROR_CLR,
   TXT_DEFAULT_CLR,
-} from './styles/consts.colors'
+} from '../sharedStyles/consts.colors'
+import { AsyncStatus } from '../enums'
+import LoadingIndicator from '../sharedComponents/LoadingIndicator'
 
 type Props = {
   description: String
-  status: StepStatus
+  status: AsyncStatus
 }
 
 const iconContainer = {
@@ -38,19 +38,19 @@ const styles = StyleSheet.create({
 })
 
 const statusToUiMapping = {
-  [StepStatus.NotStarted]: {
+  [AsyncStatus.NotStarted]: {
     component: <Text style={{ textAlign: 'center' }}></Text>,
     txtStyle: styles.txtNotStarted,
   },
-  [StepStatus.Pending]: {
+  [AsyncStatus.Pending]: {
     component: <LoadingIndicator />,
     txtStyle: styles.txtPending,
   },
-  [StepStatus.Success]: {
+  [AsyncStatus.Success]: {
     component: <Text style={{ textAlign: 'center' }}>✅</Text>,
     txtStyle: styles.txtSuccess,
   },
-  [StepStatus.Error]: {
+  [AsyncStatus.Error]: {
     component: <Text style={{ textAlign: 'center' }}>❌</Text>,
     txtStyle: styles.txtError,
   },

@@ -1,4 +1,4 @@
-import Setup from './Setup'
+import Setup from './setup/Setup'
 import Home from './Home'
 
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'

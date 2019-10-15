@@ -1,11 +1,13 @@
 import React from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text } from 'react-native'
 import * as Kilt from '@kiltprotocol/sdk-js'
-import { bodyTxt, sectionTitleTxt } from './styles/utils.typography'
-import { sectionContainer } from './styles/utils.layout'
-import { flexRowEndLayout } from './styles/utils.layout'
-import { mainViewContainer } from './styles/utils.layout'
-import { IDENTITY_SETUP } from './routes'
+import { bodyTxt, sectionTitleTxt } from '../sharedStyles/utils.typography'
+import {
+  flexRowEndLayout,
+  mainViewContainer,
+  sectionContainer,
+} from '../sharedStyles/utils.layout'
+import { IDENTITY_SETUP } from '../routes'
 import MnemonicDialog from './MnemonicDialog'
 import Mnemonic from './Mnemonic'
 import {
@@ -13,7 +15,7 @@ import {
   NavigationState,
   NavigationParams,
 } from 'react-navigation'
-import KiltButton from './sharedComponents/KiltButton'
+import KiltButton from '../sharedComponents/KiltButton'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>

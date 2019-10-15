@@ -7,16 +7,16 @@ import {
   NavigationState,
   NavigationParams,
 } from 'react-navigation'
-import KiltButton from './sharedComponents/KiltButton'
+import KiltButton from '../sharedComponents/KiltButton'
 import {
   mainViewContainer,
   sectionContainer,
   flexRowEndLayout,
-} from './styles/utils.layout'
-import { sectionTitleTxt } from './styles/utils.typography'
+} from '../sharedStyles/utils.layout'
+import { sectionTitleTxt } from '../sharedStyles/utils.typography'
 import IdentitySetupStep from './IdentitySetupStep'
-import { StepStatus } from './enums'
-import { HOME } from './routes'
+import { AsyncStatus } from '../enums'
+import { HOME } from '../routes'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -36,11 +36,11 @@ class IdentitySetup extends React.Component<Props, State> {
     steps: {
       create: {
         description: 'Creating your identity',
-        status: StepStatus.Pending,
+        status: AsyncStatus.Pending,
       },
       save: {
         description: 'Saving your identity',
-        status: StepStatus.NotStarted,
+        status: AsyncStatus.NotStarted,
       },
     },
   }
@@ -107,11 +107,11 @@ class IdentitySetup extends React.Component<Props, State> {
         steps: {
           create: {
             ...prevState.steps.create,
-            status: StepStatus.Success,
+            status: AsyncStatus.Success,
           },
           save: {
             ...prevState.steps.save,
-            status: StepStatus.Pending,
+            status: AsyncStatus.Pending,
           },
         },
         isNextBtnDisabled: false,

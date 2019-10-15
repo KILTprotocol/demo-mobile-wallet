@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import KiltButton from './sharedComponents/KiltButton'
+import KiltButton from '../sharedComponents/KiltButton'
 import {
   NavigationScreenProp,
   NavigationState,
@@ -10,13 +10,13 @@ import {
   mainViewContainer,
   sectionContainer,
   flexRowEndLayout,
-} from './styles/utils.layout'
+} from '../sharedStyles/utils.layout'
 import {
   bodyTxt,
   mainTitleTxt,
   sectionTitleTxt,
-} from './styles/utils.typography'
-import { MNEMONIC_CREATION } from './routes'
+} from '../sharedStyles/utils.typography'
+import { MNEMONIC_CREATION } from '../routes'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
