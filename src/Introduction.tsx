@@ -13,7 +13,11 @@ import {
 } from './styles/utils.typography'
 import { IDENTITY_CREATION } from './routes'
 
-class Introduction extends React.Component {
+type Props = {
+  navigation: any
+}
+
+class Introduction extends React.Component<Props> {
   static navigationOptions = {
     header: null,
   }

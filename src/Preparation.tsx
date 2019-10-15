@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import * as Kilt from '@kiltprotocol/sdk-js'
+import * as Keychain from 'react-native-keychain'
 import KiltButton from './KiltButton'
 import {
   mainViewContainer,
@@ -39,6 +40,48 @@ class Preparation extends React.Component<Props, State> {
     },
   }
 
+  async asyncFunc(): Promise<void> {
+    const username = 'zuck'
+    const password = 'poniesRgr8'
+
+    // Store the credentials
+    // const can = Keychain.canImplyAuthentication({
+    //   authenticationType:
+    //     Keychain.AUTHENTICATION_TYPE.DEVICE_PASSCODE_OR_BIOMETRICS,
+    // })
+
+    // console.log('can', can)
+
+    const stored = await Keychain.setGenericPassword('hdccddi', 'there', {
+      accessControl: Keychain.ACCESS_CONTROL.DEVICE_PASSCODE,
+      accessible: Keychain.ACCESSIBLE.WHEN_PASSCODE_SET_THIS_DEVICE_ONLY,
+      service: 'org.reactjs.native.example.KILTDemoMobileWallet',
+    })
+    console.log('stored', stored)
+    const credentials = await Keychain.getGenericPassword({
+      authenticationPrompt: 'heyyyy',
+      service: 'org.reactjs.native.example.KILTDemoMobileWallet',
+    })
+    console.log('credentials', credentials)
+
+    // try {
+    //   // Retrieve the credentials
+    //   const credentials = await Keychain.getGenericPassword()
+    //   if (credentials) {
+    //     console.log(
+    //       'Credentials successfully loaded for user ' + credentials.username
+    //     )
+    //     console.log('credentials', credentials)
+    //   } else {
+    //     console.log('No credentials stored')
+    //   }
+    // } catch (error) {
+    //   console.log("Keychain couldn't be accessed!", error)
+    // }
+    // const resetted = await Keychain.resetGenericPassword()
+    // console.log('resetted', resetted)
+  }
+
   createIdentity = (mnemonic: string) =>
     Kilt.Identity.buildFromMnemonic(mnemonic)
 
@@ -69,7 +112,9 @@ class Preparation extends React.Component<Props, State> {
         isNextBtnDisabled: false,
       }))
     }
-    // console.log(identity)
+
+    this.asyncFunc()
+    console.log(identity)
 
     // const blockchain = await Kilt.default.connect(
     //   'wss://full-nodes.kilt.io:9944'
@@ -96,12 +141,14 @@ class Preparation extends React.Component<Props, State> {
           </View>
         ))}
         {/* enabled only if all steps were successful */}
-        <View style={flexRowEndLayout}>
-          <KiltButton
-            disabled={isNextBtnDisabled}
-            title="Next >"
-            onPress={() => navigate(HOME)}
-          />
+        <View style={sectionContainer}>
+          <View style={flexRowEndLayout}>
+            <KiltButton
+              disabled={isNextBtnDisabled}
+              title="Next >"
+              onPress={() => navigate(HOME)}
+            />
+          </View>
         </View>
       </View>
     )
