@@ -15,8 +15,8 @@ import {
 } from '../sharedStyles/utils.layout'
 import { sectionTitleTxt } from '../sharedStyles/utils.typography'
 import IdentitySetupStep from '../components/IdentitySetupStep'
-import { AsyncStatus } from '../enums'
-import { HOME } from '../routes'
+import { AsyncStatus } from '../_enums'
+import { HOME } from '../_routes'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>

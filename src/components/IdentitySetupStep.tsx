@@ -8,8 +8,9 @@ import {
   ERROR_CLR,
   TXT_DEFAULT_CLR,
 } from '../sharedStyles/consts.colors'
-import { AsyncStatus } from '../enums'
+import { AsyncStatus } from '../_enums'
 import LoadingIndicator from '../components/LoadingIndicator'
+import TxtCentered from './TxtCentered'
 
 type Props = {
   description: String
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
 
 const statusToUiMapping = {
   [AsyncStatus.NotStarted]: {
-    component: <Text style={{ textAlign: 'center' }}></Text>,
+    component: <TxtCentered />,
     txtStyle: styles.txtNotStarted,
   },
   [AsyncStatus.Pending]: {
@@ -47,11 +48,11 @@ const statusToUiMapping = {
     txtStyle: styles.txtPending,
   },
   [AsyncStatus.Success]: {
-    component: <Text style={{ textAlign: 'center' }}>✅</Text>,
+    component: <TxtCentered>✅</TxtCentered>,
     txtStyle: styles.txtSuccess,
   },
   [AsyncStatus.Error]: {
-    component: <Text style={{ textAlign: 'center' }}>❌</Text>,
+    component: <TxtCentered>❌</TxtCentered>,
     txtStyle: styles.txtError,
   },
 }

@@ -7,7 +7,7 @@ import {
   mainViewContainer,
   sectionContainer,
 } from '../sharedStyles/utils.layout'
-import { IDENTITY_SETUP } from '../routes'
+import { IDENTITY_SETUP } from '../_routes'
 import MnemonicDialog from '../components/MnemonicDialog'
 import Mnemonic from '../components/Mnemonic'
 import {
