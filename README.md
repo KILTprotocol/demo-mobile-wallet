@@ -24,6 +24,10 @@ Follow the "Installing dependencies" step at https://facebook.github.io/react-na
   * You should see `Loading dependency graph, done.` at some point
   * In the second terminal, run `react-native run-ios`
   * The iPhone simulator should open automatically and your app should run
+  
+### Run on a physical device
+
+Follow https://facebook.github.io/react-native/docs/running-on-device#running-your-app-on-ios-devices
 
 ### How to debug
 
