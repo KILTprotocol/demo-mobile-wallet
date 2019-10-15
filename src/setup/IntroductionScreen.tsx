@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import KiltButton from '../sharedComponents/KiltButton'
+import KiltButton from '../components/KiltButton'
 import {
   NavigationScreenProp,
   NavigationState,
@@ -22,7 +22,7 @@ type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
 }
 
-class Introduction extends React.Component<Props> {
+class IntroductionScreen extends React.Component<Props> {
   static navigationOptions = {
     header: null,
   }
@@ -53,4 +53,4 @@ class Introduction extends React.Component<Props> {
   }
 }
 
-export default Introduction
+export default IntroductionScreen

@@ -7,14 +7,14 @@ import {
   NavigationState,
   NavigationParams,
 } from 'react-navigation'
-import KiltButton from '../sharedComponents/KiltButton'
+import KiltButton from '../components/KiltButton'
 import {
   mainViewContainer,
   sectionContainer,
   flexRowEndLayout,
 } from '../sharedStyles/utils.layout'
 import { sectionTitleTxt } from '../sharedStyles/utils.typography'
-import IdentitySetupStep from './IdentitySetupStep'
+import IdentitySetupStep from '../components/IdentitySetupStep'
 import { AsyncStatus } from '../enums'
 import { HOME } from '../routes'
 
@@ -26,7 +26,7 @@ type State = {
   isNextBtnDisabled: boolean
 }
 
-class IdentitySetup extends React.Component<Props, State> {
+class IdentitySetupScreen extends React.Component<Props, State> {
   static navigationOptions = {
     header: null,
   }
@@ -160,4 +160,4 @@ class IdentitySetup extends React.Component<Props, State> {
   }
 }
 
-export default IdentitySetup
+export default IdentitySetupScreen

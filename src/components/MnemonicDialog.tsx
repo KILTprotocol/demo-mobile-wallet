@@ -6,6 +6,8 @@ import Dialog, {
   DialogTitle,
 } from 'react-native-popup-dialog'
 import { Text } from 'react-native'
+import { dialog } from '../sharedStyles/utils.layout'
+import { dialogContent } from '../sharedStyles/utils.layout'
 
 type Props = {
   onPressCancel: () => void
@@ -22,7 +24,7 @@ const MnemonicDialog: React.FunctionComponent<Props> = ({
 }): JSX.Element => (
   <Dialog
     visible={visible}
-    style={{ width: 0.8 }}
+    style={dialog}
     dialogTitle={
       <DialogTitle title="Already wrote down your identity phrase?" />
     }
@@ -33,7 +35,7 @@ const MnemonicDialog: React.FunctionComponent<Props> = ({
       </DialogFooter>
     }
     onTouchOutside={onTouchOutside}>
-    <DialogContent style={{ width: 240, paddingTop: 24 }}>
+    <DialogContent style={dialogContent}>
       <Text>...</Text>
     </DialogContent>
   </Dialog>

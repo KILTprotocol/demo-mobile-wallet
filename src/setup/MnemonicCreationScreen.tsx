@@ -8,14 +8,14 @@ import {
   sectionContainer,
 } from '../sharedStyles/utils.layout'
 import { IDENTITY_SETUP } from '../routes'
-import MnemonicDialog from './MnemonicDialog'
-import Mnemonic from './Mnemonic'
+import MnemonicDialog from '../components/MnemonicDialog'
+import Mnemonic from '../components/Mnemonic'
 import {
   NavigationScreenProp,
   NavigationState,
   NavigationParams,
 } from 'react-navigation'
-import KiltButton from '../sharedComponents/KiltButton'
+import KiltButton from '../components/KiltButton'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -26,7 +26,7 @@ type State = {
   visible: boolean
 }
 
-class MnemonicCreation extends React.Component<Props, State> {
+class MnemonicCreationScreen extends React.Component<Props, State> {
   static navigationOptions = {
     header: null,
   }
@@ -89,4 +89,4 @@ class MnemonicCreation extends React.Component<Props, State> {
   }
 }
 
-export default MnemonicCreation
+export default MnemonicCreationScreen

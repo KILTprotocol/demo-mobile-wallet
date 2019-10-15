@@ -9,7 +9,7 @@ import {
   TXT_DEFAULT_CLR,
 } from '../sharedStyles/consts.colors'
 import { AsyncStatus } from '../enums'
-import LoadingIndicator from '../sharedComponents/LoadingIndicator'
+import LoadingIndicator from '../components/LoadingIndicator'
 
 type Props = {
   description: String
