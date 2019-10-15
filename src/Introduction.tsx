@@ -1,6 +1,11 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import KiltButton from './KiltButton'
+import KiltButton from './sharedComponents/KiltButton'
+import {
+  NavigationScreenProp,
+  NavigationState,
+  NavigationParams,
+} from 'react-navigation'
 import {
   mainViewContainer,
   sectionContainer,
@@ -11,10 +16,10 @@ import {
   mainTitleTxt,
   sectionTitleTxt,
 } from './styles/utils.typography'
-import { IDENTITY_CREATION } from './routes'
+import { MNEMONIC_CREATION } from './routes'
 
 type Props = {
-  navigation: any
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>
 }
 
 class Introduction extends React.Component<Props> {
@@ -39,7 +44,7 @@ class Introduction extends React.Component<Props> {
           <View style={flexRowEndLayout}>
             <KiltButton
               title="Get started >"
-              onPress={() => navigate(IDENTITY_CREATION)}
+              onPress={() => navigate(MNEMONIC_CREATION)}
             />
           </View>
         </View>

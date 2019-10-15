@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Animated } from 'react-native'
 
 type Props = {
-  style: object
+  style?: object
   delay: number
   duration: number
   children: object

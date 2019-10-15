@@ -39,13 +39,4 @@ const MnemonicDialog: React.FunctionComponent<Props> = ({
   </Dialog>
 )
 
-// onTouchOutside={() => this.closeDialog()}>
-// onPressCancel = () => this.closeDialog()
-// () => {
-// onPressOk
-// this.closeDialog()
-// navigate(PREPARATION, {
-//   mnemonic: mnemonic,
-// }
-
 export default MnemonicDialog

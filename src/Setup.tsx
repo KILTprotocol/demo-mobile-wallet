@@ -1,13 +1,13 @@
 import React from 'react'
 import Introduction from './Introduction'
-import IdentityCreation from './IdentityCreation'
+import MnemonicCreation from './MnemonicCreation'
 import Preparation from './Preparation'
 
 import { createStackNavigator } from 'react-navigation-stack'
 
 export const Setup = createStackNavigator({
   Introduction: Introduction,
-  IdentityCreation: IdentityCreation,
+  MnemonicCreation: MnemonicCreation,
   Preparation: Preparation,
 })
 

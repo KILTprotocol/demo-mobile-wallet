@@ -1,4 +1,4 @@
-export const KILT_ORANGE_CLR = '#e64612'
+export const KILT_ORANGE_CLR = '#f05a28'
 export const KILT_ORANGE_X_LIGHT_CLR = '#ffe1d7'
 export const KILT_PURPLE_CLR = '#a50056'
 

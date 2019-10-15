@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import { bodyTxt } from './styles/utils.typography'
 import { flexRowLayout } from './styles/utils.layout'
 import { StepStatus } from './enums'
-import LoadingIndicator from './LoadingIndicator'
+import LoadingIndicator from './sharedComponents/LoadingIndicator'
 import {
   SUCCESS_CLR,
   TXT_LIGHT_CLR,

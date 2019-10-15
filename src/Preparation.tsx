@@ -2,7 +2,12 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import * as Kilt from '@kiltprotocol/sdk-js'
 import * as Keychain from 'react-native-keychain'
-import KiltButton from './KiltButton'
+import {
+  NavigationScreenProp,
+  NavigationState,
+  NavigationParams,
+} from 'react-navigation'
+import KiltButton from './sharedComponents/KiltButton'
 import {
   mainViewContainer,
   sectionContainer,
@@ -14,7 +19,7 @@ import { StepStatus } from './enums'
 import { HOME } from './routes'
 
 type Props = {
-  navigation: any
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>
 }
 type State = {
   steps: any
@@ -133,7 +138,7 @@ class Preparation extends React.Component<Props, State> {
           </Text>
         </View>
         {Object.values(steps).map(step => (
-          <View style={sectionContainer}>
+          <View key={step.description} style={sectionContainer}>
             <PreparationStep
               description={step.description}
               status={step.status}
