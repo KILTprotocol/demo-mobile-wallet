@@ -19,6 +19,7 @@ type Props = {
 const iconContainer = {
   width: 24,
   marginRight: 12,
+  textAlign: 'center',
 }
 
 const styles = StyleSheet.create({
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
 
 const statusToUiMapping = {
   [StepStatus.NotStarted]: {
-    component: <Text>.</Text>,
+    component: <Text style={{ textAlign: 'center' }}></Text>,
     txtStyle: styles.txtNotStarted,
   },
   [StepStatus.Pending]: {
@@ -46,11 +47,11 @@ const statusToUiMapping = {
     txtStyle: styles.txtPending,
   },
   [StepStatus.Success]: {
-    component: <Text>✅</Text>,
+    component: <Text style={{ textAlign: 'center' }}>✅</Text>,
     txtStyle: styles.txtSuccess,
   },
   [StepStatus.Error]: {
-    component: <Text>❌</Text>,
+    component: <Text style={{ textAlign: 'center' }}>❌</Text>,
     txtStyle: styles.txtError,
   },
 }

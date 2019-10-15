@@ -1,17 +1,23 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import * as Kilt from '@kiltprotocol/sdk-js'
-import { mainViewContainer, sectionContainer } from './styles/utils.layout'
+import KiltButton from './KiltButton'
+import {
+  mainViewContainer,
+  sectionContainer,
+  flexRowEndLayout,
+} from './styles/utils.layout'
 import { sectionTitleTxt } from './styles/utils.typography'
-import { Button } from 'react-native'
 import PreparationStep from './PreparationStep'
 import { StepStatus } from './enums'
+import { HOME } from './routes'
 
 type Props = {
   navigation: any
 }
 type State = {
   steps: any
+  isNextBtnDisabled: boolean
 }
 
 class Preparation extends React.Component<Props, State> {
@@ -20,6 +26,7 @@ class Preparation extends React.Component<Props, State> {
   }
 
   state = {
+    isNextBtnDisabled: true,
     steps: {
       create: {
         description: 'Creating your identity',
@@ -40,6 +47,10 @@ class Preparation extends React.Component<Props, State> {
       setTimeout(() => resolve(this.createIdentity(mnemonic)), 2000)
     )
 
+  saveIdentity() {
+    console.log('saving...')
+  }
+
   async componentDidMount(): Promise<void> {
     const mnemonic = this.props.navigation.getParam('mnemonic')
     const identity = await this.createIdentityAsync(mnemonic)
@@ -55,6 +66,7 @@ class Preparation extends React.Component<Props, State> {
             status: StepStatus.Pending,
           },
         },
+        isNextBtnDisabled: false,
       }))
     }
     // console.log(identity)
@@ -62,12 +74,12 @@ class Preparation extends React.Component<Props, State> {
     // const blockchain = await Kilt.default.connect(
     //   'wss://full-nodes.kilt.io:9944'
     // )
+    // console.log(blockchain)
   }
 
   render(): React.ReactNode {
     const { navigate } = this.props.navigation
-    const { steps } = this.state
-    // const mnemonic = this.props.navigation.getParam('mnemonic')
+    const { isNextBtnDisabled, steps } = this.state
     return (
       <View style={mainViewContainer}>
         <View style={sectionContainer}>
@@ -84,7 +96,13 @@ class Preparation extends React.Component<Props, State> {
           </View>
         ))}
         {/* enabled only if all steps were successful */}
-        <Button title="Next >" onPress={() => navigate('Home')} />
+        <View style={flexRowEndLayout}>
+          <KiltButton
+            disabled={isNextBtnDisabled}
+            title="Next >"
+            onPress={() => navigate(HOME)}
+          />
+        </View>
       </View>
     )
   }

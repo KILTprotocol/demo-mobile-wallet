@@ -1,12 +1,17 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import { mainViewContainer, sectionContainer } from './styles/utils.layout'
+import KiltButton from './KiltButton'
+import {
+  mainViewContainer,
+  sectionContainer,
+  flexRowEndLayout,
+} from './styles/utils.layout'
 import {
   bodyTxt,
   mainTitleTxt,
   sectionTitleTxt,
 } from './styles/utils.typography'
-import { Button } from 'react-native'
+import { IDENTITY_CREATION } from './routes'
 
 class Introduction extends React.Component {
   static navigationOptions = {
@@ -26,10 +31,14 @@ class Introduction extends React.Component {
           </Text>
           <Text style={bodyTxt}>Here, you can... (description)</Text>
         </View>
-        <Button
-          title="Get started >"
-          onPress={() => navigate('IdentityCreation')}
-        />
+        <View style={sectionContainer}>
+          <View style={flexRowEndLayout}>
+            <KiltButton
+              title="Get started >"
+              onPress={() => navigate(IDENTITY_CREATION)}
+            />
+          </View>
+        </View>
       </View>
     )
   }

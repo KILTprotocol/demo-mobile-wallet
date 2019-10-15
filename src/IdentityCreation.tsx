@@ -17,6 +17,7 @@ import { sectionContainer } from './styles/utils.layout'
 import { flexRowWrapLayout, flexRowEndLayout } from './styles/utils.layout'
 import { KILT_PURPLE_CLR } from './styles/consts.colors'
 import { mainViewContainer } from './styles/utils.layout'
+import { PREPARATION } from './routes'
 
 class IdentityCreation extends React.Component<{}, { mnemonic: string }> {
   static navigationOptions = {
@@ -90,7 +91,7 @@ class IdentityCreation extends React.Component<{}, { mnemonic: string }> {
                 text="Yes, continue"
                 onPress={() => {
                   this.closeDialog()
-                  navigate('Preparation', {
+                  navigate(PREPARATION, {
                     mnemonic: mnemonic,
                   })
                 }}
