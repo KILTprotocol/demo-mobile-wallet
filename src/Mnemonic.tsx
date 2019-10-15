@@ -1,7 +1,7 @@
 import React from 'react'
 import { flexRowWrapLayout } from './styles/utils.layout'
 import { View, Text } from 'react-native'
-import FadeInView from './FadeInView'
+import FadeInView from './sharedComponents/FadeInView'
 import { bodyEmphasizedTxt } from './styles/utils.typography'
 
 type Props = {

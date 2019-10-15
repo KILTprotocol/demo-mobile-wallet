@@ -5,7 +5,7 @@ import { bodyTxt, sectionTitleTxt } from './styles/utils.typography'
 import { sectionContainer } from './styles/utils.layout'
 import { flexRowEndLayout } from './styles/utils.layout'
 import { mainViewContainer } from './styles/utils.layout'
-import { PREPARATION } from './routes'
+import { IDENTITY_SETUP } from './routes'
 import MnemonicDialog from './MnemonicDialog'
 import Mnemonic from './Mnemonic'
 import {
@@ -52,13 +52,13 @@ class MnemonicCreation extends React.Component<Props, State> {
     return (
       <View style={mainViewContainer}>
         <View style={sectionContainer}>
-          <Text style={sectionTitleTxt}>Step 1: your identity</Text>
+          <Text style={sectionTitleTxt}>Step 1: your identity phrase</Text>
           <Mnemonic mnemonic={mnemonic} />
         </View>
         <View style={sectionContainer}>
           <Text style={bodyTxt}>
             Write this phrase down and keep it safe and secret. This is your
-            KILT identity.
+            KILT identity phrase.
           </Text>
         </View>
         <View style={sectionContainer}>
@@ -77,7 +77,7 @@ class MnemonicCreation extends React.Component<Props, State> {
           onPressCancel={() => this.closeDialog()}
           onPressOK={() => {
             this.closeDialog()
-            navigate(PREPARATION, {
+            navigate(IDENTITY_SETUP, {
               mnemonic: mnemonic,
             })
           }}

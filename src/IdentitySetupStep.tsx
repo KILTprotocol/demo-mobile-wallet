@@ -56,7 +56,7 @@ const statusToUiMapping = {
   },
 }
 
-const PreparationStep: React.FunctionComponent<Props> = ({
+const IdentitySetupStep: React.FunctionComponent<Props> = ({
   description,
   status,
 }): JSX.Element => (
@@ -68,4 +68,4 @@ const PreparationStep: React.FunctionComponent<Props> = ({
   </View>
 )
 
-export default PreparationStep
+export default IdentitySetupStep

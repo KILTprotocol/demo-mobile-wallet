@@ -14,7 +14,7 @@ import {
   flexRowEndLayout,
 } from './styles/utils.layout'
 import { sectionTitleTxt } from './styles/utils.typography'
-import PreparationStep from './PreparationStep'
+import IdentitySetupStep from './IdentitySetupStep'
 import { StepStatus } from './enums'
 import { HOME } from './routes'
 
@@ -26,7 +26,7 @@ type State = {
   isNextBtnDisabled: boolean
 }
 
-class Preparation extends React.Component<Props, State> {
+class IdentitySetup extends React.Component<Props, State> {
   static navigationOptions = {
     header: null,
   }
@@ -139,7 +139,7 @@ class Preparation extends React.Component<Props, State> {
         </View>
         {Object.values(steps).map(step => (
           <View key={step.description} style={sectionContainer}>
-            <PreparationStep
+            <IdentitySetupStep
               description={step.description}
               status={step.status}
             />
@@ -160,4 +160,4 @@ class Preparation extends React.Component<Props, State> {
   }
 }
 
-export default Preparation
+export default IdentitySetup
