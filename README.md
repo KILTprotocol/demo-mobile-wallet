@@ -1,4 +1,4 @@
-# TESTING THE TEST
+# KILT Demo Mobile Wallet
 
 ## Specifications
 
