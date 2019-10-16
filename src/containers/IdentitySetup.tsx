@@ -6,6 +6,8 @@ import {
   NavigationState,
   NavigationParams,
 } from 'react-navigation'
+import { AsyncStatus } from '../_enums'
+import { HOME } from '../_routes'
 import KiltButton from '../components/KiltButton'
 import {
   mainViewContainer,
@@ -14,16 +16,19 @@ import {
 } from '../sharedStyles/utils.layout'
 import { sectionTitleTxt } from '../sharedStyles/utils.typography'
 import IdentitySetupStep from '../components/IdentitySetupStep'
-import { AsyncStatus } from '../_enums'
-import { HOME } from '../_routes'
 import { storeIdentity } from '../services/service.identity'
+
+const STEP_CREATE = 'create'
+const STEP_SAVE = 'save'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
+  stepDescriptions: object
 }
+
 type State = {
-  steps: any
   isNextBtnDisabled: boolean
+  stepStatuses: object
 }
 
 class IdentitySetup extends React.Component<Props, State> {
@@ -33,15 +38,9 @@ class IdentitySetup extends React.Component<Props, State> {
 
   state = {
     isNextBtnDisabled: true,
-    steps: {
-      create: {
-        description: 'Creating your identity',
-        status: AsyncStatus.NotStarted,
-      },
-      save: {
-        description: 'Saving your identity',
-        status: AsyncStatus.NotStarted,
-      },
+    stepStatuses: {
+      [STEP_CREATE]: AsyncStatus.Pending,
+      [STEP_SAVE]: AsyncStatus.NotStarted,
     },
   }
 
@@ -59,45 +58,23 @@ class IdentitySetup extends React.Component<Props, State> {
     )
 
   async componentDidMount(): Promise<void> {
-    this.setState(prevState => ({
-      steps: {
-        create: {
-          ...prevState.steps.create,
-          status: AsyncStatus.Pending,
-        },
-        save: {
-          ...prevState.steps.save,
-          status: AsyncStatus.NotStarted,
-        },
-      },
-    }))
     const mnemonic: string = this.props.navigation.getParam('mnemonic')
     const identity: any = await this.createIdentityAsync(mnemonic)
     if (identity) {
       this.setState(prevState => ({
-        steps: {
-          create: {
-            ...prevState.steps.create,
-            status: AsyncStatus.Success,
-          },
-          save: {
-            ...prevState.steps.save,
-            status: AsyncStatus.Pending,
-          },
+        ...prevState,
+        stepStatuses: {
+          [STEP_CREATE]: AsyncStatus.Success,
+          [STEP_SAVE]: AsyncStatus.Pending,
         },
       }))
     }
     await this.storeIdentityAsync(identity)
     this.setState(prevState => ({
-      steps: {
-        create: {
-          ...prevState.steps.create,
-          status: AsyncStatus.Success,
-        },
-        save: {
-          ...prevState.steps.save,
-          status: AsyncStatus.Success,
-        },
+      ...prevState,
+      stepStatuses: {
+        [STEP_CREATE]: AsyncStatus.Success,
+        [STEP_SAVE]: AsyncStatus.Success,
       },
       isNextBtnDisabled: false,
     }))
@@ -105,6 +82,7 @@ class IdentitySetup extends React.Component<Props, State> {
 
   render(): React.ReactNode {
     const { navigate } = this.props.navigation
+    const { stepDescriptions } = this.props
     const { isNextBtnDisabled, steps } = this.state
     return (
       <View style={mainViewContainer}>
@@ -113,14 +91,15 @@ class IdentitySetup extends React.Component<Props, State> {
             Step 2: Knitting your KILT account together
           </Text>
         </View>
-        {Object.values(steps).map(step => (
-          <View key={step.description} style={sectionContainer}>
+        {Object.entries(stepDescriptions).map(([name, description]) => (
+          <View key={description} style={sectionContainer}>
             <IdentitySetupStep
-              description={step.description}
-              status={step.status}
+              description={description}
+              status={this.state.stepStatuses[name]}
             />
           </View>
         ))}
+
         {/* enabled only if all steps were successful */}
         <View style={sectionContainer}>
           <View style={flexRowEndLayout}>
@@ -134,6 +113,13 @@ class IdentitySetup extends React.Component<Props, State> {
       </View>
     )
   }
+}
+
+IdentitySetup.defaultProps = {
+  stepDescriptions: {
+    [STEP_CREATE]: 'Creating your identity',
+    [STEP_SAVE]: 'Saving your identity',
+  },
 }
 
 export default IdentitySetup

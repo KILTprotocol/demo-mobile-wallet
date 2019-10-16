@@ -1,8 +1,14 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
+
+const styles = StyleSheet.create({
+  txtCentered: {
+    textAlign: 'center',
+  },
+})
 
 const TxtCentered: React.FunctionComponent = (props): JSX.Element => (
-  <Text style={{ textAlign: 'center' }}>{props.children}</Text>
+  <Text style={styles.txtCentered}>{props.children}</Text>
 )
 
 export default TxtCentered
