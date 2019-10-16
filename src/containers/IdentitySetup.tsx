@@ -83,7 +83,7 @@ class IdentitySetup extends React.Component<Props, State> {
   render(): React.ReactNode {
     const { navigate } = this.props.navigation
     const { stepDescriptions } = this.props
-    const { isNextBtnDisabled, steps } = this.state
+    const { isNextBtnDisabled } = this.state
     return (
       <View style={mainViewContainer}>
         <View style={sectionContainer}>
