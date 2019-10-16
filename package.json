@@ -20,6 +20,7 @@
   "dependencies": {
     "@kiltprotocol/sdk-js": "^0.15.0",
     "@polkadot/api": "^0.51.1",
+    "@react-native-community/async-storage": "^1.6.2",
     "@tradle/react-native-http": "^2.0.0",
     "@types/react-native-indicators": "^0.13.3",
     "@types/react-native-popup-dialog": "^0.16.2",

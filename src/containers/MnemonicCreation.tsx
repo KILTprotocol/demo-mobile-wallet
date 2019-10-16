@@ -54,13 +54,16 @@ class MnemonicCreation extends React.Component<Props, State> {
     return (
       <View style={mainViewContainer}>
         <View style={sectionContainer}>
-          <Text style={sectionTitleTxt}>Step 1: your identity phrase</Text>
+          <Text style={sectionTitleTxt}>
+            Step 1: your identity phrase (= seed)
+          </Text>
           <Mnemonic mnemonic={mnemonic} />
         </View>
         <View style={sectionContainer}>
           <Text style={bodyTxt}>
-            Write this phrase down and keep it safe and secret. This is your
-            KILT identity phrase.
+            This is your KILT identity phrase. Write it down (the order is
+            important) and keep it safe and secret. Do not upload it online nor
+            share it with anyone.
           </Text>
         </View>
         <View style={sectionContainer}>

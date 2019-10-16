@@ -1,7 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import * as Kilt from '@kiltprotocol/sdk-js'
-import * as Keychain from 'react-native-keychain'
 import {
   NavigationScreenProp,
   NavigationState,
@@ -17,6 +16,7 @@ import { sectionTitleTxt } from '../sharedStyles/utils.typography'
 import IdentitySetupStep from '../components/IdentitySetupStep'
 import { AsyncStatus } from '../_enums'
 import { HOME } from '../_routes'
+import { storeIdentity } from '../services/service.identity'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -36,55 +36,13 @@ class IdentitySetup extends React.Component<Props, State> {
     steps: {
       create: {
         description: 'Creating your identity',
-        status: AsyncStatus.Pending,
+        status: AsyncStatus.NotStarted,
       },
       save: {
         description: 'Saving your identity',
         status: AsyncStatus.NotStarted,
       },
     },
-  }
-
-  async asyncFunc(): Promise<void> {
-    const username = 'zuck'
-    const password = 'poniesRgr8'
-
-    // Store the credentials
-    // const can = Keychain.canImplyAuthentication({
-    //   authenticationType:
-    //     Keychain.AUTHENTICATION_TYPE.DEVICE_PASSCODE_OR_BIOMETRICS,
-    // })
-
-    // console.log('can', can)
-
-    const stored = await Keychain.setGenericPassword('hdccddi', 'there', {
-      accessControl: Keychain.ACCESS_CONTROL.DEVICE_PASSCODE,
-      accessible: Keychain.ACCESSIBLE.WHEN_PASSCODE_SET_THIS_DEVICE_ONLY,
-      service: 'org.reactjs.native.example.KILTDemoMobileWallet',
-    })
-    console.log('stored', stored)
-    const credentials = await Keychain.getGenericPassword({
-      authenticationPrompt: 'heyyyy',
-      service: 'org.reactjs.native.example.KILTDemoMobileWallet',
-    })
-    console.log('credentials', credentials)
-
-    // try {
-    //   // Retrieve the credentials
-    //   const credentials = await Keychain.getGenericPassword()
-    //   if (credentials) {
-    //     console.log(
-    //       'Credentials successfully loaded for user ' + credentials.username
-    //     )
-    //     console.log('credentials', credentials)
-    //   } else {
-    //     console.log('No credentials stored')
-    //   }
-    // } catch (error) {
-    //   console.log("Keychain couldn't be accessed!", error)
-    // }
-    // const resetted = await Keychain.resetGenericPassword()
-    // console.log('resetted', resetted)
   }
 
   createIdentity = (mnemonic: string) =>
@@ -95,13 +53,26 @@ class IdentitySetup extends React.Component<Props, State> {
       setTimeout(() => resolve(this.createIdentity(mnemonic)), 2000)
     )
 
-  saveIdentity() {
-    console.log('saving...')
-  }
+  storeIdentityAsync = identity =>
+    new Promise(resolve =>
+      setTimeout(() => resolve(storeIdentity(identity)), 2000)
+    )
 
   async componentDidMount(): Promise<void> {
-    const mnemonic = this.props.navigation.getParam('mnemonic')
-    const identity = await this.createIdentityAsync(mnemonic)
+    this.setState(prevState => ({
+      steps: {
+        create: {
+          ...prevState.steps.create,
+          status: AsyncStatus.Pending,
+        },
+        save: {
+          ...prevState.steps.save,
+          status: AsyncStatus.NotStarted,
+        },
+      },
+    }))
+    const mnemonic: string = this.props.navigation.getParam('mnemonic')
+    const identity: any = await this.createIdentityAsync(mnemonic)
     if (identity) {
       this.setState(prevState => ({
         steps: {
@@ -114,17 +85,22 @@ class IdentitySetup extends React.Component<Props, State> {
             status: AsyncStatus.Pending,
           },
         },
-        isNextBtnDisabled: false,
       }))
     }
-
-    this.asyncFunc()
-    console.log(identity)
-
-    // const blockchain = await Kilt.default.connect(
-    //   'wss://full-nodes.kilt.io:9944'
-    // )
-    // console.log(blockchain)
+    await this.storeIdentityAsync(identity)
+    this.setState(prevState => ({
+      steps: {
+        create: {
+          ...prevState.steps.create,
+          status: AsyncStatus.Success,
+        },
+        save: {
+          ...prevState.steps.save,
+          status: AsyncStatus.Success,
+        },
+      },
+      isNextBtnDisabled: false,
+    }))
   }
 
   render(): React.ReactNode {

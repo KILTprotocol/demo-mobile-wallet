@@ -32,10 +32,9 @@ export const flexRowEndLayout = {
 // Dialog
 
 export const dialog = {
-  width: 0.8,
+  width: 0.7,
 }
 
 export const dialogContent = {
-  width: 240,
   paddingTop: 24,
 }
