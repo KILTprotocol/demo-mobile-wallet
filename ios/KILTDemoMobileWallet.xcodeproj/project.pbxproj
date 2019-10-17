@@ -18,7 +18,6 @@
 		2DCD954D1E0B4F2C00145EB5 /* KILTDemoMobileWalletTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* KILTDemoMobileWalletTests.m */; };
 		4D167C5638A4FFB42B05D26D /* libPods-KILTDemoMobileWallet-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 520415950EF4E59B820EDBB6 /* libPods-KILTDemoMobileWallet-tvOS.a */; };
 		57D8BA296440A280C55303F2 /* libPods-KILTDemoMobileWallet-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A59A0555CF4F64B8F0991255 /* libPods-KILTDemoMobileWallet-tvOSTests.a */; };
-		8B35143C1FA7BA42BD4EE646 /* libPods-KILTDemoMobileWalletTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43D815BC1834395782A9A5A3 /* libPods-KILTDemoMobileWalletTests.a */; };
 		C9BB1109513ED36101C69E67 /* libPods-KILTDemoMobileWallet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C329518F0272F6259A9EDF8D /* libPods-KILTDemoMobileWallet.a */; };
 /* End PBXBuildFile section */
 
@@ -53,13 +52,10 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = KILTDemoMobileWallet/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = KILTDemoMobileWallet/main.m; sourceTree = "<group>"; };
 		152BE6E74125B27B7DAEAC44 /* Pods-KILTDemoMobileWallet-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KILTDemoMobileWallet-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-KILTDemoMobileWallet-tvOS/Pods-KILTDemoMobileWallet-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		19D34597480026D7DF7EEE16 /* Pods-KILTDemoMobileWalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KILTDemoMobileWalletTests.release.xcconfig"; path = "Target Support Files/Pods-KILTDemoMobileWalletTests/Pods-KILTDemoMobileWalletTests.release.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* KILTDemoMobileWallet-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KILTDemoMobileWallet-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* KILTDemoMobileWallet-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KILTDemoMobileWallet-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		43D815BC1834395782A9A5A3 /* libPods-KILTDemoMobileWalletTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KILTDemoMobileWalletTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EBE4B88D798D03C91D3AC2B /* Pods-KILTDemoMobileWallet-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KILTDemoMobileWallet-tvOS.release.xcconfig"; path = "Target Support Files/Pods-KILTDemoMobileWallet-tvOS/Pods-KILTDemoMobileWallet-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		520415950EF4E59B820EDBB6 /* libPods-KILTDemoMobileWallet-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KILTDemoMobileWallet-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A4313DB663FB4B3FDB76E9D7 /* Pods-KILTDemoMobileWalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KILTDemoMobileWalletTests.debug.xcconfig"; path = "Target Support Files/Pods-KILTDemoMobileWalletTests/Pods-KILTDemoMobileWalletTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A59A0555CF4F64B8F0991255 /* libPods-KILTDemoMobileWallet-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KILTDemoMobileWallet-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C199128A90723F5A4822FC0E /* Pods-KILTDemoMobileWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KILTDemoMobileWallet.debug.xcconfig"; path = "Target Support Files/Pods-KILTDemoMobileWallet/Pods-KILTDemoMobileWallet.debug.xcconfig"; sourceTree = "<group>"; };
 		C329518F0272F6259A9EDF8D /* libPods-KILTDemoMobileWallet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KILTDemoMobileWallet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,7 +70,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B35143C1FA7BA42BD4EE646 /* libPods-KILTDemoMobileWalletTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,7 +139,6 @@
 				C329518F0272F6259A9EDF8D /* libPods-KILTDemoMobileWallet.a */,
 				520415950EF4E59B820EDBB6 /* libPods-KILTDemoMobileWallet-tvOS.a */,
 				A59A0555CF4F64B8F0991255 /* libPods-KILTDemoMobileWallet-tvOSTests.a */,
-				43D815BC1834395782A9A5A3 /* libPods-KILTDemoMobileWalletTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -158,8 +152,6 @@
 				4EBE4B88D798D03C91D3AC2B /* Pods-KILTDemoMobileWallet-tvOS.release.xcconfig */,
 				F51761E5BEF4F5F33AE36CB1 /* Pods-KILTDemoMobileWallet-tvOSTests.debug.xcconfig */,
 				00E9EB4C635977BB59C57802 /* Pods-KILTDemoMobileWallet-tvOSTests.release.xcconfig */,
-				A4313DB663FB4B3FDB76E9D7 /* Pods-KILTDemoMobileWalletTests.debug.xcconfig */,
-				19D34597480026D7DF7EEE16 /* Pods-KILTDemoMobileWalletTests.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
@@ -205,7 +197,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "KILTDemoMobileWalletTests" */;
 			buildPhases = (
-				98F436806DD3AC2D6D3F7965 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
@@ -409,28 +400,6 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		98F436806DD3AC2D6D3F7965 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-KILTDemoMobileWalletTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C9250A326DDB71AF2D44F289 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -580,7 +549,6 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A4313DB663FB4B3FDB76E9D7 /* Pods-KILTDemoMobileWalletTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -603,7 +571,6 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 19D34597480026D7DF7EEE16 /* Pods-KILTDemoMobileWalletTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;

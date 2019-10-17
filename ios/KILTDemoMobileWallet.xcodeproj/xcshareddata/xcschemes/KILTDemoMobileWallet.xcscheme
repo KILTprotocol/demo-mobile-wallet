@@ -34,7 +34,7 @@
                ReferencedContainer = "container:KILTDemoMobileWallet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
+         <!-- <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
             buildForProfiling = "NO"
@@ -47,7 +47,7 @@
                BlueprintName = "KILTDemoMobileWalletTests"
                ReferencedContainer = "container:KILTDemoMobileWallet.xcodeproj">
             </BuildableReference>
-         </BuildActionEntry>
+         </BuildActionEntry> -->
       </BuildActionEntries>
    </BuildAction>
    <TestAction
