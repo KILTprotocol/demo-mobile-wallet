@@ -2,10 +2,13 @@ import { storeDataUnencrypted, getDataUnencrypted } from './service.storage'
 
 const IDENTITY_KEY = 'identity'
 
-async function storeIdentity(identity): Promise<void> {
-  // TODO: only save if idenity not present
-  storeDataUnencrypted(IDENTITY_KEY, JSON.stringify(identity))
-  return identity
+async function storeIdentity(identity): Promise<object | null> {
+  // only store if no identity is present yet to prevent overwriting identity
+  if (!getIdentity()) {
+    storeDataUnencrypted(IDENTITY_KEY, JSON.stringify(identity))
+    return identity
+  }
+  return null
 }
 
 async function getIdentity(): Promise<object | null> {

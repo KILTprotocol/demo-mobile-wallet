@@ -24,7 +24,7 @@ class AppStartup extends React.Component<Props> {
   bootstrapAsync = async () => {
     const identity = await callWithDelay(getIdentity, [])
     console.log('identity', identity)
-    this.props.navigation.navigate(identity ? SETUP : APP)
+    this.props.navigation.navigate(identity ? APP : SETUP)
   }
 
   render(): JSX.Element {
