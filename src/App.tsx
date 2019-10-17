@@ -2,7 +2,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { APP_STARTUP, APP, SETUP } from './_routes'
 import AppStack from './components/AppStack'
 import SetupStack from './components/SetupStack'
-import AppStartup from './AppStartup'
+import AppStartup from './containers/AppStartup'
 
 export default createAppContainer(
   createSwitchNavigator(

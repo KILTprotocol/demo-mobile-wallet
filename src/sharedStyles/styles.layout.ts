@@ -19,6 +19,14 @@ export const flexRowWrapLayout = {
   flexWrap: 'wrap',
 }
 
+export const fullCenter = {
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100%',
+  width: '100%',
+}
+
 export const flexRowLayout = {
   flexDirection: 'row',
   alignItems: 'center',
