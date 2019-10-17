@@ -1,16 +1,18 @@
-import Setup from './components/Setup'
-import Home from './components/Home'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
+import { APP_STARTUP, APP, SETUP } from './_routes'
+import AppStack from './components/AppStack'
+import SetupStack from './components/SetupStack'
+import AppStartup from './AppStartup'
 
-const RootStack = createSwitchNavigator({
-  Setup: {
-    screen: Setup,
-  },
-  Home: {
-    screen: Home,
-  },
-})
-
-const App = createAppContainer(RootStack)
-
-export default App
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      [APP_STARTUP]: AppStartup,
+      [APP]: AppStack,
+      [SETUP]: SetupStack,
+    },
+    {
+      initialRouteName: APP_STARTUP,
+    }
+  )
+)
