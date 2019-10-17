@@ -17,6 +17,7 @@ import {
 import { sectionTitleTxt } from '../sharedStyles/utils.typography'
 import IdentitySetupStep from '../components/IdentitySetupStep'
 import { storeIdentity } from '../services/service.identity'
+import { callWithDelay } from '../utils/utils.async'
 
 const STEP_CREATE = 'create'
 const STEP_SAVE = 'save'
@@ -47,19 +48,9 @@ class IdentitySetup extends React.Component<Props, State> {
   createIdentity = (mnemonic: string) =>
     Kilt.Identity.buildFromMnemonic(mnemonic)
 
-  createIdentityAsync = (mnemonic: string) =>
-    new Promise(resolve =>
-      setTimeout(() => resolve(this.createIdentity(mnemonic)), 2000)
-    )
-
-  storeIdentityAsync = identity =>
-    new Promise(resolve =>
-      setTimeout(() => resolve(storeIdentity(identity)), 2000)
-    )
-
   async componentDidMount(): Promise<void> {
     const mnemonic: string = this.props.navigation.getParam('mnemonic')
-    const identity: any = await this.createIdentityAsync(mnemonic)
+    const identity: any = await callWithDelay(this.createIdentity, [mnemonic])
     if (identity) {
       this.setState(prevState => ({
         ...prevState,
@@ -69,7 +60,8 @@ class IdentitySetup extends React.Component<Props, State> {
         },
       }))
     }
-    await this.storeIdentityAsync(identity)
+    const id = await callWithDelay(storeIdentity, [identity])
+    console.log('ID', id)
     this.setState(prevState => ({
       ...prevState,
       stepStatuses: {
@@ -99,8 +91,7 @@ class IdentitySetup extends React.Component<Props, State> {
             />
           </View>
         ))}
-
-        {/* enabled only if all steps were successful */}
+        {/* button is enabled only if all steps were successful */}
         <View style={sectionContainer}>
           <View style={flexRowEndLayout}>
             <KiltButton
