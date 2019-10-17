@@ -13,8 +13,8 @@ import {
   mainViewContainer,
   sectionContainer,
   flexRowEndLayout,
-} from '../sharedStyles/utils.layout'
-import { sectionTitleTxt } from '../sharedStyles/utils.typography'
+} from '../sharedStyles/styles.layout'
+import { sectionTitleTxt } from '../sharedStyles/styles.typography'
 import IdentitySetupStep from '../components/IdentitySetupStep'
 import { storeIdentity } from '../services/service.identity'
 import { callWithDelay } from '../utils/utils.async'
@@ -61,7 +61,7 @@ class IdentitySetup extends React.Component<Props, State> {
       }))
     }
     const id = await callWithDelay(storeIdentity, [identity])
-    console.log('ID', id)
+    console.log('identity', id)
     this.setState(prevState => ({
       ...prevState,
       stepStatuses: {

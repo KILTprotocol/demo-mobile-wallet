@@ -6,9 +6,9 @@ import Dialog, {
   DialogTitle,
 } from 'react-native-popup-dialog'
 import { Text } from 'react-native'
-import { dialog } from '../sharedStyles/utils.layout'
-import { dialogContent } from '../sharedStyles/utils.layout'
-import { bodyTxt } from '../sharedStyles/utils.typography'
+import { dialog } from '../sharedStyles/styles.layout'
+import { dialogContent } from '../sharedStyles/styles.layout'
+import { bodyTxt } from '../sharedStyles/styles.typography'
 
 type Props = {
   onPressCancel: () => void

@@ -1,12 +1,12 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import * as Kilt from '@kiltprotocol/sdk-js'
-import { bodyTxt, sectionTitleTxt } from '../sharedStyles/utils.typography'
+import { bodyTxt, sectionTitleTxt } from '../sharedStyles/styles.typography'
 import {
   flexRowEndLayout,
   mainViewContainer,
   sectionContainer,
-} from '../sharedStyles/utils.layout'
+} from '../sharedStyles/styles.layout'
 import { IDENTITY_SETUP } from '../_routes'
 import MnemonicDialog from '../components/MnemonicDialog'
 import Mnemonic from '../components/Mnemonic'

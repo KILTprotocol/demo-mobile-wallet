@@ -1,13 +1,13 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { bodyTxt } from '../sharedStyles/utils.typography'
-import { flexRowLayout } from '../sharedStyles/utils.layout'
+import { bodyTxt } from '../sharedStyles/styles.typography'
+import { flexRowLayout } from '../sharedStyles/styles.layout'
 import {
   SUCCESS_CLR,
   TXT_LIGHT_CLR,
   ERROR_CLR,
   TXT_DEFAULT_CLR,
-} from '../sharedStyles/consts.colors'
+} from '../sharedStyles/styles.consts.colors'
 import { AsyncStatus } from '../_enums'
 import LoadingIndicator from '../components/LoadingIndicator'
 import TxtCentered from './TxtCentered'

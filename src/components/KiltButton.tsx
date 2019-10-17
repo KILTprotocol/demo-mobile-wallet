@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'react-native'
-import { KILT_PURPLE_CLR } from '../sharedStyles/consts.colors'
+import { KILT_PURPLE_CLR } from '../sharedStyles/styles.consts.colors'
 
 type Props = {
   title: string

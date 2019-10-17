@@ -1,8 +1,8 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import FadeInView from '../components/FadeInView'
-import { flexRowWrapLayout } from '../sharedStyles/utils.layout'
-import { bodyEmphasizedTxt } from '../sharedStyles/utils.typography'
+import { flexRowWrapLayout } from '../sharedStyles/styles.layout'
+import { bodyEmphasizedTxt } from '../sharedStyles/styles.typography'
 
 type Props = {
   mnemonic: string

@@ -2,7 +2,7 @@ import {
   TXT_DEFAULT_CLR,
   KILT_ORANGE_CLR,
   KILT_ORANGE_X_LIGHT_CLR,
-} from './consts.colors'
+} from './styles.consts.colors'
 
 export const mainTitleTxt = {
   fontSize: 32,

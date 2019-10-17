@@ -11,12 +11,12 @@ import {
   mainViewContainer,
   sectionContainer,
   flexRowEndLayout,
-} from '../sharedStyles/utils.layout'
+} from '../sharedStyles/styles.layout'
 import {
   bodyTxt,
   mainTitleTxt,
   sectionTitleTxt,
-} from '../sharedStyles/utils.typography'
+} from '../sharedStyles/styles.typography'
 import { MNEMONIC_CREATION } from '../_routes'
 
 interface IOptions {
