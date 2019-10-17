@@ -3,12 +3,14 @@ import { storeDataUnencrypted, getDataUnencrypted } from './service.storage'
 const IDENTITY_KEY = 'identity'
 
 async function storeIdentity(identity): Promise<void> {
-  return storeDataUnencrypted(IDENTITY_KEY, JSON.stringify(identity))
+  // TODO: only save if idenity not present
+  storeDataUnencrypted(IDENTITY_KEY, JSON.stringify(identity))
+  return identity
 }
 
-async function getIdentity(): Promise<void> {
+async function getIdentity(): Promise<object | null> {
   const identity = await getDataUnencrypted(IDENTITY_KEY)
-  return JSON.parse(identity)
+  return identity ? JSON.parse(identity) : null
 }
 
 export { getIdentity, storeIdentity }
