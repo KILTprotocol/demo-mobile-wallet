@@ -20,7 +20,6 @@ class AppStartup extends React.Component<Props> {
     this.bootstrapAsync()
   }
 
-  // Fetch the token from storage then navigate to our appropriate place
   bootstrapAsync = async () => {
     const identity = await callWithDelay(getIdentity, [])
     console.log('identity', identity)

@@ -13,12 +13,14 @@ Utilities such as prettier, eslint and commit linting are set up.
 
 ### Prerequisites
 
-Follow the "Installing dependencies" step at https://facebook.github.io/react-native/docs/getting-started > tab **react-native-cli quickstart**.
+* IMPORTANT: Follow the "Installing dependencies" step at https://facebook.github.io/react-native/docs/getting-started > tab **react-native-cli quickstart**.
+* `brew install cocoapods`
 
 ### How to run
 
 * Clone the project
 * `yarn install` or `yarn` (please do use yarn)
+* In the `iOS` folder, run `pod install`
 * Open two terminal windows:
   * In one terminal run `yarn start`
   * You should see `Loading dependency graph, done.` at some point
