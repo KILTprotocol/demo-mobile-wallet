@@ -8482,9 +8482,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 typescript-logging@^0.6.3:
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/typescript-logging/-/typescript-logging-0.6.3.tgz#cad05be714553621ccc776536f6b8793e1c6e847"
-  integrity sha512-0zDqwjZ7KCvRobh3tXRel4IYU95iqThlsKxPeqxUmDBmhXO695LrTHvwgg9CjAPVqftSvL8ZPRcSAPT3i5DkLQ==
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/typescript-logging/-/typescript-logging-0.6.4.tgz#c752cb3e7c051a32d3636a9b277a0a5e5295051e"
+  integrity sha512-jXISCGFyp4Q1uKLKi3zF0o8rwjeEipcIO7+C+jRttks3Ci8+8jDi9e87Jmz+8xuzZq+OcKJhDkiyHriqaWb+4A==
   dependencies:
     stacktrace-js "1.3.1"
 
