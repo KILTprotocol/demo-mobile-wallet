@@ -51,7 +51,7 @@ class IdentitySetup extends React.Component<Props, State> {
   async componentDidMount(): Promise<void> {
     const { navigation } = this.props
     const mnemonic: string = navigation.getParam('mnemonic')
-    const identity: any = await callWithDelay(this.createIdentity, [mnemonic])
+    const identity = await callWithDelay(this.createIdentity, [mnemonic])
     if (identity) {
       this.setState(prevState => ({
         ...prevState,
