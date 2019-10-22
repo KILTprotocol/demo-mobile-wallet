@@ -1,12 +1,14 @@
+import { ViewStyle } from 'react-native'
+
 // Containers
 
-export const mainViewContainer = {
+export const mainViewContainer: ViewStyle = {
   paddingTop: 48,
   paddingBottom: 24,
   paddingHorizontal: 12,
 }
 
-export const sectionContainer = {
+export const sectionContainer: ViewStyle = {
   fontWeight: '600',
   marginTop: 24,
   paddingHorizontal: 24,
@@ -14,12 +16,12 @@ export const sectionContainer = {
 
 // Flex
 
-export const flexRowWrapLayout = {
+export const flexRowWrapLayout: ViewStyle = {
   flexDirection: 'row',
   flexWrap: 'wrap',
 }
 
-export const fullCenter = {
+export const fullCenter: ViewStyle = {
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
@@ -27,12 +29,12 @@ export const fullCenter = {
   width: '100%',
 }
 
-export const flexRowLayout = {
+export const flexRowLayout: ViewStyle = {
   flexDirection: 'row',
   alignItems: 'center',
 }
 
-export const flexRowEndLayout = {
+export const flexRowEndLayout: ViewStyle = {
   flexDirection: 'row',
   justifyContent: 'flex-end',
 }

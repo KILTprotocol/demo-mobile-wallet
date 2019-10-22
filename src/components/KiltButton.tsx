@@ -8,8 +8,8 @@ type Props = {
   disabled?: boolean
 }
 
-const KiltButton: React.FunctionComponent<Props> = (
-  props: Props
-): JSX.Element => <Button {...props} color={KILT_PURPLE_CLR} />
+const KiltButton: React.FunctionComponent<Props> = (props): JSX.Element => (
+  <Button {...props} color={KILT_PURPLE_CLR} />
+)
 
 export default KiltButton

@@ -3,28 +3,29 @@ import {
   KILT_ORANGE_CLR,
   KILT_ORANGE_X_LIGHT_CLR,
 } from './styles.consts.colors'
+import { TextStyle } from 'react-native'
 
-export const mainTitleTxt = {
+export const mainTitleTxt: TextStyle = {
   fontSize: 32,
   fontWeight: '600',
   marginBottom: 12,
   color: TXT_DEFAULT_CLR,
 }
 
-export const sectionTitleTxt = {
+export const sectionTitleTxt: TextStyle = {
   fontSize: 24,
   fontWeight: '600',
   marginBottom: 24,
   color: TXT_DEFAULT_CLR,
 }
 
-export const bodyTxt = {
+export const bodyTxt: TextStyle = {
   fontSize: 18,
   fontWeight: '400',
   color: TXT_DEFAULT_CLR,
 }
 
-export const bodyEmphasizedTxt = {
+export const bodyEmphasizedTxt: TextStyle = {
   fontSize: 24,
   fontWeight: '400',
   color: KILT_ORANGE_CLR,
