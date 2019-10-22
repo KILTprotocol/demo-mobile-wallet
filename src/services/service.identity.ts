@@ -1,10 +1,12 @@
 import { storeDataUnencrypted, getDataUnencrypted } from './service.storage'
+import { Identity } from '@kiltprotocol/sdk-js'
 
 const IDENTITY_KEY = 'identity'
 
-async function storeIdentity(identity): Promise<object | null> {
+async function storeIdentity(identity: Identity): Promise<object | null> {
   // only store if no identity is present yet to prevent overwriting identity
   if (!getIdentity()) {
+    // TODO: handle error case
     storeDataUnencrypted(IDENTITY_KEY, JSON.stringify(identity))
     return identity
   }

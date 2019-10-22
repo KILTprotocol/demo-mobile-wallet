@@ -6,26 +6,25 @@ const ASYNC_STORAGE_PREFIX = '@KILT:'
 const getAsyncStorageFullKeyName = (key: string): string =>
   `${ASYNC_STORAGE_PREFIX}${key}`
 
-async function storeDataUnencrypted(key: string, value: any): Promise<boolean> {
-  let stored = false
+async function storeDataUnencrypted(
+  key: string,
+  value: string
+): Promise<boolean> {
   try {
     await AsyncStorage.setItem(getAsyncStorageFullKeyName(key), value)
-    stored = true
+    return true
   } catch (error) {
-    console.log(error)
-  } finally {
-    return stored
+    console.error(error)
+    return false
   }
 }
 
-async function getDataUnencrypted(key: any): Promise<any> {
-  let value = null
+async function getDataUnencrypted(key: string): Promise<string | null> {
   try {
-    value = await AsyncStorage.getItem(getAsyncStorageFullKeyName(key))
+    return await AsyncStorage.getItem(getAsyncStorageFullKeyName(key))
   } catch (error) {
-    console.log(error)
-  } finally {
-    return value
+    console.error(error)
+    return null
   }
 }
 

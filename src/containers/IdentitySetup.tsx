@@ -61,6 +61,7 @@ class IdentitySetup extends React.Component<Props, State> {
         },
       }))
     }
+    // TODO: handle error case
     const id = await callWithDelay(storeIdentity, [identity])
     console.log('identity', id)
     this.setState(prevState => ({
