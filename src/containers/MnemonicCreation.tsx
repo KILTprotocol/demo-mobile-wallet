@@ -49,7 +49,7 @@ class MnemonicCreation extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
-    const { navigate } = this.props.navigation
+    const { navigation } = this.props
     const { mnemonic, visible } = this.state
     return (
       <View style={mainViewContainer}>
@@ -82,8 +82,8 @@ class MnemonicCreation extends React.Component<Props, State> {
           onPressCancel={() => this.closeDialog()}
           onPressOK={() => {
             this.closeDialog()
-            navigate(IDENTITY_SETUP, {
-              mnemonic: mnemonic,
+            navigation.navigate(IDENTITY_SETUP, {
+              mnemonic,
             })
           }}
         />

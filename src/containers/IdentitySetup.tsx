@@ -73,7 +73,7 @@ class IdentitySetup extends React.Component<Props, State> {
   }
 
   render(): React.ReactNode {
-    const { navigate } = this.props.navigation
+    const { navigation } = this.props
     const { stepDescriptions } = this.props
     const { isNextBtnDisabled } = this.state
     return (
@@ -97,7 +97,7 @@ class IdentitySetup extends React.Component<Props, State> {
             <KiltButton
               disabled={isNextBtnDisabled}
               title="Next >"
-              onPress={() => navigate(HOME)}
+              onPress={() => navigation.navigate(HOME)}
             />
           </View>
         </View>

@@ -7,8 +7,8 @@ const styles = StyleSheet.create({
   },
 })
 
-const TxtCentered: React.FunctionComponent = (props): JSX.Element => (
-  <Text style={styles.txtCentered}>{props.children}</Text>
+const TxtCentered: React.FunctionComponent = ({ children }): JSX.Element => (
+  <Text style={styles.txtCentered}>{children}</Text>
 )
 
 export default TxtCentered
