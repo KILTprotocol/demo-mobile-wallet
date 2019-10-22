@@ -49,7 +49,8 @@ class IdentitySetup extends React.Component<Props, State> {
     Kilt.Identity.buildFromMnemonic(mnemonic)
 
   async componentDidMount(): Promise<void> {
-    const mnemonic: string = this.props.navigation.getParam('mnemonic')
+    const { navigation } = this.props
+    const mnemonic: string = navigation.getParam('mnemonic')
     const identity: any = await callWithDelay(this.createIdentity, [mnemonic])
     if (identity) {
       this.setState(prevState => ({
