@@ -1,0 +1,7 @@
+export const APP = 'App'
+export const SETUP = 'Setup'
+export const HOME = 'Home'
+export const IDENTITY_SETUP = 'IdentitySetup'
+export const MNEMONIC_CREATION = 'MnemonicCreation'
+export const APP_STARTUP = 'AppStartup'
+export const INTRODUCTION = 'Introduction'
