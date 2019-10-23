@@ -5,7 +5,8 @@ const IDENTITY_KEY = 'identity'
 
 async function storeIdentity(identity: Identity): Promise<object | null> {
   // only store if no identity is present yet to prevent overwriting identity
-  if (!getIdentity()) {
+  const identityExisting = await getIdentity()
+  if (!identityExisting) {
     // TODO: handle error case
     storeDataUnencrypted(IDENTITY_KEY, JSON.stringify(identity))
     return identity
