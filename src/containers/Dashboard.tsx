@@ -8,8 +8,11 @@ import {
   NavigationParams,
 } from 'react-navigation'
 import { AppState } from '../redux/reducers'
-import IdentityDisplay from './IdentityDisplay'
+import { AsyncStatus, LoadingIndicatorSize } from '../_enums'
+import IdentityDisplay from '../components/IdentityDisplay'
 import KiltButton from '../components/KiltButton'
+import BalanceDisplay from '../components/BalanceDisplay'
+import LoadingIndicator from '../components/LoadingIndicator'
 import { getBalanceInKiltCoins } from '../services/service.balance'
 import {
   mainViewContainer,
@@ -19,9 +22,6 @@ import {
   sectionTitleTxt,
   mainTitleTxt,
 } from '../sharedStyles/styles.typography'
-import { AsyncStatus, LoadingIndicatorSize } from '../_enums'
-import BalanceDisplay from './BalanceDisplay'
-import LoadingIndicator from './LoadingIndicator'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>

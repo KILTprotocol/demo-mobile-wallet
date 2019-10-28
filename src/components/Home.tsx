@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from 'react-navigation-tabs'
-import Dashboard from './Dashboard'
+import Dashboard from '../containers/Dashboard'
 import Settings from './Settings'
 import { CONTACTS, DASHBOARD, SETTINGS } from '../_routes'
 import Contacts from './Contacts'
