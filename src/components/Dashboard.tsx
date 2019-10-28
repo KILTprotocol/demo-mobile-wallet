@@ -10,6 +10,7 @@ import {
 import { AppState } from '../redux/reducers'
 import IdentityDisplay from './IdentityDisplay'
 import KiltButton from '../components/KiltButton'
+import { getBalanceInKiltCoins } from '../services/service.balance'
 import {
   mainViewContainer,
   sectionContainer,
@@ -18,35 +19,78 @@ import {
   sectionTitleTxt,
   mainTitleTxt,
 } from '../sharedStyles/styles.typography'
+import { AsyncStatus, LoadingIndicatorSize } from '../_enums'
+import BalanceDisplay from './BalanceDisplay'
+import LoadingIndicator from './LoadingIndicator'
 
-interface IProps {
+type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   identity: Identity
 }
 
-const Dashboard = ({ navigation, identity }: IProps): JSX.Element => (
-  <View style={mainViewContainer}>
-    <View style={sectionContainer}>
-      <Text style={mainTitleTxt}>Dashboard</Text>
-    </View>
-    <View style={sectionContainer}>
-      <Text style={sectionTitleTxt}>Me</Text>
-      <IdentityDisplay address={identity.address} />
-    </View>
-    <View style={sectionContainer}>
-      <Text style={sectionTitleTxt}>My claims</Text>
-      <KiltButton
-        title="Create driver's license"
-        onPress={() => {
-          console.log('pressed')
-        }}
-      />
-    </View>
-  </View>
-)
+type State = {
+  balance: number
+}
 
-Dashboard.navigationOptions = {
-  header: null,
+class Dashboard extends React.Component<Props, State> {
+  static navigationOptions = {
+    header: null,
+  }
+
+  state = {
+    balance: 0,
+    balanceStatus: AsyncStatus.NotStarted,
+  }
+
+  async componentDidMount(): Promise<void> {
+    const { identity } = this.props
+    this.setState(prevState => ({
+      ...prevState,
+      balanceStatus: AsyncStatus.Pending,
+    }))
+    const balance = await getBalanceInKiltCoins(identity.address)
+    this.setState(prevState => ({
+      ...prevState,
+      balance,
+      balanceStatus: AsyncStatus.Success,
+    }))
+  }
+
+  render(): JSX.Element {
+    const { identity } = this.props
+    const { balance, balanceStatus } = this.state
+    console.log('in state', balance)
+    return (
+      <View style={mainViewContainer}>
+        <View style={sectionContainer}>
+          <Text style={mainTitleTxt}>Dashboard</Text>
+        </View>
+        <View style={sectionContainer}>
+          <Text style={sectionTitleTxt}>My identity</Text>
+          <IdentityDisplay address={identity.address} />
+        </View>
+        <View style={sectionContainer}>
+          <Text style={sectionTitleTxt}>KILT account balance</Text>
+          {balanceStatus === AsyncStatus.Success && (
+            <BalanceDisplay balance={balance} />
+          )}
+          {balanceStatus ===
+            (AsyncStatus.NotStarted || AsyncStatus.Pending) && (
+            <LoadingIndicator size={LoadingIndicatorSize.S} />
+          )}
+        </View>
+        <View style={sectionContainer}>
+          <Text style={sectionTitleTxt}>My claims</Text>
+          <KiltButton
+            title="Create driver's license"
+            onPress={() => {
+              console.log('pressed')
+            }}
+          />
+        </View>
+      </View>
+    )
+  }
 }
 
 const mapStateToProps = (state: AppState) => ({

@@ -7,3 +7,5 @@ export const TXT_LIGHT_CLR = '#9e979b'
 
 export const SUCCESS_CLR = '#00c118'
 export const ERROR_CLR = '#b30000'
+export const BALANCE_PLUS_CLR = SUCCESS_CLR
+export const BALANCE_ZERO_CLR = ERROR_CLR

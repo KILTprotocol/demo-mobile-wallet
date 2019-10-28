@@ -14,7 +14,7 @@ async function storeIdentity(identity: Identity): Promise<object | null> {
   return null
 }
 
-async function getIdentity(): Promise<object | null> {
+async function getIdentity(): Promise<Identity | null> {
   const identity = await getDataUnencrypted(IDENTITY_KEY)
   return identity ? JSON.parse(identity) : null
 }

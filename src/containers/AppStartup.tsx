@@ -6,8 +6,8 @@ import {
 } from 'react-navigation'
 import { View } from 'react-native'
 import { setIdentity } from '../redux/actions'
-import { connect } from 'react-redux'
 import { getIdentity } from '../services/service.identity'
+import { connect } from 'react-redux'
 import LoadingIndicator from '../components/LoadingIndicator'
 import { APP, SETUP } from '../_routes'
 import { mainViewContainer, fullCenter } from '../sharedStyles/styles.layout'
@@ -26,8 +26,9 @@ class AppStartup extends React.Component<Props> {
   bootstrapAsync = async () => {
     const { navigation, setIdentity } = this.props
     const identity = await callWithDelay(getIdentity)
+    console.log('identity', identity)
 
-    // TODO setup identity on set up
+    // TODO setup identity in Redux store
     setIdentity(identity)
     // if an identity is already set up, navigate to the regular app; otherwise talke the user to the identity setup screen
     navigation.navigate(identity ? APP : SETUP)

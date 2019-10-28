@@ -4,3 +4,9 @@ export enum AsyncStatus {
   Success,
   Error,
 }
+
+export enum LoadingIndicatorSize {
+  S,
+  M,
+  L,
+}

@@ -3,7 +3,7 @@ import { Identity } from '@kiltprotocol/sdk-js'
 
 type SetIdentityAction = {
   type: typeof SET_IDENTITY
-  payload: Identity
+  payload: Identity | null
 }
 
 export type AppActionTSTypes = SetIdentityAction

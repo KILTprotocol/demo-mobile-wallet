@@ -3,9 +3,10 @@ import { Text, View, TextStyle } from 'react-native'
 import Identicon from 'polkadot-identicon-react-native'
 import { bodyTxt } from '../sharedStyles/styles.typography'
 import { flexRowLayout } from '../sharedStyles/styles.layout'
+import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 
 type Props = {
-  address: string
+  address: IPublicIdentity['address']
 }
 
 const addressStyle: TextStyle = {
