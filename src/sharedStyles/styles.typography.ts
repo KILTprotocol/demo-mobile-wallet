@@ -6,14 +6,16 @@ import {
 import { TextStyle } from 'react-native'
 
 export const mainTitleTxt: TextStyle = {
-  fontSize: 30,
+  fontFamily: 'Montserrat-Bold',
+  fontSize: 34,
   fontWeight: '600',
   marginBottom: 12,
   color: TXT_DEFAULT_CLR,
 }
 
 export const sectionTitleTxt: TextStyle = {
-  fontSize: 24,
+  fontFamily: 'Montserrat-Bold',
+  fontSize: 26,
   fontWeight: '600',
   marginBottom: 24,
   color: TXT_DEFAULT_CLR,

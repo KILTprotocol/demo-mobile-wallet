@@ -19,6 +19,7 @@
 		4D167C5638A4FFB42B05D26D /* libPods-KILTDemoMobileWallet-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 520415950EF4E59B820EDBB6 /* libPods-KILTDemoMobileWallet-tvOS.a */; };
 		57D8BA296440A280C55303F2 /* libPods-KILTDemoMobileWallet-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A59A0555CF4F64B8F0991255 /* libPods-KILTDemoMobileWallet-tvOSTests.a */; };
 		5850C58992CA4D7D1D492E2D /* libPods-KILTDemoMobileWalletTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39F3ED5DDC3C5ACEFBA8D998 /* libPods-KILTDemoMobileWalletTests.a */; };
+		5F7DB93E23675B7400E0963D /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F7DB93D23675B7400E0963D /* Montserrat-Bold.ttf */; };
 		C9BB1109513ED36101C69E67 /* libPods-KILTDemoMobileWallet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C329518F0272F6259A9EDF8D /* libPods-KILTDemoMobileWallet.a */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		39F3ED5DDC3C5ACEFBA8D998 /* libPods-KILTDemoMobileWalletTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KILTDemoMobileWalletTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EBE4B88D798D03C91D3AC2B /* Pods-KILTDemoMobileWallet-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KILTDemoMobileWallet-tvOS.release.xcconfig"; path = "Target Support Files/Pods-KILTDemoMobileWallet-tvOS/Pods-KILTDemoMobileWallet-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		520415950EF4E59B820EDBB6 /* libPods-KILTDemoMobileWallet-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KILTDemoMobileWallet-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F7DB93D23675B7400E0963D /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		A59A0555CF4F64B8F0991255 /* libPods-KILTDemoMobileWallet-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KILTDemoMobileWallet-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C199128A90723F5A4822FC0E /* Pods-KILTDemoMobileWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KILTDemoMobileWallet.debug.xcconfig"; path = "Target Support Files/Pods-KILTDemoMobileWallet/Pods-KILTDemoMobileWallet.debug.xcconfig"; sourceTree = "<group>"; };
 		C329518F0272F6259A9EDF8D /* libPods-KILTDemoMobileWallet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KILTDemoMobileWallet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,7 +163,6 @@
 				265D0C3B0BF1EAA55AD92831 /* Pods-KILTDemoMobileWalletTests.debug.xcconfig */,
 				3298C38B47EED91B97B59366 /* Pods-KILTDemoMobileWalletTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -175,6 +176,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				5F7DB93D23675B7400E0963D /* Montserrat-Bold.ttf */,
 				13B07FAE1A68108700A75B9A /* KILTDemoMobileWallet */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* KILTDemoMobileWalletTests */,
@@ -308,6 +310,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -338,6 +341,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				5F7DB93E23675B7400E0963D /* Montserrat-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
