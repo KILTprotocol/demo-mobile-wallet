@@ -1,4 +1,4 @@
-const DEFAULT_DELAY = 2000
+const DEFAULT_DELAY = 100
 
 // Used for UI, to prevent rendering flashes
 async function callWithDelay<T>(

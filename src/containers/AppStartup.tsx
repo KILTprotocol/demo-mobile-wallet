@@ -5,6 +5,8 @@ import {
   NavigationParams,
 } from 'react-navigation'
 import { View } from 'react-native'
+import { setIdentity } from '../redux/actions'
+import { connect } from 'react-redux'
 import { getIdentity } from '../services/service.identity'
 import LoadingIndicator from '../components/LoadingIndicator'
 import { APP, SETUP } from '../_routes'
@@ -13,6 +15,7 @@ import { callWithDelay } from '../utils/utils.async'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
+  setIdentity: typeof setIdentity
 }
 
 class AppStartup extends React.Component<Props> {
@@ -21,22 +24,41 @@ class AppStartup extends React.Component<Props> {
   }
 
   bootstrapAsync = async () => {
-    const { navigation } = this.props
+    const { navigation, setIdentity } = this.props
     const identity = await callWithDelay(getIdentity)
-    console.log('identity', identity)
+
+    // TODO setup identity on set up
+    setIdentity(identity)
+    // if an identity is already set up, navigate to the regular app; otherwise talke the user to the identity setup screen
     navigation.navigate(identity ? APP : SETUP)
   }
 
   render(): JSX.Element {
     return (
-      <View>
-        <View style={mainViewContainer}>
-          <View style={fullCenter}>
-            <LoadingIndicator />
-          </View>
+      <View style={mainViewContainer}>
+        <View style={fullCenter}>
+          <LoadingIndicator />
         </View>
       </View>
     )
   }
 }
-export default AppStartup
+
+const mapStateToProps = state => {
+  return {
+    identity: state.identity,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setIdentity: identity => {
+      dispatch(setIdentity(identity))
+    },
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppStartup)

@@ -1,13 +1,17 @@
-import React from 'react'
-import { Text, View } from 'react-native'
-import { mainViewContainer } from '../sharedStyles/styles.layout'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
+import Dashboard from './Dashboard'
+import Settings from './Settings'
+import { CONTACTS, DASHBOARD, SETTINGS } from '../_routes'
+import Contacts from './Contacts'
 
-const Home: React.FunctionComponent = (): JSX.Element => (
-  <View style={mainViewContainer}>
-    <Text>
-      This should be a tabbed view containing the dashboard, contacts, etc
-    </Text>
-  </View>
-)
+const TabNavigator = createBottomTabNavigator({
+  [DASHBOARD]: Dashboard,
+  [CONTACTS]: Contacts,
+  [SETTINGS]: Settings,
+})
 
-export default Home
+TabNavigator.navigationOptions = {
+  header: null,
+}
+
+export default TabNavigator

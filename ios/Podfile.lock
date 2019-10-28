@@ -231,6 +231,8 @@ PODS:
     - React
   - RNScreens (1.0.0-alpha.23):
     - React
+  - RNSVG (9.13.3):
+    - React
   - TcpSockets (3.3.2):
     - React
   - Yoga (1.14.0)
@@ -270,6 +272,7 @@ DEPENDENCIES:
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSVG (from `../node_modules/react-native-svg`)
   - TcpSockets (from `../node_modules/react-native-tcp`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -340,6 +343,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSVG:
+    :path: "../node_modules/react-native-svg"
   TcpSockets:
     :path: "../node_modules/react-native-tcp"
   Yoga:
@@ -378,9 +383,10 @@ SPEC CHECKSUMS:
   RNKeychain: 45dbd50d1ac4bd42c3740f76ffb135abf05746d0
   RNReanimated: 6abbbae2e5e72609d85aabd92a982a94566885f1
   RNScreens: f28b48b8345f2f5f39ed6195518291515032a788
+  RNSVG: f6177f8d7c095fada7cfee2e4bb7388ba426064c
   TcpSockets: 14306fb79f9750ea7d2ddd02d8bed182abb01797
   Yoga: 14927e37bd25376d216b150ab2a561773d57911f
 
 PODFILE CHECKSUM: ab2d5bc98c8eeffb4e64a9b56596e1665630f514
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.8.1
