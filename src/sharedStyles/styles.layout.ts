@@ -34,6 +34,12 @@ export const flexRowLayout: ViewStyle = {
   alignItems: 'center',
 }
 
+export const flexRowCenterLayout: ViewStyle = {
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+}
+
 export const flexRowEndLayout: ViewStyle = {
   flexDirection: 'row',
   justifyContent: 'flex-end',

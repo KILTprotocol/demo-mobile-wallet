@@ -6,7 +6,7 @@ import {
 import { TextStyle } from 'react-native'
 
 export const mainTitleTxt: TextStyle = {
-  fontSize: 32,
+  fontSize: 30,
   fontWeight: '600',
   marginBottom: 12,
   color: TXT_DEFAULT_CLR,
