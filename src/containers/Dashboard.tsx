@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, ImageBackground } from 'react-native'
 import { connect } from 'react-redux'
 import { Identity } from '@kiltprotocol/sdk-js'
 import {
@@ -22,6 +22,8 @@ import {
   sectionTitleTxt,
   mainTitleTxt,
 } from '../sharedStyles/styles.typography'
+
+const img = require('../assets/imgs/my-image.png')
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -61,34 +63,36 @@ class Dashboard extends React.Component<Props, State> {
     const { balance, balanceStatus } = this.state
     console.log('in state', balance)
     return (
-      <View style={mainViewContainer}>
-        <View style={sectionContainer}>
-          <Text style={mainTitleTxt}>Dashboard</Text>
+      <ImageBackground source={img} style={{ width: '100%', height: '100%' }}>
+        <View style={mainViewContainer}>
+          <View style={sectionContainer}>
+            <Text style={mainTitleTxt}>Dashboard</Text>
+          </View>
+          <View style={sectionContainer}>
+            <Text style={sectionTitleTxt}>My identity</Text>
+            <IdentityDisplay address={identity.address} />
+          </View>
+          <View style={sectionContainer}>
+            <Text style={sectionTitleTxt}>KILT account balance</Text>
+            {balanceStatus === AsyncStatus.Success && (
+              <BalanceDisplay balance={balance} />
+            )}
+            {balanceStatus ===
+              (AsyncStatus.NotStarted || AsyncStatus.Pending) && (
+              <LoadingIndicator size={LoadingIndicatorSize.S} />
+            )}
+          </View>
+          <View style={sectionContainer}>
+            <Text style={sectionTitleTxt}>My claims</Text>
+            <KiltButton
+              title="Create driver's license"
+              onPress={() => {
+                console.log('pressed')
+              }}
+            />
+          </View>
         </View>
-        <View style={sectionContainer}>
-          <Text style={sectionTitleTxt}>My identity</Text>
-          <IdentityDisplay address={identity.address} />
-        </View>
-        <View style={sectionContainer}>
-          <Text style={sectionTitleTxt}>KILT account balance</Text>
-          {balanceStatus === AsyncStatus.Success && (
-            <BalanceDisplay balance={balance} />
-          )}
-          {balanceStatus ===
-            (AsyncStatus.NotStarted || AsyncStatus.Pending) && (
-            <LoadingIndicator size={LoadingIndicatorSize.S} />
-          )}
-        </View>
-        <View style={sectionContainer}>
-          <Text style={sectionTitleTxt}>My claims</Text>
-          <KiltButton
-            title="Create driver's license"
-            onPress={() => {
-              console.log('pressed')
-            }}
-          />
-        </View>
-      </View>
+      </ImageBackground>
     )
   }
 }
