@@ -9,9 +9,8 @@ export const mainViewContainer: ViewStyle = {
 }
 
 export const sectionContainer: ViewStyle = {
-  fontWeight: '600',
   marginTop: 24,
-  paddingHorizontal: 24,
+  paddingHorizontal: 12,
 }
 
 // Flex
@@ -48,9 +47,17 @@ export const flexRowEndLayout: ViewStyle = {
 // Dialog
 
 export const dialog = {
+  // 70% screen width
   width: 0.7,
 }
 
 export const dialogContent = {
   paddingTop: 24,
+}
+
+// Image background
+
+export const imgBckgrd = {
+  height: '100%',
+  width: '100%',
 }
