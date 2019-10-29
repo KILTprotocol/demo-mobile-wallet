@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 import LoadingIndicator from '../components/LoadingIndicator'
 import { APP, SETUP } from '../_routes'
 import { mainViewContainer, fullCenter } from '../sharedStyles/styles.layout'
-import { AppState } from 'src/redux/reducers'
+import { AppState } from '../redux/reducers'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>

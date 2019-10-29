@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import * as Kilt from '@kiltprotocol/sdk-js'
+import { Identity } from '@kiltprotocol/sdk-js'
 import { bodyTxt, sectionTitleTxt } from '../sharedStyles/styles.typography'
 import {
   flexRowEndLayout,
@@ -32,7 +32,7 @@ class MnemonicCreation extends React.Component<Props, State> {
   }
 
   state = {
-    mnemonic: Kilt.Identity.generateMnemonic(),
+    mnemonic: Identity.generateMnemonic(),
     visible: false,
   }
 

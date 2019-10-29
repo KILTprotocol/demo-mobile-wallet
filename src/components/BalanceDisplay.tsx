@@ -11,11 +11,11 @@ type Props = {
   balance: number
 }
 
-const green: TextStyle = {
+const plus: TextStyle = {
   color: BALANCE_PLUS_CLR,
 }
 
-const red: TextStyle = {
+const zero: TextStyle = {
   color: BALANCE_ZERO_CLR,
 }
 
@@ -23,7 +23,7 @@ const BalanceDisplay: React.FunctionComponent<Props> = ({
   balance,
 }): JSX.Element => (
   <View style={flexRowLayout}>
-    <Text style={[bodyTxt, balance > 0 ? green : red]}>{balance}</Text>
+    <Text style={[bodyTxt, balance > 0 ? plus : zero]}>{balance}</Text>
   </View>
 )
 
