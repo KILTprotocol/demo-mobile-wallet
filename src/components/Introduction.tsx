@@ -25,7 +25,7 @@ interface IProps {
 const Introduction = ({ navigation }: IProps): JSX.Element => (
   <View style={mainViewContainer}>
     <View style={sectionContainer}>
-      <Text style={mainTitleTxt}>Claim independence.</Text>
+      <Text style={mainTitleTxt}>Credentials for web3.</Text>
     </View>
     <View style={sectionContainer}>
       <Text style={sectionTitleTxt}>This is your very own KILT wallet.</Text>
