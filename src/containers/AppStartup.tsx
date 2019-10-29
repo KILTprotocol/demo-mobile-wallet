@@ -27,8 +27,6 @@ class AppStartup extends React.Component<Props> {
     const { navigation, setIdentity } = this.props
     const identity = await callWithDelay(getIdentity)
     console.log('identity', identity)
-
-    // TODO setup identity in Redux store
     setIdentity(identity)
     // if an identity is already set up, navigate to the regular app; otherwise talke the user to the identity setup screen
     navigation.navigate(identity ? APP : SETUP)

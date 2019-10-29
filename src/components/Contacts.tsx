@@ -12,26 +12,29 @@ import {
   flexRowCenterLayout,
 } from '../sharedStyles/styles.layout'
 import { mainTitleTxt } from '../sharedStyles/styles.typography'
+import WithDefaultBackground from './WithDefaultBackground'
 
 interface IProps {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
 }
 
 const Contacts = ({ navigation }: IProps): JSX.Element => (
-  <View style={mainViewContainer}>
-    <View style={sectionContainer}>
-      <Text style={mainTitleTxt}>Contacts</Text>
-    </View>
-    <View style={sectionContainer}>
-      <View style={flexRowCenterLayout}>
-        <KiltButton
-          title="Add contact (feature coming soon)"
-          disabled
-          onPress={() => {}}
-        />
+  <WithDefaultBackground>
+    <View style={mainViewContainer}>
+      <View style={sectionContainer}>
+        <Text style={mainTitleTxt}>Contacts</Text>
+      </View>
+      <View style={sectionContainer}>
+        <View style={flexRowCenterLayout}>
+          <KiltButton
+            title="Add contact (feature coming soon)"
+            disabled
+            onPress={() => {}}
+          />
+        </View>
       </View>
     </View>
-  </View>
+  </WithDefaultBackground>
 )
 
 Contacts.navigationOptions = {
