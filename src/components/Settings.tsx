@@ -25,7 +25,11 @@ const Settings = ({ navigation }: IProps): JSX.Element => (
     <View style={sectionContainer}>
       <View style={flexRowCenterLayout}>
         <KiltButton
-          title="Reset wallet"
+      </View>
+      <View style={flexRowCenterLayout}>
+        <KiltButton
+          title="Delete all credentials from this wallet (feature coming soon)"
+          disabled
           onPress={() => {
             console.log('pressed')
           }}

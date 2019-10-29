@@ -25,10 +25,9 @@ const Contacts = ({ navigation }: IProps): JSX.Element => (
     <View style={sectionContainer}>
       <View style={flexRowCenterLayout}>
         <KiltButton
-          title="Add contact"
-          onPress={() => {
-            console.log('pressed')
-          }}
+          title="Add contact (feature coming soon)"
+          disabled
+          onPress={() => {}}
         />
       </View>
     </View>
