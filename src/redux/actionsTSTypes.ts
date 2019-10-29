@@ -1,4 +1,4 @@
-import { SET_IDENTITY } from './actionTypes'
+import { SET_IDENTITY, RESET_IDENTITY } from './actionTypes'
 import { Identity } from '@kiltprotocol/sdk-js'
 
 type SetIdentityAction = {
@@ -6,4 +6,8 @@ type SetIdentityAction = {
   payload: Identity | null
 }
 
-export type AppActionTSTypes = SetIdentityAction
+type ResetIdentityAction = {
+  type: typeof RESET_IDENTITY
+}
+
+export type AppActionTSTypes = SetIdentityAction | ResetIdentityAction

@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import * as Kilt from '@kiltprotocol/sdk-js'
+import { Identity } from '@kiltprotocol/sdk-js'
 import {
   NavigationScreenProp,
   NavigationState,
@@ -16,8 +16,9 @@ import {
 } from '../sharedStyles/styles.layout'
 import { sectionTitleTxt } from '../sharedStyles/styles.typography'
 import IdentitySetupStep from '../components/IdentitySetupStep'
-import { storeIdentity } from '../services/service.identity'
 import { callWithDelay } from '../utils/utils.async'
+import { setIdentity } from '../redux/actions'
+import { connect } from 'react-redux'
 
 const STEP_CREATE = 'create'
 const STEP_SAVE = 'save'
@@ -25,6 +26,8 @@ const STEP_SAVE = 'save'
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   stepDescriptions: object
+  setIdentityInStore: typeof setIdentity
+  identityFromStore: Identity | null
 }
 
 type State = {
@@ -45,11 +48,27 @@ class IdentitySetup extends React.Component<Props, State> {
     },
   }
 
-  createIdentity = (mnemonic: string) =>
-    Kilt.Identity.buildFromMnemonic(mnemonic)
+  createIdentity = (mnemonic: string) => Identity.buildFromMnemonic(mnemonic)
+
+  componentDidUpdate(prevProps): void {
+    const { identityFromStore } = this.props
+    if (
+      prevProps.identityFromStore !== identityFromStore &&
+      identityFromStore !== null
+    ) {
+      this.setState(prevState => ({
+        ...prevState,
+        stepStatuses: {
+          [STEP_CREATE]: AsyncStatus.Success,
+          [STEP_SAVE]: AsyncStatus.Success,
+        },
+        isNextBtnDisabled: false,
+      }))
+    }
+  }
 
   async componentDidMount(): Promise<void> {
-    const { navigation } = this.props
+    const { navigation, setIdentityInStore } = this.props
     const mnemonic: string = navigation.getParam('mnemonic')
     const identity = await callWithDelay(this.createIdentity, [mnemonic])
     if (identity) {
@@ -60,18 +79,9 @@ class IdentitySetup extends React.Component<Props, State> {
           [STEP_SAVE]: AsyncStatus.Pending,
         },
       }))
+      // TODO: handle error case
+      await callWithDelay(setIdentityInStore, [identity])
     }
-    // TODO: handle error case
-    const id = await callWithDelay(storeIdentity, [identity])
-    console.log('identity', id)
-    this.setState(prevState => ({
-      ...prevState,
-      stepStatuses: {
-        [STEP_CREATE]: AsyncStatus.Success,
-        [STEP_SAVE]: AsyncStatus.Success,
-      },
-      isNextBtnDisabled: false,
-    }))
   }
 
   render(): React.ReactNode {
@@ -114,4 +124,22 @@ IdentitySetup.defaultProps = {
   },
 }
 
-export default IdentitySetup
+const mapStateToProps = state => {
+  console.log('djhscs', state)
+  return {
+    identityFromStore: state.identityReducer.identity,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setIdentityInStore: identity => {
+      dispatch(setIdentity(identity))
+    },
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IdentitySetup)

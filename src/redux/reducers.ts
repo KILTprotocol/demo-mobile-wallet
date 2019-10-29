@@ -1,30 +1,13 @@
 import { Identity } from '@kiltprotocol/sdk-js'
-import { SET_IDENTITY } from './actionTypes'
+import { combineReducers } from 'redux'
+import identityReducer from './identityReducer'
 
-const INITIAL_STATE = {
-  identity: null,
-}
-
-type Action = {
-  payload: any
-  type: string
-}
+const rootReducer = combineReducers({
+  identityReducer: identityReducer,
+})
 
 export type AppState = {
   identity: Identity | null
 }
 
-export default function reducer(
-  state = INITIAL_STATE,
-  action: Action
-): AppState {
-  switch (action.type) {
-    case SET_IDENTITY:
-      return {
-        ...state,
-        identity: action.payload,
-      }
-    default:
-      return state
-  }
-}
+export default rootReducer

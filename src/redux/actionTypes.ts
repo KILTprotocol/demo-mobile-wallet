@@ -1,1 +1,2 @@
 export const SET_IDENTITY = 'SET_IDENTITY'
+export const RESET_IDENTITY = 'RESET_IDENTITY'

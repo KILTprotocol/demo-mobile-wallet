@@ -27,7 +27,7 @@ import WithDefaultBackground from '../components/WithDefaultBackground'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
-  identity: Identity
+  identityFromStore: Identity | null
 }
 
 type State = {
@@ -45,12 +45,14 @@ class Dashboard extends React.Component<Props, State> {
   }
 
   async componentDidMount(): Promise<void> {
-    const { identity } = this.props
+    const { identityFromStore } = this.props
     this.setState(prevState => ({
       ...prevState,
       balanceStatus: AsyncStatus.Pending,
     }))
-    const balance = await getBalanceInKiltCoins(identity.address)
+    const balance = identityFromStore
+      ? 0
+      : await getBalanceInKiltCoins(identityFromStore.address)
     this.setState(prevState => ({
       ...prevState,
       balance,
@@ -59,9 +61,9 @@ class Dashboard extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
-    const { identity } = this.props
+    const { identityFromStore } = this.props
+    console.log('DASHBOARD identityFromStore', identityFromStore)
     const { balance, balanceStatus } = this.state
-    console.log('in state', balance)
     return (
       <WithDefaultBackground>
         <View style={mainViewContainer}>
@@ -70,7 +72,9 @@ class Dashboard extends React.Component<Props, State> {
           </View>
           <View style={sectionContainer}>
             <Text style={sectionTitleTxt}>My identity</Text>
-            <IdentityDisplay address={identity.address} />
+            <IdentityDisplay
+              address={identityFromStore ? identityFromStore.address : ''}
+            />
           </View>
           <View style={sectionContainer}>
             <Text style={sectionTitleTxt}>KILT account balance</Text>
@@ -101,7 +105,7 @@ class Dashboard extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  identity: state.identity,
+  identityFromStore: state.identityReducer.identity,
 })
 
 export default connect(mapStateToProps)(Dashboard)

@@ -5,17 +5,18 @@ import {
   NavigationParams,
 } from 'react-navigation'
 import { View } from 'react-native'
+import { Identity } from '@kiltprotocol/sdk-js'
 import { setIdentity } from '../redux/actions'
-import { getIdentity } from '../services/service.identity'
 import { connect } from 'react-redux'
 import LoadingIndicator from '../components/LoadingIndicator'
 import { APP, SETUP } from '../_routes'
 import { mainViewContainer, fullCenter } from '../sharedStyles/styles.layout'
-import { callWithDelay } from '../utils/utils.async'
+import { AppState } from 'src/redux/reducers'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
-  setIdentity: typeof setIdentity
+  setIdentityInStore: typeof setIdentity
+  identityFromStore: Identity | null
 }
 
 class AppStartup extends React.Component<Props> {
@@ -24,12 +25,9 @@ class AppStartup extends React.Component<Props> {
   }
 
   bootstrapAsync = async () => {
-    const { navigation, setIdentity } = this.props
-    const identity = await callWithDelay(getIdentity)
-    console.log('identity', identity)
-    setIdentity(identity)
+    const { identityFromStore, navigation } = this.props
     // if an identity is already set up, navigate to the regular app; otherwise talke the user to the identity setup screen
-    navigation.navigate(identity ? APP : SETUP)
+    navigation.navigate(identityFromStore ? APP : SETUP)
   }
 
   render(): JSX.Element {
@@ -43,15 +41,15 @@ class AppStartup extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: AppState) => {
   return {
-    identity: state.identity,
+    identityFromStore: state.identityReducer.identity,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    setIdentity: identity => {
+    setIdentityInStore: (identity: Identity) => {
       dispatch(setIdentity(identity))
     },
   }
