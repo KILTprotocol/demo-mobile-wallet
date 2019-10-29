@@ -8,7 +8,7 @@ type Props = {
   children: object
 }
 
-const FadeInView: React.FunctionComponent<Props> = ({
+const WithFadeInAnimation: React.FunctionComponent<Props> = ({
   style,
   delay,
   duration,
@@ -34,4 +34,4 @@ const FadeInView: React.FunctionComponent<Props> = ({
   )
 }
 
-export default FadeInView
+export default WithFadeInAnimation
