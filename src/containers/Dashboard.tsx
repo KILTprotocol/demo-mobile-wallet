@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ImageBackground } from 'react-native'
+import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { Identity } from '@kiltprotocol/sdk-js'
 import {
@@ -17,17 +17,13 @@ import { getBalanceInKiltCoins } from '../services/service.balance'
 import {
   mainViewContainer,
   sectionContainer,
-  imgBckgrd,
 } from '../sharedStyles/styles.layout'
 import {
   sectionTitleTxt,
   mainTitleTxt,
 } from '../sharedStyles/styles.typography'
 import Credential from '../components/Credential'
-
-const imgDottedBckgrd = require('../assets/imgs/imgDottedBckgrd.png')
-// TODO create HOC for image
-// TODO check file length
+import WithDefaultBackground from '../components/WithDefaultBackground'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -67,7 +63,7 @@ class Dashboard extends React.Component<Props, State> {
     const { balance, balanceStatus } = this.state
     console.log('in state', balance)
     return (
-      <ImageBackground source={imgDottedBckgrd} style={imgBckgrd}>
+      <WithDefaultBackground>
         <View style={mainViewContainer}>
           <View style={sectionContainer}>
             <Text style={mainTitleTxt}>Dashboard</Text>
@@ -99,7 +95,7 @@ class Dashboard extends React.Component<Props, State> {
             <Credential title="Driver's license" />
           </View>
         </View>
-      </ImageBackground>
+      </WithDefaultBackground>
     )
   }
 }
