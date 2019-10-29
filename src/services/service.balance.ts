@@ -2,11 +2,12 @@ import { Balance, IPublicIdentity } from '@kiltprotocol/sdk-js'
 import * as Kilt from '@kiltprotocol/sdk-js'
 import { BlockchainApiConnection } from '@kiltprotocol/sdk-js'
 import BN from 'bn.js'
+import { BLOCKCHAIN_NODE } from './config'
 
 const KILT_MICRO_COIN = 1000000
 
 async function getBalanceRaw(address: IPublicIdentity['address']): Promise<BN> {
-  const connection = await Kilt.default.connect('wss://full-nodes.kilt.io:9944')
+  await Kilt.default.connect(BLOCKCHAIN_NODE)
   const balance = await Balance.getBalance(address)
   console.log('balance', balance)
   BlockchainApiConnection.getCached().then(blockchain => {
