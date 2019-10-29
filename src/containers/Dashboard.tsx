@@ -17,13 +17,17 @@ import { getBalanceInKiltCoins } from '../services/service.balance'
 import {
   mainViewContainer,
   sectionContainer,
+  imgBckgrd,
 } from '../sharedStyles/styles.layout'
 import {
   sectionTitleTxt,
   mainTitleTxt,
 } from '../sharedStyles/styles.typography'
+import Credential from '../components/Credential'
 
-const img = require('../assets/imgs/my-image.png')
+const imgDottedBckgrd = require('../assets/imgs/imgDottedBckgrd.png')
+// TODO create HOC for image
+// TODO check file length
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -63,7 +67,7 @@ class Dashboard extends React.Component<Props, State> {
     const { balance, balanceStatus } = this.state
     console.log('in state', balance)
     return (
-      <ImageBackground source={img} style={{ width: '100%', height: '100%' }}>
+      <ImageBackground source={imgDottedBckgrd} style={imgBckgrd}>
         <View style={mainViewContainer}>
           <View style={sectionContainer}>
             <Text style={mainTitleTxt}>Dashboard</Text>
@@ -83,13 +87,16 @@ class Dashboard extends React.Component<Props, State> {
             )}
           </View>
           <View style={sectionContainer}>
-            <Text style={sectionTitleTxt}>My claims</Text>
+            <Text style={sectionTitleTxt}>My credentials</Text>
             <KiltButton
               title="Create driver's license"
               onPress={() => {
                 console.log('pressed')
               }}
             />
+          </View>
+          <View style={sectionContainer}>
+            <Credential title="Driver's license" />
           </View>
         </View>
       </ImageBackground>
