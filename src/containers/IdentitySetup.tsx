@@ -19,6 +19,7 @@ import IdentitySetupStep from '../components/IdentitySetupStep'
 import { callWithDelay } from '../utils/utils.async'
 import { setIdentity } from '../redux/actions'
 import { connect } from 'react-redux'
+import { AppState } from '../redux/reducers'
 
 const STEP_CREATE = 'create'
 const STEP_SAVE = 'save'
@@ -124,8 +125,7 @@ IdentitySetup.defaultProps = {
   },
 }
 
-const mapStateToProps = state => {
-  console.log('djhscs', state)
+const mapStateToProps = (state: AppState) => {
   return {
     identityFromStore: state.identityReducer.identity,
   }

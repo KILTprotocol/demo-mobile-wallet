@@ -1,4 +1,5 @@
 import React from 'react'
+import { Dispatch } from 'redux'
 import {
   NavigationScreenProp,
   NavigationState,
@@ -41,13 +42,13 @@ class AppStartup extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: AppState) => {
+const mapStateToProps = (state: AppState): any => {
   return {
     identityFromStore: state.identityReducer.identity,
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: Dispatch): any => {
   return {
     setIdentityInStore: (identity: Identity) => {
       dispatch(setIdentity(identity))
