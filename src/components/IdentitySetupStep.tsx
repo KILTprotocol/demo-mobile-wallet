@@ -1,12 +1,14 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { bodyTxt } from '../sharedStyles/styles.typography'
+import { bodyTxt, bodyInvertedClrTxt } from '../sharedStyles/styles.typography'
 import { flexRowLayout } from '../sharedStyles/styles.layout'
 import {
   SUCCESS_CLR,
   TXT_LIGHT_CLR,
   ERROR_CLR,
-  TXT_DEFAULT_CLR,
+  TXT_INVERTED_CLR,
+  KILT_ORANGE_CLR,
+  TXT_INVERTED_LIGHT_CLR,
 } from '../sharedStyles/styles.consts.colors'
 import { AsyncStatus } from '../_enums'
 import LoadingIndicator from '../components/LoadingIndicator'
@@ -23,9 +25,10 @@ const iconContainer = {
   textAlign: 'center',
 }
 
+/// todo move to typography
 const styles = StyleSheet.create({
   txtNotStarted: {
-    color: TXT_LIGHT_CLR,
+    color: TXT_INVERTED_LIGHT_CLR,
   },
   txtSuccess: {
     color: SUCCESS_CLR,
@@ -34,7 +37,7 @@ const styles = StyleSheet.create({
     color: ERROR_CLR,
   },
   txtPending: {
-    color: TXT_DEFAULT_CLR,
+    color: KILT_ORANGE_CLR,
   },
 })
 
@@ -48,7 +51,7 @@ const statusToUiMapping = {
     txtStyle: styles.txtPending,
   },
   [AsyncStatus.Success]: {
-    component: <TxtCentered>✓</TxtCentered>,
+    component: <TxtCentered style={styles.txtSuccess}>✓</TxtCentered>,
     txtStyle: styles.txtSuccess,
   },
   [AsyncStatus.Error]: {
@@ -63,7 +66,8 @@ const IdentitySetupStep: React.FunctionComponent<Props> = ({
 }): JSX.Element => (
   <View style={flexRowLayout}>
     <View style={iconContainer}>{statusToUiMapping[status].component}</View>
-    <Text style={[bodyTxt, statusToUiMapping[status].txtStyle]}>
+    <Text
+      style={[bodyTxt, bodyInvertedClrTxt, statusToUiMapping[status].txtStyle]}>
       {description}
     </Text>
   </View>

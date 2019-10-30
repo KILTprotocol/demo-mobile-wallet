@@ -14,12 +14,16 @@ import {
   sectionContainer,
   flexRowEndLayout,
 } from '../sharedStyles/styles.layout'
-import { sectionTitleTxt } from '../sharedStyles/styles.typography'
+import {
+  sectionTitleTxt,
+  titleInvertedClrTxt,
+} from '../sharedStyles/styles.typography'
 import IdentitySetupStep from '../components/IdentitySetupStep'
 import { callWithDelay } from '../utils/utils.async'
 import { setIdentity } from '../redux/actions'
 import { connect } from 'react-redux'
 import { AppState } from '../redux/reducers'
+import WithIntroBackground from '../components/WithIntroBackground'
 
 const STEP_CREATE = 'create'
 const STEP_SAVE = 'save'
@@ -89,31 +93,33 @@ class IdentitySetup extends React.Component<Props, State> {
     const { navigation, stepDescriptions } = this.props
     const { isNextBtnDisabled } = this.state
     return (
-      <View style={mainViewContainer}>
-        <View style={sectionContainer}>
-          <Text style={sectionTitleTxt}>
-            Step 2: Knitting your KILT account together
-          </Text>
-        </View>
-        {Object.entries(stepDescriptions).map(([name, description]) => (
-          <View key={description} style={sectionContainer}>
-            <IdentitySetupStep
-              description={description}
-              status={this.state.stepStatuses[name]}
-            />
+      <WithIntroBackground>
+        <View style={mainViewContainer}>
+          <View style={sectionContainer}>
+            <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>
+              Step 2: Knitting your KILT account together
+            </Text>
           </View>
-        ))}
-        {/* button is enabled only if all steps were successful */}
-        <View style={sectionContainer}>
-          <View style={flexRowEndLayout}>
-            <KiltButton
-              disabled={isNextBtnDisabled}
-              title="Next >"
-              onPress={() => navigation.navigate(HOME)}
-            />
+          {Object.entries(stepDescriptions).map(([name, description]) => (
+            <View key={description} style={sectionContainer}>
+              <IdentitySetupStep
+                description={description}
+                status={this.state.stepStatuses[name]}
+              />
+            </View>
+          ))}
+          {/* the button is enabled only if all steps were successful */}
+          <View style={sectionContainer}>
+            <View style={flexRowEndLayout}>
+              <KiltButton
+                disabled={isNextBtnDisabled}
+                title="Next >"
+                onPress={() => navigation.navigate(HOME)}
+              />
+            </View>
           </View>
         </View>
-      </View>
+      </WithIntroBackground>
     )
   }
 }

@@ -3,6 +3,8 @@ import {
   KILT_ORANGE_CLR,
   KILT_ORANGE_X_LIGHT_CLR,
   TXT_LIGHT_CLR,
+  TXT_INVERTED_CLR,
+  TXT_INVERTED_LIGHT_CLR_NEUTRAL,
 } from './styles.consts.colors'
 import { TextStyle } from 'react-native'
 import { TXT_S_SIZE, TXT_M_SIZE, TXT_L_SIZE } from './styles.consts.typography'
@@ -42,4 +44,15 @@ export const bodyEmphasizedTxt: TextStyle = {
   backgroundColor: KILT_ORANGE_X_LIGHT_CLR,
   paddingVertical: 2,
   paddingHorizontal: 3,
+}
+
+export const titleInvertedClrTxt: TextStyle = {
+  color: TXT_INVERTED_LIGHT_CLR_NEUTRAL,
+}
+
+export const bodyInvertedClrTxt: TextStyle = {
+  color: TXT_INVERTED_CLR,
+}
+export const emphasizedClrTxt: TextStyle = {
+  color: KILT_ORANGE_CLR,
 }

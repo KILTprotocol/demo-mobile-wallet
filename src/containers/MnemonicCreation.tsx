@@ -1,7 +1,12 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import { Identity } from '@kiltprotocol/sdk-js'
-import { bodyTxt, sectionTitleTxt } from '../sharedStyles/styles.typography'
+import {
+  bodyTxt,
+  sectionTitleTxt,
+  titleInvertedClrTxt,
+  bodyInvertedClrTxt,
+} from '../sharedStyles/styles.typography'
 import {
   flexRowEndLayout,
   mainViewContainer,
@@ -56,13 +61,13 @@ class MnemonicCreation extends React.Component<Props, State> {
       <WithIntroBackground>
         <View style={mainViewContainer}>
           <View style={sectionContainer}>
-            <Text style={sectionTitleTxt}>
+            <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>
               Step 1: your identity phrase (= seed)
             </Text>
             <Mnemonic mnemonic={mnemonic} />
           </View>
           <View style={sectionContainer}>
-            <Text style={bodyTxt}>
+            <Text style={[bodyTxt, bodyInvertedClrTxt]}>
               This is your KILT identity phrase. Write it down (the order is
               important) and keep it safe and secret. Do not upload it online
               nor share it with anyone.
