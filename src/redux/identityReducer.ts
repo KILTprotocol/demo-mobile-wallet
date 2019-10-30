@@ -1,15 +1,11 @@
 import { RESET_IDENTITY, SET_IDENTITY } from './actionTypes'
+import { Action } from './actionsTSTypes'
 import { AppState } from './reducers'
 
 const identityDefault = null
 
 const INITIAL_STATE = {
   identity: identityDefault,
-}
-
-type Action = {
-  payload: any
-  type: string
 }
 
 export default function identityReducer(
