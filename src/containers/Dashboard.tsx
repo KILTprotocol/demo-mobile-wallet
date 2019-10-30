@@ -44,6 +44,8 @@ type Props = {
 type State = {
   balance: number
   isDialogVisible: boolean
+  balanceStatus: AsyncStatus
+  claimContents: object
 }
 
 class Dashboard extends React.Component<Props, State> {
@@ -55,6 +57,7 @@ class Dashboard extends React.Component<Props, State> {
     balance: 0,
     balanceStatus: AsyncStatus.NotStarted,
     isDialogVisible: false,
+    claimContents: {},
   }
 
   closeDialog(): void {
@@ -65,14 +68,10 @@ class Dashboard extends React.Component<Props, State> {
     this.setState({ isDialogVisible: true })
   }
 
+  // TODO function styles
   onPressOK = () => {
-    const claimContents = { ...this.state }
+    const { claimContents } = this.state
     const { identityFromStore, addCredentialInStore } = this.props
-    // TODO cleanup
-    delete claimContents['balance']
-    delete claimContents['balanceStatus']
-    delete claimContents['isDialogVisible']
-    console.log('claimContentsppppppppppppppp', claimContents)
 
     const claim = createDriversLicenseClaim(claimContents, identityFromStore)
     if (claim) {
@@ -81,8 +80,6 @@ class Dashboard extends React.Component<Props, State> {
         claim,
         identityFromStore
       )
-
-      // contents: object
 
       console.log('requestForAttestation', requestForAttestation)
       addCredentialInStore({
@@ -94,15 +91,15 @@ class Dashboard extends React.Component<Props, State> {
         contents: requestForAttestation.claim.contents,
       })
     }
-    // console.log('claim', claim)
-    // this.setState({ isDialogVisible: false })
     this.closeDialog()
   }
 
   onChangeText = (inputValue: string, ppty: string) => {
-    // TODO function styles
-    // TODO nest these in a parent ppties object
-    this.setState({ [ppty]: inputValue })
+    // the claim contents are generated based purely on the input fields, which themselves are generated from the CTYPE
+    // this way, we remain flexible/modular: changing the CTYPE automatically changes this logics
+    this.setState(state => ({
+      claimContents: { ...state.claimContents, [ppty]: inputValue },
+    }))
   }
 
   async componentDidMount(): Promise<void> {
