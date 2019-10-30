@@ -16,6 +16,7 @@ import {
   NavigationParams,
 } from 'react-navigation'
 import KiltButton from '../components/KiltButton'
+import WithIntroBackground from '../components/WithIntroBackground'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -52,42 +53,43 @@ class MnemonicCreation extends React.Component<Props, State> {
     const { navigation } = this.props
     const { mnemonic, visible } = this.state
     return (
-      <View style={mainViewContainer}>
-        <View style={sectionContainer}>
-          <Text style={sectionTitleTxt}>
-            Step 1: your identity phrase (= seed)
-          </Text>
-          <Mnemonic mnemonic={mnemonic} />
-        </View>
-        <View style={sectionContainer}>
-          <Text style={bodyTxt}>
-            This is your KILT identity phrase. Write it down (the order is
-            important) and keep it safe and secret. Do not upload it online nor
-            share it with anyone.
-          </Text>
-        </View>
-        <View style={sectionContainer}>
-          <View style={flexRowEndLayout}>
-            <KiltButton
-              title="OK, I wrote it down >"
-              onPress={() => {
-                this.openDialog()
-              }}
-            />
+      <WithIntroBackground>
+        <View style={mainViewContainer}>
+          <View style={sectionContainer}>
+            <Text style={sectionTitleTxt}>
+              Step 1: your identity phrase (= seed)
+            </Text>
+            <Mnemonic mnemonic={mnemonic} />
           </View>
+          <View style={sectionContainer}>
+            <Text style={bodyTxt}>
+              This is your KILT identity phrase. Write it down (the order is
+              important) and keep it safe and secret. Do not upload it online
+              nor share it with anyone.
+            </Text>
+          </View>
+          <View style={sectionContainer}>
+            <View style={flexRowEndLayout}>
+              <KiltButton
+                title="OK, I wrote it down >"
+                onPress={() => {
+                  this.openDialog()
+                }}
+              />
+            </View>
+          </View>
+          <MnemonicDialog
+            visible={visible}
+            onPressCancel={() => this.closeDialog()}
+            onPressOK={() => {
+              this.closeDialog()
+              navigation.navigate(IDENTITY_SETUP, {
+                mnemonic,
+              })
+            }}
+          />
         </View>
-        <MnemonicDialog
-          visible={visible}
-          onTouchOutside={() => this.closeDialog()}
-          onPressCancel={() => this.closeDialog()}
-          onPressOK={() => {
-            this.closeDialog()
-            navigation.navigate(IDENTITY_SETUP, {
-              mnemonic,
-            })
-          }}
-        />
-      </View>
+      </WithIntroBackground>
     )
   }
 }
