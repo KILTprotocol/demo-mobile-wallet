@@ -118,14 +118,8 @@ class Dashboard extends React.Component<Props, State> {
     }))
   }
 
-  componentDidUpdate() {
-    const { credentialsFromStore } = this.props
-    console.log('credentialsFromStore', credentialsFromStore)
-  }
-
   render(): JSX.Element {
     const { credentialsFromStore, identityFromStore } = this.props
-    console.log('DASHBOARD identityFromStore', credentialsFromStore)
     const { balance, balanceStatus, isDialogVisible } = this.state
     return (
       <WithDefaultBackground>

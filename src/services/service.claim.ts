@@ -16,12 +16,14 @@ function createDriversLicenseClaim(
 
 function createRequestForAttestation(
   claim: Claim,
-  claimerIdentity: Identity
-): RequestForAttestation {
-  // TODO check w Timo. fronObject, but deprecated... ?
-  console.log(claimerIdentity.seed)
-  const id = Identity.buildFromSeed(Object.values(claimerIdentity.seed))
-  return new RequestForAttestation(claim, [], id)
+  claimerIdentity: Identity | null
+): RequestForAttestation | null {
+  if (claimerIdentity) {
+    // TODO check w Timo. fromObject, but deprecated... ?
+    const id = Identity.buildFromSeed(Object.values(claimerIdentity.seed))
+    return new RequestForAttestation(claim, [], id)
+  }
+  return null
 }
 
 export { createDriversLicenseClaim, createRequestForAttestation }
