@@ -3,14 +3,18 @@ import { ViewStyle } from 'react-native'
 // Containers
 
 export const mainViewContainer: ViewStyle = {
-  paddingTop: 48,
+  marginTop: 64,
   paddingBottom: 24,
   paddingHorizontal: 12,
 }
 
 export const sectionContainer: ViewStyle = {
-  marginTop: 24,
+  marginBottom: 24,
   paddingHorizontal: 12,
+}
+
+export const fixedHeight: ViewStyle = {
+  height: 24,
 }
 
 // Flex

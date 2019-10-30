@@ -27,7 +27,7 @@ const Contacts = ({ navigation }: IProps): JSX.Element => (
       <View style={sectionContainer}>
         <View style={flexRowCenterLayout}>
           <KiltButton
-            title="Add contact (feature coming soon)"
+            title="Add contact (not implemented)"
             disabled
             onPress={() => {}}
           />
