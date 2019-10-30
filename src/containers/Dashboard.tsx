@@ -86,6 +86,17 @@ class Dashboard extends React.Component<Props, State> {
               <LoadingIndicator size={LoadingIndicatorSize.S} />
             )}
           </View>
+            {identityFromStore && (
+              <KiltButton
+                title="Request tokens"
+                onPress={() => {
+                  Linking.openURL(
+                    getRequestTokensUrl(identityFromStore.address)
+                  )
+                }}
+              />
+            )}
+          </View>
           <View style={sectionContainer}>
             <Text style={sectionTitleTxt}>My credentials</Text>
             <KiltButton
