@@ -6,7 +6,7 @@ import { LoadingIndicatorSize } from '../_enums'
 const getSize = (size: LoadingIndicatorSize | undefined): number => {
   switch (size) {
     case LoadingIndicatorSize.S:
-      return 24
+      return 20
     case LoadingIndicatorSize.M:
       return 40
     case LoadingIndicatorSize.L:
