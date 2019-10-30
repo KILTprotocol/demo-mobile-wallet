@@ -5,6 +5,12 @@ export enum AsyncStatus {
   Error,
 }
 
+export enum CredentialStatus {
+  Valid,
+  Revoked,
+  AttestationPending,
+}
+
 export enum LoadingIndicatorSize {
   S,
   M,
