@@ -15,13 +15,15 @@ import {
 import { mainTitleTxt } from '../sharedStyles/styles.typography'
 import { APP_STARTUP } from '../_routes'
 import WithDefaultBackground from './WithDefaultBackground'
-import { resetIdentity } from '../redux/actions'
+import { resetIdentity, deleteAllCredentials } from '../redux/actions'
 import { Identity } from '@kiltprotocol/sdk-js'
+import { Dispatch } from 'redux'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
-  resetIdentityInStore: typeof resetIdentity
   identityFromStore: Identity | null
+  resetIdentityInStore: typeof resetIdentity
+  deleteAllCredentialsInStore: typeof deleteAllCredentials
 }
 
 class Settings extends React.Component<Props, null> {
@@ -35,7 +37,7 @@ class Settings extends React.Component<Props, null> {
   }
 
   render(): JSX.Element {
-    const { resetIdentityInStore } = this.props
+    const { resetIdentityInStore, deleteAllCredentialsInStore } = this.props
     return (
       <WithDefaultBackground>
         <View style={mainViewContainer}>
@@ -48,16 +50,18 @@ class Settings extends React.Component<Props, null> {
               <KiltButton
                 title="Reset identity"
                 onPress={() => {
+                  // since only 1 identity for the MVP, resetIdentity means deleting the claims as well
                   resetIdentityInStore()
+                  deleteAllCredentialsInStore()
                 }}
               />
             </View>
             <View style={flexRowCenterLayout}>
+              {/* TODO add warning dialog */}
               <KiltButton
-                title="Delete all credentials from this wallet (feature coming soon)"
-                disabled
+                title="Delete all credentials from this wallet"
                 onPress={() => {
-                  console.log('pressed')
+                  deleteAllCredentialsInStore()
                 }}
               />
             </View>
@@ -78,10 +82,13 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: Dispatch): any => {
   return {
     resetIdentityInStore: () => {
       dispatch(resetIdentity())
+    },
+    deleteAllCredentialsInStore: () => {
+      dispatch(deleteAllCredentials())
     },
   }
 }

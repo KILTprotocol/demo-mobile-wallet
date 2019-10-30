@@ -48,7 +48,7 @@ const statusToUiMapping = {
     txtStyle: styles.txtPending,
   },
   [AsyncStatus.Success]: {
-    component: <TxtCentered>✅</TxtCentered>,
+    component: <TxtCentered>✓</TxtCentered>,
     txtStyle: styles.txtSuccess,
   },
   [AsyncStatus.Error]: {
