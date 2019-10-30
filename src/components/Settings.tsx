@@ -27,6 +27,7 @@ type Props = {
 }
 
 class Settings extends React.Component<Props, null> {
+  static navigationOptions: { header: null }
   componentDidUpdate(): void {
     // we might want to move this logics up to a higher level component
     const { identityFromStore, navigation } = this.props
@@ -70,10 +71,6 @@ class Settings extends React.Component<Props, null> {
       </WithDefaultBackground>
     )
   }
-}
-
-Settings.navigationOptions = {
-  header: null,
 }
 
 const mapStateToProps = state => {

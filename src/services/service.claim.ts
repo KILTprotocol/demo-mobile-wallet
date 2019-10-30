@@ -1,6 +1,6 @@
 import { Claim, Identity, RequestForAttestation } from '@kiltprotocol/sdk-js'
 
-type DriversLicenseClaimContents = {
+export type DriversLicenseClaimContents = {
   name: string
   birthday: number
   type: string
@@ -8,10 +8,13 @@ type DriversLicenseClaimContents = {
 
 function createDriversLicenseClaim(
   claimContents: DriversLicenseClaimContents,
-  claimerIdentity: Identity
-): Claim {
-  const ctype = require('../data/ctypeDriversLicense.json')
-  return new Claim(ctype, claimContents, claimerIdentity)
+  claimerIdentity: Identity | null
+): Claim | null {
+  if (claimerIdentity) {
+    const ctype = require('../data/ctypeDriversLicense.json')
+    return new Claim(ctype, claimContents, claimerIdentity)
+  }
+  return null
 }
 
 function createRequestForAttestation(

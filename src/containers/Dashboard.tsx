@@ -30,6 +30,7 @@ import CredentialsDialog from '../components/CredentialsDialog'
 import {
   createDriversLicenseClaim,
   createRequestForAttestation,
+  DriversLicenseClaimContents,
 } from '../services/service.claim'
 import { addCredential } from '../redux/actions'
 import { CredentialType } from '../redux/credentialsReducer'
@@ -73,23 +74,27 @@ class Dashboard extends React.Component<Props, State> {
     const { claimContents } = this.state
     const { identityFromStore, addCredentialInStore } = this.props
 
-    const claim = createDriversLicenseClaim(claimContents, identityFromStore)
+    const claim = createDriversLicenseClaim(
+      claimContents as DriversLicenseClaimContents,
+      identityFromStore
+    )
     if (claim) {
       console.log('identityFromStore', identityFromStore)
       const requestForAttestation = createRequestForAttestation(
         claim,
         identityFromStore
       )
-
       console.log('requestForAttestation', requestForAttestation)
-      addCredentialInStore({
-        // TODO let user pick claim name
-        title: "Driver's License",
-        hash: requestForAttestation.hash,
-        cTypeHash: requestForAttestation.ctypeHash,
-        status: CredentialStatus.AttestationPending,
-        contents: requestForAttestation.claim.contents,
-      })
+      if (requestForAttestation) {
+        addCredentialInStore({
+          // TODO let user pick claim name
+          title: "Driver's License",
+          hash: requestForAttestation.hash,
+          cTypeHash: requestForAttestation.ctypeHash,
+          status: CredentialStatus.AttestationPending,
+          contents: requestForAttestation.claim.contents,
+        })
+      }
     }
     this.closeDialog()
   }
