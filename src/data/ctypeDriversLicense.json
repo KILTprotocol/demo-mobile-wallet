@@ -1,6 +1,6 @@
 {
   "schema": {
-    "$id": "driverslicensemobile",
+    "$id": "driverslicenseminimal",
     "$schema": "http://kilt-protocol.org/draft-01/ctype#",
     "properties": {
       "name": {
@@ -9,7 +9,7 @@
       "birthday": {
         "type": "string"
       },
-      "licenseType": {
+      "license": {
         "type": "string"
       }
     },
@@ -17,7 +17,7 @@
   },
   "metadata": {
     "title": {
-      "default": "driverslicensemobile"
+      "default": "driverslicenseminimal"
     },
     "description": {},
     "properties": {
@@ -31,13 +31,13 @@
           "default": "birthday"
         }
       },
-      "licenseType": {
+      "license": {
         "title": {
-          "default": "licenseType"
+          "default": "license"
         }
       }
     }
   },
   "owner": "5EeL6Hermg1c9fEDyuRQjwMu4XVGqqPwgrLhckjDh1RtLGd9",
-  "hash": "0xc964aee192b29aaee61f1e7f43f4b68f5fc3064434e5a93941c15d5fef913a45"
+  "hash": "0x4edaa5b8eea2e071dfe48724f6789d6741c1ce0e0f4466079a1d78ef0c02aea2"
 }
