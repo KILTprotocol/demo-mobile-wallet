@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View, TextStyle } from 'react-native'
-import Identicon from 'polkadot-identicon-react-native'
+// import Identicon from 'polkadot-identicon-react-native'
 import { bodyTxt } from '../sharedStyles/styles.typography'
 import { flexRowLayout } from '../sharedStyles/styles.layout'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
@@ -18,7 +18,7 @@ const IdentityDisplay: React.FunctionComponent<Props> = ({
   address,
 }): JSX.Element => (
   <View style={flexRowLayout}>
-    <Identicon value={address} size={48} theme="polkadot" />
+    {/* <Identicon value={address} size={48} theme="polkadot" /> */}
     <Text style={[bodyTxt, addressStyle]}>{address}</Text>
   </View>
 )
