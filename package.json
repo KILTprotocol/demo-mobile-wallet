@@ -41,7 +41,6 @@
     "querystring-es3": "~0.2.0",
     "react": "16.9.0",
     "react-native": "0.61.2",
-    "react-native-blur": "^3.2.2",
     "react-native-crypto": "^2.1.0",
     "react-native-dialog": "^5.6.0",
     "react-native-gesture-handler": "^1.4.1",
