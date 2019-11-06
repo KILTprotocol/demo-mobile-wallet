@@ -5,21 +5,19 @@ import {
   ADD_CREDENTIAL,
   DELETE_ALL_CREDENTIALS,
 } from './actionTypes'
-import { AppActionTSTypes } from './actionsTSTypes'
-import { CredentialType } from './credentialsReducer'
+import { TAppAction } from './actionsTSTypes'
+import { TCredential } from './credentialsReducer'
 
-export const setIdentity = (identity: Identity | null): AppActionTSTypes => ({
+export const setIdentity = (identity: Identity | null): TAppAction => ({
   type: SET_IDENTITY,
   payload: identity,
 })
 
-export const resetIdentity = (): AppActionTSTypes => ({
+export const resetIdentity = (): TAppAction => ({
   type: RESET_IDENTITY,
 })
 
-export const addCredential = (
-  credential: CredentialType
-): AppActionTSTypes => ({
+export const addCredential = (credential: TCredential): TAppAction => ({
   type: ADD_CREDENTIAL,
   payload: credential,
 })

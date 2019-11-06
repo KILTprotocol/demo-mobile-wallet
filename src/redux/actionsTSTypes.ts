@@ -5,34 +5,34 @@ import {
   ADD_CREDENTIAL,
   DELETE_ALL_CREDENTIALS,
 } from './actionTypes'
-import { CredentialType } from './credentialsReducer'
+import { TCredential } from './credentialsReducer'
 
-type SetIdentityAction = {
+type TSetIdentityAction = {
   type: typeof SET_IDENTITY
   payload: Identity | null
 }
 
-type ResetIdentityAction = {
+type TResetIdentityAction = {
   type: typeof RESET_IDENTITY
 }
 
-type AddCredentialAction = {
+type TAddCredentialAction = {
   type: typeof ADD_CREDENTIAL
-  payload: CredentialType
+  payload: TCredential
 }
 
-type DeleteAllCredentialsAction = {
+type TDeleteAllCredentialsAction = {
   type: typeof DELETE_ALL_CREDENTIALS
-  payload: CredentialType
+}
 }
 
-export type AppActionTSTypes =
-  | SetIdentityAction
-  | ResetIdentityAction
-  | AddCredentialAction
-  | DeleteAllCredentialsAction
+export type TAppAction =
+  | TSetIdentityAction
+  | TResetIdentityAction
+  | TAddCredentialAction
+  | TDeleteAllCredentialsAction
 
-export type Action = {
+export type TAction = {
   payload: any
   type: string
 }
