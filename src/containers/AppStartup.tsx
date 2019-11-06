@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 import LoadingIndicator from '../components/LoadingIndicator'
 import { APP, SETUP } from '../_routes'
 import { mainViewContainer, fullCenter } from '../sharedStyles/styles.layout'
-import { AppState } from '../redux/reducers'
+import { TAppState } from '../redux/reducers'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -27,7 +27,8 @@ class AppStartup extends React.Component<Props> {
 
   bootstrapAsync = async () => {
     const { identityFromStore, navigation } = this.props
-    // if an identity is already set up, navigate to the regular app; otherwise talke the user to the identity setup screen
+    // if an identity is already set up, navigate to the regular app
+    // if not, navigate to the identity setup screen
     navigation.navigate(identityFromStore ? APP : SETUP)
   }
 
@@ -42,7 +43,7 @@ class AppStartup extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: AppState): any => {
+const mapStateToProps = (state: TAppState): any => {
   return {
     identityFromStore: state.identityReducer.identity,
   }

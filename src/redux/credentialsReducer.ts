@@ -1,18 +1,17 @@
-import { ADD_CREDENTIAL, DELETE_ALL_CREDENTIALS } from './actionTypes'
-import { Action } from './actionsTSTypes'
-import { AppState } from './reducers'
+import { TAction } from './actionsTSTypes'
+import { TAppState } from './reducers'
 import { CredentialStatus } from '../_enums'
 
-export type CredentialType = {
+export type TCredential = {
   title: string
   contents: object
   hash: string
-  cTypeHash: string
+  cTypeHash: NonceHash
   status: CredentialStatus
 }
 // TODO clean anys
 
-const credentialsDefault: CredentialType[] = []
+const credentialsDefault: TCredential[] = []
 
 const INITIAL_STATE = {
   credentials: credentialsDefault,
@@ -20,8 +19,8 @@ const INITIAL_STATE = {
 
 export default function credentialsReducer(
   state = INITIAL_STATE,
-  action: Action
-): AppState {
+  action: TAction
+): TAppState {
   switch (action.type) {
     case ADD_CREDENTIAL:
       return {

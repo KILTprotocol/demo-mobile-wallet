@@ -22,7 +22,7 @@ import IdentitySetupStep from '../components/IdentitySetupStep'
 import { callWithDelay } from '../utils/utils.async'
 import { setIdentity } from '../redux/actions'
 import { connect } from 'react-redux'
-import { AppState } from '../redux/reducers'
+import { TAppState } from '../redux/reducers'
 import WithIntroBackground from '../components/WithIntroBackground'
 
 const STEP_CREATE = 'create'
@@ -131,7 +131,7 @@ IdentitySetup.defaultProps = {
   },
 }
 
-const mapStateToProps = (state: AppState) => {
+const mapStateToProps = (state: TAppState) => {
   return {
     identityFromStore: state.identityReducer.identity,
   }
