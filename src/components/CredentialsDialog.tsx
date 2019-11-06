@@ -18,10 +18,6 @@ class CredentialsDialog extends React.Component<Props> {
     isCreateBtnDisabled: false,
   }
 
-  componentDidUpdate(): void {
-    console.log(this.state)
-  }
-
   render(): JSX.Element {
     const { isCreateBtnDisabled } = this.state
     const { onPressOK, onPressCancel, onChangeText, visible } = this.props
