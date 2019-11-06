@@ -32,9 +32,9 @@ import {
   createRequestForAttestation,
   DriversLicenseClaimContents,
 } from '../services/service.claim'
-import { addCredential } from '../redux/actions'
-import { CredentialType } from '../redux/credentialsReducer'
-import Credential from '../components/Credential'
+import CredentialList from '../components/CredentialList'
+import RequestTokensButton from '../components/RequestTokensButton'
+import BalanceLoadable from '../components/BalanceLoadable'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -140,23 +140,12 @@ class Dashboard extends React.Component<Props, State> {
           </View>
           <View style={sectionContainer}>
             <Text style={sectionTitleTxt}>KILT account balance</Text>
-            <View style={fixedHeight}>
-              {balanceStatus === AsyncStatus.Success && (
-                <BalanceDisplay balance={balance} />
-              )}
-              {balanceStatus === AsyncStatus.Pending && (
-                <LoadingIndicator size={LoadingIndicatorSize.S} />
-              )}
-            </View>
+            <BalanceLoadable
+              asyncStatus={balanceAsyncStatus}
+              balance={balance}
+            />
             {identityFromStore && (
-              <KiltButton
-                title="Request tokens"
-                onPress={() => {
-                  Linking.openURL(
-                    getRequestTokensUrl(identityFromStore.address)
-                  )
-                }}
-              />
+              <RequestTokensButton address={identityFromStore.address} />
             )}
           </View>
           <View style={sectionContainer}>

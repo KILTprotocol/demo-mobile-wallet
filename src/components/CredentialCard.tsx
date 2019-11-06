@@ -66,7 +66,7 @@ const pptyLabelStyle: TextStyle = {
   textTransform: 'capitalize',
 }
 
-const Credential: React.FunctionComponent<Props> = ({
+const CredentialCard: React.FunctionComponent<Props> = ({
   title,
   status,
   contents,
@@ -92,4 +92,4 @@ const Credential: React.FunctionComponent<Props> = ({
   </View>
 )
 
-export default Credential
+export default CredentialCard

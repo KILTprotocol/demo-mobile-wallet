@@ -19,12 +19,10 @@ const zero: TextStyle = {
   color: BALANCE_ZERO_CLR,
 }
 
-const BalanceDisplay: React.FunctionComponent<Props> = ({
-  balance,
-}): JSX.Element => (
+const Balance: React.FunctionComponent<Props> = ({ balance }): JSX.Element => (
   <View style={flexRowLayout}>
     <Text style={[bodyTxt, balance > 0 ? plus : zero]}>{balance}</Text>
   </View>
 )
 
-export default BalanceDisplay
+export default Balance
