@@ -101,27 +101,28 @@ class Dashboard extends React.Component<Props, State> {
       claimContents as TDriversLicenseClaimContents,
       identityFromStore
     )
-    if (claim) {
-      const requestForAttestation = createRequestForAttestation(
-        claim,
+
+    if (!claim || !identityFromStore) {
+      return
+    }
+    const requestForAttestation = createRequestForAttestation(
+      claim,
+      identityFromStore
+    )
+    if (requestForAttestation) {
+      addCredentialInStore({
+        // TODO let user pick and edit claim name
+        title: "Driver's License",
+        hash: requestForAttestation.hash,
+        cTypeHash: requestForAttestation.ctypeHash.hash,
+        status: CredentialStatus.AttestationPending,
+        contents: requestForAttestation.claim.contents,
+      })
+      const claimerIdentity = getSDKIdentityFromStoredIdentity(
         identityFromStore
       )
-      if (requestForAttestation) {
-        addCredentialInStore({
-          // TODO let user pick and edit claim name
-          title: "Driver's License",
-          hash: requestForAttestation.hash,
-          cTypeHash: requestForAttestation.ctypeHash.hash,
-          status: CredentialStatus.AttestationPending,
-          contents: requestForAttestation.claim.contents,
-        })
-        const claimerIdentity = getSDKIdentityFromStoredIdentity(
-          identityFromStore
-        )
-        sendRequestForAttestation(requestForAttestation, claimerIdentity)
-      }
+      sendRequestForAttestation(requestForAttestation, claimerIdentity)
     }
-    this.closeDialog()
   }
 
   onChangeClaimContentsInputs = (inputValue: string, ppty: string) => {
@@ -161,6 +162,10 @@ class Dashboard extends React.Component<Props, State> {
   handleNewMsgs(newMsgsHashes: string[]): void {
     // TODO `this` here?
     const { identityFromStore, updateCredentialStatusInStore } = this.props
+
+    if (!identityFromStore) {
+      return
+    }
     console.log('💥💥💥 New messages received', newMsgsHashes[0])
     newMsgsHashes.map(h => {
       // TODO merge mgs and hashes
@@ -266,7 +271,10 @@ class Dashboard extends React.Component<Props, State> {
           claimerIdentity={identityFromStore}
           visible={isDialogVisible}
           onPressCancel={() => this.closeDialog()}
-          onPressOK={() => this.createClaimAndRequestAttestation()}
+          onPressOK={() => {
+            this.createClaimAndRequestAttestation()
+            this.closeDialog()
+          }}
           onChangeText={(inputValue, ppty) =>
             this.onChangeClaimContentsInputs(inputValue, ppty)
           }
