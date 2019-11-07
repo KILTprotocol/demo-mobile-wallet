@@ -32,11 +32,14 @@ import CredentialsDialog from '../components/CredentialsDialog'
 import {
   createDriversLicenseClaim,
   createRequestForAttestation,
-  TDriversLicenseClaimContents,
   sendRequestForAttestation,
 } from '../services/service.claim'
 import { addCredential, updateCredentialStatus } from '../redux/actions'
-import { TCredential, THashAndClaimStatus } from '../redux/types'
+import {
+  TCredential,
+  THashAndClaimStatus,
+  TDriversLicenseClaimContents,
+} from '../_types'
 import CredentialList from '../components/CredentialList'
 import RequestTokensButton from '../components/RequestTokensButton'
 import BalanceLoadable from '../components/BalanceLoadable'

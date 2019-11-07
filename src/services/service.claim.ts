@@ -6,14 +6,9 @@ import {
 } from '@kiltprotocol/sdk-js'
 import MessageService from './service.messaging'
 import { ATTESTER_MNEMONIC } from '../_config'
+import { TDriversLicenseClaimContents } from '../_types'
 
 const ATTESTER_IDENTITY = Identity.buildFromMnemonic(ATTESTER_MNEMONIC)
-
-export type TDriversLicenseClaimContents = {
-  name: string
-  birthday: number
-  type: string
-}
 
 function createDriversLicenseClaim(
   claimContents: TDriversLicenseClaimContents,

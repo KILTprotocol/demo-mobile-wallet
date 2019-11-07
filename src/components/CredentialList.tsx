@@ -1,8 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
-import { TCredential } from '../redux/credentialsReducer'
 import { sectionContainer } from '../sharedStyles/styles.layout'
 import CredentialCard from './CredentialCard'
+import { TCredential } from '../_types'
 
 type Props = {
   credentials: TCredential[]
