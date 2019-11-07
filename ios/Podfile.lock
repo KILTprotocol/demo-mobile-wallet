@@ -182,8 +182,6 @@ PODS:
     - React-cxxreact (= 0.61.2)
     - React-jsi (= 0.61.2)
   - React-jsinspector (0.61.2)
-  - react-native-blur (0.8.0):
-    - React
   - react-native-randombytes (3.5.3):
     - React
   - react-native-udp (2.6.1):
@@ -258,7 +256,6 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
-  - react-native-blur (from `../node_modules/react-native-blur`)
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - react-native-udp (from `../node_modules/react-native-udp`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -315,8 +312,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
-  react-native-blur:
-    :path: "../node_modules/react-native-blur"
   react-native-randombytes:
     :path: "../node_modules/react-native-randombytes"
   react-native-udp:
@@ -376,7 +371,6 @@ SPEC CHECKSUMS:
   React-jsi: 32285a21b1b24c36060493ed3057a34677d58d09
   React-jsiexecutor: 8909917ff7d8f21a57e443a866fd8d4560e50c65
   React-jsinspector: 111d7d342b07a904c400592e02a2b958f1098b60
-  react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-randombytes: 3638d24759d67c68f6ccba60c52a7a8a8faa6a23
   react-native-udp: 54a1aa9bf5c0824f930b1ba6dbfb3fd3e733bba9
   React-RCTActionSheet: 89b037c0fb7d2671607cb645760164e7e0c013f6
