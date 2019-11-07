@@ -18,7 +18,7 @@ import WithDefaultBackground from './WithDefaultBackground'
 import { resetIdentity, deleteAllCredentials } from '../redux/actions'
 import { Identity } from '@kiltprotocol/sdk-js'
 import { Dispatch } from 'redux'
-import { TMapDispatchToProps } from 'src/_types'
+import { TMapDispatchToProps } from '../_types'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>

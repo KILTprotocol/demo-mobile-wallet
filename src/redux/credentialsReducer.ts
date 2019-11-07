@@ -3,7 +3,7 @@ import {
   DELETE_ALL_CREDENTIALS,
   UPDATE_CREDENTIAL_STATUS,
 } from './actionTypes'
-import { TAppAction } from './types'
+import { TAppAction } from '../_types'
 import { TAppState } from './reducers'
 
 // TODO clean any

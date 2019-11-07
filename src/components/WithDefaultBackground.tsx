@@ -2,12 +2,12 @@ import React from 'react'
 import { ImageBackground } from 'react-native'
 import { imgBckgrd } from '../sharedStyles/styles.layout'
 
-const imgDottedBckgrd = require('../assets/imgs/imgDottedBckgrd.jpg')
+const mainBckgrdImg = require('../assets/imgs/mainBckgrdImg.jpg')
 
 const WithDefaultBackground: React.FunctionComponent = ({
   children,
 }): JSX.Element => (
-  <ImageBackground source={imgDottedBckgrd} style={imgBckgrd}>
+  <ImageBackground source={mainBckgrdImg} style={imgBckgrd}>
     {children}
   </ImageBackground>
 )

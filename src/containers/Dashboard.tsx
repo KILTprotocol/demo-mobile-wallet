@@ -47,7 +47,7 @@ import BalanceLoadable from '../components/BalanceLoadable'
 import { POLLING_PERIOD_MS } from '../_config'
 import { getInboxUrlFromAddress } from '../utils/utils.messaging'
 import { getSDKIdentityFromStoredIdentity } from '../utils/utils.identity'
-import { TMapDispatchToProps, TMapStateToProps } from 'src/_types'
+import { TMapDispatchToProps, TMapStateToProps } from '../_types'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>

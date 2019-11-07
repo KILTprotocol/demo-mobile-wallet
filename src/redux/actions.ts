@@ -6,7 +6,7 @@ import {
   DELETE_ALL_CREDENTIALS,
   UPDATE_CREDENTIAL_STATUS,
 } from './actionTypes'
-import { TAppAction, TCredential, THashAndClaimStatus } from './types'
+import { TAppAction, TCredential, THashAndClaimStatus } from '../_types'
 
 export const setIdentity = (identity: Identity | null): TAppAction => ({
   type: SET_IDENTITY,

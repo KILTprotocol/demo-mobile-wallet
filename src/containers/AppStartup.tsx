@@ -13,7 +13,7 @@ import LoadingIndicator from '../components/LoadingIndicator'
 import { APP, SETUP } from '../_routes'
 import { mainViewContainer, fullCenter } from '../sharedStyles/styles.layout'
 import { TAppState } from '../redux/reducers'
-import { TMapDispatchToProps, TMapStateToProps } from 'src/_types'
+import { TMapDispatchToProps, TMapStateToProps } from '../_types'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
