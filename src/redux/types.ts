@@ -4,8 +4,12 @@ import {
   RESET_IDENTITY,
   ADD_CREDENTIAL,
   DELETE_ALL_CREDENTIALS,
+  UPDATE_CREDENTIAL_STATUS,
 } from './actionTypes'
-import { TCredential } from './credentialsReducer'
+import { NonceHash } from '@kiltprotocol/sdk-js/build/types/RequestForAttestation'
+import { CredentialStatus } from '../_enums'
+
+// Actions
 
 type TSetIdentityAction = {
   type: typeof SET_IDENTITY
@@ -24,6 +28,11 @@ type TAddCredentialAction = {
 type TDeleteAllCredentialsAction = {
   type: typeof DELETE_ALL_CREDENTIALS
 }
+
+type TUpdateCredentialStatusAction = {
+  type: typeof UPDATE_CREDENTIAL_STATUS
+  // payload = status and hash
+  payload: any
 }
 
 export type TAppAction =
@@ -31,10 +40,21 @@ export type TAppAction =
   | TResetIdentityAction
   | TAddCredentialAction
   | TDeleteAllCredentialsAction
+  | TUpdateCredentialStatusAction
 
 export type TAction = {
   payload: any
   type: string
+}
+
+// Others
+
+export type TCredential = {
+  title: string
+  contents: object
+  hash: string
+  cTypeHash: NonceHash
+  status: CredentialStatus
 }
 
 // TODO move all types into separate files??

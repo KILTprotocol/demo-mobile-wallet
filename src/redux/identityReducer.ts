@@ -1,5 +1,5 @@
 import { RESET_IDENTITY, SET_IDENTITY } from './actionTypes'
-import { TAction } from './actionsTSTypes'
+import { TAction } from './types'
 import { TAppState } from './reducers'
 
 const identityDefault = null

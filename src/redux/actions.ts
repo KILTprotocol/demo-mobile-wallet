@@ -5,8 +5,7 @@ import {
   ADD_CREDENTIAL,
   DELETE_ALL_CREDENTIALS,
 } from './actionTypes'
-import { TAppAction } from './actionsTSTypes'
-import { TCredential } from './credentialsReducer'
+import { TAppAction } from './types'
 
 export const setIdentity = (identity: Identity | null): TAppAction => ({
   type: SET_IDENTITY,

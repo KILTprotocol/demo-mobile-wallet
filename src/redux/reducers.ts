@@ -7,7 +7,7 @@ const rootReducer = combineReducers({
   credentialsReducer: credentialsReducer,
 })
 
-// TODO define AppState type, so far issue with combineReducers that nests the ppties
-export type AppState = any
+// TODO define TAppState type, so far issue with combineReducers that nests the ppties
+export type TAppState = any
 
 export default rootReducer
