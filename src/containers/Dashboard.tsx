@@ -111,7 +111,7 @@ class Dashboard extends React.Component<Props, State> {
           // TODO let user pick and edit claim name
           title: "Driver's License",
           hash: requestForAttestation.hash,
-          cTypeHash: requestForAttestation.ctypeHash,
+          cTypeHash: requestForAttestation.ctypeHash.hash,
           status: CredentialStatus.AttestationPending,
           contents: requestForAttestation.claim.contents,
         })
