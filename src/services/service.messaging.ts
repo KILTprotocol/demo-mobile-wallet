@@ -35,7 +35,7 @@ export interface IMessageOutput extends IMessage {
 /**
  * as in prototype/services
  */
-// TODO needed?
+// TODO: are IContact and IMyIdentity needed?
 export interface IContact {
   metaData: {
     name: string
@@ -54,7 +54,6 @@ export interface IContact {
 /**
  * local Identity
  */
-// TODO needed?
 export interface IMyIdentity {
   identity: Identity
   metaData: {

@@ -5,6 +5,9 @@ import {
   TXT_LIGHT_CLR,
   TXT_INVERTED_CLR,
   TXT_INVERTED_LIGHT_CLR_NEUTRAL,
+  TXT_INVERTED_LIGHT_CLR,
+  SUCCESS_CLR,
+  ERROR_CLR,
 } from './styles.consts.colors'
 import { TextStyle } from 'react-native'
 import { TXT_S_SIZE, TXT_M_SIZE, TXT_L_SIZE } from './styles.consts.typography'
@@ -53,6 +56,27 @@ export const titleInvertedClrTxt: TextStyle = {
 export const bodyInvertedClrTxt: TextStyle = {
   color: TXT_INVERTED_CLR,
 }
+
 export const emphasizedClrTxt: TextStyle = {
+  color: KILT_ORANGE_CLR,
+}
+
+export const txtCentered: TextStyle = {
+  textAlign: 'center',
+}
+
+export const txtNotStarted: TextStyle = {
+  color: TXT_INVERTED_LIGHT_CLR,
+}
+
+export const txtSuccess: TextStyle = {
+  color: SUCCESS_CLR,
+}
+
+export const txtError: TextStyle = {
+  color: ERROR_CLR,
+}
+
+export const txtPending: TextStyle = {
   color: KILT_ORANGE_CLR,
 }

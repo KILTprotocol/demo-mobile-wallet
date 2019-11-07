@@ -29,16 +29,14 @@ const Contacts = ({ navigation }: IProps): JSX.Element => (
           <KiltButton
             title="Add contact (not implemented)"
             disabled
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('')
+            }}
           />
         </View>
       </View>
     </View>
   </WithDefaultBackground>
 )
-
-Contacts.navigationOptions = {
-  header: null,
-}
 
 export default Contacts

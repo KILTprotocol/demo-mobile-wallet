@@ -18,7 +18,8 @@ import WithDefaultBackground from './WithDefaultBackground'
 import { resetIdentity, deleteAllCredentials } from '../redux/actions'
 import { Identity } from '@kiltprotocol/sdk-js'
 import { Dispatch } from 'redux'
-import { TMapDispatchToProps } from '../_types'
+import { TMapDispatchToProps, TMapStateToProps } from '../_types'
+import { TAppState } from '../redux/reducers'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -74,7 +75,7 @@ class Settings extends React.Component<Props, null> {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => {
   return {
     identityFromStore: state.identityReducer.identity,
   }

@@ -3,14 +3,11 @@ import {
   DELETE_ALL_CREDENTIALS,
   UPDATE_CREDENTIAL_STATUS,
 } from './actionTypes'
-import { TAppAction } from '../_types'
+import { TAppAction, TCredentialMapByHash } from '../_types'
 import { TAppState } from './reducers'
 
-// TODO clean any
-
 const INITIAL_STATE = {
-  // TODO set up real type
-  credentialsAsObject: {},
+  credentialsAsObject: <TCredentialMapByHash>{},
 }
 
 // TODO change name of credential, since a credential is only when attested
