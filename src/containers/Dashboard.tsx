@@ -45,7 +45,7 @@ type Props = {
 type State = {
   balance: number
   isDialogVisible: boolean
-  balanceStatus: AsyncStatus
+  balanceAsyncStatus: AsyncStatus
   claimContents: object
 }
 
@@ -111,7 +111,7 @@ class Dashboard extends React.Component<Props, State> {
     const { identityFromStore } = this.props
     this.setState(prevState => ({
       ...prevState,
-      balanceStatus: AsyncStatus.Pending,
+      balanceAsyncStatus: AsyncStatus.Pending,
     }))
     const balance = identityFromStore
       ? await getBalanceInKiltCoins(identityFromStore.address)
@@ -119,7 +119,7 @@ class Dashboard extends React.Component<Props, State> {
     this.setState(prevState => ({
       ...prevState,
       balance,
-      balanceStatus: AsyncStatus.Success,
+      balanceAsyncStatus: AsyncStatus.Success,
     }))
   }
 
