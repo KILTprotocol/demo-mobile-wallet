@@ -42,6 +42,7 @@
               "@typescript-eslint/no-object-literal-type-assertion": "off",
               "@typescript-eslint/no-explicit-any": "off",
               "no-underscore-dangle": "off",
+              "no-unused-vars": [2, {"args": "all", "argsIgnorePattern": "^_"}],
               "global-require": "off"
           }
       }

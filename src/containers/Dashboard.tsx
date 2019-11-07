@@ -186,7 +186,7 @@ class Dashboard extends React.Component<Props, State> {
     })
   }
 
-  componentDidUpdate(prevProps, prevState: State): void {
+  componentDidUpdate(_: any, prevState: State): void {
     const { msgsHashes } = this.state
     const prevMsgsHashes = prevState.msgsHashes
     const newMsgsHashes = this.getNewMsgsHashes(prevMsgsHashes, msgsHashes)
