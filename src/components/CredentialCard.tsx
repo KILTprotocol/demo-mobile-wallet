@@ -16,7 +16,8 @@ import { imgBckgrd, flexRowLayout } from '../sharedStyles/styles.layout'
 import { CredentialStatus } from '../_enums'
 import CredentialStatusBadge from './CredentialStatusBadge'
 import { bodyTxt } from '../sharedStyles/styles.typography'
-const kiltBckgrd = require('../assets/imgs/kiltBckgrd.jpg')
+const claimBckgrd = require('../assets/imgs/claimBckgrd.jpg')
+const claimBckgrdValid = require('../assets/imgs/claimBckgrdValid.jpg')
 
 type Props = {
   title: string
@@ -73,7 +74,9 @@ const CredentialCard: React.FunctionComponent<Props> = ({
 }): JSX.Element => (
   <View style={credentialCard}>
     <ImageBackground
-      source={kiltBckgrd}
+      source={
+        status === CredentialStatus.Valid ? claimBckgrdValid : claimBckgrd
+      }
       style={imgBckgrd}
       imageStyle={imgBckgrdExtraStyles}>
       <View style={credentialCardContentStyle}>
