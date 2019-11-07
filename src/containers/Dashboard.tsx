@@ -52,7 +52,6 @@ import { TMapDispatchToProps, TMapStateToProps } from '../_types'
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   identityFromStore: Identity | null
-  // TODO  TCredential[] vs ... ? see T branch
   credentialsAsObjectFromStore: TCredentialMapByHash
   addCredentialInStore: typeof addCredential
   updateCredentialStatusInStore: typeof updateCredentialStatus
@@ -84,8 +83,7 @@ class Dashboard extends React.Component<Props, State> {
   }
 
   closeDialog(): void {
-    // TODO also empty claim contents?
-    this.setState({ isDialogVisible: false })
+    this.setState({ isDialogVisible: false, claimContents: {} })
   }
 
   openDialog(): void {
@@ -111,7 +109,6 @@ class Dashboard extends React.Component<Props, State> {
     )
     if (requestForAttestation) {
       addCredentialInStore({
-        // TODO let user pick and edit claim name
         title: "Driver's License",
         hash: requestForAttestation.hash,
         cTypeHash: requestForAttestation.ctypeHash.hash,
@@ -217,7 +214,6 @@ class Dashboard extends React.Component<Props, State> {
       .then((encryptedMessages: IEncryptedMessage[]) => {
         const encryptedMsgsHashes = encryptedMessages.map(msg => msg.hash)
         this.setState({
-          // TODO merge
           msgsHashes: encryptedMsgsHashes,
           msgs: encryptedMessages,
         })

@@ -60,7 +60,6 @@ class Settings extends React.Component<Props, null> {
               />
             </View>
             <View style={flexRowCenterLayout}>
-              {/* TODO add warning dialog */}
               <KiltButton
                 title="Delete all credentials from this wallet"
                 onPress={() => {

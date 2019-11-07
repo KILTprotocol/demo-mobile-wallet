@@ -3,10 +3,7 @@ import { Identity } from '@kiltprotocol/sdk-js'
 // TODO how is it an identity if it's missing some ppties?
 const getSDKIdentityFromStoredIdentity = (identity: Identity): Identity => {
   // TODO fix
-  console.log('identity', identity)
   const arr = new Uint8Array(Object.values(identity.seed))
-  console.log('Identity.buildFromSeed(arr)', Identity.buildFromSeed(arr))
-
   return Identity.buildFromSeed(arr)
 }
 

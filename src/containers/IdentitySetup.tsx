@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
+import { Dispatch } from 'redux'
 import { Identity } from '@kiltprotocol/sdk-js'
 import {
   NavigationScreenProp,
@@ -24,6 +25,7 @@ import { setIdentity } from '../redux/actions'
 import { connect } from 'react-redux'
 import { TAppState } from '../redux/reducers'
 import WithIntroBackground from '../components/WithIntroBackground'
+import { TMapDispatchToProps } from '../_types'
 
 const STEP_CREATE = 'create'
 const STEP_SAVE = 'save'
@@ -55,7 +57,7 @@ class IdentitySetup extends React.Component<Props, State> {
 
   createIdentity = (mnemonic: string) => Identity.buildFromMnemonic(mnemonic)
 
-  componentDidUpdate(prevProps): void {
+  componentDidUpdate(prevProps: Props): void {
     const { identityFromStore } = this.props
     if (
       prevProps.identityFromStore !== identityFromStore &&
@@ -131,13 +133,15 @@ IdentitySetup.defaultProps = {
   },
 }
 
-const mapStateToProps = (state: TAppState) => {
+const mapStateToProps = (state: TAppState): TAppState => {
   return {
     identityFromStore: state.identityReducer.identity,
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (
+  dispatch: Dispatch
+): Partial<TMapDispatchToProps> => {
   return {
     setIdentityInStore: identity => {
       dispatch(setIdentity(identity))

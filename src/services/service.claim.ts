@@ -38,17 +38,16 @@ function sendRequestForAttestation(
   requestForAttestation: RequestForAttestation,
   identity: Identity
 ): void {
+  // TODO why phrase, why metaData
   const sender = {
     identity,
     // TODO add name
     metaData: {
       name: '',
     },
-    // TODO why phrase
     phrase: '',
   }
   const receiver = {
-    // TODO why metaData
     metaData: {
       name: '',
     },
