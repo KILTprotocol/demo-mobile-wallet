@@ -7,6 +7,7 @@ import {
 import MessageService from './service.messaging'
 import { ATTESTER_MNEMONIC } from '../_config'
 import { TDriversLicenseClaimContents } from '../_types'
+import { getSDKIdentityFromStoredIdentity } from '../utils/utils.identity'
 
 const ATTESTER_IDENTITY = Identity.buildFromMnemonic(ATTESTER_MNEMONIC)
 
@@ -27,8 +28,7 @@ function createRequestForAttestation(
 ): RequestForAttestation | null {
   if (claimerIdentity) {
     // TODO fromObject also OK, but deprecated soon
-    const arr = new Uint8Array(Object.values(claimerIdentity.seed))
-    const identity = Identity.buildFromSeed(arr)
+    const identity = getSDKIdentityFromStoredIdentity(claimerIdentity)
     return new RequestForAttestation(claim, [], identity)
   }
   return null
