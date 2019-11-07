@@ -49,7 +49,6 @@ class Settings extends React.Component<Props, null> {
           </View>
           <View style={sectionContainer}>
             <View style={flexRowCenterLayout}>
-              {/* TODO about credentials deletion: what happens if 2 credentials with the same content but different timestamps are created?? --> should add timestamp on there */}
               <KiltButton
                 title="Reset identity"
                 onPress={() => {

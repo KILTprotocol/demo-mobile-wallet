@@ -27,7 +27,6 @@ function createRequestForAttestation(
   claimerIdentity: Identity | null
 ): RequestForAttestation | null {
   if (claimerIdentity) {
-    // TODO fromObject also OK, but deprecated soon
     const identity = getSDKIdentityFromStoredIdentity(claimerIdentity)
     return new RequestForAttestation(claim, [], identity)
   }

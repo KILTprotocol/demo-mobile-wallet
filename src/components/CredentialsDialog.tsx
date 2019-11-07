@@ -14,7 +14,7 @@ type Props = {
 
 class CredentialsDialog extends React.Component<Props> {
   state = {
-    // TODOset state as relevant apply styles to disabled btn
+    // TODO set state as relevant apply styles to disabled btn
     isCreateBtnDisabled: false,
   }
 
