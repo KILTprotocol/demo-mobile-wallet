@@ -1,13 +1,22 @@
-import { Claim, Identity, RequestForAttestation } from '@kiltprotocol/sdk-js'
+import {
+  Claim,
+  Identity,
+  RequestForAttestation,
+  MessageBodyType,
+} from '@kiltprotocol/sdk-js'
+import MessageService from './service.messaging'
+import { ATTESTER_MNEMONIC } from '../_config'
 
-export type DriversLicenseClaimContents = {
+const ATTESTER_IDENTITY = Identity.buildFromMnemonic(ATTESTER_MNEMONIC)
+
+export type TDriversLicenseClaimContents = {
   name: string
   birthday: number
   type: string
 }
 
 function createDriversLicenseClaim(
-  claimContents: DriversLicenseClaimContents,
+  claimContents: TDriversLicenseClaimContents,
   claimerIdentity: Identity | null
 ): Claim | null {
   if (claimerIdentity) {
@@ -22,11 +31,47 @@ function createRequestForAttestation(
   claimerIdentity: Identity | null
 ): RequestForAttestation | null {
   if (claimerIdentity) {
-    // TODO check w Timo. fromObject, but deprecated... ?
-    const id = Identity.buildFromSeed(Object.values(claimerIdentity.seed))
-    return new RequestForAttestation(claim, [], id)
+    // TODO fromObject also OK, but deprecated soon
+    const arr = new Uint8Array(Object.values(claimerIdentity.seed))
+    const identity = Identity.buildFromSeed(arr)
+    return new RequestForAttestation(claim, [], identity)
   }
   return null
 }
 
-export { createDriversLicenseClaim, createRequestForAttestation }
+function sendRequestForAttestation(
+  requestForAttestation: RequestForAttestation,
+  identity: Identity
+): void {
+  const sender = {
+    identity,
+    // TODO add name
+    metaData: {
+      name: '',
+    },
+    // TODO why phrase
+    phrase: '',
+  }
+  const receiver = {
+    // TODO why metaData
+    metaData: {
+      name: '',
+    },
+    publicIdentity: ATTESTER_IDENTITY,
+  }
+  // TODO async and deal with singleSend's errors
+  MessageService.singleSend(
+    {
+      content: requestForAttestation,
+      type: MessageBodyType.REQUEST_ATTESTATION_FOR_CLAIM,
+    },
+    sender,
+    receiver
+  )
+}
+
+export {
+  createDriversLicenseClaim,
+  createRequestForAttestation,
+  sendRequestForAttestation,
+}
