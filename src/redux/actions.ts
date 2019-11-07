@@ -4,8 +4,9 @@ import {
   SET_IDENTITY,
   ADD_CREDENTIAL,
   DELETE_ALL_CREDENTIALS,
+  UPDATE_CREDENTIAL_STATUS,
 } from './actionTypes'
-import { TAppAction } from './types'
+import { TAppAction, TCredential, TClaimStatusAndHash } from './types'
 
 export const setIdentity = (identity: Identity | null): TAppAction => ({
   type: SET_IDENTITY,
@@ -21,6 +22,13 @@ export const addCredential = (credential: TCredential): TAppAction => ({
   payload: credential,
 })
 
-export const deleteAllCredentials = (): AppActionTSTypes => ({
+export const updateCredentialStatus = (
+  statusAndHash: TClaimStatusAndHash
+): TAppAction => ({
+  type: UPDATE_CREDENTIAL_STATUS,
+  payload: statusAndHash,
+})
+
+export const deleteAllCredentials = (): TAppAction => ({
   type: DELETE_ALL_CREDENTIALS,
 })

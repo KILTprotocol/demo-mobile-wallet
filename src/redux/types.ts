@@ -32,7 +32,7 @@ type TDeleteAllCredentialsAction = {
 type TUpdateCredentialStatusAction = {
   type: typeof UPDATE_CREDENTIAL_STATUS
   // payload = status and hash
-  payload: any
+  payload: TClaimStatusAndHash
 }
 
 export type TAppAction =
@@ -55,6 +55,11 @@ export type TCredential = {
   hash: string
   cTypeHash: NonceHash
   status: CredentialStatus
+}
+
+export type TClaimStatusAndHash = {
+  status: CredentialStatus
+  hash: NonceHash
 }
 
 // TODO move all types into separate files??
