@@ -3,7 +3,7 @@ import {
   DELETE_ALL_CREDENTIALS,
   UPDATE_CREDENTIAL_STATUS,
 } from './actionTypes'
-import { TAction } from './types'
+import { TAppAction } from './types'
 import { TAppState } from './reducers'
 
 // TODO clean any
@@ -16,7 +16,7 @@ const INITIAL_STATE = {
 // TODO change name of credential, since a credential is only when attested
 export default function credentialsReducer(
   state = INITIAL_STATE,
-  action: TAction
+  action: TAppAction
 ): TAppState {
   switch (action.type) {
     case ADD_CREDENTIAL:

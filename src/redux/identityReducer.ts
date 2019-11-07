@@ -1,5 +1,5 @@
 import { RESET_IDENTITY, SET_IDENTITY } from './actionTypes'
-import { TAction } from './types'
+import { TAppAction } from './types'
 import { TAppState } from './reducers'
 
 const identityDefault = null
@@ -10,7 +10,7 @@ const INITIAL_STATE = {
 
 export default function identityReducer(
   state = INITIAL_STATE,
-  action: TAction
+  action: TAppAction
 ): TAppState {
   switch (action.type) {
     case SET_IDENTITY:

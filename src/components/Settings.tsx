@@ -18,6 +18,7 @@ import WithDefaultBackground from './WithDefaultBackground'
 import { resetIdentity, deleteAllCredentials } from '../redux/actions'
 import { Identity } from '@kiltprotocol/sdk-js'
 import { Dispatch } from 'redux'
+import { TMapDispatchToProps } from 'src/_types'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -47,7 +48,7 @@ class Settings extends React.Component<Props, null> {
           </View>
           <View style={sectionContainer}>
             <View style={flexRowCenterLayout}>
-              {/* TODO about credentials deletion: what happens if 2 credentials with the same content but different timestamps are created */}
+              {/* TODO about credentials deletion: what happens if 2 credentials with the same content but different timestamps are created?? --> should add timestamp on there */}
               <KiltButton
                 title="Reset identity"
                 onPress={() => {
@@ -79,7 +80,9 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): any => {
+const mapDispatchToProps = (
+  dispatch: Dispatch
+): Partial<TMapDispatchToProps> => {
   return {
     resetIdentityInStore: () => {
       dispatch(resetIdentity())

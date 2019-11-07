@@ -36,14 +36,14 @@ import {
   sendRequestForAttestation,
 } from '../services/service.claim'
 import { addCredential, updateCredentialStatus } from '../redux/actions'
-import { TCredential, TClaimStatusAndHash } from '../redux/types'
+import { TCredential, THashAndClaimStatus } from '../redux/types'
 import CredentialList from '../components/CredentialList'
 import RequestTokensButton from '../components/RequestTokensButton'
 import BalanceLoadable from '../components/BalanceLoadable'
 import { POLLING_PERIOD_MS } from '../_config'
 import { getInboxUrlFromAddress } from '../utils/utils.messaging'
-import { NonceHash } from '@kiltprotocol/sdk-js/build/types/RequestForAttestation'
 import { getSDKIdentityFromStoredIdentity } from '../utils/utils.identity'
+import { TMapDispatchToProps, TMapStateToProps } from 'src/_types'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -274,17 +274,19 @@ class Dashboard extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: TAppState): any => ({
+const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
   identityFromStore: state.identityReducer.identity,
   credentialsAsObjectFromStore: state.credentialsReducer.credentialsAsObject,
 })
 
-const mapDispatchToProps = (dispatch: Dispatch): any => {
+const mapDispatchToProps = (
+  dispatch: Dispatch
+): Partial<TMapDispatchToProps> => {
   return {
     addCredentialInStore: (credential: TCredential) => {
       dispatch(addCredential(credential))
     },
-    updateCredentialStatusInStore: (hashAndStatus: any) => {
+    updateCredentialStatusInStore: (hashAndStatus: THashAndClaimStatus) => {
       dispatch(updateCredentialStatus(hashAndStatus))
     },
   }

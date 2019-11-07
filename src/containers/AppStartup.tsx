@@ -13,6 +13,7 @@ import LoadingIndicator from '../components/LoadingIndicator'
 import { APP, SETUP } from '../_routes'
 import { mainViewContainer, fullCenter } from '../sharedStyles/styles.layout'
 import { TAppState } from '../redux/reducers'
+import { TMapDispatchToProps, TMapStateToProps } from 'src/_types'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -43,13 +44,15 @@ class AppStartup extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: TAppState): any => {
+const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => {
   return {
     identityFromStore: state.identityReducer.identity,
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): any => {
+const mapDispatchToProps = (
+  dispatch: Dispatch
+): Partial<TMapDispatchToProps> => {
   return {
     setIdentityInStore: (identity: Identity) => {
       dispatch(setIdentity(identity))
