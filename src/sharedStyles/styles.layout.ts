@@ -1,6 +1,8 @@
 import { ViewStyle } from 'react-native'
 
+// ---------------------
 // Containers
+// ---------------------
 
 export const mainViewContainer: ViewStyle = {
   marginTop: 64,
@@ -17,7 +19,9 @@ export const fixedHeight: ViewStyle = {
   height: 24,
 }
 
+// ---------------------
 // Flex
+// ---------------------
 
 export const flexRowWrapLayout: ViewStyle = {
   flexDirection: 'row',
@@ -48,7 +52,9 @@ export const flexRowEndLayout: ViewStyle = {
   justifyContent: 'flex-end',
 }
 
+// ---------------------
 // Dialog
+// ---------------------
 
 export const dialog = {
   // 70% screen width
@@ -59,7 +65,9 @@ export const dialogContent = {
   paddingTop: 24,
 }
 
+// ---------------------
 // Image background
+// ---------------------
 
 export const imgBckgrd = {
   height: '100%',

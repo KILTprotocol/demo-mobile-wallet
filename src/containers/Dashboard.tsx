@@ -39,6 +39,7 @@ import {
   TCredential,
   THashAndClaimStatus,
   TDriversLicenseClaimContents,
+  TCredentialMapByHash,
 } from '../_types'
 import CredentialList from '../components/CredentialList'
 import RequestTokensButton from '../components/RequestTokensButton'
@@ -52,8 +53,7 @@ type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   identityFromStore: Identity | null
   // TODO  TCredential[] vs ... ? see T branch
-  // credentialsFromStore: TCredential[]
-  credentialsAsObjectFromStore: any
+  credentialsAsObjectFromStore: TCredentialMapByHash
   addCredentialInStore: typeof addCredential
   updateCredentialStatusInStore: typeof updateCredentialStatus
 }
@@ -115,7 +115,6 @@ class Dashboard extends React.Component<Props, State> {
           status: CredentialStatus.AttestationPending,
           contents: requestForAttestation.claim.contents,
         })
-        // TODO fix
         const claimerIdentity = getSDKIdentityFromStoredIdentity(
           identityFromStore
         )

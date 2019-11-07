@@ -31,6 +31,13 @@ export type TDriversLicenseClaimContents = {
   type: string
 }
 
+export type TCredentialMapByHash = { [key: string]: TCredential }
+
+export type TMapStateToProps = {
+  identityFromStore: Identity
+  credentialsAsObjectFromStore: TCredentialMapByHash
+}
+
 // ---------------------
 // Redux: Actions
 // ---------------------
@@ -76,9 +83,4 @@ export type TMapDispatchToProps = {
   resetIdentityInStore: () => void
   setIdentityInStore: (identity: Identity) => void
   deleteAllCredentialsInStore: (hashAndStatus: THashAndClaimStatus) => void
-}
-
-export type TMapStateToProps = {
-  identityFromStore: Identity
-  credentialsAsObjectFromStore: any
 }
