@@ -43,7 +43,14 @@ Follow https://facebook.github.io/react-native/docs/running-on-device#running-yo
   * Menu > Hardware > Shake gesture
   * Select Toggle inspector
 
-### Troubleshooting (how this project is created)
+### Troubleshooting: run
+
+Experiencing issues with your redux store not updating?
+
+Keep in mind that we're using redux-persist and that some of the state is persisted to the async storage, aka the local device storage.
+To truly reset the store, you mind need to temporarily comment out the `whitelist` attribute in `store.ts` (or change the key to `blacklist`) and refresh the app.
+
+### Troubleshooting: setup
 
 * Ran `react-native init`.
 * Added the built KILT sdk-js as a folder (`kiltsdk`) in the root level of the app.
