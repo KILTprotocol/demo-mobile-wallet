@@ -1,22 +1,19 @@
-import { TAction } from './actionsTSTypes'
+import {
+  ADD_CREDENTIAL,
+  DELETE_ALL_CREDENTIALS,
+  UPDATE_CREDENTIAL_STATUS,
+} from './actionTypes'
+import { TAction } from './types'
 import { TAppState } from './reducers'
-import { CredentialStatus } from '../_enums'
 
-export type TCredential = {
-  title: string
-  contents: object
-  hash: string
-  cTypeHash: NonceHash
-  status: CredentialStatus
-}
-// TODO clean anys
-
-const credentialsDefault: TCredential[] = []
+// TODO clean any
 
 const INITIAL_STATE = {
-  credentials: credentialsDefault,
+  // TODO set up real type
+  credentialsAsObject: {},
 }
 
+// TODO change name of credential, since a credential is only when attested
 export default function credentialsReducer(
   state = INITIAL_STATE,
   action: TAction
@@ -25,13 +22,35 @@ export default function credentialsReducer(
     case ADD_CREDENTIAL:
       return {
         ...state,
-        credentials: [...state.credentials, action.payload],
+        credentialsAsObject: {
+          ...state.credentialsAsObject,
+          [action.payload.hash]: action.payload,
+        },
       }
     case DELETE_ALL_CREDENTIALS:
       return {
         ...state,
-        credentials: [],
+        credentialsAsObject: {},
       }
+    case UPDATE_CREDENTIAL_STATUS:
+      console.log('updating credential status', action.payload.hash)
+      // TODO fix
+      if (state.credentialsAsObject[action.payload.hash]) {
+        const newState = {
+          ...state,
+          credentialsAsObject: {
+            ...state.credentialsAsObject,
+            [action.payload.hash]: {
+              ...state.credentialsAsObject[action.payload.hash],
+              status: action.payload.status,
+            },
+          },
+        }
+        console.log('========))))))', newState.credentialsAsObject)
+        return newState
+      }
+      return state
+
     default:
       return state
   }

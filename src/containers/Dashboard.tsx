@@ -1,45 +1,58 @@
 import React from 'react'
-import { View, Text, Linking } from 'react-native'
+import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
-import { Identity } from '@kiltprotocol/sdk-js'
+import {
+  Identity,
+  IEncryptedMessage,
+  Message,
+  IMessage,
+  MessageBodyType,
+} from '@kiltprotocol/sdk-js'
 import { Dispatch } from 'redux'
 import {
   NavigationScreenProp,
   NavigationState,
   NavigationParams,
 } from 'react-navigation'
-import { AppState } from '../redux/reducers'
-import { AsyncStatus, LoadingIndicatorSize, CredentialStatus } from '../_enums'
+import { TAppState } from '../redux/reducers'
+import { AsyncStatus, CredentialStatus } from '../_enums'
 import IdentityDisplay from '../components/IdentityDisplay'
 import KiltButton from '../components/KiltButton'
-import BalanceDisplay from '../components/BalanceDisplay'
-import LoadingIndicator from '../components/LoadingIndicator'
 import { getBalanceInKiltCoins } from '../services/service.balance'
 import {
   mainViewContainer,
   sectionContainer,
-  fixedHeight,
 } from '../sharedStyles/styles.layout'
 import {
   sectionTitleTxt,
   mainTitleTxt,
 } from '../sharedStyles/styles.typography'
 import WithDefaultBackground from '../components/WithDefaultBackground'
-import { getRequestTokensUrl } from '../utils/utils.faucet'
 import CredentialsDialog from '../components/CredentialsDialog'
 import {
   createDriversLicenseClaim,
   createRequestForAttestation,
-  DriversLicenseClaimContents,
+  TDriversLicenseClaimContents,
+  sendRequestForAttestation,
 } from '../services/service.claim'
+import { addCredential, updateCredentialStatus } from '../redux/actions'
+import { TCredential, TClaimStatusAndHash } from '../redux/types'
 import CredentialList from '../components/CredentialList'
 import RequestTokensButton from '../components/RequestTokensButton'
 import BalanceLoadable from '../components/BalanceLoadable'
+import { POLLING_PERIOD_MS } from '../_config'
+import { getInboxUrlFromAddress } from '../utils/utils.messaging'
+import { NonceHash } from '@kiltprotocol/sdk-js/build/types/RequestForAttestation'
+import { getSDKIdentityFromStoredIdentity } from '../utils/utils.identity'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   identityFromStore: Identity | null
+  // TODO  TCredential[] vs ... ? see T branch
+  // credentialsFromStore: TCredential[]
+  credentialsAsObjectFromStore: any
   addCredentialInStore: typeof addCredential
+  updateCredentialStatusInStore: typeof updateCredentialStatus
 }
 
 type State = {
@@ -47,6 +60,8 @@ type State = {
   isDialogVisible: boolean
   balanceAsyncStatus: AsyncStatus
   claimContents: object
+  msgsHashes: string[]
+  msgs: IEncryptedMessage[]
 }
 
 class Dashboard extends React.Component<Props, State> {
@@ -54,14 +69,19 @@ class Dashboard extends React.Component<Props, State> {
     header: null,
   }
 
+  static interval: NodeJS.Timeout
+
   state = {
     balance: 0,
-    balanceStatus: AsyncStatus.NotStarted,
+    balanceAsyncStatus: AsyncStatus.NotStarted,
     isDialogVisible: false,
     claimContents: {},
+    msgsHashes: [],
+    msgs: [],
   }
 
   closeDialog(): void {
+    // TODO also empty claim contents?
     this.setState({ isDialogVisible: false })
   }
 
@@ -70,38 +90,40 @@ class Dashboard extends React.Component<Props, State> {
   }
 
   // TODO function styles
-  onPressOK = () => {
+  createClaimAndRequestAttestation = () => {
     const { claimContents } = this.state
     const { identityFromStore, addCredentialInStore } = this.props
 
     const claim = createDriversLicenseClaim(
-      claimContents as DriversLicenseClaimContents,
+      claimContents as TDriversLicenseClaimContents,
       identityFromStore
     )
     if (claim) {
-      console.log('identityFromStore', identityFromStore)
       const requestForAttestation = createRequestForAttestation(
         claim,
         identityFromStore
       )
-      console.log('requestForAttestation', requestForAttestation)
       if (requestForAttestation) {
         addCredentialInStore({
-          // TODO let user pick claim name
+          // TODO let user pick and edit claim name
           title: "Driver's License",
           hash: requestForAttestation.hash,
           cTypeHash: requestForAttestation.ctypeHash,
           status: CredentialStatus.AttestationPending,
           contents: requestForAttestation.claim.contents,
         })
+        // TODO fix
+        const claimerIdentity = getSDKIdentityFromStoredIdentity(
+          identityFromStore
+        )
+        sendRequestForAttestation(requestForAttestation, claimerIdentity)
       }
     }
     this.closeDialog()
   }
 
-  onChangeText = (inputValue: string, ppty: string) => {
-    // the claim contents are generated based purely on the input fields, which themselves are generated from the CTYPE
-    // this way, we remain flexible/modular: changing the CTYPE automatically changes this logics
+  onChangeClaimContentsInputs = (inputValue: string, ppty: string) => {
+    // claim contents are generated from the input fields, which themselves are generated from the CTYPE json, to be flexible. Changing the CTYPE automatically changes this logics.
     this.setState(state => ({
       claimContents: { ...state.claimContents, [ppty]: inputValue },
     }))
@@ -121,11 +143,88 @@ class Dashboard extends React.Component<Props, State> {
       balance,
       balanceAsyncStatus: AsyncStatus.Success,
     }))
+
+    // polling for new messages
+    Dashboard.interval = setInterval(
+      this.fetchAndHandleMessagesToUser,
+      POLLING_PERIOD_MS
+    )
+    // TODO: long poll, static vs not, async function subscribe()... ????
+  }
+
+  getNewMsgsHashes(prevMsgsHashes: string[], msgsHashes: string[]): string[] {
+    return msgsHashes.filter(hash => !prevMsgsHashes.includes(hash))
+  }
+
+  handleNewMsgs(newMsgsHashes: string[]): void {
+    // TODO `this` here?
+    const { identityFromStore, updateCredentialStatusInStore } = this.props
+    console.log('💥💥💥 New messages received', newMsgsHashes[0])
+    newMsgsHashes.map(h => {
+      // TODO merge mgs and hashes
+      const fullMsg = this.state.msgs.filter(m => m.hash === h)[0]
+      console.log(fullMsg)
+      const claimerIdentity = getSDKIdentityFromStoredIdentity(
+        identityFromStore
+      )
+      // TODO check message owner ++++++++++
+      const m: IMessage = Message.createFromEncryptedMessage(
+        fullMsg,
+        claimerIdentity
+      )
+      console.log('CLAIM', m)
+      if (m.body.type === MessageBodyType.SUBMIT_ATTESTATION_FOR_CLAIM) {
+        const hashAndStatus = {
+          status: CredentialStatus.Valid,
+          hash: m.body.content.attestation.claimHash,
+        }
+        console.log('ATTESTED', hashAndStatus)
+        updateCredentialStatusInStore(hashAndStatus)
+      }
+    })
+  }
+
+  componentDidUpdate(prevProps, prevState: State): void {
+    const { msgsHashes } = this.state
+    const prevMsgsHashes = prevState.msgsHashes
+    const newMsgsHashes = this.getNewMsgsHashes(prevMsgsHashes, msgsHashes)
+    if (newMsgsHashes.length > 0) {
+      // only handle new messages, here message deletion is irrelevant
+      this.handleNewMsgs(newMsgsHashes)
+    }
+  }
+
+  fetchAndHandleMessagesToUser = async () => {
+    const { identityFromStore } = this.props
+    if (!identityFromStore) {
+      return
+    }
+    fetch(getInboxUrlFromAddress(identityFromStore.address))
+      .then(response => {
+        return response.json()
+      })
+      .catch(error => {
+        console.log(error)
+        return null
+      })
+      .then((encryptedMessages: IEncryptedMessage[]) => {
+        const encryptedMsgsHashes = encryptedMessages.map(msg => msg.hash)
+        this.setState({
+          // TODO merge
+          msgsHashes: encryptedMsgsHashes,
+          msgs: encryptedMessages,
+        })
+      })
+  }
+
+  componentWillUnmount(): void {
+    clearInterval(Dashboard.interval)
   }
 
   render(): JSX.Element {
-    const { credentialsFromStore, identityFromStore } = this.props
-    const { balance, balanceStatus, isDialogVisible } = this.state
+    const { credentialsAsObjectFromStore, identityFromStore } = this.props
+    const { balance, balanceAsyncStatus, isDialogVisible } = this.state
+    const credentials = Object.values(credentialsAsObjectFromStore)
     return (
       <WithDefaultBackground>
         <View style={mainViewContainer}>
@@ -150,7 +249,7 @@ class Dashboard extends React.Component<Props, State> {
           </View>
           <View style={sectionContainer}>
             <Text style={sectionTitleTxt}>My credentials</Text>
-            {credentialsFromStore.length < 1 && (
+            {credentials.length < 1 && (
               <KiltButton
                 title="Request driver's license"
                 onPress={() => {
@@ -159,23 +258,15 @@ class Dashboard extends React.Component<Props, State> {
               />
             )}
           </View>
-          {credentialsFromStore.map((cred: CredentialType) => (
-            <View style={sectionContainer} key={cred.hash}>
-              <Credential
-                title={cred.title}
-                status={cred.status}
-                contents={cred.contents}
-              />
-            </View>
-          ))}
+          <CredentialList credentials={credentials || []} />
         </View>
         <CredentialsDialog
           claimerIdentity={identityFromStore}
           visible={isDialogVisible}
           onPressCancel={() => this.closeDialog()}
-          onPressOK={() => this.onPressOK()}
+          onPressOK={() => this.createClaimAndRequestAttestation()}
           onChangeText={(inputValue, ppty) =>
-            this.onChangeText(inputValue, ppty)
+            this.onChangeClaimContentsInputs(inputValue, ppty)
           }
         />
       </WithDefaultBackground>
@@ -183,15 +274,18 @@ class Dashboard extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: AppState): any => ({
+const mapStateToProps = (state: TAppState): any => ({
   identityFromStore: state.identityReducer.identity,
-  credentialsFromStore: state.credentialsReducer.credentials,
+  credentialsAsObjectFromStore: state.credentialsReducer.credentialsAsObject,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch): any => {
   return {
-    addCredentialInStore: (credential: CredentialType) => {
+    addCredentialInStore: (credential: TCredential) => {
       dispatch(addCredential(credential))
+    },
+    updateCredentialStatusInStore: (hashAndStatus: any) => {
+      dispatch(updateCredentialStatus(hashAndStatus))
     },
   }
 }
