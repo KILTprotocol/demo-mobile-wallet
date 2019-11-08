@@ -30,9 +30,12 @@ Utilities such as prettier, eslint and commit linting are set up.
 * Start the automatic attestation service (kilt-cli):
 `npx ts-node kilt-cli.ts --ctype "0x4edaa5b8eea2e071dfe48724f6789d6741c1ce0e0f4466079a1d78ef0c02aea2" --seed "snake rabbit relief hotel naive quiz chicken square office identify obscure tired" --timeout 1`
   
-### Run on a physical device
+### Run on a physical device (iPhone)
 
-Follow https://facebook.github.io/react-native/docs/running-on-device#running-your-app-on-ios-devices
+* Prerequisites: follow https://facebook.github.io/react-native/docs/running-on-device#running-your-app-on-ios-devices. Most importantly, you should have a developer account.
+* Open XCode and `KILTDemoMobileWallet.xcworkspace` (not the project file but the workspace one, this is important!)
+* Connect your phone to your laptop, you should see your device displayed as a target in XCode
+* Hit "launch" in XCode
 
 ### How to debug
 
@@ -46,14 +49,16 @@ Follow https://facebook.github.io/react-native/docs/running-on-device#running-yo
   * Menu > Hardware > Shake gesture
   * Select Toggle inspector
 
-### Troubleshooting: run
+## Dev troubleshooting
+
+### Troubles to run
 
 Experiencing issues with your redux store not updating?
 
 Keep in mind that we're using redux-persist and that some of the state is persisted to the async storage, aka the local device storage.
 To truly reset the store, you mind need to temporarily comment out the `whitelist` attribute in `store.ts` (or change the key to `blacklist`) and refresh the app.
 
-### Troubleshooting: setup
+### Troubles to setup
 
 * Ran `react-native init`.
 * Added the built KILT sdk-js as a folder (`kiltsdk`) in the root level of the app.
