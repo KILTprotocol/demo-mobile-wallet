@@ -1,9 +1,10 @@
 import { createBottomTabNavigator } from 'react-navigation-tabs'
+import { ACCOUNT, CONTACTS, DASHBOARD, SETTINGS } from '../_routes'
+import Account from './Account'
 import Dashboard from '../containers/Dashboard'
 import Settings from './Settings'
-import { CONTACTS, DASHBOARD, SETTINGS } from '../_routes'
 import Contacts from './Contacts'
-import { TXT_S_SIZE } from '../sharedStyles/styles.consts.typography'
+import { TXT_XS_SIZE } from '../sharedStyles/styles.consts.typography'
 import {
   KILT_PURPLE_CLR,
   TXT_INVERTED_CLR,
@@ -14,16 +15,19 @@ const tabBarOptions = {
   activeTintColor: TXT_INVERTED_CLR,
   inactiveTintColor: TXT_INVERTED_LIGHT_CLR,
   labelStyle: {
-    fontSize: TXT_S_SIZE,
+    fontSize: TXT_XS_SIZE,
   },
   style: {
     backgroundColor: KILT_PURPLE_CLR,
+    height: 64,
+    paddingVertical: 18,
   },
 }
 
 const TabNavigator = createBottomTabNavigator(
   {
     [DASHBOARD]: Dashboard,
+    [ACCOUNT]: Account,
     [CONTACTS]: Contacts,
     [SETTINGS]: Settings,
   },
