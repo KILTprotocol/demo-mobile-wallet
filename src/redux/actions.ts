@@ -1,10 +1,12 @@
-import { Identity } from '@kiltprotocol/sdk-js'
+import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
 import {
   RESET_IDENTITY,
   SET_IDENTITY,
   ADD_CREDENTIAL,
   DELETE_ALL_CREDENTIALS,
   UPDATE_CREDENTIAL_STATUS,
+  SET_PUBLIC_IDENTITY,
+  RESET_PUBLIC_IDENTITY,
 } from './actionTypes'
 import { TAppAction, TCredential, THashAndClaimStatus } from '../_types'
 
@@ -15,6 +17,17 @@ export const setIdentity = (identity: Identity | null): TAppAction => ({
 
 export const resetIdentity = (): TAppAction => ({
   type: RESET_IDENTITY,
+})
+
+export const setPublicIdentity = (
+  publicIdentity: PublicIdentity | null
+): TAppAction => ({
+  type: SET_PUBLIC_IDENTITY,
+  payload: publicIdentity,
+})
+
+export const resetPublicIdentity = (): TAppAction => ({
+  type: RESET_PUBLIC_IDENTITY,
 })
 
 export const addCredential = (credential: TCredential): TAppAction => ({
