@@ -1,6 +1,5 @@
 import React from 'react'
 import Dialog from 'react-native-dialog'
-import { Identity } from '@kiltprotocol/sdk-js'
 const ctype = require('../data/ctypeDriversLicense.json')
 const driversLicenseProperties = Object.keys(ctype.metadata.properties)
 
@@ -8,7 +7,6 @@ type Props = {
   onPressCancel: () => void
   onPressOK: () => void
   onChangeText: (inputValue: string, ppty: string) => void
-  claimerIdentity: Identity | null
   visible: boolean
 }
 

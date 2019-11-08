@@ -228,7 +228,6 @@ class Dashboard extends React.Component<Props, State> {
           <CredentialList credentials={credentials || []} />
         </ScrollView>
         <CredentialsDialog
-          claimerIdentity={identityFromStore}
           visible={isDialogVisible}
           onPressCancel={() => this.closeDialog()}
           onPressOK={() => {
