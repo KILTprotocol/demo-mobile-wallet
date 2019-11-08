@@ -16,10 +16,8 @@ import {
   ScrollView,
 } from 'react-navigation'
 import { TAppState } from '../redux/reducers'
-import { AsyncStatus, CredentialStatus } from '../_enums'
-import IdentityDisplay from '../components/IdentityDisplay'
+import { CredentialStatus } from '../_enums'
 import KiltButton from '../components/KiltButton'
-import { getBalanceInKiltCoins } from '../services/service.balance'
 import {
   mainViewContainer,
   sectionContainer,
@@ -43,8 +41,6 @@ import {
   TCredentialMapByHash,
 } from '../_types'
 import CredentialList from '../components/CredentialList'
-import RequestTokensButton from '../components/RequestTokensButton'
-import BalanceLoadable from '../components/BalanceLoadable'
 import { POLLING_PERIOD_MS } from '../_config'
 import { getInboxUrlFromAddress } from '../utils/utils.messaging'
 import { getSDKIdentityFromStoredIdentity } from '../utils/utils.identity'
@@ -59,9 +55,7 @@ type Props = {
 }
 
 type State = {
-  balance: number
   isDialogVisible: boolean
-  balanceAsyncStatus: AsyncStatus
   claimContents: object
   msgsHashes: string[]
   msgs: IEncryptedMessage[]
@@ -75,8 +69,6 @@ class Dashboard extends React.Component<Props, State> {
   static interval: NodeJS.Timeout
 
   state = {
-    balance: 0,
-    balanceAsyncStatus: AsyncStatus.NotStarted,
     isDialogVisible: false,
     claimContents: {},
     msgsHashes: [],
@@ -95,12 +87,10 @@ class Dashboard extends React.Component<Props, State> {
   createClaimAndRequestAttestation = () => {
     const { claimContents } = this.state
     const { identityFromStore, addCredentialInStore } = this.props
-
     const claim = createDriversLicenseClaim(
       claimContents as TDriversLicenseClaimContents,
       identityFromStore
     )
-
     if (!claim || !identityFromStore) {
       return
     }
@@ -131,20 +121,6 @@ class Dashboard extends React.Component<Props, State> {
   }
 
   async componentDidMount(): Promise<void> {
-    const { identityFromStore } = this.props
-    this.setState(prevState => ({
-      ...prevState,
-      balanceAsyncStatus: AsyncStatus.Pending,
-    }))
-    const balance = identityFromStore
-      ? await getBalanceInKiltCoins(identityFromStore.address)
-      : 0
-    this.setState(prevState => ({
-      ...prevState,
-      balance,
-      balanceAsyncStatus: AsyncStatus.Success,
-    }))
-
     // polling for new messages
     Dashboard.interval = setInterval(
       this.fetchAndHandleMessagesToUser,
@@ -177,13 +153,13 @@ class Dashboard extends React.Component<Props, State> {
       try {
         Message.ensureOwnerIsSender(msg)
         if (msg.body.type === MessageBodyType.SUBMIT_ATTESTATION_FOR_CLAIM) {
-        const hashAndStatus = {
+          const hashAndStatus = {
             hash: msg.body.content.attestation.claimHash,
-          status: CredentialStatus.Valid,
+            status: CredentialStatus.Valid,
+          }
+          console.log('ATTESTED', hashAndStatus)
+          updateCredentialStatusInStore(hashAndStatus)
         }
-        console.log('ATTESTED', hashAndStatus)
-        updateCredentialStatusInStore(hashAndStatus)
-      }
       } catch (error) {
         console.log(error)
       }
@@ -228,7 +204,7 @@ class Dashboard extends React.Component<Props, State> {
 
   render(): JSX.Element {
     const { credentialsAsObjectFromStore, identityFromStore } = this.props
-    const { balance, balanceAsyncStatus, isDialogVisible } = this.state
+    const { isDialogVisible } = this.state
     const credentials = Object.values(credentialsAsObjectFromStore)
     return (
       <WithDefaultBackground>
@@ -237,23 +213,9 @@ class Dashboard extends React.Component<Props, State> {
             <Text style={mainTitleTxt}>Dashboard</Text>
           </View>
           <View style={sectionContainer}>
-            <Text style={sectionTitleTxt}>My identity</Text>
-            {identityFromStore && (
-              <IdentityDisplay address={identityFromStore.address} />
-            )}
-          </View>
-          <View style={sectionContainer}>
-            <Text style={sectionTitleTxt}>KILT account balance</Text>
-            <BalanceLoadable
-              asyncStatus={balanceAsyncStatus}
-              balance={balance}
-            />
-            {identityFromStore && (
-              <RequestTokensButton address={identityFromStore.address} />
-            )}
-          </View>
-          <View style={sectionContainer}>
-            <Text style={sectionTitleTxt}>My credentials</Text>
+            <Text style={sectionTitleTxt}>
+              My credentials ({credentials.length})
+            </Text>
             {credentials.length < 1 && (
               <KiltButton
                 title="Request driver's license"
