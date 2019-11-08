@@ -5,6 +5,7 @@ import {
   NavigationScreenProp,
   NavigationState,
   NavigationParams,
+  ScrollView,
 } from 'react-navigation'
 import KiltButton from '../components/KiltButton'
 import {
@@ -43,7 +44,7 @@ class Settings extends React.Component<Props, null> {
     const { resetIdentityInStore, deleteAllCredentialsInStore } = this.props
     return (
       <WithDefaultBackground>
-        <View style={mainViewContainer}>
+        <ScrollView style={mainViewContainer}>
           <View style={sectionContainer}>
             <Text style={mainTitleTxt}>Settings</Text>
           </View>
@@ -67,7 +68,7 @@ class Settings extends React.Component<Props, null> {
               />
             </View>
           </View>
-        </View>
+        </ScrollView>
       </WithDefaultBackground>
     )
   }

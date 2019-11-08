@@ -5,6 +5,7 @@ import {
   NavigationScreenProp,
   NavigationState,
   NavigationParams,
+  ScrollView,
 } from 'react-navigation'
 import {
   mainViewContainer,
@@ -20,7 +21,7 @@ interface IProps {
 
 const Contacts = ({ navigation }: IProps): JSX.Element => (
   <WithDefaultBackground>
-    <View style={mainViewContainer}>
+    <ScrollView style={mainViewContainer}>
       <View style={sectionContainer}>
         <Text style={mainTitleTxt}>Contacts</Text>
       </View>
@@ -35,7 +36,7 @@ const Contacts = ({ navigation }: IProps): JSX.Element => (
           />
         </View>
       </View>
-    </View>
+    </ScrollView>
   </WithDefaultBackground>
 )
 

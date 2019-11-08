@@ -13,6 +13,7 @@ import {
   NavigationScreenProp,
   NavigationState,
   NavigationParams,
+  ScrollView,
 } from 'react-navigation'
 import { TAppState } from '../redux/reducers'
 import { AsyncStatus, CredentialStatus } from '../_enums'
@@ -230,7 +231,7 @@ class Dashboard extends React.Component<Props, State> {
     const credentials = Object.values(credentialsAsObjectFromStore)
     return (
       <WithDefaultBackground>
-        <View style={mainViewContainer}>
+        <ScrollView style={mainViewContainer}>
           <View style={sectionContainer}>
             <Text style={mainTitleTxt}>Dashboard</Text>
           </View>
@@ -262,7 +263,7 @@ class Dashboard extends React.Component<Props, State> {
             )}
           </View>
           <CredentialList credentials={credentials || []} />
-        </View>
+        </ScrollView>
         <CredentialsDialog
           claimerIdentity={identityFromStore}
           visible={isDialogVisible}
