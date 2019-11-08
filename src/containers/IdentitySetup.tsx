@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import { Dispatch } from 'redux'
-import { Identity } from '@kiltprotocol/sdk-js'
+import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
 import {
   NavigationScreenProp,
   NavigationState,
@@ -21,7 +21,7 @@ import {
 } from '../sharedStyles/styles.typography'
 import IdentitySetupStep from '../components/IdentitySetupStep'
 import { callWithDelay } from '../utils/utils.async'
-import { setIdentity } from '../redux/actions'
+import { setIdentity, setPublicIdentity } from '../redux/actions'
 import { connect } from 'react-redux'
 import { TAppState } from '../redux/reducers'
 import WithIntroBackground from '../components/WithIntroBackground'
@@ -34,6 +34,7 @@ type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   stepDescriptions: object
   setIdentityInStore: typeof setIdentity
+  setPublicIdentityInStore: typeof setPublicIdentity
   identityFromStore: Identity | null
 }
 
@@ -75,10 +76,19 @@ class IdentitySetup extends React.Component<Props, State> {
   }
 
   async componentDidMount(): Promise<void> {
-    const { navigation, setIdentityInStore } = this.props
+    const {
+      navigation,
+      setIdentityInStore,
+      setPublicIdentityInStore,
+    } = this.props
     const mnemonic: string = navigation.getParam('mnemonic')
     const identity = await callWithDelay(this.createIdentity, [mnemonic])
-    if (identity) {
+    const publicIdentity = new PublicIdentity(
+      identity.address,
+      identity.boxPublicKeyAsHex
+    )
+    // TODO separate these into their own functions
+    if (identity && publicIdentity) {
       this.setState(prevState => ({
         ...prevState,
         stepStatuses: {
@@ -88,6 +98,7 @@ class IdentitySetup extends React.Component<Props, State> {
       }))
       // TODO: handle error case
       await callWithDelay(setIdentityInStore, [identity])
+      await callWithDelay(setPublicIdentityInStore, [publicIdentity])
     }
   }
 
@@ -145,6 +156,9 @@ const mapDispatchToProps = (
   return {
     setIdentityInStore: identity => {
       dispatch(setIdentity(identity))
+    },
+    setPublicIdentityInStore: publicIdentity => {
+      dispatch(setPublicIdentity(publicIdentity))
     },
   }
 }

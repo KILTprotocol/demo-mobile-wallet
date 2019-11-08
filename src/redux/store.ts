@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware } from 'redux'
+// import KeyChain from
 import AsyncStorage from '@react-native-community/async-storage'
 import { persistStore, persistReducer } from 'redux-persist'
 import rootReducer from './reducers'
@@ -12,7 +13,7 @@ const persistConfig = {
   storage: AsyncStorage,
   // whitelist = reducers for which we want to persist the state in AsyncStorage
   // TODO only the reducer for the public identity should be whitelisted since the private identity is encrypted
-  whitelist: ['identityReducer', 'credentialsReducer'],
+  whitelist: ['identityReducer', 'publicIdentityReducer', 'credentialsReducer'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
