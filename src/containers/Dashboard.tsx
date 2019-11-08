@@ -158,33 +158,34 @@ class Dashboard extends React.Component<Props, State> {
   }
 
   handleNewMsgs(newMsgsHashes: string[]): void {
-    // TODO `this` here?
     const { identityFromStore, updateCredentialStatusInStore } = this.props
-
     if (!identityFromStore) {
       return
     }
     console.log('💥💥💥 New messages received', newMsgsHashes[0])
     newMsgsHashes.map(h => {
       // TODO merge mgs and hashes
-      const fullMsg = this.state.msgs.filter(m => m.hash === h)[0]
-      console.log(fullMsg)
+      const encryptedMsg = this.state.msgs.find(m => m.hash === h)
+      console.log(encryptedMsg)
       const claimerIdentity = getSDKIdentityFromStoredIdentity(
         identityFromStore
       )
-      // TODO check message owner ++++++++++
-      const m: IMessage = Message.createFromEncryptedMessage(
-        fullMsg,
+      const msg: IMessage = Message.createFromEncryptedMessage(
+        encryptedMsg,
         claimerIdentity
       )
-      console.log('CLAIM', m)
-      if (m.body.type === MessageBodyType.SUBMIT_ATTESTATION_FOR_CLAIM) {
+      try {
+        Message.ensureOwnerIsSender(msg)
+        if (msg.body.type === MessageBodyType.SUBMIT_ATTESTATION_FOR_CLAIM) {
         const hashAndStatus = {
+            hash: msg.body.content.attestation.claimHash,
           status: CredentialStatus.Valid,
-          hash: m.body.content.attestation.claimHash,
         }
         console.log('ATTESTED', hashAndStatus)
         updateCredentialStatusInStore(hashAndStatus)
+      }
+      } catch (error) {
+        console.log(error)
       }
     })
   }
