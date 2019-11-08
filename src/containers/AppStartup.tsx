@@ -1,5 +1,4 @@
 import React from 'react'
-import { Dispatch } from 'redux'
 import {
   NavigationScreenProp,
   NavigationState,
@@ -7,17 +6,15 @@ import {
 } from 'react-navigation'
 import { View } from 'react-native'
 import { Identity } from '@kiltprotocol/sdk-js'
-import { setIdentity } from '../redux/actions'
 import { connect } from 'react-redux'
 import LoadingIndicator from '../components/LoadingIndicator'
 import { APP, SETUP } from '../_routes'
 import { mainViewContainer, fullCenter } from '../sharedStyles/styles.layout'
 import { TAppState } from '../redux/reducers'
-import { TMapDispatchToProps, TMapStateToProps } from '../_types'
+import { TMapStateToProps } from '../_types'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
-  setIdentityInStore: typeof setIdentity
   identityFromStore: Identity | null
 }
 
@@ -50,17 +47,7 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => {
   }
 }
 
-const mapDispatchToProps = (
-  dispatch: Dispatch
-): Partial<TMapDispatchToProps> => {
-  return {
-    setIdentityInStore: (identity: Identity) => {
-      dispatch(setIdentity(identity))
-    },
-  }
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(AppStartup)
