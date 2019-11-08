@@ -7,6 +7,7 @@ import {
   Message,
   IMessage,
   MessageBodyType,
+  PublicIdentity,
 } from '@kiltprotocol/sdk-js'
 import { Dispatch } from 'redux'
 import {
@@ -27,7 +28,7 @@ import {
   mainTitleTxt,
 } from '../sharedStyles/styles.typography'
 import WithDefaultBackground from '../components/WithDefaultBackground'
-import CredentialsDialog from '../components/CredentialsDialog'
+import ClaimDialog from '../components/ClaimDialog'
 import {
   createDriversLicenseClaim,
   createRequestForAttestation,
@@ -49,6 +50,7 @@ import { TMapDispatchToProps, TMapStateToProps } from '../_types'
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   identityFromStore: Identity | null
+  publicIdentityFromStore: PublicIdentity | null
   credentialsAsObjectFromStore: TCredentialMapByHash
   addCredentialInStore: typeof addCredential
   updateCredentialStatusInStore: typeof updateCredentialStatus
@@ -177,11 +179,11 @@ class Dashboard extends React.Component<Props, State> {
   }
 
   fetchAndHandleMessagesToUser = async () => {
-    const { identityFromStore } = this.props
-    if (!identityFromStore) {
+    const { publicIdentityFromStore } = this.props
+    if (!publicIdentityFromStore) {
       return
     }
-    fetch(getInboxUrlFromAddress(identityFromStore.address))
+    fetch(getInboxUrlFromAddress(publicIdentityFromStore.address))
       .then(response => {
         return response.json()
       })
@@ -203,7 +205,7 @@ class Dashboard extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
-    const { credentialsAsObjectFromStore, identityFromStore } = this.props
+    const { credentialsAsObjectFromStore } = this.props
     const { isDialogVisible } = this.state
     const credentials = Object.values(credentialsAsObjectFromStore)
     return (
@@ -245,6 +247,7 @@ class Dashboard extends React.Component<Props, State> {
 
 const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
   identityFromStore: state.identityReducer.identity,
+  publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
   credentialsAsObjectFromStore: state.credentialsReducer.credentialsAsObject,
 })
 
