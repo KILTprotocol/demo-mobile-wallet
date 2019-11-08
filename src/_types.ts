@@ -1,10 +1,12 @@
-import { Identity } from '@kiltprotocol/sdk-js'
+import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
 import {
   SET_IDENTITY,
   RESET_IDENTITY,
   ADD_CREDENTIAL,
   DELETE_ALL_CREDENTIALS,
   UPDATE_CREDENTIAL_STATUS,
+  RESET_PUBLIC_IDENTITY,
+  SET_PUBLIC_IDENTITY,
 } from './redux/actionTypes'
 import { CredentialStatus } from './_enums'
 
@@ -35,6 +37,7 @@ export type TCredentialMapByHash = { [key: string]: TCredential }
 
 export type TMapStateToProps = {
   identityFromStore: Identity
+  publicIdentityFromStore: PublicIdentity
   credentialsAsObjectFromStore: TCredentialMapByHash
 }
 
@@ -49,6 +52,15 @@ type TSetIdentityAction = {
 
 type TResetIdentityAction = {
   type: typeof RESET_IDENTITY
+}
+
+type TSetPublicIdentityAction = {
+  type: typeof SET_PUBLIC_IDENTITY
+  payload: PublicIdentity | null
+}
+
+type TResetPublicIdentityAction = {
+  type: typeof RESET_PUBLIC_IDENTITY
 }
 
 type TAddCredentialAction = {
@@ -69,6 +81,8 @@ type TUpdateCredentialStatusAction = {
 export type TAppAction =
   | TSetIdentityAction
   | TResetIdentityAction
+  | TSetPublicIdentityAction
+  | TResetPublicIdentityAction
   | TAddCredentialAction
   | TDeleteAllCredentialsAction
   | TUpdateCredentialStatusAction
@@ -82,5 +96,6 @@ export type TMapDispatchToProps = {
   updateCredentialStatusInStore: (hashAndStatus: THashAndClaimStatus) => void
   resetIdentityInStore: () => void
   setIdentityInStore: (identity: Identity) => void
+  setPublicIdentityInStore: (publicIdentity: PublicIdentity) => void
   deleteAllCredentialsInStore: (hashAndStatus: THashAndClaimStatus) => void
 }
