@@ -10,7 +10,7 @@ type Props = {
   visible: boolean
 }
 
-class ClaimDialog extends React.Component<Props> {
+class AddClaimDialog extends React.Component<Props> {
   state = {
     // TODO set state as relevant apply styles to disabled btn
     isCreateBtnDisabled: false,
@@ -43,4 +43,4 @@ class ClaimDialog extends React.Component<Props> {
   }
 }
 
-export default ClaimDialog
+export default AddClaimDialog

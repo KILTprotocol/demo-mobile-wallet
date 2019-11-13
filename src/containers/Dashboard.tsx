@@ -28,7 +28,7 @@ import {
   mainTitleTxt,
 } from '../sharedStyles/styles.typography'
 import WithDefaultBackground from '../components/WithDefaultBackground'
-import ClaimDialog from '../components/ClaimDialog'
+import AddClaimDialog from '../components/AddClaimDialog'
 import {
   createDriversLicenseClaim,
   createRequestForAttestation,
@@ -229,7 +229,7 @@ class Dashboard extends React.Component<Props, State> {
           </View>
           <CredentialList credentials={credentials || []} />
         </ScrollView>
-        <ClaimDialog
+        <AddClaimDialog
           visible={isDialogVisible}
           onPressCancel={() => this.closeDialog()}
           onPressOK={() => {
