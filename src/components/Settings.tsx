@@ -16,8 +16,12 @@ import {
 import { mainTitleTxt } from '../sharedStyles/styles.typography'
 import { APP_STARTUP } from '../_routes'
 import WithDefaultBackground from './WithDefaultBackground'
-import { resetIdentity, deleteAllCredentials } from '../redux/actions'
-import { Identity } from '@kiltprotocol/sdk-js'
+import {
+  resetIdentity,
+  deleteAllCredentials,
+  resetPublicIdentity,
+} from '../redux/actions'
+import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
 import { Dispatch } from 'redux'
 import { TMapDispatchToProps, TMapStateToProps } from '../_types'
 import { TAppState } from '../redux/reducers'
@@ -25,23 +29,38 @@ import { TAppState } from '../redux/reducers'
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   identityFromStore: Identity | null
+  publicIdentityFromStore: PublicIdentity | null
   resetIdentityInStore: typeof resetIdentity
+  resetPublicIdentityInStore: typeof resetPublicIdentity
   deleteAllCredentialsInStore: typeof deleteAllCredentials
 }
 
 class Settings extends React.Component<Props, null> {
   static navigationOptions: { header: null }
   componentDidUpdate(): void {
-    // we might want to move this logics up to a higher level component
-    const { identityFromStore, navigation } = this.props
-    // if the identity is reset, navigate to app startup to let the user set their identity anew
-    if (!identityFromStore) {
+    // todo: we might want to move this logics up to a higher level component
+    const { publicIdentityFromStore, navigation } = this.props
+    // if the public identity is reset, navigate to app startup to let the user set their identity anew
+    if (!publicIdentityFromStore) {
       navigation.navigate(APP_STARTUP)
     }
   }
 
+  resetApp(): void {
+    const {
+      resetPublicIdentityInStore,
+      resetIdentityInStore,
+      deleteAllCredentialsInStore,
+    } = this.props
+    // the app is mono-identity so `resetIdentity` means deleting the claims as well
+    // Todo ask user for their thumb!!
+    resetPublicIdentityInStore()
+    resetIdentityInStore()
+    deleteAllCredentialsInStore()
+  }
+
   render(): JSX.Element {
-    const { resetIdentityInStore, deleteAllCredentialsInStore } = this.props
+    const { deleteAllCredentialsInStore } = this.props
     return (
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>
@@ -51,11 +70,9 @@ class Settings extends React.Component<Props, null> {
           <View style={sectionContainer}>
             <View style={flexRowCenterLayout}>
               <KiltButton
-                title="Reset identity"
+                title="Reset app (delete identity and credentials)"
                 onPress={() => {
-                  // since only 1 identity for the MVP, resetIdentity means deleting the claims as well
-                  resetIdentityInStore()
-                  deleteAllCredentialsInStore()
+                  this.resetApp()
                 }}
               />
             </View>
@@ -77,6 +94,7 @@ class Settings extends React.Component<Props, null> {
 const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => {
   return {
     identityFromStore: state.identityReducer.identity,
+    publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
   }
 }
 
@@ -87,13 +105,13 @@ const mapDispatchToProps = (
     resetIdentityInStore: () => {
       dispatch(resetIdentity())
     },
+    resetPublicIdentityInStore: () => {
+      dispatch(resetPublicIdentity())
+    },
     deleteAllCredentialsInStore: () => {
       dispatch(deleteAllCredentials())
     },
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Settings)
+export default connect(mapStateToProps, mapDispatchToProps)(Settings)

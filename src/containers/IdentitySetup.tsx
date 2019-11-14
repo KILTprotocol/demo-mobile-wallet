@@ -2,6 +2,8 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { Dispatch } from 'redux'
 import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
+import * as Keychain from 'react-native-keychain'
+import { connect } from 'react-redux'
 import {
   NavigationScreenProp,
   NavigationState,
@@ -21,11 +23,11 @@ import {
 } from '../sharedStyles/styles.typography'
 import IdentitySetupStep from '../components/IdentitySetupStep'
 import { callWithDelay } from '../utils/utils.async'
-import { setIdentity, setPublicIdentity } from '../redux/actions'
-import { connect } from 'react-redux'
+import { setPublicIdentity, setIdentity } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
 import WithIntroBackground from '../components/WithIntroBackground'
 import { TMapDispatchToProps } from '../_types'
+import { getGenericPassword } from 'react-native-keychain'
 
 const STEP_CREATE = 'create'
 const STEP_SAVE = 'save'
@@ -33,9 +35,10 @@ const STEP_SAVE = 'save'
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   stepDescriptions: object
-  setIdentityInStore: typeof setIdentity
-  setPublicIdentityInStore: typeof setPublicIdentity
   identityFromStore: Identity | null
+  setIdentityInStore: typeof setIdentity
+  publicIdentityFromStore: PublicIdentity | null
+  setPublicIdentityInStore: typeof setPublicIdentity
 }
 
 type State = {
@@ -56,13 +59,15 @@ class IdentitySetup extends React.Component<Props, State> {
     },
   }
 
+  // TODO move to utility file
   createIdentity = (mnemonic: string) => Identity.buildFromMnemonic(mnemonic)
 
   componentDidUpdate(prevProps: Props): void {
-    const { identityFromStore } = this.props
+    const { publicIdentityFromStore } = this.props
+    // TODO check f setup is behaving properly and what heppns if i switch apps before end of setup
     if (
-      prevProps.identityFromStore !== identityFromStore &&
-      identityFromStore !== null
+      prevProps.publicIdentityFromStore !== publicIdentityFromStore &&
+      publicIdentityFromStore !== null
     ) {
       this.setState(prevState => ({
         ...prevState,
@@ -78,8 +83,8 @@ class IdentitySetup extends React.Component<Props, State> {
   async componentDidMount(): Promise<void> {
     const {
       navigation,
-      setIdentityInStore,
       setPublicIdentityInStore,
+      setIdentityInStore,
     } = this.props
     const mnemonic: string = navigation.getParam('mnemonic')
     const identity = await callWithDelay(this.createIdentity, [mnemonic])
@@ -96,8 +101,25 @@ class IdentitySetup extends React.Component<Props, State> {
           [STEP_SAVE]: AsyncStatus.Pending,
         },
       }))
-      // TODO: handle error case
-      await callWithDelay(setIdentityInStore, [identity])
+      // ALSO TODO set normal identity!!!!! since at setup
+      // ALSO: do we want to ask for thumb already??
+      // because at setup time and later on, must be the same person
+      // TODO: handle error cases
+      // TODO move to utility file
+      // TODO use const "identity" for this
+      await Keychain.setGenericPassword('identity', JSON.stringify(identity), {
+        accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_ANY,
+        accessible: Keychain.ACCESSIBLE.WHEN_PASSCODE_SET_THIS_DEVICE_ONLY,
+      })
+      // TODO cleanup
+      const identityWrapper = await getGenericPassword()
+      if (identityWrapper) {
+        // decrypt identity
+        const identityDecrypted = JSON.parse(identityWrapper.password)
+        // add decrypted identity to Redux store for use anywhere in the app, until user leaves the app again or screen locks
+        setIdentityInStore(identityDecrypted)
+      }
+
       await callWithDelay(setPublicIdentityInStore, [publicIdentity])
     }
   }
@@ -147,6 +169,7 @@ IdentitySetup.defaultProps = {
 const mapStateToProps = (state: TAppState): TAppState => {
   return {
     identityFromStore: state.identityReducer.identity,
+    publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
   }
 }
 
@@ -154,16 +177,13 @@ const mapDispatchToProps = (
   dispatch: Dispatch
 ): Partial<TMapDispatchToProps> => {
   return {
-    setIdentityInStore: identity => {
-      dispatch(setIdentity(identity))
-    },
     setPublicIdentityInStore: publicIdentity => {
       dispatch(setPublicIdentity(publicIdentity))
+    },
+    setIdentityInStore: identity => {
+      dispatch(setIdentity(identity))
     },
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IdentitySetup)
+export default connect(mapStateToProps, mapDispatchToProps)(IdentitySetup)

@@ -5,7 +5,7 @@ import {
   NavigationParams,
 } from 'react-navigation'
 import { View } from 'react-native'
-import { Identity } from '@kiltprotocol/sdk-js'
+import { PublicIdentity } from '@kiltprotocol/sdk-js'
 import { connect } from 'react-redux'
 import LoadingIndicator from '../components/LoadingIndicator'
 import { APP, SETUP } from '../_routes'
@@ -15,7 +15,7 @@ import { TMapStateToProps } from '../_types'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
-  identityFromStore: Identity | null
+  publicIdentityFromStore: PublicIdentity | null
 }
 
 class AppStartup extends React.Component<Props> {
@@ -24,10 +24,10 @@ class AppStartup extends React.Component<Props> {
   }
 
   bootstrapAsync = async () => {
-    const { identityFromStore, navigation } = this.props
+    const { publicIdentityFromStore, navigation } = this.props
     // if an identity is already set up, navigate to the regular app
     // if not, navigate to the identity setup screen
-    navigation.navigate(identityFromStore ? APP : SETUP)
+    navigation.navigate(publicIdentityFromStore ? APP : SETUP)
   }
 
   render(): JSX.Element {
@@ -43,11 +43,8 @@ class AppStartup extends React.Component<Props> {
 
 const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => {
   return {
-    identityFromStore: state.identityReducer.identity,
+    publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
   }
 }
 
-export default connect(
-  mapStateToProps,
-  null
-)(AppStartup)
+export default connect(mapStateToProps, null)(AppStartup)
