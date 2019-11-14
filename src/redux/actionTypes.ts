@@ -12,4 +12,9 @@ export const RESET_PUBLIC_IDENTITY = 'RESET_PUBLIC_IDENTITY'
 export const ADD_CREDENTIAL = 'ADD_CREDENTIAL'
 export const DELETE_ALL_CREDENTIALS = 'DELETE_ALL_CREDENTIALS'
 export const UPDATE_CREDENTIAL_STATUS = 'UPDATE_CREDENTIAL_STATUS'
-// TODO multiline comments
+
+/* ---------------------------------- */
+/*              Contacts              */
+/* ---------------------------------- */
+export const ADD_CONTACT = 'ADD_CONTACT'
+export const DELETE_ALL_CONTACTS = 'DELETE_ALL_CONTACTS'

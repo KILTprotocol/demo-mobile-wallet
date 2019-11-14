@@ -7,12 +7,14 @@ import {
   UPDATE_CREDENTIAL_STATUS,
   RESET_PUBLIC_IDENTITY,
   SET_PUBLIC_IDENTITY,
+  ADD_CONTACT,
+  DELETE_ALL_CONTACTS,
 } from './redux/actionTypes'
 import { CredentialStatus } from './_enums'
 
-// ---------------------
-// Claims, Credentials
-// ---------------------
+/* ---------------------------------- */
+/*         Claims, Credentials        */
+/* ---------------------------------- */
 
 export type TCredential = {
   title: string
@@ -35,15 +37,18 @@ export type TDriversLicenseClaimContents = {
 
 export type TCredentialMapByHash = { [key: string]: TCredential }
 
-export type TMapStateToProps = {
-  identityFromStore: Identity
-  publicIdentityFromStore: PublicIdentity
-  credentialsAsObjectFromStore: TCredentialMapByHash
+/* ---------------------------------- */
+/*              Contacts              */
+/* ---------------------------------- */
+
+export type TContact = {
+  address: string
+  name: string
 }
 
-// ---------------------
-// Redux: Actions
-// ---------------------
+/* ---------------------------------- */
+/*           Redux: Actions           */
+/* ---------------------------------- */
 
 type TSetIdentityAction = {
   type: typeof SET_IDENTITY
@@ -78,6 +83,16 @@ type TUpdateCredentialStatusAction = {
   payload: THashAndClaimStatus
 }
 
+// todo harmonize add conbtact vs create contact naming
+type TAddContactAction = {
+  type: typeof ADD_CONTACT
+  payload: TContact
+}
+
+type TDeleteAllContactsAction = {
+  type: typeof DELETE_ALL_CONTACTS
+}
+
 export type TAppAction =
   | TSetIdentityAction
   | TResetIdentityAction
@@ -86,10 +101,12 @@ export type TAppAction =
   | TAddCredentialAction
   | TDeleteAllCredentialsAction
   | TUpdateCredentialStatusAction
+  | TAddContactAction
+  | TDeleteAllContactsAction
 
-// ---------------------
-// Redux: State and Dispatch mapping
-// ---------------------
+/* ---------------------------------- */
+/*      Redux: State and Dispatch     */
+/* ---------------------------------- */
 
 export type TMapDispatchToProps = {
   addCredentialInStore: (credential: TCredential) => void
@@ -97,5 +114,14 @@ export type TMapDispatchToProps = {
   resetIdentityInStore: () => void
   setIdentityInStore: (identity: Identity) => void
   setPublicIdentityInStore: (publicIdentity: PublicIdentity) => void
+  resetPublicIdentityInStore: () => void
   deleteAllCredentialsInStore: (hashAndStatus: THashAndClaimStatus) => void
+  addContactInStore: (contact: TContact) => void
+  deleteAllContactsInStore: () => void
+}
+
+export type TMapStateToProps = {
+  identityFromStore: Identity
+  publicIdentityFromStore: PublicIdentity
+  credentialsAsObjectFromStore: TCredentialMapByHash
 }

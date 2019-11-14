@@ -7,13 +7,30 @@ import {
   UPDATE_CREDENTIAL_STATUS,
   SET_PUBLIC_IDENTITY,
   RESET_PUBLIC_IDENTITY,
+  ADD_CONTACT,
+  DELETE_ALL_CONTACTS,
 } from './actionTypes'
-import { TAppAction, TCredential, THashAndClaimStatus } from '../_types'
+import {
+  TAppAction,
+  TCredential,
+  THashAndClaimStatus,
+  TContact,
+} from '../_types'
 
 export const setIdentity = (identity: Identity | null): TAppAction => ({
   type: SET_IDENTITY,
   payload: identity,
 })
+
+// TODO rename credentials vs claims
+// todo rename reset identity to delete in store
+// todo harmonize create vs add in dialog names, action names, reducers, color names, etc
+// todo rename mnemonic dialog
+// todo rename InStore to InRdxStore
+
+// todo fix folder structure
+
+// todo draw flow and architecture
 
 export const resetIdentity = (): TAppAction => ({
   type: RESET_IDENTITY,
@@ -44,4 +61,13 @@ export const updateCredentialStatus = (
 
 export const deleteAllCredentials = (): TAppAction => ({
   type: DELETE_ALL_CREDENTIALS,
+})
+
+export const addContact = (contact: TContact): TAppAction => ({
+  type: ADD_CONTACT,
+  payload: contact,
+})
+
+export const deleteAllContacts = (): TAppAction => ({
+  type: DELETE_ALL_CONTACTS,
 })

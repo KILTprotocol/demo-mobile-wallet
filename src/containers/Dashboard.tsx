@@ -86,32 +86,40 @@ class Dashboard extends React.Component<Props, State> {
   }
 
   // TODO function styles
-  createClaimAndRequestAttestation = () => {
+  async createClaimAndRequestAttestation(): Promise<void> {
     const { claimContents } = this.state
     const { identityFromStore, addCredentialInStore } = this.props
-    const claim = createDriversLicenseClaim(
-      claimContents as TDriversLicenseClaimContents,
-      identityFromStore
-    )
-    if (!claim || !identityFromStore) {
-      return
-    }
-    const requestForAttestation = createRequestForAttestation(
-      claim,
-      identityFromStore
-    )
-    if (requestForAttestation) {
-      addCredentialInStore({
-        title: "Driver's License",
-        hash: requestForAttestation.hash,
-        cTypeHash: requestForAttestation.ctypeHash.hash,
-        status: CredentialStatus.AttestationPending,
-        contents: requestForAttestation.claim.contents,
-      })
-      const claimerIdentity = getSDKIdentityFromStoredIdentity(
-        identityFromStore
-      )
-      sendRequestForAttestation(requestForAttestation, claimerIdentity)
+    try {
+      if (identityFromStore) {
+        const claim = createDriversLicenseClaim(
+          claimContents as TDriversLicenseClaimContents,
+          identityFromStore
+        )
+        if (!claim || !identityFromStore) {
+          return
+        }
+        const requestForAttestation = createRequestForAttestation(
+          claim,
+          identityFromStore
+        )
+        if (requestForAttestation) {
+          addCredentialInStore({
+            title: "Driver's License",
+            hash: requestForAttestation.hash,
+            cTypeHash: requestForAttestation.ctypeHash.hash,
+            status: CredentialStatus.AttestationPending,
+            contents: requestForAttestation.claim.contents,
+          })
+          const claimerIdentity = getSDKIdentityFromStoredIdentity(
+            identityFromStore
+          )
+          sendRequestForAttestation(requestForAttestation, claimerIdentity)
+        }
+      } else {
+        console.log('No identity found')
+      }
+    } catch (error) {
+      console.log('OK', error)
     }
   }
 
@@ -232,8 +240,8 @@ class Dashboard extends React.Component<Props, State> {
         <AddClaimDialog
           visible={isDialogVisible}
           onPressCancel={() => this.closeDialog()}
-          onPressOK={() => {
-            this.createClaimAndRequestAttestation()
+          onPressOK={async () => {
+            await this.createClaimAndRequestAttestation()
             this.closeDialog()
           }}
           onChangeText={(inputValue, ppty) =>
@@ -264,7 +272,4 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Dashboard)
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
