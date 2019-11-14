@@ -1,6 +1,6 @@
 import React from 'react'
 import { ScrollView, View, Text } from 'react-native'
-import { Identity } from '@kiltprotocol/sdk-js'
+import { PublicIdentity } from '@kiltprotocol/sdk-js'
 import { connect } from 'react-redux'
 import {
   mainViewContainer,
@@ -14,14 +14,14 @@ import {
 import IdentityDisplay from './IdentityDisplay'
 import AddressQRCode from './AddressQRCode'
 import RequestTokensButton from './RequestTokensButton'
-import { TAppState } from 'src/redux/reducers'
+import { TAppState } from '../redux/reducers'
 import { TMapStateToProps } from '../_types'
 import { AsyncStatus } from '../_enums'
 import BalanceLoadable from './BalanceLoadable'
 import { getBalanceInKiltCoins } from '../services/service.balance'
 
 type Props = {
-  identityFromStore: Identity | null
+  publicIdentityFromStore: PublicIdentity | null
 }
 
 type State = {
@@ -40,14 +40,16 @@ class Account extends React.Component<Props, State> {
   }
 
   async componentDidMount(): Promise<void> {
-    const { identityFromStore } = this.props
+    const { publicIdentityFromStore } = this.props
+    const address = publicIdentityFromStore
+      ? publicIdentityFromStore.address
+      : null
+
     this.setState(prevState => ({
       ...prevState,
       balanceAsyncStatus: AsyncStatus.Pending,
     }))
-    const balance = identityFromStore
-      ? await getBalanceInKiltCoins(identityFromStore.address)
-      : 0
+    const balance = address ? await getBalanceInKiltCoins(address) : 0
     this.setState(prevState => ({
       ...prevState,
       balance,
@@ -56,7 +58,10 @@ class Account extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
-    const { identityFromStore } = this.props
+    const { publicIdentityFromStore } = this.props
+    const address = publicIdentityFromStore
+      ? publicIdentityFromStore.address
+      : null
     const { balance, balanceAsyncStatus } = this.state
     return (
       <WithDefaultBackground>
@@ -66,12 +71,8 @@ class Account extends React.Component<Props, State> {
           </View>
           <View style={sectionContainer}>
             <Text style={sectionTitleTxt}>My address</Text>
-            {identityFromStore && (
-              <IdentityDisplay address={identityFromStore.address} />
-            )}
-            {identityFromStore && (
-              <AddressQRCode address={identityFromStore.address} />
-            )}
+            {address && <IdentityDisplay address={address} />}
+            {address && <AddressQRCode address={address} />}
           </View>
           <View style={sectionContainer}>
             <Text style={sectionTitleTxt}>KILT account balance</Text>
@@ -79,9 +80,7 @@ class Account extends React.Component<Props, State> {
               asyncStatus={balanceAsyncStatus}
               balance={balance}
             />
-            {identityFromStore && (
-              <RequestTokensButton address={identityFromStore.address} />
-            )}
+            {address && <RequestTokensButton address={address} />}
           </View>
         </ScrollView>
       </WithDefaultBackground>
@@ -90,7 +89,7 @@ class Account extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
-  identityFromStore: state.identityReducer.identity,
+  publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
 })
 
 export default connect(mapStateToProps)(Account)
