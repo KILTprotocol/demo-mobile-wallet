@@ -29,7 +29,7 @@ type Props = {
 
 type State = {
   mnemonic: string
-  visible: boolean
+  dialogVisible: boolean
 }
 
 class MnemonicCreation extends React.Component<Props, State> {
@@ -39,7 +39,7 @@ class MnemonicCreation extends React.Component<Props, State> {
 
   state = {
     mnemonic: Identity.generateMnemonic(),
-    visible: false,
+    dialogVisible: false,
   }
 
   componentWillUnmount(): void {
@@ -47,16 +47,16 @@ class MnemonicCreation extends React.Component<Props, State> {
   }
 
   closeDialog(): void {
-    this.setState({ visible: false })
+    this.setState({ dialogVisible: false })
   }
 
   openDialog(): void {
-    this.setState({ visible: true })
+    this.setState({ dialogVisible: true })
   }
 
   render(): JSX.Element {
     const { navigation } = this.props
-    const { mnemonic, visible } = this.state
+    const { mnemonic, dialogVisible } = this.state
     return (
       <WithIntroBackground>
         <View style={mainViewContainer}>
@@ -84,7 +84,7 @@ class MnemonicCreation extends React.Component<Props, State> {
             </View>
           </View>
           <MnemonicDialog
-            visible={visible}
+            visible={dialogVisible}
             onPressCancel={() => this.closeDialog()}
             onPressOK={() => {
               this.closeDialog()
