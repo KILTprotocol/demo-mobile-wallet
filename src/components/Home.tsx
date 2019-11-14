@@ -1,13 +1,43 @@
-import React from 'react'
-import { Text, View } from 'react-native'
-import { mainViewContainer } from '../sharedStyles/styles.layout'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
+import { ACCOUNT, CONTACTS, DASHBOARD, SETTINGS } from '../_routes'
+import Account from './Account'
+import Dashboard from '../containers/Dashboard'
+import Settings from './Settings'
+import Contacts from './Contacts'
+import { TXT_XS_SIZE } from '../sharedStyles/styles.consts.typography'
+import {
+  KILT_PURPLE_CLR,
+  TXT_INVERTED_CLR,
+  TXT_INVERTED_LIGHT_CLR,
+} from '../sharedStyles/styles.consts.colors'
 
-const Home: React.FunctionComponent = (): JSX.Element => (
-  <View style={mainViewContainer}>
-    <Text>
-      This should be a tabbed view containing the dashboard, contacts, etc
-    </Text>
-  </View>
+const tabBarOptions = {
+  activeTintColor: TXT_INVERTED_CLR,
+  inactiveTintColor: TXT_INVERTED_LIGHT_CLR,
+  labelStyle: {
+    fontSize: TXT_XS_SIZE,
+  },
+  style: {
+    backgroundColor: KILT_PURPLE_CLR,
+    height: 64,
+    paddingVertical: 18,
+  },
+}
+
+const TabNavigator = createBottomTabNavigator(
+  {
+    [DASHBOARD]: Dashboard,
+    [ACCOUNT]: Account,
+    [CONTACTS]: Contacts,
+    [SETTINGS]: Settings,
+  },
+  {
+    tabBarOptions,
+  }
 )
 
-export default Home
+TabNavigator.navigationOptions = {
+  header: null,
+}
+
+export default TabNavigator

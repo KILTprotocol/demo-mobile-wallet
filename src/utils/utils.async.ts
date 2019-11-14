@@ -1,6 +1,6 @@
-const DEFAULT_DELAY = 2000
+const DEFAULT_DELAY = 800
 
-// Used for UI, to prevent rendering flashes
+// used for UI, to prevent rendering flashes
 async function callWithDelay<T>(
   func: (...args: any[]) => T,
   params: any[] = [],

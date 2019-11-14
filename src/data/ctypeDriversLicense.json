@@ -1,0 +1,43 @@
+{
+  "schema": {
+    "$id": "driverslicenseminimal",
+    "$schema": "http://kilt-protocol.org/draft-01/ctype#",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "birthday": {
+        "type": "string"
+      },
+      "license": {
+        "type": "string"
+      }
+    },
+    "type": "object"
+  },
+  "metadata": {
+    "title": {
+      "default": "driverslicenseminimal"
+    },
+    "description": {},
+    "properties": {
+      "name": {
+        "title": {
+          "default": "name"
+        }
+      },
+      "birthday": {
+        "title": {
+          "default": "birthday"
+        }
+      },
+      "license": {
+        "title": {
+          "default": "license"
+        }
+      }
+    }
+  },
+  "owner": "5EeL6Hermg1c9fEDyuRQjwMu4XVGqqPwgrLhckjDh1RtLGd9",
+  "hash": "0x4edaa5b8eea2e071dfe48724f6789d6741c1ce0e0f4466079a1d78ef0c02aea2"
+}

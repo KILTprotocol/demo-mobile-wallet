@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import FadeInView from '../components/FadeInView'
+import WithFadeInAnimation from '../components/WithFadeInAnimation'
 import { flexRowWrapLayout } from '../sharedStyles/styles.layout'
 import { bodyEmphasizedTxt } from '../sharedStyles/styles.typography'
 
@@ -16,12 +16,12 @@ const Mnemonic: React.FunctionComponent<Props> = ({
 }): JSX.Element => (
   <View style={flexRowWrapLayout}>
     {mnemonic.split(' ').map(word => (
-      <FadeInView
+      <WithFadeInAnimation
         key={word}
         delay={Math.random() * MAX_DELAY_MS}
         duration={TOTAL_ANIM_DURATION_MS}>
         <Text style={bodyEmphasizedTxt}>{word}</Text>
-      </FadeInView>
+      </WithFadeInAnimation>
     ))}
   </View>
 )

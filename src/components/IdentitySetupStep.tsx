@@ -1,13 +1,14 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { bodyTxt } from '../sharedStyles/styles.typography'
-import { flexRowLayout } from '../sharedStyles/styles.layout'
+import { View, Text } from 'react-native'
 import {
-  SUCCESS_CLR,
-  TXT_LIGHT_CLR,
-  ERROR_CLR,
-  TXT_DEFAULT_CLR,
-} from '../sharedStyles/styles.consts.colors'
+  bodyTxt,
+  bodyInvertedClrTxt,
+  txtNotStarted,
+  txtPending,
+  txtSuccess,
+  txtError,
+} from '../sharedStyles/styles.typography'
+import { flexRowLayout } from '../sharedStyles/styles.layout'
 import { AsyncStatus } from '../_enums'
 import LoadingIndicator from '../components/LoadingIndicator'
 import TxtCentered from './TxtCentered'
@@ -23,37 +24,22 @@ const iconContainer = {
   textAlign: 'center',
 }
 
-const styles = StyleSheet.create({
-  txtNotStarted: {
-    color: TXT_LIGHT_CLR,
-  },
-  txtSuccess: {
-    color: SUCCESS_CLR,
-  },
-  txtError: {
-    color: ERROR_CLR,
-  },
-  txtPending: {
-    color: TXT_DEFAULT_CLR,
-  },
-})
-
 const statusToUiMapping = {
   [AsyncStatus.NotStarted]: {
     component: <TxtCentered />,
-    txtStyle: styles.txtNotStarted,
+    txtStyle: txtNotStarted,
   },
   [AsyncStatus.Pending]: {
     component: <LoadingIndicator />,
-    txtStyle: styles.txtPending,
+    txtStyle: txtPending,
   },
   [AsyncStatus.Success]: {
-    component: <TxtCentered>✅</TxtCentered>,
-    txtStyle: styles.txtSuccess,
+    component: <TxtCentered style={txtSuccess}>✓</TxtCentered>,
+    txtStyle: txtSuccess,
   },
   [AsyncStatus.Error]: {
     component: <TxtCentered>❌</TxtCentered>,
-    txtStyle: styles.txtError,
+    txtStyle: txtError,
   },
 }
 
@@ -63,7 +49,8 @@ const IdentitySetupStep: React.FunctionComponent<Props> = ({
 }): JSX.Element => (
   <View style={flexRowLayout}>
     <View style={iconContainer}>{statusToUiMapping[status].component}</View>
-    <Text style={[bodyTxt, statusToUiMapping[status].txtStyle]}>
+    <Text
+      style={[bodyTxt, bodyInvertedClrTxt, statusToUiMapping[status].txtStyle]}>
       {description}
     </Text>
   </View>

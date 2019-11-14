@@ -1,20 +1,27 @@
 import { ViewStyle } from 'react-native'
 
-// Containers
+/* ---------------------------------- */
+/*             Containers             */
+/* ---------------------------------- */
 
 export const mainViewContainer: ViewStyle = {
-  paddingTop: 48,
-  paddingBottom: 24,
-  paddingHorizontal: 12,
+  paddingHorizontal: 18,
+  paddingBottom: 12,
+  paddingTop: 44,
 }
 
 export const sectionContainer: ViewStyle = {
-  fontWeight: '600',
-  marginTop: 24,
-  paddingHorizontal: 24,
+  marginBottom: 24,
+  paddingHorizontal: 12,
 }
 
-// Flex
+export const fixedHeight: ViewStyle = {
+  height: 24,
+}
+
+/* ---------------------------------- */
+/*                Flex                */
+/* ---------------------------------- */
 
 export const flexRowWrapLayout: ViewStyle = {
   flexDirection: 'row',
@@ -34,17 +41,35 @@ export const flexRowLayout: ViewStyle = {
   alignItems: 'center',
 }
 
+export const flexRowCenterLayout: ViewStyle = {
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+}
+
 export const flexRowEndLayout: ViewStyle = {
   flexDirection: 'row',
   justifyContent: 'flex-end',
 }
 
-// Dialog
+/* ---------------------------------- */
+/*               Dialog               */
+/* ---------------------------------- */
 
 export const dialog = {
+  // 70% screen width
   width: 0.7,
 }
 
 export const dialogContent = {
   paddingTop: 24,
+}
+
+/* ---------------------------------- */
+/*          Image background          */
+/* ---------------------------------- */
+
+export const imgBckgrd = {
+  height: '100%',
+  width: '100%',
 }

@@ -1,7 +1,12 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import * as Kilt from '@kiltprotocol/sdk-js'
-import { bodyTxt, sectionTitleTxt } from '../sharedStyles/styles.typography'
+import { Identity } from '@kiltprotocol/sdk-js'
+import {
+  bodyTxt,
+  sectionTitleTxt,
+  titleInvertedClrTxt,
+  bodyInvertedClrTxt,
+} from '../sharedStyles/styles.typography'
 import {
   flexRowEndLayout,
   mainViewContainer,
@@ -16,6 +21,7 @@ import {
   NavigationParams,
 } from 'react-navigation'
 import KiltButton from '../components/KiltButton'
+import WithIntroBackground from '../components/WithIntroBackground'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -23,7 +29,7 @@ type Props = {
 
 type State = {
   mnemonic: string
-  visible: boolean
+  dialogVisible: boolean
 }
 
 class MnemonicCreation extends React.Component<Props, State> {
@@ -32,8 +38,8 @@ class MnemonicCreation extends React.Component<Props, State> {
   }
 
   state = {
-    mnemonic: Kilt.Identity.generateMnemonic(),
-    visible: false,
+    mnemonic: Identity.generateMnemonic(),
+    dialogVisible: false,
   }
 
   componentWillUnmount(): void {
@@ -41,53 +47,54 @@ class MnemonicCreation extends React.Component<Props, State> {
   }
 
   closeDialog(): void {
-    this.setState({ visible: false })
+    this.setState({ dialogVisible: false })
   }
 
   openDialog(): void {
-    this.setState({ visible: true })
+    this.setState({ dialogVisible: true })
   }
 
   render(): JSX.Element {
     const { navigation } = this.props
-    const { mnemonic, visible } = this.state
+    const { mnemonic, dialogVisible } = this.state
     return (
-      <View style={mainViewContainer}>
-        <View style={sectionContainer}>
-          <Text style={sectionTitleTxt}>
-            Step 1: your identity phrase (= seed)
-          </Text>
-          <Mnemonic mnemonic={mnemonic} />
-        </View>
-        <View style={sectionContainer}>
-          <Text style={bodyTxt}>
-            This is your KILT identity phrase. Write it down (the order is
-            important) and keep it safe and secret. Do not upload it online nor
-            share it with anyone.
-          </Text>
-        </View>
-        <View style={sectionContainer}>
-          <View style={flexRowEndLayout}>
-            <KiltButton
-              title="OK, I wrote it down >"
-              onPress={() => {
-                this.openDialog()
-              }}
-            />
+      <WithIntroBackground>
+        <View style={mainViewContainer}>
+          <View style={sectionContainer}>
+            <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>
+              Step 1: your identity phrase (= seed)
+            </Text>
+            <Mnemonic mnemonic={mnemonic} />
           </View>
+          <View style={sectionContainer}>
+            <Text style={[bodyTxt, bodyInvertedClrTxt]}>
+              This is your KILT identity phrase. Write it down (the order is
+              important) and keep it safe and secret. Do not upload it online
+              nor share it with anyone.
+            </Text>
+          </View>
+          <View style={sectionContainer}>
+            <View style={flexRowEndLayout}>
+              <KiltButton
+                title="OK, I wrote it down >"
+                onPress={() => {
+                  this.openDialog()
+                }}
+              />
+            </View>
+          </View>
+          <MnemonicDialog
+            visible={dialogVisible}
+            onPressCancel={() => this.closeDialog()}
+            onPressOK={() => {
+              this.closeDialog()
+              navigation.navigate(IDENTITY_SETUP, {
+                mnemonic,
+              })
+            }}
+          />
         </View>
-        <MnemonicDialog
-          visible={visible}
-          onTouchOutside={() => this.closeDialog()}
-          onPressCancel={() => this.closeDialog()}
-          onPressOK={() => {
-            this.closeDialog()
-            navigation.navigate(IDENTITY_SETUP, {
-              mnemonic,
-            })
-          }}
-        />
-      </View>
+      </WithIntroBackground>
     )
   }
 }

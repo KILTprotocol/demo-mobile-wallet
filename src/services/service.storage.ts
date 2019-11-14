@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage'
 
-// AsyncStorage is not shared across apps, but we still prefix our keys in case some libs use AsyncStorage too
+// AsyncStorage is NOT shared across apps, but we still prefix our keys in case some of our libs are using AsyncStorage too
 const ASYNC_STORAGE_PREFIX = '@KILT:'
 
 const getAsyncStorageFullKeyName = (key: string): string =>
@@ -28,4 +28,14 @@ async function getDataUnencrypted(key: string): Promise<string | null> {
   }
 }
 
-export { storeDataUnencrypted, getDataUnencrypted }
+async function removeDataUnencrypted(key: string): Promise<boolean> {
+  try {
+    await AsyncStorage.removeItem(getAsyncStorageFullKeyName(key))
+    return true
+  } catch (error) {
+    console.error(error)
+    return false
+  }
+}
+
+export { removeDataUnencrypted, storeDataUnencrypted, getDataUnencrypted }
