@@ -57,7 +57,7 @@ type Props = {
 }
 
 type State = {
-  isDialogVisible: boolean
+  dialogVisible: boolean
   claimContents: object
   msgsHashes: string[]
   msgs: IEncryptedMessage[]
@@ -71,18 +71,18 @@ class Dashboard extends React.Component<Props, State> {
   static interval: NodeJS.Timeout
 
   state = {
-    isDialogVisible: false,
+    dialogVisible: false,
     claimContents: {},
     msgsHashes: [],
     msgs: [],
   }
 
   closeDialog(): void {
-    this.setState({ isDialogVisible: false, claimContents: {} })
+    this.setState({ dialogVisible: false, claimContents: {} })
   }
 
   openDialog(): void {
-    this.setState({ isDialogVisible: true })
+    this.setState({ dialogVisible: true })
   }
 
   // TODO function styles
@@ -214,7 +214,7 @@ class Dashboard extends React.Component<Props, State> {
 
   render(): JSX.Element {
     const { credentialsAsObjectFromStore } = this.props
-    const { isDialogVisible } = this.state
+    const { dialogVisible } = this.state
     const credentials = Object.values(credentialsAsObjectFromStore)
     return (
       <WithDefaultBackground>
@@ -230,6 +230,7 @@ class Dashboard extends React.Component<Props, State> {
               <KiltButton
                 title="Request driver's license"
                 onPress={() => {
+                  // todo needed or not
                   this.openDialog()
                 }}
               />
@@ -238,7 +239,7 @@ class Dashboard extends React.Component<Props, State> {
           <CredentialList credentials={credentials || []} />
         </ScrollView>
         <AddClaimDialog
-          visible={isDialogVisible}
+          visible={dialogVisible}
           onPressCancel={() => this.closeDialog()}
           onPressOK={async () => {
             await this.createClaimAndRequestAttestation()
