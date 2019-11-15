@@ -1,5 +1,7 @@
 import React from 'react'
 import Dialog from 'react-native-dialog'
+import { dialogContainer } from '../sharedStyles/styles.dialog'
+
 const ctype = require('../data/ctypeDriversLicense.json')
 const driversLicenseProperties = Object.keys(ctype.metadata.properties)
 
@@ -20,15 +22,17 @@ class AddClaimDialog extends React.Component<Props> {
     const { isCreateBtnDisabled } = this.state
     const { onPressOK, onPressCancel, onChangeText, visible } = this.props
     return (
-      <Dialog.Container visible={visible}>
+      <Dialog.Container visible={visible} style={dialogContainer}>
         <Dialog.Title>Request credential</Dialog.Title>
         <Dialog.Description>
           Enter the requested information.
         </Dialog.Description>
         {driversLicenseProperties.map(ppty => (
           <Dialog.Input
-            label={ppty}
+            // todo here adapt keyboardType to input type
             key={ppty}
+            returnKeyType="done"
+            label={`${ppty}:`}
             onChangeText={inputValue => onChangeText(inputValue, ppty)}
           />
         ))}

@@ -1,5 +1,6 @@
 import React from 'react'
 import Dialog from 'react-native-dialog'
+import { dialogContainer } from '../sharedStyles/styles.dialog'
 
 type Props = {
   onPressCancel: () => void
@@ -26,11 +27,13 @@ class AddContactDialog extends React.Component<Props> {
       address,
     } = this.props
     return (
-      <Dialog.Container visible={visible}>
+      <Dialog.Container visible={visible} style={dialogContainer}>
         <Dialog.Title>Create contact</Dialog.Title>
         <Dialog.Description>{`Address: ${address}`}</Dialog.Description>
         <Dialog.Input
-          label={'Name'}
+          autoFocus
+          returnKeyType="done"
+          label="Name:"
           onChangeText={name => onChangeContactName(name)}
         />
         {/* + todo generate a random color and a letter for the qr code ???? */}
