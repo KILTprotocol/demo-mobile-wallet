@@ -17,7 +17,7 @@ const AddressQRCode: React.FunctionComponent<Props> = ({
       codeStyle="circle"
       content={address}
       color={KILT_PURPLE_CLR_MEDIUM}
-      size={200}
+      size={160}
       logo={kiltLogoSquare}
       logoSize={60}
     />
