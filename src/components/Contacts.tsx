@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text } from 'react-native'
 import { Dispatch } from 'redux'
 import { RNCamera } from 'react-native-camera'
 import { connect } from 'react-redux'
@@ -21,6 +21,7 @@ import AddContactDialog from './AddContactDialog'
 import { addContact, deleteAllContacts } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
 import { TMapDispatchToProps, TContact } from '../_types'
+import QRCodeScanner from './QRCodeScanner'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -36,26 +37,6 @@ type State = {
   newContactName: string
 }
 
-const styles = StyleSheet.create({
-  cameraPreview: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  cameraContainer: {
-    flexDirection: 'column',
-    height: '70%',
-  },
-  scanningStatus: {
-    flex: 0,
-    padding: 15,
-    paddingHorizontal: 20,
-    alignSelf: 'center',
-  },
-})
-
 class Contacts extends React.Component<Props, State> {
   state = {
     dialogVisible: false,
@@ -65,7 +46,6 @@ class Contacts extends React.Component<Props, State> {
   }
 
   onBarCodeRead(barcode): void {
-    console.log(barcode)
     this.setState({
       dialogVisible: true,
       scannerOpen: false,
@@ -76,7 +56,6 @@ class Contacts extends React.Component<Props, State> {
   setNewContactName(newContactName: string): void {
     // todo need or not
     this.setState({
-      ...this.state,
       newContactName,
     })
   }
@@ -93,7 +72,6 @@ class Contacts extends React.Component<Props, State> {
       name: newContactName,
       address: newContactAddress,
     })
-    this.closeDialog()
   }
 
   render(): JSX.Element {
@@ -126,23 +104,11 @@ class Contacts extends React.Component<Props, State> {
               />
             </View>
           </View>
+          {/* todo rename booleans */}
           {scannerOpen && (
-            <View style={styles.cameraContainer}>
-              <RNCamera
-                ref={ref => {
-                  this.camera = ref
-                }}
-                style={styles.cameraPreview}
-                type={RNCamera.Constants.Type.back}
-                flashMode={RNCamera.Constants.FlashMode.on}
-                onBarCodeRead={barcode => this.onBarCodeRead(barcode)}
-              />
-              <View>
-                <TouchableOpacity style={styles.scanningStatus}>
-                  <Text>Scanning...</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+            <QRCodeScanner
+              onBarCodeRead={barcode => this.onBarCodeRead(barcode)}
+            />
           )}
           <View>
             {contactsFromStore.map((c: TContact) => (
@@ -159,6 +125,7 @@ class Contacts extends React.Component<Props, State> {
             onChangeContactName={name => this.setNewContactName(name)}
             onPressOK={() => {
               this.createNewContact()
+              this.closeDialog()
             }}
           />
         </ScrollView>
