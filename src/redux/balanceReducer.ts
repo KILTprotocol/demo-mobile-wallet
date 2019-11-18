@@ -1,4 +1,4 @@
-import { UPDATE_BALANCE } from './actionTypes'
+import { UPDATE_BALANCE, RESET_BALANCE } from './actionTypes'
 import { TAppAction } from '../_types'
 import { TAppState } from './reducers'
 
@@ -17,6 +17,11 @@ export default function balanceReducer(
       return {
         ...state,
         balance: action.payload,
+      }
+    case RESET_BALANCE:
+      return {
+        ...state,
+        balance: balanceDefault,
       }
     default:
       return state

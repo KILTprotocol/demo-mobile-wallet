@@ -41,6 +41,12 @@ export const flexRowLayout: ViewStyle = {
   alignItems: 'center',
 }
 
+export const flexRowLayoutSpaceBetween: ViewStyle = {
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+}
+
 export const flexRowCenterLayout: ViewStyle = {
   flexDirection: 'row',
   alignItems: 'center',

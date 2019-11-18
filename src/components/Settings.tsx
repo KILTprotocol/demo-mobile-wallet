@@ -17,6 +17,7 @@ import { mainTitleTxt } from '../sharedStyles/styles.typography'
 import { APP_STARTUP } from '../_routes'
 import WithDefaultBackground from './WithDefaultBackground'
 import {
+  resetBalance,
   resetIdentity,
   deleteAllCredentials,
   resetPublicIdentity,
@@ -31,6 +32,7 @@ type Props = {
   identityFromStore: Identity | null
   publicIdentityFromStore: PublicIdentity | null
   resetIdentityInStore: typeof resetIdentity
+  resetBalanceInStore: typeof resetBalance
   resetPublicIdentityInStore: typeof resetPublicIdentity
   deleteAllCredentialsInStore: typeof deleteAllCredentials
 }
@@ -51,11 +53,14 @@ class Settings extends React.Component<Props, null> {
       resetPublicIdentityInStore,
       resetIdentityInStore,
       deleteAllCredentialsInStore,
+      resetBalanceInStore,
     } = this.props
     // the app is mono-identity so `resetIdentity` means deleting the claims as well
     // Todo ask user for their thumb!!
+    // reset all
     resetPublicIdentityInStore()
     resetIdentityInStore()
+    resetBalanceInStore()
     deleteAllCredentialsInStore()
   }
 
@@ -110,6 +115,9 @@ const mapDispatchToProps = (
     },
     deleteAllCredentialsInStore: () => {
       dispatch(deleteAllCredentials())
+    },
+    resetBalanceInStore: () => {
+      dispatch(resetBalance())
     },
   }
 }

@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { ACCOUNT, CONTACTS, DASHBOARD, SETTINGS } from '../_routes'
-import Account from './Account'
+import Account from '../containers/Account'
 import Dashboard from '../containers/Dashboard'
+import Contacts from '../containers/Contacts'
 import Settings from './Settings'
-import Contacts from './Contacts'
 import { TXT_XS_SIZE } from '../sharedStyles/styles.consts.typography'
 import {
   KILT_PURPLE_CLR,

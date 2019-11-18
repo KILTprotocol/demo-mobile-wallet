@@ -9,6 +9,8 @@ import {
   SET_PUBLIC_IDENTITY,
   ADD_CONTACT,
   DELETE_ALL_CONTACTS,
+  UPDATE_BALANCE,
+  RESET_BALANCE,
 } from './redux/actionTypes'
 import { CredentialStatus } from './_enums'
 
@@ -83,10 +85,19 @@ type TUpdateCredentialStatusAction = {
   payload: THashAndClaimStatus
 }
 
-// todo harmonize add conbtact vs create contact naming
+// todo harmonize add contact vs create contact naming
 type TAddContactAction = {
   type: typeof ADD_CONTACT
   payload: TContact
+}
+
+type TUpdateBalanceAction = {
+  type: typeof UPDATE_BALANCE
+  payload: number
+}
+
+type TResetBalanceAction = {
+  type: typeof RESET_BALANCE
 }
 
 type TDeleteAllContactsAction = {
@@ -103,6 +114,8 @@ export type TAppAction =
   | TUpdateCredentialStatusAction
   | TAddContactAction
   | TDeleteAllContactsAction
+  | TUpdateBalanceAction
+  | TResetBalanceAction
 
 /* ---------------------------------- */
 /*      Redux: State and Dispatch     */
@@ -118,9 +131,12 @@ export type TMapDispatchToProps = {
   deleteAllCredentialsInStore: (hashAndStatus: THashAndClaimStatus) => void
   addContactInStore: (contact: TContact) => void
   deleteAllContactsInStore: () => void
+  updateBalanceInStore: (balance: number) => void
+  resetBalanceInStore: () => void
 }
 
 export type TMapStateToProps = {
+  balanceFromStore: number
   identityFromStore: Identity
   publicIdentityFromStore: PublicIdentity
   credentialsMapFromStore: TCredentialMapByHash

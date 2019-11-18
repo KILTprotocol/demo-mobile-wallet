@@ -16,12 +16,13 @@ import {
   flexRowCenterLayout,
 } from '../sharedStyles/styles.layout'
 import { mainTitleTxt } from '../sharedStyles/styles.typography'
-import WithDefaultBackground from './WithDefaultBackground'
-import AddContactDialog from './AddContactDialog'
+import WithDefaultBackground from '../components/WithDefaultBackground'
+import AddContactDialog from '../components/AddContactDialog'
 import { addContact, deleteAllContacts } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
 import { TMapDispatchToProps, TContact } from '../_types'
-import QRCodeScanner from './QRCodeScanner'
+import QRCodeScanner from '../components/QRCodeScanner'
+import ContactList from '../components/ContactList'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -45,6 +46,7 @@ class Contacts extends React.Component<Props, State> {
     newContactName: '',
   }
 
+  // todo barcode type
   onBarCodeRead(barcode): void {
     this.setState({
       dialogVisible: true,
@@ -111,12 +113,7 @@ class Contacts extends React.Component<Props, State> {
             />
           )}
           <View>
-            {contactsFromStore.map((c: TContact) => (
-              <View key={c.address}>
-                <Text>{c.name}</Text>
-                <Text>{c.address}</Text>
-              </View>
-            ))}
+            <ContactList contacts={contactsFromStore} />
           </View>
           <AddContactDialog
             visible={dialogVisible}

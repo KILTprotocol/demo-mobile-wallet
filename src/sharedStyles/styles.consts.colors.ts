@@ -5,6 +5,7 @@ export const KILT_ORANGE_CLR = '#f05a28'
 export const KILT_ORANGE_X_LIGHT_CLR = 'rgba(240,90,40,0.09)'
 export const KILT_PURPLE_CLR = '#280021'
 export const KILT_PURPLE_CLR_MEDIUM = '#751869'
+export const KILT_GREEN_CLR = '#22c5aa'
 export const CLR_BCKGRD_DARK = 'rgba(0, 0, 0, 0.5)'
 
 /* ---------------------------------- */
