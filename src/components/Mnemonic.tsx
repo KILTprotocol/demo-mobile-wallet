@@ -15,9 +15,9 @@ const Mnemonic: React.FunctionComponent<Props> = ({
   mnemonic,
 }): JSX.Element => (
   <View style={flexRowWrapLayout}>
-    {mnemonic.split(' ').map(word => (
+    {mnemonic.split(' ').map((word, idx) => (
       <WithFadeInAnimation
-        key={word}
+        key={`${word}${idx}`}
         delay={Math.random() * MAX_DELAY_MS}
         duration={TOTAL_ANIM_DURATION_MS}>
         <Text style={bodyEmphasizedTxt}>{word}</Text>
