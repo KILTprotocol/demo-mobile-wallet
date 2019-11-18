@@ -16,8 +16,9 @@ import { imgBckgrd, flexRowLayout, card } from '../sharedStyles/styles.layout'
 import { CredentialStatus } from '../_enums'
 import CredentialStatusBadge from './CredentialStatusBadge'
 import { bodyTxt } from '../sharedStyles/styles.typography'
-const claimBckgrd = require('../assets/imgs/claimBckgrd.jpg')
+const claimBckgrdPending = require('../assets/imgs/claimBckgrdPending.jpg')
 const claimBckgrdValid = require('../assets/imgs/claimBckgrdValid.jpg')
+const claimBckgrdRevoked = require('../assets/imgs/claimBckgrdRevoked.jpg')
 
 type Props = {
   title: string
@@ -37,6 +38,7 @@ const credentialTitleTxt: TextStyle = {
 
 const credentialCard: ViewStyle = {
   height: 200,
+  borderRadius: 10,
   ...card,
   shadowOpacity: 0.3,
 }
@@ -61,6 +63,18 @@ const pptyLabelStyle: TextStyle = {
   textTransform: 'capitalize',
 }
 
+const statusToUiMapping = {
+  [CredentialStatus.AttestationPending]: {
+    imgSrc: claimBckgrdPending,
+  },
+  [CredentialStatus.Valid]: {
+    imgSrc: claimBckgrdValid,
+  },
+  [CredentialStatus.Revoked]: {
+    imgSrc: claimBckgrdRevoked,
+  },
+}
+
 const CredentialCard: React.FunctionComponent<Props> = ({
   title,
   status,
@@ -68,9 +82,7 @@ const CredentialCard: React.FunctionComponent<Props> = ({
 }): JSX.Element => (
   <View style={credentialCard}>
     <ImageBackground
-      source={
-        status === CredentialStatus.Valid ? claimBckgrdValid : claimBckgrd
-      }
+      source={statusToUiMapping[status].imgSrc}
       style={imgBckgrd}
       imageStyle={imgBckgrdExtraStyles}>
       <View style={credentialCardContentStyle}>
