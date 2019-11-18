@@ -33,7 +33,7 @@ type Props = {
   onBarCodeRead: (barcode: any) => void
 }
 
-const QRCodeScanner: React.FunctionComponent<Props> = ({
+const QrCodeScanner: React.FunctionComponent<Props> = ({
   onBarCodeRead,
 }): JSX.Element => (
   <View style={styles.cameraContainer}>
@@ -49,4 +49,4 @@ const QRCodeScanner: React.FunctionComponent<Props> = ({
   </View>
 )
 
-export default QRCodeScanner
+export default QrCodeScanner

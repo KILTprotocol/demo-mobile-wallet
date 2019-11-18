@@ -1,7 +1,7 @@
 import React from 'react'
 import Dialog from 'react-native-dialog'
 import { Text, View, ViewStyle } from 'react-native'
-import QRCodeScanner from '../components/QRCodeScanner'
+import QrCodeScanner from '../components/QrCodeScanner'
 import { TXT_S_SIZE } from '../sharedStyles/styles.consts.typography'
 import {
   dialogInputTxt,
@@ -79,7 +79,7 @@ class TokenTransferDialog extends React.Component<Props> {
               </Text>
             ) : (
               <View style={qrCodeScannerContainer}>
-                <QRCodeScanner
+                <QrCodeScanner
                   onBarCodeRead={barcode => {
                     onTokenRecipientAddressRead(barcode.data)
                   }}
