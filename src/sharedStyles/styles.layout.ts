@@ -88,3 +88,11 @@ export const card: ViewStyle = {
   shadowRadius: 9,
   elevation: 16,
 }
+
+/* ---------------------------------- */
+/*       QrCodeScannerContainer       */
+/* ---------------------------------- */
+
+export const qrCodeScannerContainer: ViewStyle = {
+  height: 200,
+}

@@ -44,7 +44,7 @@ import {
 import CredentialList from '../components/CredentialList'
 import { POLLING_PERIOD_MS } from '../_config'
 import { getInboxUrlFromAddress } from '../utils/utils.messaging'
-import { getSDKIdentityFromStoredIdentity } from '../utils/utils.identity'
+import { getSdkIdentityFromStoredIdentity } from '../utils/utils.identity'
 import { TMapDispatchToProps, TMapStateToProps } from '../_types'
 
 type Props = {
@@ -110,7 +110,7 @@ class Dashboard extends React.Component<Props, State> {
             status: CredentialStatus.AttestationPending,
             contents: requestForAttestation.claim.contents,
           })
-          const claimerIdentity = getSDKIdentityFromStoredIdentity(
+          const claimerIdentity = getSdkIdentityFromStoredIdentity(
             identityFromStore
           )
           sendRequestForAttestation(requestForAttestation, claimerIdentity)
@@ -153,7 +153,7 @@ class Dashboard extends React.Component<Props, State> {
       // TODO merge mgs and hashes
       const encryptedMsg = this.state.msgs.find(m => m.hash === h)
       console.log(encryptedMsg)
-      const claimerIdentity = getSDKIdentityFromStoredIdentity(
+      const claimerIdentity = getSdkIdentityFromStoredIdentity(
         identityFromStore
       )
       const msg: IMessage = Message.createFromEncryptedMessage(

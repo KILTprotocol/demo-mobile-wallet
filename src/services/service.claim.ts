@@ -7,7 +7,7 @@ import {
 import MessageService from './service.messaging'
 import { ATTESTER_MNEMONIC } from '../_config'
 import { TDriversLicenseClaimContents } from '../_types'
-import { getSDKIdentityFromStoredIdentity } from '../utils/utils.identity'
+import { getSdkIdentityFromStoredIdentity } from '../utils/utils.identity'
 
 const ATTESTER_IDENTITY = Identity.buildFromMnemonic(ATTESTER_MNEMONIC)
 
@@ -27,7 +27,7 @@ function createRequestForAttestation(
   claimerIdentity: Identity | null
 ): RequestForAttestation | null {
   if (claimerIdentity) {
-    const identity = getSDKIdentityFromStoredIdentity(claimerIdentity)
+    const identity = getSdkIdentityFromStoredIdentity(claimerIdentity)
     return new RequestForAttestation(claim, [], identity)
   }
   return null

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { ScrollView, View, Text } from 'react-native'
 import * as Kilt from '@kiltprotocol/sdk-js'
-import { PublicIdentity, Identity } from '@kiltprotocol/sdk-js'
+import { PublicIdentity, Identity, Balance } from '@kiltprotocol/sdk-js'
 import { connect } from 'react-redux'
 import {
   mainViewContainer,
@@ -20,6 +20,10 @@ import { TMapStateToProps } from '../_types'
 import TokenTransferDialog from '../containers/TokenTransferDialog'
 import KiltButton from '../components/KiltButton'
 import BalanceComp from '../components/Balance'
+import { asMicroKiltCoins } from '../services/service.balance'
+import { getSdkIdentityFromStoredIdentity } from '../utils/utils.identity'
+import { AsyncStatus } from '../_enums'
+import { callWithDelay } from '../utils/utils.async'
 
 type Props = {
   publicIdentityFromStore: PublicIdentity | null
@@ -31,17 +35,28 @@ type State = {
   dialogVisible: boolean
   tokenAmountToTransfer: number
   tokenRecipientAddress: string
+  transferAsyncStatus: AsyncStatus
 }
 
 class Account extends Component<Props, State> {
-  state = {
+  defaultState = {
     dialogVisible: false,
     tokenAmountToTransfer: 0,
     tokenRecipientAddress: '',
+    transferAsyncStatus: AsyncStatus.NotStarted,
+  }
+
+  state = {
+    ...this.defaultState,
   }
 
   openDialog(): void {
-    this.setState({ dialogVisible: true })
+    this.setState({
+      dialogVisible: true,
+      tokenAmountToTransfer: 0,
+      tokenRecipientAddress: '',
+      transferAsyncStatus: AsyncStatus.NotStarted,
+    })
   }
 
   closeDialog(): void {
@@ -58,9 +73,42 @@ class Account extends Component<Props, State> {
     this.setState({ tokenRecipientAddress })
   }
 
+  async transferTokens(): Promise<void> {
+    // todo refactor nicely
+    const { tokenRecipientAddress, tokenAmountToTransfer } = this.state
+    const { identityFromStore } = this.props
+    if (identityFromStore && tokenRecipientAddress) {
+      this.setState({ transferAsyncStatus: AsyncStatus.Pending })
+      const transferAmount = asMicroKiltCoins(tokenAmountToTransfer)
+      try {
+        await Balance.makeTransfer(
+          getSdkIdentityFromStoredIdentity(identityFromStore),
+          tokenRecipientAddress,
+          transferAmount
+        )
+        this.setState({ transferAsyncStatus: AsyncStatus.Success })
+      } catch (error) {
+        console.log(`[TRANSFER] Blockchain error: ${error}`)
+        this.setState({ transferAsyncStatus: AsyncStatus.Error })
+      }
+    } else {
+      console.log(
+        '[TRANSFER] App error: No identity or no tokenRecipientAddress found'
+      )
+      this.setState({ transferAsyncStatus: AsyncStatus.Error })
+    }
+    callWithDelay(() => {
+      this.closeDialog()
+    })
+  }
+
   render(): JSX.Element {
     const { publicIdentityFromStore, balanceFromStore } = this.props
-    const { dialogVisible, tokenRecipientAddress } = this.state
+    const {
+      dialogVisible,
+      tokenRecipientAddress,
+      transferAsyncStatus,
+    } = this.state
     const address = publicIdentityFromStore
       ? publicIdentityFromStore.address
       : null
@@ -100,16 +148,16 @@ class Account extends Component<Props, State> {
               this.setState({ tokenRecipientAddress: '' })
               this.closeDialog()
             }}
-            onChangeTokenAmountToTransfer={tokenAmountToTransfer =>
-              this.setTokenAmountToTransfer(tokenAmountToTransfer)
+            onChangeTokenAmountToTransfer={amount =>
+              this.setTokenAmountToTransfer(amount)
             }
-            onTokenRecipientAddressRead={(tokenRecipientAddress: string) => {
-              this.setTokenRecipientAddress(tokenRecipientAddress)
+            onTokenRecipientAddressRead={(recipientAddress: string) => {
+              this.setTokenRecipientAddress(recipientAddress)
             }}
-            onPressOK={async () => {
-              // todo implement transfer
-              console.log('try transferring.....')
+            onConfirmTransfer={async () => {
+              this.transferTokens()
             }}
+            transferAsyncStatus={transferAsyncStatus}
           />
         </ScrollView>
       </WithDefaultBackground>

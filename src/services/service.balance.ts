@@ -24,9 +24,9 @@ const KILT_MICRO_COIN = 1000000
 
 // todo number vs balance....
 // todo cleanup
-// function asMicroKiltCoins(balance: number): BN {
-//   return new BN(balance).muln(KILT_MICRO_COIN)
-// }
+function asMicroKiltCoins(balance: number): BN {
+  return new BN(balance).muln(KILT_MICRO_COIN)
+}
 
 function asKiltCoins(balance: BN): number {
   return balance.divn(KILT_MICRO_COIN).toNumber()
@@ -46,4 +46,4 @@ function balanceListener(
   }
 }
 
-export { asKiltCoins, balanceListener }
+export { asKiltCoins, asMicroKiltCoins, balanceListener }
