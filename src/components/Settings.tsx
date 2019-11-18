@@ -75,7 +75,7 @@ class Settings extends React.Component<Props, null> {
           <View style={sectionContainer}>
             <View style={flexRowCenterLayout}>
               <KiltButton
-                title="Reset app (delete identity and credentials)"
+                title="Reset app (delete credentials + reset identity and balance)"
                 onPress={() => {
                   this.resetApp()
                 }}

@@ -12,7 +12,7 @@ import {
   TXT_DEFAULT_CLR,
   TXT_LIGHT_CLR_NEUTRAL,
 } from '../sharedStyles/styles.consts.colors'
-import { imgBckgrd, flexRowLayout } from '../sharedStyles/styles.layout'
+import { imgBckgrd, flexRowLayout, card } from '../sharedStyles/styles.layout'
 import { CredentialStatus } from '../_enums'
 import CredentialStatusBadge from './CredentialStatusBadge'
 import { bodyTxt } from '../sharedStyles/styles.typography'
@@ -36,15 +36,9 @@ const credentialTitleTxt: TextStyle = {
 }
 
 const credentialCard: ViewStyle = {
-  shadowColor: '#000',
   height: 200,
-  shadowOffset: {
-    width: 0,
-    height: 3,
-  },
+  ...card,
   shadowOpacity: 0.3,
-  shadowRadius: 9,
-  elevation: 16,
 }
 
 const imgBckgrdExtraStyles: ImageStyle = {
