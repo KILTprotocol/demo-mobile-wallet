@@ -1,14 +1,16 @@
 import { combineReducers } from 'redux'
-import identityReducer from './identityReducer'
-import publicIdentityReducer from './publicIdentityReducer'
+import balanceReducer from './balanceReducer'
 import credentialsReducer from './credentialsReducer'
 import contactsReducer from './contactsReducer'
+import identityReducer from './identityReducer'
+import publicIdentityReducer from './publicIdentityReducer'
 
 const rootReducer = combineReducers({
   identityReducer: identityReducer,
   publicIdentityReducer: publicIdentityReducer,
   credentialsReducer: credentialsReducer,
   contactsReducer: contactsReducer,
+  balanceReducer: balanceReducer,
 })
 
 // TODO define TAppState type, so far issue with combineReducers that nests the ppties

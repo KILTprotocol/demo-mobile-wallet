@@ -9,6 +9,7 @@ import {
   RESET_PUBLIC_IDENTITY,
   ADD_CONTACT,
   DELETE_ALL_CONTACTS,
+  UPDATE_BALANCE,
 } from './actionTypes'
 import {
   TAppAction,
@@ -70,4 +71,9 @@ export const addContact = (contact: TContact): TAppAction => ({
 
 export const deleteAllContacts = (): TAppAction => ({
   type: DELETE_ALL_CONTACTS,
+})
+
+export const updateBalance = (balance: number): TAppAction => ({
+  type: UPDATE_BALANCE,
+  payload: balance,
 })
