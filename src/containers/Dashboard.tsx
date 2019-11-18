@@ -116,10 +116,10 @@ class Dashboard extends React.Component<Props, State> {
           sendRequestForAttestation(requestForAttestation, claimerIdentity)
         }
       } else {
-        console.log('No identity found')
+        console.error('No identity found')
       }
     } catch (error) {
-      console.log('OK', error)
+      console.error('OK', error)
     }
   }
 

@@ -89,13 +89,13 @@ class MessageService {
         })
         .then(response => response.json())
         .then(() => {
-          console.log('Message sent')
+          console.info('[MESSAGE] Message sent')
         })
         .catch(error => {
-          console.log(error)
+          console.error(error)
         })
     } catch (error) {
-      console.log(error)
+      console.error(error)
       return Promise.reject()
     }
   }

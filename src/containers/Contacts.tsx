@@ -79,7 +79,7 @@ class Contacts extends React.Component<Props, State> {
   render(): JSX.Element {
     const { dialogVisible, scannerOpen, newContactAddress } = this.state
     const { contactsFromStore, deleteAllContactsInStore } = this.props
-    console.log(contactsFromStore)
+    // todo delete contacts on reset app
     return (
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>

@@ -61,13 +61,9 @@ class Account extends Component<Props, State> {
   render(): JSX.Element {
     const { publicIdentityFromStore, balanceFromStore } = this.props
     const { dialogVisible, tokenRecipientAddress } = this.state
-
-    console.log('balanceFromStore', balanceFromStore)
     const address = publicIdentityFromStore
       ? publicIdentityFromStore.address
       : null
-
-    // todo get balance at t = 0
     return (
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>
