@@ -12,7 +12,6 @@ const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
   // whitelist = reducers for which we want to persist the state in AsyncStorage
-  // TODO only the reducer for the public identity should be whitelisted since the private identity is encrypted
   whitelist: [
     'publicIdentityReducer',
     'credentialsReducer',

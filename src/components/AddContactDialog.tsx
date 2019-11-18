@@ -36,7 +36,6 @@ class AddContactDialog extends React.Component<Props> {
           label="Name:"
           onChangeText={name => onChangeContactName(name)}
         />
-        {/* + todo generate a random color and a letter for the qr code ???? */}
         <Dialog.Button onPress={onPressCancel} label="Cancel" />
         <Dialog.Button
           onPress={onPressOK}
