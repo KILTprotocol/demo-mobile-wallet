@@ -51,7 +51,7 @@ type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   identityFromStore: Identity | null
   publicIdentityFromStore: PublicIdentity | null
-  credentialsAsObjectFromStore: TCredentialMapByHash
+  credentialsMapFromStore: TCredentialMapByHash
   addCredentialInStore: typeof addCredential
   updateCredentialStatusInStore: typeof updateCredentialStatus
 }
@@ -213,9 +213,9 @@ class Dashboard extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
-    const { credentialsAsObjectFromStore } = this.props
+    const { credentialsMapFromStore } = this.props
     const { dialogVisible } = this.state
-    const credentials = Object.values(credentialsAsObjectFromStore)
+    const credentials = Object.values(credentialsMapFromStore)
     return (
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>
@@ -257,7 +257,7 @@ class Dashboard extends React.Component<Props, State> {
 const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
   identityFromStore: state.identityReducer.identity,
   publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
-  credentialsAsObjectFromStore: state.credentialsReducer.credentialsAsObject,
+  credentialsMapFromStore: state.credentialsReducer.credentialsMap,
 })
 
 const mapDispatchToProps = (

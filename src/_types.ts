@@ -123,5 +123,5 @@ export type TMapDispatchToProps = {
 export type TMapStateToProps = {
   identityFromStore: Identity
   publicIdentityFromStore: PublicIdentity
-  credentialsAsObjectFromStore: TCredentialMapByHash
+  credentialsMapFromStore: TCredentialMapByHash
 }
