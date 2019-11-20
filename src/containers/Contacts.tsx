@@ -33,7 +33,6 @@ type Props = {
 
 type State = {
   dialogVisible: boolean
-  scannerOpen: boolean
   newContactAddress: string
   newContactName: string
 }
@@ -41,19 +40,18 @@ type State = {
 class Contacts extends React.Component<Props, State> {
   state = {
     dialogVisible: false,
-    scannerOpen: false,
     newContactAddress: '',
     newContactName: '',
   }
 
   // todo barcode type
-  onBarCodeRead(barcode): void {
-    this.setState({
-      dialogVisible: true,
-      scannerOpen: false,
-      newContactAddress: barcode.data,
-    })
-  }
+  // onBarCodeRead(barcode): void {
+  //   this.setState({
+  //     dialogVisible: true,
+  //     scannerOpen: false,
+  //     newContactAddress: barcode.data,
+  //   })
+  // }
 
   setNewContactName(newContactName: string): void {
     // todo need or not
@@ -66,8 +64,16 @@ class Contacts extends React.Component<Props, State> {
     this.setState({ dialogVisible: false })
   }
 
-  // todo create vs save vs new
-  createNewContact(): void {
+  openDialog(): void {
+    this.setState({
+      dialogVisible: true,
+      newContactAddress: '',
+      newContactName: '',
+    })
+  }
+
+  // todo create vs save vs add vs new
+  addNewContact(): void {
     const { addContactInStore } = this.props
     const { newContactAddress, newContactName } = this.state
     addContactInStore({
@@ -77,7 +83,7 @@ class Contacts extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
-    const { dialogVisible, scannerOpen, newContactAddress } = this.state
+    const { dialogVisible, newContactAddress } = this.state
     const { contactsFromStore, deleteAllContactsInStore } = this.props
     // todo delete contacts on reset app
     return (
@@ -91,9 +97,7 @@ class Contacts extends React.Component<Props, State> {
               <KiltButton
                 title="Add new contact"
                 onPress={() => {
-                  this.setState({
-                    scannerOpen: true,
-                  })
+                  this.openDialog()
                 }}
               />
             </View>
@@ -107,13 +111,7 @@ class Contacts extends React.Component<Props, State> {
             </View>
           </View>
           {/* todo rename booleans */}
-          {scannerOpen && (
-            <View style={qrCodeScannerContainer}>
-              <QrCodeScanner
-                onBarCodeRead={barcode => this.onBarCodeRead(barcode)}
-              />
-            </View>
-          )}
+          {/* todo refactor dialogs eg DRY */}
           <View>
             <ContactList contacts={contactsFromStore} />
           </View>
@@ -122,8 +120,13 @@ class Contacts extends React.Component<Props, State> {
             address={newContactAddress}
             onPressCancel={() => this.closeDialog()}
             onChangeContactName={name => this.setNewContactName(name)}
-            onPressOK={() => {
-              this.createNewContact()
+            onNewContactAddressRead={address => {
+              this.setState({
+                newContactAddress: address,
+              })
+            }}
+            onConfirmAddContact={() => {
+              this.addNewContact()
               this.closeDialog()
             }}
           />
