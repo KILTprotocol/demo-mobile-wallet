@@ -116,10 +116,10 @@ class Dashboard extends React.Component<Props, State> {
           sendRequestForAttestation(requestForAttestation, claimerIdentity)
         }
       } else {
-        console.error('No identity found')
+        console.info('No identity found')
       }
     } catch (error) {
-      console.error('OK', error)
+      console.info('OK', error)
     }
   }
 
@@ -162,16 +162,23 @@ class Dashboard extends React.Component<Props, State> {
       )
       try {
         Message.ensureOwnerIsSender(msg)
+        console.log('TYPE', msg.body.type)
+        console.log(
+          'msg.body.content.attestation.revoked',
+          msg.body.content.attestation.revoked
+        )
+        console.log('msg.body.content', msg.body.content)
         if (msg.body.type === MessageBodyType.SUBMIT_ATTESTATION_FOR_CLAIM) {
           const hashAndStatus = {
             hash: msg.body.content.attestation.claimHash,
-            status: CredentialStatus.Valid,
+            status: msg.body.content.attestation.revoked
+              ? CredentialStatus.Revoked
+              : CredentialStatus.Valid,
           }
-          console.log('ATTESTED', hashAndStatus)
           updateCredentialStatusInStore(hashAndStatus)
         }
       } catch (error) {
-        console.log(error)
+        console.info(error)
       }
     })
   }
@@ -196,16 +203,19 @@ class Dashboard extends React.Component<Props, State> {
         return response.json()
       })
       .catch(error => {
-        console.log(error)
+        console.info(error)
         return null
       })
       .then((encryptedMessages: IEncryptedMessage[]) => {
-        const encryptedMsgsHashes = encryptedMessages.map(msg => msg.hash)
-        this.setState({
-          msgsHashes: encryptedMsgsHashes,
-          msgs: encryptedMessages,
-        })
+        if (encryptedMessages) {
+          const encryptedMsgsHashes = encryptedMessages.map(msg => msg.hash)
+          this.setState({
+            msgsHashes: encryptedMsgsHashes,
+            msgs: encryptedMessages,
+          })
+        }
       })
+    // query all potential attestations
   }
 
   componentWillUnmount(): void {
@@ -226,13 +236,13 @@ class Dashboard extends React.Component<Props, State> {
             <Text style={sectionTitleTxt}>
               My credentials ({credentials.length})
             </Text>
-              <KiltButton
-              title="Request membership card"
-                onPress={() => {
-                  // todo needed or not
-                  this.openDialog()
-                }}
-              />
+            <KiltButton
+              title="＋ Request membership card"
+              onPress={() => {
+                // todo needed or not
+                this.openDialog()
+              }}
+            />
           </View>
           <CredentialList credentials={credentials || []} />
         </ScrollView>

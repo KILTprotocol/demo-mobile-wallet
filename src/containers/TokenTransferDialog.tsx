@@ -37,17 +37,16 @@ type Props = {
   onTokenRecipientAddressRead: (address: string) => void
   tokenRecipientAddress: string
   visible: boolean
+  isOkBtnDisabled: boolean
   transferAsyncStatus: AsyncStatus
 }
 
 class TokenTransferDialog extends React.Component<Props> {
-  state = {
-    // TODO set state as relevant apply styles to disabled btn
-    isOkBtnDisabled: false,
+  processTokenAmountToTransfer(tokenAmountToTransfer: string): number {
+    return parseFloat(tokenAmountToTransfer)
   }
 
   render(): JSX.Element {
-    const { isOkBtnDisabled } = this.state
     const {
       onChangeTokenAmountToTransfer,
       onTokenRecipientAddressRead,
@@ -56,6 +55,7 @@ class TokenTransferDialog extends React.Component<Props> {
       onPressCancel,
       visible,
       transferAsyncStatus,
+      isOkBtnDisabled,
     } = this.props
 
     const form = (
@@ -67,7 +67,9 @@ class TokenTransferDialog extends React.Component<Props> {
           style={dialogInputTxt}
           label="Amount to transfer (in KILT tokens):"
           onChangeText={tokenAmountToTransfer =>
-            onChangeTokenAmountToTransfer(parseFloat(tokenAmountToTransfer))
+            onChangeTokenAmountToTransfer(
+              this.processTokenAmountToTransfer(tokenAmountToTransfer)
+            )
           }
         />
         <View style={dialogSection}>
@@ -122,16 +124,22 @@ class TokenTransferDialog extends React.Component<Props> {
       },
     }
 
+    // todoprio bigger touch targets for tabs
     return (
       <Dialog.Container visible={visible} style={dialogContainer}>
         <Dialog.Title>Transfer KILT tokens</Dialog.Title>
         {statusToUiMapping[transferAsyncStatus].component}
-        <Dialog.Button onPress={onPressCancel} label="Cancel" />
-        <Dialog.Button
-          onPress={onConfirmTransfer}
-          label="Transfer tokens"
-          disabled={isOkBtnDisabled}
-        />
+        {transferAsyncStatus === AsyncStatus.NotStarted && (
+          <Dialog.Button onPress={onPressCancel} label="Cancel" />
+        )}
+        {transferAsyncStatus === AsyncStatus.NotStarted && (
+          <Dialog.Button
+            onPress={onConfirmTransfer}
+            label="Transfer tokens"
+            style={isOkBtnDisabled ? { color: 'lightgrey' } : {}}
+            disabled={isOkBtnDisabled}
+          />
+        )}
       </Dialog.Container>
     )
   }

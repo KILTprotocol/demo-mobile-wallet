@@ -15,6 +15,13 @@ export enum CredentialStatus {
   AttestationPending,
 }
 
+export enum AppLockStatus {
+  NotSetUp,
+  SetUpAndLocked,
+  SetUpAndUnlocked,
+  Unknown,
+}
+
 /* ---------------------------------- */
 /*                 UI                 */
 /* ---------------------------------- */

@@ -1,32 +1,28 @@
-import { PublicIdentity } from '@kiltprotocol/sdk-js'
+import { PublicIdentity, Balance, IPublicIdentity } from '@kiltprotocol/sdk-js'
 import BN from 'bn.js'
 import { updateBalance } from '../redux/actions'
 import { store } from '../redux/store'
 
 const KILT_MICRO_COIN = 1000000
 // TODOprio credentials encryption
-// TODOprio get balance at start!
 
-// todo number vs balance....
+// TODOprio number vs balance....
 // todo cleanup
 // token initialization??
 // todo address string vs ci dessous
 
-// async function getBalanceRaw(address: IPublicIdentity['address']): Promise<BN> {
-//   await Kilt.default.connect(BLOCKCHAIN_NODE)
-//   const balance = await Balance.getBalance(address)
-//   BlockchainApiConnection.getCached().then(blockchain => {
-//     blockchain.api.disconnect()
-//   })
-//   return balance
-// }
+async function getBalanceRaw(address: IPublicIdentity['address']): Promise<BN> {
+  // only OK if connection open
+  const balance = await Balance.getBalance(address)
+  return balance
+}
 
-// async function getBalanceInKiltCoins(
-//   address: IPublicIdentity['address']
-// ): Promise<number> {
-//   // const balanceRaw = await getBalanceRaw(address)
-//   // return asKiltCoins(balanceRaw)
-// }
+async function getBalanceInKiltCoins(
+  address: IPublicIdentity['address']
+): Promise<number> {
+  const balanceRaw = await getBalanceRaw(address)
+  return asKiltCoins(balanceRaw)
+}
 
 function asMicroKiltCoins(balance: number): BN {
   return new BN(balance).muln(KILT_MICRO_COIN)
@@ -50,4 +46,4 @@ function balanceListener(
   }
 }
 
-export { asKiltCoins, asMicroKiltCoins, balanceListener }
+export { asKiltCoins, asMicroKiltCoins, balanceListener, getBalanceInKiltCoins }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { ScrollView, View, Text } from 'react-native'
-import * as Kilt from '@kiltprotocol/sdk-js'
 import { PublicIdentity, Identity, Balance } from '@kiltprotocol/sdk-js'
 import { connect } from 'react-redux'
 import {
@@ -33,6 +32,7 @@ type Props = {
 
 type State = {
   dialogVisible: boolean
+  isDialogOkBtnDisabled: boolean
   tokenAmountToTransfer: number
   tokenRecipientAddress: string
   transferAsyncStatus: AsyncStatus
@@ -41,6 +41,7 @@ type State = {
 class Account extends Component<Props, State> {
   defaultState = {
     dialogVisible: false,
+    isDialogOkBtnDisabled: true,
     tokenAmountToTransfer: 0,
     tokenRecipientAddress: '',
     transferAsyncStatus: AsyncStatus.NotStarted,
@@ -50,9 +51,37 @@ class Account extends Component<Props, State> {
     ...this.defaultState,
   }
 
+  componentDidUpdate(): void {
+    const {
+      tokenRecipientAddress,
+      tokenAmountToTransfer,
+      isDialogOkBtnDisabled,
+    } = this.state
+    if (
+      tokenRecipientAddress &&
+      tokenAmountToTransfer &&
+      isDialogOkBtnDisabled
+    ) {
+      this.setState({
+        ...this.state,
+        isDialogOkBtnDisabled: false,
+      })
+    } else if (
+      (!tokenRecipientAddress || !tokenAmountToTransfer) &&
+      !isDialogOkBtnDisabled
+    ) {
+      this.setState({
+        ...this.state,
+        isDialogOkBtnDisabled: true,
+      })
+    }
+  }
+
   openDialog(): void {
+    // todo use .. this.state (needed???)
     this.setState({
       dialogVisible: true,
+      isDialogOkBtnDisabled: true,
       tokenAmountToTransfer: 0,
       tokenRecipientAddress: '',
       transferAsyncStatus: AsyncStatus.NotStarted,
@@ -60,7 +89,7 @@ class Account extends Component<Props, State> {
   }
 
   closeDialog(): void {
-    // todo rename boooleans
+    // todo rename booleans
     // todo use hooks for dialogs
     this.setState({ dialogVisible: false })
   }
@@ -75,12 +104,17 @@ class Account extends Component<Props, State> {
 
   async transferTokens(): Promise<void> {
     // todo refactor nicely
+    // TODOprio bug always transfer one token more......
     const { tokenRecipientAddress, tokenAmountToTransfer } = this.state
     const { identityFromStore } = this.props
     if (identityFromStore && tokenRecipientAddress) {
       this.setState({ transferAsyncStatus: AsyncStatus.Pending })
       const transferAmount = asMicroKiltCoins(tokenAmountToTransfer)
+      console.info(
+        `[TRANSFER] Starting transfer of ${tokenAmountToTransfer} (${transferAmount})...`
+      )
       try {
+        console.info('[TRANSFER] Trying transfer...')
         await Balance.makeTransfer(
           getSdkIdentityFromStoredIdentity(identityFromStore),
           tokenRecipientAddress,
@@ -88,18 +122,23 @@ class Account extends Component<Props, State> {
         )
         this.setState({ transferAsyncStatus: AsyncStatus.Success })
       } catch (error) {
-        console.log(`[TRANSFER] Blockchain error: ${error}`)
+        console.info(`[TRANSFER] Blockchain error: ${error}`)
         this.setState({ transferAsyncStatus: AsyncStatus.Error })
       }
     } else {
-      console.log(
-        '[TRANSFER] App error: No identity or no tokenRecipientAddress found'
-      )
       this.setState({ transferAsyncStatus: AsyncStatus.Error })
+      console.info(
+        `[TRANSFER] App error: No identity or no tokenRecipientAddress found (tokenRecipientAddress: ${tokenRecipientAddress}, identityFromStore: ${identityFromStore})`
+      )
     }
-    callWithDelay(() => {
-      this.closeDialog()
-    })
+    // delay in order to let the user see the error message
+    callWithDelay(
+      () => {
+        this.closeDialog()
+      },
+      [],
+      1200
+    )
   }
 
   render(): JSX.Element {
@@ -108,6 +147,7 @@ class Account extends Component<Props, State> {
       dialogVisible,
       tokenRecipientAddress,
       transferAsyncStatus,
+      isDialogOkBtnDisabled,
     } = this.state
     const address = publicIdentityFromStore
       ? publicIdentityFromStore.address
@@ -122,13 +162,13 @@ class Account extends Component<Props, State> {
             <Text style={sectionTitleTxt}>My address</Text>
             {address && (
               <>
-                <IdentityDisplay address={address} />
                 <AddressQRCode address={address} />
+                <IdentityDisplay address={address} />
               </>
             )}
           </View>
           <View style={sectionContainer}>
-            <Text style={sectionTitleTxt}>KILT account balance</Text>
+            <Text style={sectionTitleTxt}>My KILT account balance</Text>
             <BalanceComp balance={balanceFromStore} />
           </View>
           <View style={sectionContainer}>
@@ -143,6 +183,7 @@ class Account extends Component<Props, State> {
           </View>
           <TokenTransferDialog
             visible={dialogVisible}
+            isOkBtnDisabled={isDialogOkBtnDisabled}
             tokenRecipientAddress={tokenRecipientAddress}
             onPressCancel={() => {
               this.setState({ tokenRecipientAddress: '' })
