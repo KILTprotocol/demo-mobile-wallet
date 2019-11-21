@@ -12,7 +12,7 @@ const RequestTokensButton: React.FunctionComponent<Props> = ({
   address,
 }): JSX.Element => (
   <KiltButton
-    title="Request tokens"
+    title="⤵ Request tokens"
     onPress={() => {
       Linking.openURL(getRequestTokensUrl(address))
     }}

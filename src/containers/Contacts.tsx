@@ -23,6 +23,7 @@ import { TAppState } from '../redux/reducers'
 import { TMapDispatchToProps, TContact } from '../_types'
 import ContactList from '../components/ContactList'
 import QrCodeScanner from '../components/QrCodeScanner'
+import { ButtonType } from '../_enums'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -95,18 +96,21 @@ class Contacts extends React.Component<Props, State> {
           <View style={sectionContainer}>
             <View style={flexRowCenterLayout}>
               <KiltButton
-                title="Add new contact"
+                title="＋ Add new contact"
                 onPress={() => {
                   this.openDialog()
                 }}
               />
             </View>
+            {/* todo move to settings */}
+            {/* todo also delete all contacts when settings */}
             <View style={flexRowCenterLayout}>
               <KiltButton
-                title="Delete all contacts"
+                title="✕ Delete all contacts"
                 onPress={() => {
                   deleteAllContactsInStore()
                 }}
+                type={ButtonType.Danger}
               />
             </View>
           </View>

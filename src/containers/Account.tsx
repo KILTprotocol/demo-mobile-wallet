@@ -135,7 +135,7 @@ class Account extends Component<Props, State> {
             <Text style={sectionTitleTxt}>Actions</Text>
             {address && <RequestTokensButton address={address} />}
             <KiltButton
-              title="Transfer tokens"
+              title="↔ Transfer tokens"
               onPress={() => {
                 this.openDialog()
               }}

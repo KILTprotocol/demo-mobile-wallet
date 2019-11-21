@@ -26,6 +26,7 @@ import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
 import { Dispatch } from 'redux'
 import { TMapDispatchToProps, TMapStateToProps } from '../_types'
 import { TAppState } from '../redux/reducers'
+import { ButtonType } from '../_enums'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -75,18 +76,20 @@ class Settings extends React.Component<Props, null> {
           <View style={sectionContainer}>
             <View style={flexRowCenterLayout}>
               <KiltButton
-                title="Reset app (delete credentials + reset identity and balance)"
                 onPress={() => {
-                  this.resetApp()
+                  deleteAllCredentialsInStore()
                 }}
+                title="✕ Delete all credentials from this wallet"
+                type={ButtonType.Danger}
               />
             </View>
             <View style={flexRowCenterLayout}>
               <KiltButton
-                title="Delete all credentials from this wallet"
                 onPress={() => {
-                  deleteAllCredentialsInStore()
+                  this.resetApp()
                 }}
+                title="✕✕ Reset app (delete credentials + reset identity and balance)"
+                type={ButtonType.Danger}
               />
             </View>
           </View>
