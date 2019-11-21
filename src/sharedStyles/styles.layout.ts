@@ -44,6 +44,12 @@ export const flexRowLayout: ViewStyle = {
   alignItems: 'center',
 }
 
+export const flexRowLayoutBaseline: ViewStyle = {
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'baseline',
+}
+
 export const flexRowLayoutSpaceBetween: ViewStyle = {
   display: 'flex',
   flexDirection: 'row',
@@ -51,6 +57,7 @@ export const flexRowLayoutSpaceBetween: ViewStyle = {
   justifyContent: 'space-between',
 }
 
+// todo remove "layout" from all names
 export const flexRowCenterLayout: ViewStyle = {
   display: 'flex',
   flexDirection: 'row',
