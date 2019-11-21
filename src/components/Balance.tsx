@@ -1,7 +1,7 @@
 import React from 'react'
-import { Text, View, TextStyle } from 'react-native'
-import { bodyTxt } from '../sharedStyles/styles.typography'
-import { flexRowLayout } from '../sharedStyles/styles.layout'
+import { Text, View, TextStyle, ViewStyle } from 'react-native'
+import { bodyTxt, lTxt } from '../sharedStyles/styles.typography'
+import { flexRowLayoutBaseline } from '../sharedStyles/styles.layout'
 import {
   BALANCE_PLUS_CLR,
   BALANCE_ZERO_CLR,
@@ -19,9 +19,16 @@ const zero: TextStyle = {
   color: BALANCE_ZERO_CLR,
 }
 
+const balanceNr: ViewStyle = {
+  marginRight: 2,
+}
+
 const Balance: React.FunctionComponent<Props> = ({ balance }): JSX.Element => (
-  <View style={flexRowLayout}>
-    <Text style={[bodyTxt, balance > 0 ? plus : zero]}>{balance}</Text>
+  <View style={flexRowLayoutBaseline}>
+    <Text style={[bodyTxt, lTxt, balanceNr, balance > 0 ? plus : zero]}>
+      {balance}
+    </Text>
+    <Text style={[bodyTxt]}> KILT Coins</Text>
   </View>
 )
 
