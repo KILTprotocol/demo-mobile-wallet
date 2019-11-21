@@ -2,17 +2,29 @@ import {
   KILT_ORANGE_CLR,
   KILT_PURPLE_CLR,
   KILT_GREEN_CLR,
+  KILT_PURPLE_CLR_MEDIUM,
+  KILT_GREEN_CLR_DARK,
 } from '../sharedStyles/styles.consts.colors'
 
-const ADDRESS_DISPLAY_LENGTH = 10
-const COLORS = Object.freeze([KILT_ORANGE_CLR, KILT_PURPLE_CLR, KILT_GREEN_CLR])
+const ADDRESS_DISPLAY_START_LENGTH = 9
+const ADDRESS_DISPLAY_END_LENGTH = 4
+const COLORS = Object.freeze([
+  KILT_ORANGE_CLR,
+  KILT_PURPLE_CLR,
+  KILT_PURPLE_CLR_MEDIUM,
+  KILT_GREEN_CLR,
+  KILT_GREEN_CLR_DARK,
+])
 
 /* ---------------------------------- */
-/*               Contact              */
+/*               Address              */
 /* ---------------------------------- */
 
 const truncateAddress = (address: string): string =>
-  `${address.substr(0, ADDRESS_DISPLAY_LENGTH)}...`
+  `${address.substr(0, ADDRESS_DISPLAY_START_LENGTH)}...${address.substr(
+    address.length - ADDRESS_DISPLAY_END_LENGTH,
+    ADDRESS_DISPLAY_END_LENGTH
+  )}`
 
 /* generates a color from a string that will be different for different strings
 but always the same for a given string
