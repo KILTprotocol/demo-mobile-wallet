@@ -39,7 +39,7 @@ function balanceListener(
 ): void {
   if (change.toNumber()) {
     console.info(
-      `[BALANCE] Balance has changed by ${change.toNumber()} to ${balance.toNumber()}`
+      `[BALANCE LISTENER] Balance has changed by ${change.toNumber()} to ${balance.toNumber()}`
     )
     // save new balance in store
     store.dispatch(updateBalance(asKiltCoins(balance)))

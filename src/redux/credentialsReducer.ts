@@ -30,8 +30,8 @@ export default function credentialsReducer(
         credentialsMap: {},
       }
     case UPDATE_CREDENTIAL_STATUS:
-      console.log(
-        '[CREDENTIAL] Updating credential status:',
+      console.info(
+        '[CREDENTIAL REDUCER] Updating credential status:',
         action.payload.hash
       )
       const { hash: claimHash, status: claimStatus } = action.payload

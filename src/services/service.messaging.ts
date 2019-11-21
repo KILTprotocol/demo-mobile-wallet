@@ -92,10 +92,10 @@ class MessageService {
           console.info('[MESSAGE] Message sent')
         })
         .catch(error => {
-          console.error(error)
+          console.info(error)
         })
     } catch (error) {
-      console.error(error)
+      console.info(error)
       return Promise.reject()
     }
   }
