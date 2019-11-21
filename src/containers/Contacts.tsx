@@ -1,7 +1,6 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text } from 'react-native'
 import { Dispatch } from 'redux'
-import { RNCamera } from 'react-native-camera'
 import { connect } from 'react-redux'
 import KiltButton from '../components/KiltButton'
 import {
@@ -14,13 +13,17 @@ import {
   mainViewContainer,
   sectionContainer,
   flexRowCenterLayout,
+  qrCodeScannerContainer,
 } from '../sharedStyles/styles.layout'
 import { mainTitleTxt } from '../sharedStyles/styles.typography'
-import WithDefaultBackground from './WithDefaultBackground'
-import AddContactDialog from './AddContactDialog'
+import WithDefaultBackground from '../components/WithDefaultBackground'
+import AddContactDialog from '../components/AddContactDialog'
 import { addContact, deleteAllContacts } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
 import { TMapDispatchToProps, TContact } from '../_types'
+import ContactList from '../components/ContactList'
+import QrCodeScanner from '../components/QrCodeScanner'
+import { ButtonType } from '../_enums'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -31,53 +34,30 @@ type Props = {
 
 type State = {
   dialogVisible: boolean
-  scannerOpen: boolean
   newContactAddress: string
   newContactName: string
 }
 
-const styles = StyleSheet.create({
-  cameraPreview: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  cameraContainer: {
-    flexDirection: 'column',
-    height: '70%',
-  },
-  scanningStatus: {
-    flex: 0,
-    padding: 15,
-    paddingHorizontal: 20,
-    alignSelf: 'center',
-  },
-})
-
 class Contacts extends React.Component<Props, State> {
   state = {
     dialogVisible: false,
-    scannerOpen: false,
     newContactAddress: '',
     newContactName: '',
   }
 
-  onBarCodeRead(barcode): void {
-    console.log(barcode)
-    this.setState({
-      dialogVisible: true,
-      scannerOpen: false,
-      newContactAddress: barcode.data,
-    })
-  }
+  // todo barcode type
+  // onBarCodeRead(barcode): void {
+  //   this.setState({
+  //     dialogVisible: true,
+  //     scannerOpen: false,
+  //     newContactAddress: barcode.data,
+  //   })
+  // }
 
   setNewContactName(newContactName: string): void {
     // todo need or not
     this.setState({
-      ...this.state,
-      newContactName,
+      newContactName: newContactName.trimLeft().trimRight(),
     })
   }
 
@@ -85,21 +65,28 @@ class Contacts extends React.Component<Props, State> {
     this.setState({ dialogVisible: false })
   }
 
-  // todo create vs save vs new
-  createNewContact(): void {
+  openDialog(): void {
+    this.setState({
+      dialogVisible: true,
+      newContactAddress: '',
+      newContactName: '',
+    })
+  }
+
+  // todo create vs save vs add vs new
+  addNewContact(): void {
     const { addContactInStore } = this.props
     const { newContactAddress, newContactName } = this.state
     addContactInStore({
       name: newContactName,
       address: newContactAddress,
     })
-    this.closeDialog()
   }
 
   render(): JSX.Element {
-    const { dialogVisible, scannerOpen, newContactAddress } = this.state
+    const { dialogVisible, newContactAddress } = this.state
     const { contactsFromStore, deleteAllContactsInStore } = this.props
-    console.log(contactsFromStore)
+    // todo delete contacts on reset app
     return (
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>
@@ -109,56 +96,41 @@ class Contacts extends React.Component<Props, State> {
           <View style={sectionContainer}>
             <View style={flexRowCenterLayout}>
               <KiltButton
-                title="Add new contact"
+                title="＋ Add new contact"
                 onPress={() => {
-                  this.setState({
-                    scannerOpen: true,
-                  })
+                  this.openDialog()
                 }}
               />
             </View>
+            {/* todo move to settings */}
+            {/* todo also delete all contacts when settings */}
             <View style={flexRowCenterLayout}>
               <KiltButton
-                title="Delete all contacts"
+                title="✕ Delete all contacts"
                 onPress={() => {
                   deleteAllContactsInStore()
                 }}
+                type={ButtonType.Danger}
               />
             </View>
           </View>
-          {scannerOpen && (
-            <View style={styles.cameraContainer}>
-              <RNCamera
-                ref={ref => {
-                  this.camera = ref
-                }}
-                style={styles.cameraPreview}
-                type={RNCamera.Constants.Type.back}
-                flashMode={RNCamera.Constants.FlashMode.on}
-                onBarCodeRead={barcode => this.onBarCodeRead(barcode)}
-              />
-              <View>
-                <TouchableOpacity style={styles.scanningStatus}>
-                  <Text>Scanning...</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          )}
+          {/* todo refactor dialogs eg DRY */}
           <View>
-            {contactsFromStore.map((c: TContact) => (
-              <View key={c.address}>
-                <Text>{c.name}</Text>
-                <Text>{c.address}</Text>
-              </View>
-            ))}
+            <ContactList contacts={contactsFromStore} />
           </View>
           <AddContactDialog
             visible={dialogVisible}
             address={newContactAddress}
             onPressCancel={() => this.closeDialog()}
             onChangeContactName={name => this.setNewContactName(name)}
-            onPressOK={() => {
-              this.createNewContact()
+            onNewContactAddressRead={address => {
+              this.setState({
+                newContactAddress: address,
+              })
+            }}
+            onConfirmAddContact={() => {
+              this.addNewContact()
+              this.closeDialog()
             }}
           />
         </ScrollView>

@@ -9,6 +9,8 @@ import {
   RESET_PUBLIC_IDENTITY,
   ADD_CONTACT,
   DELETE_ALL_CONTACTS,
+  UPDATE_BALANCE,
+  RESET_BALANCE,
 } from './actionTypes'
 import {
   TAppAction,
@@ -17,6 +19,9 @@ import {
   TContact,
 } from '../_types'
 
+/* ---------------------------------- */
+/*              Identity              */
+/* ---------------------------------- */
 export const setIdentity = (identity: Identity | null): TAppAction => ({
   type: SET_IDENTITY,
   payload: identity,
@@ -28,7 +33,7 @@ export const setIdentity = (identity: Identity | null): TAppAction => ({
 // todo rename mnemonic dialog
 // todo rename InStore to InRdxStore
 
-// todo fix folder structure
+// TODOprio fix folder structure
 
 // todo draw flow and architecture
 
@@ -47,6 +52,10 @@ export const resetPublicIdentity = (): TAppAction => ({
   type: RESET_PUBLIC_IDENTITY,
 })
 
+/* ---------------------------------- */
+/*             Credentials            */
+/* ---------------------------------- */
+
 export const addCredential = (credential: TCredential): TAppAction => ({
   type: ADD_CREDENTIAL,
   payload: credential,
@@ -63,6 +72,10 @@ export const deleteAllCredentials = (): TAppAction => ({
   type: DELETE_ALL_CREDENTIALS,
 })
 
+/* ---------------------------------- */
+/*              Contacts              */
+/* ---------------------------------- */
+
 export const addContact = (contact: TContact): TAppAction => ({
   type: ADD_CONTACT,
   payload: contact,
@@ -70,4 +83,17 @@ export const addContact = (contact: TContact): TAppAction => ({
 
 export const deleteAllContacts = (): TAppAction => ({
   type: DELETE_ALL_CONTACTS,
+})
+
+/* ---------------------------------- */
+/*              Balance               */
+/* ---------------------------------- */
+
+export const updateBalance = (balance: number): TAppAction => ({
+  type: UPDATE_BALANCE,
+  payload: balance,
+})
+
+export const resetBalance = (): TAppAction => ({
+  type: RESET_BALANCE,
 })

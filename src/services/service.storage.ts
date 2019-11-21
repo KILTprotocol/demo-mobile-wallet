@@ -14,7 +14,7 @@ async function storeDataUnencrypted(
     await AsyncStorage.setItem(getAsyncStorageFullKeyName(key), value)
     return true
   } catch (error) {
-    console.error(error)
+    console.info(error)
     return false
   }
 }
@@ -23,7 +23,7 @@ async function getDataUnencrypted(key: string): Promise<string | null> {
   try {
     return await AsyncStorage.getItem(getAsyncStorageFullKeyName(key))
   } catch (error) {
-    console.error(error)
+    console.info(error)
     return null
   }
 }
@@ -33,7 +33,7 @@ async function removeDataUnencrypted(key: string): Promise<boolean> {
     await AsyncStorage.removeItem(getAsyncStorageFullKeyName(key))
     return true
   } catch (error) {
-    console.error(error)
+    console.info(error)
     return false
   }
 }

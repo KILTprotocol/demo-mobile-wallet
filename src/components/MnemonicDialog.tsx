@@ -1,5 +1,6 @@
 import React from 'react'
 import Dialog from 'react-native-dialog'
+import { dialogContainer } from '../sharedStyles/styles.dialog'
 
 type Props = {
   onPressCancel: () => void
@@ -12,7 +13,7 @@ const MnemonicDialog: React.FunctionComponent<Props> = ({
   onPressOK,
   visible,
 }): JSX.Element => (
-  <Dialog.Container visible={visible}>
+  <Dialog.Container visible={visible} style={dialogContainer}>
     <Dialog.Title>Already wrote it down?</Dialog.Title>
     <Dialog.Description>
       This is important! Your identity phrase (seed) will help you recover your

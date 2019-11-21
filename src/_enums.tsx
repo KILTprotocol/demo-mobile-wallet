@@ -1,3 +1,7 @@
+/* ---------------------------------- */
+/*              Statuses              */
+/* ---------------------------------- */
+
 export enum AsyncStatus {
   NotStarted,
   Pending,
@@ -11,8 +15,23 @@ export enum CredentialStatus {
   AttestationPending,
 }
 
+export enum AppLockStatus {
+  NotSetUp,
+  SetUpAndLocked,
+  SetUpAndUnlocked,
+  Unknown,
+}
+
+/* ---------------------------------- */
+/*                 UI                 */
+/* ---------------------------------- */
+
 export enum LoadingIndicatorSize {
   S,
   M,
   L,
+}
+
+export enum ButtonType {
+  Danger,
 }

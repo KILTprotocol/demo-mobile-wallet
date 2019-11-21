@@ -30,7 +30,7 @@ import {
 import WithDefaultBackground from '../components/WithDefaultBackground'
 import AddClaimDialog from '../components/AddClaimDialog'
 import {
-  createDriversLicenseClaim,
+  createMembershipClaim,
   createRequestForAttestation,
   sendRequestForAttestation,
 } from '../services/service.claim'
@@ -38,26 +38,26 @@ import { addCredential, updateCredentialStatus } from '../redux/actions'
 import {
   TCredential,
   THashAndClaimStatus,
-  TDriversLicenseClaimContents,
+  TClaimContents,
   TCredentialMapByHash,
 } from '../_types'
 import CredentialList from '../components/CredentialList'
 import { POLLING_PERIOD_MS } from '../_config'
 import { getInboxUrlFromAddress } from '../utils/utils.messaging'
-import { getSDKIdentityFromStoredIdentity } from '../utils/utils.identity'
+import { getSdkIdentityFromStoredIdentity } from '../utils/utils.identity'
 import { TMapDispatchToProps, TMapStateToProps } from '../_types'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   identityFromStore: Identity | null
   publicIdentityFromStore: PublicIdentity | null
-  credentialsAsObjectFromStore: TCredentialMapByHash
+  credentialsMapFromStore: TCredentialMapByHash
   addCredentialInStore: typeof addCredential
   updateCredentialStatusInStore: typeof updateCredentialStatus
 }
 
 type State = {
-  isDialogVisible: boolean
+  dialogVisible: boolean
   claimContents: object
   msgsHashes: string[]
   msgs: IEncryptedMessage[]
@@ -71,18 +71,18 @@ class Dashboard extends React.Component<Props, State> {
   static interval: NodeJS.Timeout
 
   state = {
-    isDialogVisible: false,
+    dialogVisible: false,
     claimContents: {},
     msgsHashes: [],
     msgs: [],
   }
 
   closeDialog(): void {
-    this.setState({ isDialogVisible: false, claimContents: {} })
+    this.setState({ dialogVisible: false, claimContents: {} })
   }
 
   openDialog(): void {
-    this.setState({ isDialogVisible: true })
+    this.setState({ dialogVisible: true })
   }
 
   // TODO function styles
@@ -91,8 +91,8 @@ class Dashboard extends React.Component<Props, State> {
     const { identityFromStore, addCredentialInStore } = this.props
     try {
       if (identityFromStore) {
-        const claim = createDriversLicenseClaim(
-          claimContents as TDriversLicenseClaimContents,
+        const claim = createMembershipClaim(
+          claimContents as TClaimContents,
           identityFromStore
         )
         if (!claim || !identityFromStore) {
@@ -104,22 +104,22 @@ class Dashboard extends React.Component<Props, State> {
         )
         if (requestForAttestation) {
           addCredentialInStore({
-            title: "Driver's License",
+            title: 'Membership Card',
             hash: requestForAttestation.hash,
             cTypeHash: requestForAttestation.ctypeHash.hash,
             status: CredentialStatus.AttestationPending,
             contents: requestForAttestation.claim.contents,
           })
-          const claimerIdentity = getSDKIdentityFromStoredIdentity(
+          const claimerIdentity = getSdkIdentityFromStoredIdentity(
             identityFromStore
           )
           sendRequestForAttestation(requestForAttestation, claimerIdentity)
         }
       } else {
-        console.log('No identity found')
+        console.info('No identity found')
       }
     } catch (error) {
-      console.log('OK', error)
+      console.info('OK', error)
     }
   }
 
@@ -153,7 +153,7 @@ class Dashboard extends React.Component<Props, State> {
       // TODO merge mgs and hashes
       const encryptedMsg = this.state.msgs.find(m => m.hash === h)
       console.log(encryptedMsg)
-      const claimerIdentity = getSDKIdentityFromStoredIdentity(
+      const claimerIdentity = getSdkIdentityFromStoredIdentity(
         identityFromStore
       )
       const msg: IMessage = Message.createFromEncryptedMessage(
@@ -162,16 +162,23 @@ class Dashboard extends React.Component<Props, State> {
       )
       try {
         Message.ensureOwnerIsSender(msg)
+        console.log('TYPE', msg.body.type)
+        console.log(
+          'msg.body.content.attestation.revoked',
+          msg.body.content.attestation.revoked
+        )
+        console.log('msg.body.content', msg.body.content)
         if (msg.body.type === MessageBodyType.SUBMIT_ATTESTATION_FOR_CLAIM) {
           const hashAndStatus = {
             hash: msg.body.content.attestation.claimHash,
-            status: CredentialStatus.Valid,
+            status: msg.body.content.attestation.revoked
+              ? CredentialStatus.Revoked
+              : CredentialStatus.Valid,
           }
-          console.log('ATTESTED', hashAndStatus)
           updateCredentialStatusInStore(hashAndStatus)
         }
       } catch (error) {
-        console.log(error)
+        console.info(error)
       }
     })
   }
@@ -196,16 +203,19 @@ class Dashboard extends React.Component<Props, State> {
         return response.json()
       })
       .catch(error => {
-        console.log(error)
+        console.info(error)
         return null
       })
       .then((encryptedMessages: IEncryptedMessage[]) => {
-        const encryptedMsgsHashes = encryptedMessages.map(msg => msg.hash)
-        this.setState({
-          msgsHashes: encryptedMsgsHashes,
-          msgs: encryptedMessages,
-        })
+        if (encryptedMessages) {
+          const encryptedMsgsHashes = encryptedMessages.map(msg => msg.hash)
+          this.setState({
+            msgsHashes: encryptedMsgsHashes,
+            msgs: encryptedMessages,
+          })
+        }
       })
+    // query all potential attestations
   }
 
   componentWillUnmount(): void {
@@ -213,9 +223,9 @@ class Dashboard extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
-    const { credentialsAsObjectFromStore } = this.props
-    const { isDialogVisible } = this.state
-    const credentials = Object.values(credentialsAsObjectFromStore)
+    const { credentialsMapFromStore } = this.props
+    const { dialogVisible } = this.state
+    const credentials = Object.values(credentialsMapFromStore)
     return (
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>
@@ -226,19 +236,18 @@ class Dashboard extends React.Component<Props, State> {
             <Text style={sectionTitleTxt}>
               My credentials ({credentials.length})
             </Text>
-            {credentials.length < 1 && (
-              <KiltButton
-                title="Request driver's license"
-                onPress={() => {
-                  this.openDialog()
-                }}
-              />
-            )}
+            <KiltButton
+              title="＋ Request membership card"
+              onPress={() => {
+                // todo needed or not
+                this.openDialog()
+              }}
+            />
           </View>
           <CredentialList credentials={credentials || []} />
         </ScrollView>
         <AddClaimDialog
-          visible={isDialogVisible}
+          visible={dialogVisible}
           onPressCancel={() => this.closeDialog()}
           onPressOK={async () => {
             await this.createClaimAndRequestAttestation()
@@ -256,7 +265,7 @@ class Dashboard extends React.Component<Props, State> {
 const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
   identityFromStore: state.identityReducer.identity,
   publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
-  credentialsAsObjectFromStore: state.credentialsReducer.credentialsAsObject,
+  credentialsMapFromStore: state.credentialsReducer.credentialsMap,
 })
 
 const mapDispatchToProps = (

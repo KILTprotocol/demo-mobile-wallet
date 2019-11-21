@@ -22,7 +22,6 @@ import {
   titleInvertedClrTxt,
 } from '../sharedStyles/styles.typography'
 import IdentitySetupStep from '../components/IdentitySetupStep'
-import { callWithDelay } from '../utils/utils.async'
 import { setPublicIdentity, setIdentity } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
 import WithIntroBackground from '../components/WithIntroBackground'
@@ -31,10 +30,11 @@ import { getGenericPassword } from 'react-native-keychain'
 
 const STEP_CREATE = 'create'
 const STEP_SAVE = 'save'
+const STEP_SECURE = 'secure'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
-  stepDescriptions: object
+  stepsDescriptions: object
   identityFromStore: Identity | null
   setIdentityInStore: typeof setIdentity
   publicIdentityFromStore: PublicIdentity | null
@@ -54,8 +54,9 @@ class IdentitySetup extends React.Component<Props, State> {
   state = {
     isNextBtnDisabled: true,
     stepStatuses: {
-      [STEP_CREATE]: AsyncStatus.Pending,
+      [STEP_CREATE]: AsyncStatus.NotStarted,
       [STEP_SAVE]: AsyncStatus.NotStarted,
+      [STEP_SECURE]: AsyncStatus.NotStarted,
     },
   }
 
@@ -64,7 +65,7 @@ class IdentitySetup extends React.Component<Props, State> {
 
   componentDidUpdate(prevProps: Props): void {
     const { publicIdentityFromStore } = this.props
-    // TODO check f setup is behaving properly and what heppns if i switch apps before end of setup
+    // todo is this useful
     if (
       prevProps.publicIdentityFromStore !== publicIdentityFromStore &&
       publicIdentityFromStore !== null
@@ -74,6 +75,7 @@ class IdentitySetup extends React.Component<Props, State> {
         stepStatuses: {
           [STEP_CREATE]: AsyncStatus.Success,
           [STEP_SAVE]: AsyncStatus.Success,
+          [STEP_SECURE]: AsyncStatus.Success,
         },
         isNextBtnDisabled: false,
       }))
@@ -87,45 +89,88 @@ class IdentitySetup extends React.Component<Props, State> {
       setIdentityInStore,
     } = this.props
     const mnemonic: string = navigation.getParam('mnemonic')
-    const identity = await callWithDelay(this.createIdentity, [mnemonic])
+    const identity = this.createIdentity(mnemonic)
     const publicIdentity = new PublicIdentity(
       identity.address,
       identity.boxPublicKeyAsHex
     )
-    // TODO separate these into their own functions
+
+    // todo refactor
+    const STEP_DURATION_MS = 1000
+    const BUFFER_MS = 200
+
     if (identity && publicIdentity) {
-      this.setState(prevState => ({
-        ...prevState,
-        stepStatuses: {
-          [STEP_CREATE]: AsyncStatus.Success,
-          [STEP_SAVE]: AsyncStatus.Pending,
-        },
-      }))
-      // ALSO TODO set normal identity!!!!! since at setup
-      // ALSO: do we want to ask for thumb already??
-      // because at setup time and later on, must be the same person
+      setTimeout(() => {
+        this.setState(prevState => ({
+          ...prevState,
+          stepStatuses: {
+            [STEP_CREATE]: AsyncStatus.Pending,
+            [STEP_SAVE]: AsyncStatus.NotStarted,
+            [STEP_SECURE]: AsyncStatus.NotStarted,
+          },
+        }))
+      }, BUFFER_MS)
+
+      setTimeout(() => {
+        this.setState(prevState => ({
+          ...prevState,
+          stepStatuses: {
+            [STEP_CREATE]: AsyncStatus.Success,
+            [STEP_SAVE]: AsyncStatus.Pending,
+            [STEP_SECURE]: AsyncStatus.NotStarted,
+          },
+        }))
+      }, STEP_DURATION_MS)
+
+      setTimeout(() => {
+        this.setState(prevState => ({
+          ...prevState,
+          stepStatuses: {
+            [STEP_CREATE]: AsyncStatus.Success,
+            [STEP_SAVE]: AsyncStatus.Success,
+            [STEP_SECURE]: AsyncStatus.Pending,
+          },
+        }))
+      }, 2 * STEP_DURATION_MS)
+
       // TODO: handle error cases
       // TODO move to utility file
+      // TODO separate these into their own functions
       // TODO use const "identity" for this
-      await Keychain.setGenericPassword('identity', JSON.stringify(identity), {
-        accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_ANY,
-        accessible: Keychain.ACCESSIBLE.WHEN_PASSCODE_SET_THIS_DEVICE_ONLY,
-      })
-      // TODO cleanup
-      const identityWrapper = await getGenericPassword()
-      if (identityWrapper) {
-        // decrypt identity
-        const identityDecrypted = JSON.parse(identityWrapper.password)
-        // add decrypted identity to Redux store for use anywhere in the app, until user leaves the app again or screen locks
-        setIdentityInStore(identityDecrypted)
-      }
 
-      await callWithDelay(setPublicIdentityInStore, [publicIdentity])
+      setTimeout(async () => {
+        // todoprio move to separate file (utility)
+        await Keychain.setGenericPassword(
+          'identity',
+          JSON.stringify(identity),
+          {
+            accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_ANY,
+            accessible: Keychain.ACCESSIBLE.WHEN_PASSCODE_SET_THIS_DEVICE_ONLY,
+          }
+        )
+
+        const identityWrapper = await getGenericPassword()
+        if (identityWrapper) {
+          // decrypt identity
+          const identityDecrypted = JSON.parse(identityWrapper.password)
+          setIdentityInStore(identityDecrypted)
+        }
+        // todo async?
+        setPublicIdentityInStore(publicIdentity)
+        this.setState(prevState => ({
+          ...prevState,
+          stepStatuses: {
+            [STEP_CREATE]: AsyncStatus.Success,
+            [STEP_SAVE]: AsyncStatus.Success,
+            [STEP_SECURE]: AsyncStatus.Success,
+          },
+        }))
+      }, 3 * STEP_DURATION_MS + BUFFER_MS)
     }
   }
 
   render(): React.ReactNode {
-    const { navigation, stepDescriptions } = this.props
+    const { navigation, stepsDescriptions } = this.props
     const { isNextBtnDisabled } = this.state
     return (
       <WithIntroBackground>
@@ -135,14 +180,16 @@ class IdentitySetup extends React.Component<Props, State> {
               Step 2: Knitting your KILT account together
             </Text>
           </View>
-          {Object.entries(stepDescriptions).map(([name, description]) => (
-            <View key={description} style={sectionContainer}>
-              <IdentitySetupStep
-                description={description}
-                status={this.state.stepStatuses[name]}
-              />
-            </View>
-          ))}
+          <View style={sectionContainer}>
+            {Object.entries(stepsDescriptions).map(([name, description]) => (
+              <View key={description} style={sectionContainer}>
+                <IdentitySetupStep
+                  description={description}
+                  status={this.state.stepStatuses[name]}
+                />
+              </View>
+            ))}
+          </View>
           {/* the button is enabled only if all steps were successful */}
           <View style={sectionContainer}>
             <View style={flexRowEndLayout}>
@@ -160,9 +207,10 @@ class IdentitySetup extends React.Component<Props, State> {
 }
 
 IdentitySetup.defaultProps = {
-  stepDescriptions: {
+  stepsDescriptions: {
     [STEP_CREATE]: 'Creating your identity',
     [STEP_SAVE]: 'Saving your identity',
+    [STEP_SECURE]: 'Securing your wallet: identify yourself',
   },
 }
 

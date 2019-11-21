@@ -18,3 +18,9 @@ export const UPDATE_CREDENTIAL_STATUS = 'UPDATE_CREDENTIAL_STATUS'
 /* ---------------------------------- */
 export const ADD_CONTACT = 'ADD_CONTACT'
 export const DELETE_ALL_CONTACTS = 'DELETE_ALL_CONTACTS'
+
+/* ---------------------------------- */
+/*              Balance               */
+/* ---------------------------------- */
+export const UPDATE_BALANCE = 'UPDATE_BALANCE'
+export const RESET_BALANCE = 'RESET_BALANCE'

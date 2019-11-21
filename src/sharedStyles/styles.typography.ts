@@ -36,6 +36,14 @@ export const bodyTxt: TextStyle = {
   color: TXT_DEFAULT_CLR,
 }
 
+export const mTxt: TextStyle = {
+  fontSize: TXT_M_SIZE,
+}
+
+export const lTxt: TextStyle = {
+  fontSize: TXT_L_SIZE,
+}
+
 export const boldTxt: TextStyle = {
   fontWeight: '900',
 }

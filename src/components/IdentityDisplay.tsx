@@ -1,24 +1,25 @@
 import React from 'react'
-import { Text, View, TextStyle } from 'react-native'
-import Identicon from 'polkadot-identicon-react-native'
-import { bodyTxt } from '../sharedStyles/styles.typography'
-import { flexRowLayout } from '../sharedStyles/styles.layout'
+import { View, ViewStyle } from 'react-native'
+import { flexRowCenterLayout } from '../sharedStyles/styles.layout'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
+import AddressDisplay from './AddressDisplay'
 
 type Props = {
   address: IPublicIdentity['address']
 }
 
-const addressStyle: TextStyle = {
-  marginBottom: 12,
+const addressWrapper: ViewStyle = {
+  marginTop: 12,
+  marginBottom: 6,
 }
 
 const IdentityDisplay: React.FunctionComponent<Props> = ({
   address,
 }): JSX.Element => (
-  <View style={flexRowLayout}>
-    {/* <Identicon value={address} size={48} theme="polkadot" /> */}
-    <Text style={[bodyTxt, addressStyle]}>{address}</Text>
+  <View style={flexRowCenterLayout}>
+    <View style={addressWrapper}>
+      <AddressDisplay address={address} />
+    </View>
   </View>
 )
 

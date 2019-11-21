@@ -17,6 +17,7 @@ import { mainTitleTxt } from '../sharedStyles/styles.typography'
 import { APP_STARTUP } from '../_routes'
 import WithDefaultBackground from './WithDefaultBackground'
 import {
+  resetBalance,
   resetIdentity,
   deleteAllCredentials,
   resetPublicIdentity,
@@ -25,12 +26,14 @@ import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
 import { Dispatch } from 'redux'
 import { TMapDispatchToProps, TMapStateToProps } from '../_types'
 import { TAppState } from '../redux/reducers'
+import { ButtonType } from '../_enums'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   identityFromStore: Identity | null
   publicIdentityFromStore: PublicIdentity | null
   resetIdentityInStore: typeof resetIdentity
+  resetBalanceInStore: typeof resetBalance
   resetPublicIdentityInStore: typeof resetPublicIdentity
   deleteAllCredentialsInStore: typeof deleteAllCredentials
 }
@@ -38,7 +41,7 @@ type Props = {
 class Settings extends React.Component<Props, null> {
   static navigationOptions: { header: null }
   componentDidUpdate(): void {
-    // todo: we might want to move this logics up to a higher level component
+    // todo: we might want to move this logics up to a higher level component eg AppWrapper
     const { publicIdentityFromStore, navigation } = this.props
     // if the public identity is reset, navigate to app startup to let the user set their identity anew
     if (!publicIdentityFromStore) {
@@ -51,11 +54,14 @@ class Settings extends React.Component<Props, null> {
       resetPublicIdentityInStore,
       resetIdentityInStore,
       deleteAllCredentialsInStore,
+      resetBalanceInStore,
     } = this.props
     // the app is mono-identity so `resetIdentity` means deleting the claims as well
     // Todo ask user for their thumb!!
+    // reset all
     resetPublicIdentityInStore()
     resetIdentityInStore()
+    resetBalanceInStore()
     deleteAllCredentialsInStore()
   }
 
@@ -70,18 +76,20 @@ class Settings extends React.Component<Props, null> {
           <View style={sectionContainer}>
             <View style={flexRowCenterLayout}>
               <KiltButton
-                title="Reset app (delete identity and credentials)"
                 onPress={() => {
-                  this.resetApp()
+                  deleteAllCredentialsInStore()
                 }}
+                title="✕ Delete all credentials from this wallet"
+                type={ButtonType.Danger}
               />
             </View>
             <View style={flexRowCenterLayout}>
               <KiltButton
-                title="Delete all credentials from this wallet"
                 onPress={() => {
-                  deleteAllCredentialsInStore()
+                  this.resetApp()
                 }}
+                title="✕✕ Reset app (delete credentials + reset identity and balance)"
+                type={ButtonType.Danger}
               />
             </View>
           </View>
@@ -110,6 +118,9 @@ const mapDispatchToProps = (
     },
     deleteAllCredentialsInStore: () => {
       dispatch(deleteAllCredentials())
+    },
+    resetBalanceInStore: () => {
+      dispatch(resetBalance())
     },
   }
 }
