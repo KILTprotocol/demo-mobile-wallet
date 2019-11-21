@@ -22,7 +22,7 @@ type Props = {
 // todo rename dialog components
 class AddContactDialog extends React.Component<Props> {
   state = {
-    // TODO set state as relevant apply styles to disabled btn
+    // TODOprio set state as relevant apply styles to disabled btn
     isOKBtnDisabled: false,
   }
 

@@ -7,7 +7,7 @@ type Props = {
   address: string
 }
 
-// todo tab state
+// TODOmedium tab state
 const RequestTokensButton: React.FunctionComponent<Props> = ({
   address,
 }): JSX.Element => (

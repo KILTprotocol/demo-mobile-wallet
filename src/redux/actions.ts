@@ -33,7 +33,7 @@ export const setIdentity = (identity: Identity | null): TAppAction => ({
 // todo rename mnemonic dialog
 // todo rename InStore to InRdxStore
 
-// todo fix folder structure
+// TODOprio fix folder structure
 
 // todo draw flow and architecture
 

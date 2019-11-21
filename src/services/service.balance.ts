@@ -4,8 +4,14 @@ import { updateBalance } from '../redux/actions'
 import { store } from '../redux/store'
 
 const KILT_MICRO_COIN = 1000000
+// TODOprio credentials encryption
+// TODOprio get balance at start!
 
+// todo number vs balance....
 // todo cleanup
+// token initialization??
+// todo address string vs ci dessous
+
 // async function getBalanceRaw(address: IPublicIdentity['address']): Promise<BN> {
 //   await Kilt.default.connect(BLOCKCHAIN_NODE)
 //   const balance = await Balance.getBalance(address)
@@ -22,8 +28,6 @@ const KILT_MICRO_COIN = 1000000
 //   // return asKiltCoins(balanceRaw)
 // }
 
-// todo number vs balance....
-// todo cleanup
 function asMicroKiltCoins(balance: number): BN {
   return new BN(balance).muln(KILT_MICRO_COIN)
 }

@@ -15,7 +15,7 @@ type Props = {
 
 class AddClaimDialog extends React.Component<Props> {
   state = {
-    // TODO set state as relevant apply styles to disabled btn
+    // TODOprio set state as relevant apply styles to disabled btn
     isCreateBtnDisabled: false,
   }
 

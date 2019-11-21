@@ -110,7 +110,6 @@ class Contacts extends React.Component<Props, State> {
               />
             </View>
           </View>
-          {/* todo rename booleans */}
           {/* todo refactor dialogs eg DRY */}
           <View>
             <ContactList contacts={contactsFromStore} />
