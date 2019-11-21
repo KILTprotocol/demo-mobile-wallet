@@ -30,7 +30,7 @@ import {
 import WithDefaultBackground from '../components/WithDefaultBackground'
 import AddClaimDialog from '../components/AddClaimDialog'
 import {
-  createDriversLicenseClaim,
+  createMembershipClaim,
   createRequestForAttestation,
   sendRequestForAttestation,
 } from '../services/service.claim'
@@ -38,7 +38,7 @@ import { addCredential, updateCredentialStatus } from '../redux/actions'
 import {
   TCredential,
   THashAndClaimStatus,
-  TDriversLicenseClaimContents,
+  TClaimContents,
   TCredentialMapByHash,
 } from '../_types'
 import CredentialList from '../components/CredentialList'
@@ -91,8 +91,8 @@ class Dashboard extends React.Component<Props, State> {
     const { identityFromStore, addCredentialInStore } = this.props
     try {
       if (identityFromStore) {
-        const claim = createDriversLicenseClaim(
-          claimContents as TDriversLicenseClaimContents,
+        const claim = createMembershipClaim(
+          claimContents as TClaimContents,
           identityFromStore
         )
         if (!claim || !identityFromStore) {
@@ -104,7 +104,7 @@ class Dashboard extends React.Component<Props, State> {
         )
         if (requestForAttestation) {
           addCredentialInStore({
-            title: "Driver's License",
+            title: 'Membership Card',
             hash: requestForAttestation.hash,
             cTypeHash: requestForAttestation.ctypeHash.hash,
             status: CredentialStatus.AttestationPending,
@@ -226,15 +226,13 @@ class Dashboard extends React.Component<Props, State> {
             <Text style={sectionTitleTxt}>
               My credentials ({credentials.length})
             </Text>
-            {credentials.length < 1 && (
               <KiltButton
-                title="Request driver's license"
+              title="Request membership card"
                 onPress={() => {
                   // todo needed or not
                   this.openDialog()
                 }}
               />
-            )}
           </View>
           <CredentialList credentials={credentials || []} />
         </ScrollView>

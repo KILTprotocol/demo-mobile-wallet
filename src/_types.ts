@@ -31,7 +31,7 @@ export type THashAndClaimStatus = {
   hash: string
 }
 
-export type TDriversLicenseClaimContents = {
+export type TClaimContents = {
   name: string
   birthday: number
   type: string

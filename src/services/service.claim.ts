@@ -6,17 +6,17 @@ import {
 } from '@kiltprotocol/sdk-js'
 import MessageService from './service.messaging'
 import { ATTESTER_MNEMONIC } from '../_config'
-import { TDriversLicenseClaimContents } from '../_types'
+import { TClaimContents } from '../_types'
 import { getSdkIdentityFromStoredIdentity } from '../utils/utils.identity'
 
 const ATTESTER_IDENTITY = Identity.buildFromMnemonic(ATTESTER_MNEMONIC)
 
-function createDriversLicenseClaim(
-  claimContents: TDriversLicenseClaimContents,
+function createMembershipClaim(
+  claimContents: TClaimContents,
   claimerIdentity: Identity | null
 ): Claim | null {
   if (claimerIdentity) {
-    const ctype = require('../data/ctypeDriversLicense.json')
+    const ctype = require('../data/ctypeMembership.json')
     return new Claim(ctype, claimContents, claimerIdentity)
   }
   return null
@@ -64,7 +64,7 @@ function sendRequestForAttestation(
 }
 
 export {
-  createDriversLicenseClaim,
+  createMembershipClaim,
   createRequestForAttestation,
   sendRequestForAttestation,
 }

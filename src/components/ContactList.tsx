@@ -14,7 +14,7 @@ import {
 } from '../sharedStyles/styles.consts.colors'
 import { MIN_SIZE_TOUCHABLE } from '../sharedStyles/styles.consts.touchable'
 import {
-  generateConstantColor,
+  generateConstantColorFromStr,
   takeFirstLetter,
   truncateAddress,
 } from '../utils/utils.formatting'
@@ -67,7 +67,11 @@ export default class ContactList extends React.Component<Props> {
                 <View
                   style={[
                     contactBadge,
-                    { backgroundColor: generateConstantColor(contact.name) },
+                    {
+                      backgroundColor: generateConstantColorFromStr(
+                        contact.name
+                      ),
+                    },
                   ]}>
                   <Text style={[bodyTxt, badgeTxt]}>
                     {takeFirstLetter(contact.name)}

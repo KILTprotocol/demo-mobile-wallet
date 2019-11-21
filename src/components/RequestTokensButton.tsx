@@ -8,7 +8,6 @@ type Props = {
 }
 
 // todo tab state
-// todo bug identity asked twice on setup
 const RequestTokensButton: React.FunctionComponent<Props> = ({
   address,
 }): JSX.Element => (
