@@ -6,8 +6,6 @@ import {
   KILT_GREEN_CLR_DARK,
 } from '../sharedStyles/styles.consts.colors'
 
-const ADDRESS_DISPLAY_START_LENGTH = 9
-const ADDRESS_DISPLAY_END_LENGTH = 4
 const COLORS = Object.freeze([
   KILT_ORANGE_CLR,
   KILT_PURPLE_CLR,
@@ -15,6 +13,8 @@ const COLORS = Object.freeze([
   KILT_GREEN_CLR,
   KILT_GREEN_CLR_DARK,
 ])
+const ADDRESS_DISPLAY_START_LENGTH = 8
+const ADDRESS_DISPLAY_END_LENGTH = 4
 
 /* ---------------------------------- */
 /*               Address              */
