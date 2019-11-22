@@ -124,7 +124,6 @@ class TokenTransferDialog extends React.Component<Props> {
       },
     }
 
-    // todoprio bigger touch targets for tabs
     return (
       <Dialog.Container visible={visible} style={dialogContainer}>
         <Dialog.Title>Transfer KILT tokens</Dialog.Title>
