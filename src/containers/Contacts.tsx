@@ -13,22 +13,18 @@ import {
   mainViewContainer,
   sectionContainer,
   flexRowCenterLayout,
-  qrCodeScannerContainer,
 } from '../sharedStyles/styles.layout'
 import { mainTitleTxt } from '../sharedStyles/styles.typography'
 import WithDefaultBackground from '../components/WithDefaultBackground'
 import AddContactDialog from '../components/AddContactDialog'
-import { addContact, deleteAllContacts } from '../redux/actions'
+import { addContact } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
 import { TMapDispatchToProps, TContact } from '../_types'
 import ContactList from '../components/ContactList'
-import QrCodeScanner from '../components/QrCodeScanner'
-import { ButtonType } from '../_enums'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   addContactInStore: typeof addContact
-  deleteAllContactsInStore: typeof deleteAllContacts
   contactsFromStore: TContact[]
 }
 
@@ -53,6 +49,8 @@ class Contacts extends React.Component<Props, State> {
   //     newContactAddress: barcode.data,
   //   })
   // }
+
+  // todo prevent double add
 
   setNewContactName(newContactName: string): void {
     // todo need or not
@@ -85,7 +83,7 @@ class Contacts extends React.Component<Props, State> {
 
   render(): JSX.Element {
     const { dialogVisible, newContactAddress } = this.state
-    const { contactsFromStore, deleteAllContactsInStore } = this.props
+    const { contactsFromStore } = this.props
     // todo delete contacts on reset app
     return (
       <WithDefaultBackground>
@@ -102,17 +100,7 @@ class Contacts extends React.Component<Props, State> {
                 }}
               />
             </View>
-            {/* todo move to settings */}
             {/* todo also delete all contacts when settings */}
-            <View style={flexRowCenterLayout}>
-              <KiltButton
-                title="✕ Delete all contacts"
-                onPress={() => {
-                  deleteAllContactsInStore()
-                }}
-                type={ButtonType.Danger}
-              />
-            </View>
           </View>
           {/* todo refactor dialogs eg DRY */}
           <View>
@@ -152,9 +140,6 @@ const mapDispatchToProps = (
     // todo replace any
     addContactInStore: (contact: TContact) => {
       dispatch(addContact(contact))
-    },
-    deleteAllContactsInStore: () => {
-      dispatch(deleteAllContacts())
     },
   }
 }

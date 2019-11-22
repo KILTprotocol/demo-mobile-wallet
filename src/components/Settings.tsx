@@ -21,6 +21,7 @@ import {
   resetIdentity,
   deleteAllCredentials,
   resetPublicIdentity,
+  deleteAllContacts,
 } from '../redux/actions'
 import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
 import { Dispatch } from 'redux'
@@ -36,6 +37,7 @@ type Props = {
   resetBalanceInStore: typeof resetBalance
   resetPublicIdentityInStore: typeof resetPublicIdentity
   deleteAllCredentialsInStore: typeof deleteAllCredentials
+  deleteAllContactsInStore: typeof deleteAllContacts
 }
 
 class Settings extends React.Component<Props, null> {
@@ -54,19 +56,22 @@ class Settings extends React.Component<Props, null> {
       resetPublicIdentityInStore,
       resetIdentityInStore,
       deleteAllCredentialsInStore,
+      deleteAllContactsInStore,
       resetBalanceInStore,
     } = this.props
     // the app is mono-identity so `resetIdentity` means deleting the claims as well
     // Todo ask user for their thumb!!
+    // todo replace this with a full store reset??
     // reset all
     resetPublicIdentityInStore()
     resetIdentityInStore()
     resetBalanceInStore()
     deleteAllCredentialsInStore()
+    deleteAllContactsInStore()
   }
 
   render(): JSX.Element {
-    const { deleteAllCredentialsInStore } = this.props
+    const { deleteAllCredentialsInStore, deleteAllContactsInStore } = this.props
     return (
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>
@@ -80,6 +85,15 @@ class Settings extends React.Component<Props, null> {
                   deleteAllCredentialsInStore()
                 }}
                 title="✕ Delete all credentials from this wallet"
+                type={ButtonType.Danger}
+              />
+            </View>
+            <View style={flexRowCenterLayout}>
+              <KiltButton
+                title="✕ Delete all contacts"
+                onPress={() => {
+                  deleteAllContactsInStore()
+                }}
                 type={ButtonType.Danger}
               />
             </View>
@@ -118,6 +132,9 @@ const mapDispatchToProps = (
     },
     deleteAllCredentialsInStore: () => {
       dispatch(deleteAllCredentials())
+    },
+    deleteAllContactsInStore: () => {
+      dispatch(deleteAllContacts())
     },
     resetBalanceInStore: () => {
       dispatch(resetBalance())
