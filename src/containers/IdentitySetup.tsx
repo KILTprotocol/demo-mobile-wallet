@@ -27,6 +27,7 @@ import { TAppState } from '../redux/reducers'
 import WithIntroBackground from '../components/WithIntroBackground'
 import { TMapDispatchToProps } from '../_types'
 import { getGenericPassword } from 'react-native-keychain'
+import { saveIdentityAsContactInDemoServices } from '../services/service.demo'
 
 const STEP_CREATE = 'create'
 const STEP_SAVE = 'save'
@@ -60,7 +61,7 @@ class IdentitySetup extends React.Component<Props, State> {
     },
   }
 
-  // TODO move to utility file
+  // TODOprio move to utility file
   createIdentity = (mnemonic: string) => Identity.buildFromMnemonic(mnemonic)
 
   componentDidUpdate(prevProps: Props): void {
@@ -165,6 +166,11 @@ class IdentitySetup extends React.Component<Props, State> {
             [STEP_SECURE]: AsyncStatus.Success,
           },
         }))
+        /* Not strictly needed for the demo wallet but it makes demo setup easier.
+        Because we're using the demo client app to attest and revoke, 
+        the claimer needs to be known in the contact services
+        (according to the logics in the demo client) */
+        saveIdentityAsContactInDemoServices(publicIdentity)
       }, 3 * STEP_DURATION_MS + BUFFER_MS)
     }
   }
