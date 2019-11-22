@@ -2,8 +2,8 @@ import React from 'react'
 import Dialog from 'react-native-dialog'
 import { View, Text, ViewStyle } from 'react-native'
 import { dialogContainer, dialogSection } from '../sharedStyles/styles.dialog'
-import { TXT_S_SIZE } from '../sharedStyles/styles.consts.typography'
 import { qrCodeScannerContainer } from '../sharedStyles/styles.layout'
+import AddressDisplay from './AddressDisplay'
 import QrCodeScanner from './QrCodeScanner'
 
 const newContactLabel: ViewStyle = {
@@ -43,7 +43,7 @@ class AddContactDialog extends React.Component<Props> {
           <Text style={newContactLabel}>New contact address:</Text>
           <View>
             {address ? (
-              <Text style={{ fontSize: TXT_S_SIZE }}>{address}</Text>
+              <AddressDisplay address={address} />
             ) : (
               <View style={qrCodeScannerContainer}>
                 <QrCodeScanner

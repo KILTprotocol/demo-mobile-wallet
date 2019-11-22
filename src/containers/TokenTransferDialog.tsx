@@ -1,8 +1,6 @@
 import React from 'react'
 import Dialog from 'react-native-dialog'
 import { Text, View, ViewStyle } from 'react-native'
-import QrCodeScanner from '../components/QrCodeScanner'
-import { TXT_S_SIZE } from '../sharedStyles/styles.consts.typography'
 import {
   dialogInputTxt,
   dialogContainer,
@@ -20,10 +18,14 @@ import {
   qrCodeScannerContainer,
   flexRowCenterLayout,
 } from '../sharedStyles/styles.layout'
+import { disabledButton } from '../sharedStyles/styles.buttons'
+import AddressDisplay from '../components/AddressDisplay'
+import QrCodeScanner from '../components/QrCodeScanner'
 
 const contentContainer: ViewStyle = {
   height: 150,
   ...flexRowCenterLayout,
+  paddingBottom: 12,
 }
 
 const recipientLabel: ViewStyle = {
@@ -76,9 +78,7 @@ class TokenTransferDialog extends React.Component<Props> {
           <Text style={recipientLabel}>Recipient:</Text>
           <View>
             {tokenRecipientAddress ? (
-              <Text style={{ fontSize: TXT_S_SIZE }}>
-                {tokenRecipientAddress}
-              </Text>
+              <AddressDisplay address={tokenRecipientAddress} />
             ) : (
               <View style={qrCodeScannerContainer}>
                 <QrCodeScanner
@@ -136,7 +136,7 @@ class TokenTransferDialog extends React.Component<Props> {
           <Dialog.Button
             onPress={onConfirmTransfer}
             label="Transfer tokens"
-            style={isOkBtnDisabled ? { color: 'lightgrey' } : {}}
+            style={isOkBtnDisabled ? disabledButton : {}}
             disabled={isOkBtnDisabled}
           />
         )}
