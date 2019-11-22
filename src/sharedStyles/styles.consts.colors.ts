@@ -27,6 +27,7 @@ export const TXT_INVERTED_LIGHT_CLR_NEUTRAL = '#868686'
 export const SUCCESS_CLR = '#009c84'
 // redish
 export const ERROR_CLR = '#b30000'
+// semantic colors derived from these
 export const BALANCE_PLUS_CLR = SUCCESS_CLR
 export const BALANCE_ZERO_CLR = ERROR_CLR
 export const ATT_VALID_CLR = SUCCESS_CLR

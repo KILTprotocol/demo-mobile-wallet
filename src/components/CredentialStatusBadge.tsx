@@ -8,7 +8,7 @@ import {
   TXT_INVERTED_CLR,
 } from '../sharedStyles/styles.consts.colors'
 import { CredentialStatus } from '../_enums'
-import { TXT_XS_SIZE } from '../sharedStyles/styles.consts.typography'
+import { TXT_XXS_SIZE } from '../sharedStyles/styles.consts.typography'
 
 type Props = {
   status: CredentialStatus
@@ -23,7 +23,7 @@ const badgeDefaultStyle: ViewStyle = {
 const badgeTxtStyle: TextStyle = {
   textTransform: 'uppercase',
   color: TXT_INVERTED_CLR,
-  fontSize: TXT_XS_SIZE,
+  fontSize: TXT_XXS_SIZE,
   fontWeight: '600',
 }
 

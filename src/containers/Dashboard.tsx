@@ -1,14 +1,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
-import {
-  Identity,
-  IEncryptedMessage,
-  Message,
-  IMessage,
-  MessageBodyType,
-  PublicIdentity,
-} from '@kiltprotocol/sdk-js'
+import { Identity, PublicIdentity, Attestation } from '@kiltprotocol/sdk-js'
 import { Dispatch } from 'redux'
 import {
   NavigationScreenProp,
@@ -43,7 +36,6 @@ import {
 } from '../_types'
 import CredentialList from '../components/CredentialList'
 import { POLLING_PERIOD_MS } from '../_config'
-import { getInboxUrlFromAddress } from '../utils/utils.messaging'
 import { getSdkIdentityFromStoredIdentity } from '../utils/utils.identity'
 import { TMapDispatchToProps, TMapStateToProps } from '../_types'
 
@@ -59,8 +51,6 @@ type Props = {
 type State = {
   dialogVisible: boolean
   claimContents: object
-  msgsHashes: string[]
-  msgs: IEncryptedMessage[]
 }
 
 class Dashboard extends React.Component<Props, State> {
@@ -73,8 +63,6 @@ class Dashboard extends React.Component<Props, State> {
   state = {
     dialogVisible: false,
     claimContents: {},
-    msgsHashes: [],
-    msgs: [],
   }
 
   closeDialog(): void {
@@ -109,6 +97,7 @@ class Dashboard extends React.Component<Props, State> {
             cTypeHash: requestForAttestation.ctypeHash.hash,
             status: CredentialStatus.AttestationPending,
             contents: requestForAttestation.claim.contents,
+            requestTimestamp: Date.now(),
           })
           const claimerIdentity = getSdkIdentityFromStoredIdentity(
             identityFromStore
@@ -133,89 +122,45 @@ class Dashboard extends React.Component<Props, State> {
   async componentDidMount(): Promise<void> {
     // polling for new messages
     Dashboard.interval = setInterval(
-      this.fetchAndHandleMessagesToUser,
+      this.queryChainAndUpdateCredentialsInStore,
       POLLING_PERIOD_MS
     )
     // TODO: long poll, static vs not, async function subscribe()... ????
   }
 
-  getNewMsgsHashes(prevMsgsHashes: string[], msgsHashes: string[]): string[] {
-    return msgsHashes.filter(hash => !prevMsgsHashes.includes(hash))
-  }
-
-  handleNewMsgs(newMsgsHashes: string[]): void {
-    const { identityFromStore, updateCredentialStatusInStore } = this.props
-    if (!identityFromStore) {
-      return
-    }
-    console.log('💥💥💥 New messages received', newMsgsHashes[0])
-    newMsgsHashes.map(h => {
-      // TODO merge mgs and hashes
-      const encryptedMsg = this.state.msgs.find(m => m.hash === h)
-      console.log(encryptedMsg)
-      const claimerIdentity = getSdkIdentityFromStoredIdentity(
-        identityFromStore
-      )
-      const msg: IMessage = Message.createFromEncryptedMessage(
-        encryptedMsg,
-        claimerIdentity
-      )
-      try {
-        Message.ensureOwnerIsSender(msg)
-        console.log('TYPE', msg.body.type)
+  queryChainAndUpdateCredentialsInStore = async () => {
+    const {
+      credentialsMapFromStore,
+      updateCredentialStatusInStore,
+    } = this.props
+    const claimHashes = Object.keys(credentialsMapFromStore)
+    console.log(`${claimHashes.length} hashes to query`)
+    claimHashes.forEach(async h => {
+      console.log('[ATTESTATION] Querying hash......')
+      const attestation = await Attestation.query(h)
+      // todoprio why is the attestation not null?????/
+      if (
+        attestation &&
+        attestation.cTypeHash !==
+          '0x0000000000000000000000000000000000000000000000000000000000000000'
+      ) {
         console.log(
-          'msg.body.content.attestation.revoked',
-          msg.body.content.attestation.revoked
+          '[ATTESTATION] OK found on chain with not 0 ctype hash',
+          attestation
         )
-        console.log('msg.body.content', msg.body.content)
-        if (msg.body.type === MessageBodyType.SUBMIT_ATTESTATION_FOR_CLAIM) {
-          const hashAndStatus = {
-            hash: msg.body.content.attestation.claimHash,
-            status: msg.body.content.attestation.revoked
-              ? CredentialStatus.Revoked
-              : CredentialStatus.Valid,
-          }
-          updateCredentialStatusInStore(hashAndStatus)
+        const hashAndStatus = {
+          hash: h,
+          status: attestation.revoked
+            ? CredentialStatus.Revoked
+            : CredentialStatus.Valid,
         }
-      } catch (error) {
-        console.info(error)
+        updateCredentialStatusInStore(hashAndStatus)
+      } else {
+        console.log('[ATTESTATION] Not found on chain aka PENDING', attestation)
+        // state should remain pending
+        // .... maybe log an error here
       }
     })
-  }
-
-  componentDidUpdate(_: any, prevState: State): void {
-    const { msgsHashes } = this.state
-    const prevMsgsHashes = prevState.msgsHashes
-    const newMsgsHashes = this.getNewMsgsHashes(prevMsgsHashes, msgsHashes)
-    if (newMsgsHashes.length > 0) {
-      // only handle new messages, here message deletion is irrelevant
-      this.handleNewMsgs(newMsgsHashes)
-    }
-  }
-
-  fetchAndHandleMessagesToUser = async () => {
-    const { publicIdentityFromStore } = this.props
-    if (!publicIdentityFromStore) {
-      return
-    }
-    fetch(getInboxUrlFromAddress(publicIdentityFromStore.address))
-      .then(response => {
-        return response.json()
-      })
-      .catch(error => {
-        console.info(error)
-        return null
-      })
-      .then((encryptedMessages: IEncryptedMessage[]) => {
-        if (encryptedMessages) {
-          const encryptedMsgsHashes = encryptedMessages.map(msg => msg.hash)
-          this.setState({
-            msgsHashes: encryptedMsgsHashes,
-            msgs: encryptedMessages,
-          })
-        }
-      })
-    // query all potential attestations
   }
 
   componentWillUnmount(): void {

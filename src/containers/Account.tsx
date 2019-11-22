@@ -105,6 +105,8 @@ class Account extends Component<Props, State> {
   async transferTokens(): Promise<void> {
     // todo refactor nicely
     // TODOprio bug always transfer one token more......
+    // todo transfer crashes when user has no tokens
+    // todo disable transfer token button when user has no token????
     const { tokenRecipientAddress, tokenAmountToTransfer } = this.state
     const { identityFromStore } = this.props
     if (identityFromStore && tokenRecipientAddress) {
@@ -175,6 +177,7 @@ class Account extends Component<Props, State> {
             <Text style={sectionTitleTxt}>Actions</Text>
             {address && <RequestTokensButton address={address} />}
             <KiltButton
+              disabled={!balanceFromStore}
               title="↔ Transfer tokens"
               onPress={() => {
                 this.openDialog()

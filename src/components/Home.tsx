@@ -24,6 +24,8 @@ const tabBarOptions = {
   },
 }
 
+// todoprio bigger touch targets for tabs
+// todoprio back to correct tab when app gets locked!! maybe save this in store???
 const TabNavigator = createBottomTabNavigator(
   {
     [DASHBOARD]: Dashboard,

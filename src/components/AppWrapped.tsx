@@ -83,6 +83,7 @@ class AppWrapped extends React.Component<Props> {
     } = this.props
     // id has just been set up
     if (prevIdentityFromStore !== identityFromStore) {
+      // todoprio Bug: we're disconnected when I request an attestation
       if (identityFromStore) {
         console.info('[SOCKET] Reconnecting.......')
         await this.connectAndListen()

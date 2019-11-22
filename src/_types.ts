@@ -24,6 +24,7 @@ export type TCredential = {
   hash: string
   cTypeHash: string
   status: CredentialStatus
+  requestTimestamp: number
 }
 
 export type THashAndClaimStatus = {

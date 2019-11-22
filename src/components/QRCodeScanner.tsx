@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   },
 })
 
+// todoprio not request microphone
 type Props = {
   onBarCodeRead: (barcode: any) => void
 }
