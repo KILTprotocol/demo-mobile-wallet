@@ -39,6 +39,10 @@ import { POLLING_PERIOD_MS } from '../_config'
 import { getSdkIdentityFromStoredIdentity } from '../utils/utils.identity'
 import { TMapDispatchToProps, TMapStateToProps } from '../_types'
 
+const ctype = require('../data/ctypeMembership.json')
+const claimPpties = Object.keys(ctype.metadata.properties)
+const isName = (ppty: string): boolean => ppty.toLowerCase().includes('name')
+
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   identityFromStore: Identity | null
@@ -52,6 +56,7 @@ type Props = {
 type State = {
   dialogVisible: boolean
   claimContents: object
+  isDialogOkBtnDisabled: boolean
 }
 
 class Dashboard extends React.Component<Props, State> {
@@ -61,13 +66,42 @@ class Dashboard extends React.Component<Props, State> {
 
   static interval: NodeJS.Timeout
 
+  // for convenience and simplicity in this demo app:
+  // any ppty that looks like name will be filled with the USERNAME stored in the redux store;
+  // ofc this stops working when using a cType with multiple name-like properties
+  claimContentsDefault = claimPpties.reduce((acc, ppty) => {
+    return { ...acc, [ppty]: isName(ppty) ? this.props.usernameFromStore : '' }
+  }, {})
+
   state = {
     dialogVisible: false,
-    claimContents: {},
+    isDialogOkBtnDisabled: true,
+    claimContents: this.claimContentsDefault,
+  }
+
+  areClaimContentsOk(claimContents): boolean {
+    const areAllPptiesPresent =
+      Object.keys(claimContents).length === claimPpties.length
+    const areAllPptiesTruthy = !Object.values(claimContents).some(
+      pptyValue => !pptyValue
+    )
+    return areAllPptiesPresent && areAllPptiesTruthy
+  }
+
+  // todo reorder methods so that lifecycle hooks are above
+  // const isName = (ppty: string): boolean => ppty.toLowerCase().includes('name')
+  componentDidUpdate(): void {
+    const { claimContents, isDialogOkBtnDisabled } = this.state
+    const areClaimContentsOk = this.areClaimContentsOk(claimContents)
+    if (!!areClaimContentsOk !== !isDialogOkBtnDisabled) {
+      this.setState({
+        isDialogOkBtnDisabled: !areClaimContentsOk,
+      })
+    }
   }
 
   closeDialog(): void {
-    this.setState({ dialogVisible: false, claimContents: {} })
+    this.setState({ dialogVisible: false })
   }
 
   openDialog(): void {
@@ -170,6 +204,7 @@ class Dashboard extends React.Component<Props, State> {
 
   render(): JSX.Element {
     const { credentialsMapFromStore, usernameFromStore } = this.props
+    const { isDialogOkBtnDisabled } = this.state
     const { dialogVisible } = this.state
     const credentials = Object.values(credentialsMapFromStore)
     return (
@@ -185,7 +220,6 @@ class Dashboard extends React.Component<Props, State> {
             <KiltButton
               title="＋ Request membership card"
               onPress={() => {
-                // todo needed or not
                 this.openDialog()
               }}
             />
@@ -194,15 +228,20 @@ class Dashboard extends React.Component<Props, State> {
         </ScrollView>
         <AddClaimDialog
           visible={dialogVisible}
+          isOkBtnDisabled={isDialogOkBtnDisabled}
           onPressCancel={() => this.closeDialog()}
           onPressOK={async () => {
+            // todo move to "onpressOK" separate function
             await this.createClaimAndRequestAttestation()
             this.closeDialog()
+            this.setState({ claimContents: this.claimContentsDefault })
           }}
           onChangeText={(inputValue, ppty) =>
             this.onChangeClaimContentsInputs(inputValue, ppty)
           }
           username={usernameFromStore}
+          claimPpties={claimPpties}
+          claimContentsDefault={this.claimContentsDefault}
         />
       </WithDefaultBackground>
     )

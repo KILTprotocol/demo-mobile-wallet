@@ -19,18 +19,12 @@ type Props = {
   onNewContactAddressRead: (address: string) => void
   visible: boolean
   address: string
+  isOkBtnDisabled: boolean
 }
 
 // todo rename dialog components
 class AddContactDialog extends React.Component<Props> {
-  state = {
-    // TODOprio set state as relevant apply styles to disabled btn
-    // TODOprio navigation
-    isOKBtnDisabled: false,
-  }
-
   render(): JSX.Element {
-    const { isOKBtnDisabled } = this.state
     const {
       onConfirmAddContact,
       onPressCancel,
@@ -38,6 +32,7 @@ class AddContactDialog extends React.Component<Props> {
       onNewContactAddressRead,
       visible,
       address,
+      isOkBtnDisabled,
     } = this.props
     return (
       <Dialog.Container visible={visible} style={dialogContainer}>
@@ -75,7 +70,7 @@ class AddContactDialog extends React.Component<Props> {
         <Dialog.Button
           onPress={onConfirmAddContact}
           label="Add contact"
-          disabled={isOKBtnDisabled}
+          disabled={isOkBtnDisabled}
         />
       </Dialog.Container>
     )

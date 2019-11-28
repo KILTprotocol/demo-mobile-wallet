@@ -63,7 +63,6 @@ class Account extends Component<Props, State> {
       isDialogOkBtnDisabled
     ) {
       this.setState({
-        ...this.state,
         isDialogOkBtnDisabled: false,
       })
     } else if (
@@ -71,7 +70,6 @@ class Account extends Component<Props, State> {
       !isDialogOkBtnDisabled
     ) {
       this.setState({
-        ...this.state,
         isDialogOkBtnDisabled: true,
       })
     }
@@ -189,6 +187,7 @@ class Account extends Component<Props, State> {
             isOkBtnDisabled={isDialogOkBtnDisabled}
             tokenRecipientAddress={tokenRecipientAddress}
             onPressCancel={() => {
+              // todo rename to "reset" function
               this.setState({ tokenRecipientAddress: '' })
               this.closeDialog()
             }}
@@ -215,7 +214,4 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
   balanceFromStore: state.balanceReducer.balance,
 })
 
-export default connect(
-  mapStateToProps,
-  null
-)(Account)
+export default connect(mapStateToProps, null)(Account)

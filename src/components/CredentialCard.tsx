@@ -89,7 +89,8 @@ const CredentialCard: React.FunctionComponent<Props> = ({
         <Text style={credentialTitleTxt}>{title}</Text>
         <CredentialStatusBadge status={status} />
         <View style={credentialPptiesStyle}>
-          {/* todoprio fix ppty display */}
+          {/* todoprio fix ppty order display */}
+          {/* todoprio ppty type input type */}
           {Object.entries(contents).map(([pptyName, pptyValue]) => (
             <View key={pptyName} style={flexRowLayout}>
               <Text style={[bodyTxt, pptyLabelStyle]}>{pptyName}</Text>
