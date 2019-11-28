@@ -215,4 +215,7 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
   balanceFromStore: state.balanceReducer.balance,
 })
 
-export default connect(mapStateToProps)(Account)
+export default connect(
+  mapStateToProps,
+  null
+)(Account)

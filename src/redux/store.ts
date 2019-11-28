@@ -17,6 +17,7 @@ const persistConfig = {
     'credentialsReducer',
     'contactsReducer',
     'balanceReducer',
+    'usernameReducer',
   ],
   blacklist: ['identityReducer'],
 }

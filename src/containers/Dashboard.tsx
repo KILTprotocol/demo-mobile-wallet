@@ -46,6 +46,7 @@ type Props = {
   credentialsMapFromStore: TCredentialMapByHash
   addCredentialInStore: typeof addCredential
   updateCredentialStatusInStore: typeof updateCredentialStatus
+  usernameFromStore: string
 }
 
 type State = {
@@ -168,7 +169,7 @@ class Dashboard extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
-    const { credentialsMapFromStore } = this.props
+    const { credentialsMapFromStore, usernameFromStore } = this.props
     const { dialogVisible } = this.state
     const credentials = Object.values(credentialsMapFromStore)
     return (
@@ -201,6 +202,7 @@ class Dashboard extends React.Component<Props, State> {
           onChangeText={(inputValue, ppty) =>
             this.onChangeClaimContentsInputs(inputValue, ppty)
           }
+          username={usernameFromStore}
         />
       </WithDefaultBackground>
     )
@@ -211,6 +213,7 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
   identityFromStore: state.identityReducer.identity,
   publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
   credentialsMapFromStore: state.credentialsReducer.credentialsMap,
+  usernameFromStore: state.usernameReducer.username,
 })
 
 const mapDispatchToProps = (

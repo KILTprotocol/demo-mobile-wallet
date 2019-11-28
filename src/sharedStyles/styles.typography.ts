@@ -36,6 +36,8 @@ export const bodyTxt: TextStyle = {
   color: TXT_DEFAULT_CLR,
 }
 
+export const inputTxt = bodyTxt
+
 export const mTxt: TextStyle = {
   fontSize: TXT_M_SIZE,
 }
@@ -46,6 +48,10 @@ export const lTxt: TextStyle = {
 
 export const boldTxt: TextStyle = {
   fontWeight: '900',
+}
+
+export const disabledTxt: TextStyle = {
+  color: 'grey',
 }
 
 export const bodyEmphasizedTxt: TextStyle = {

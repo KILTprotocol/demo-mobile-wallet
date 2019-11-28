@@ -8,7 +8,8 @@ const MESSAGING_INBOX_URL = `${MESSAGING_SERVICE_URL}/inbox`
 const POLLING_PERIOD_MS = 3000
 // CLAIMER_DISPLAY_NAME is used when saving the identity in the demo services, for demo purposes
 // In case you're wondering, I picked Glenn because Glenn is a Scottish name and... we're Kilt... see what I did here
-const CLAIMER_DISPLAY_NAME = 'Glenn'
+// todoprio ask at setup
+// todo ok if empty????
 
 export {
   ATTESTER_MNEMONIC,
@@ -17,5 +18,4 @@ export {
   MESSAGING_SERVICE_URL,
   CONTACTS_SERVICE_URL,
   POLLING_PERIOD_MS,
-  CLAIMER_DISPLAY_NAME,
 }

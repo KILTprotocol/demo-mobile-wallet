@@ -235,7 +235,7 @@ const mapDispatchToProps = (
   dispatch: Dispatch
 ): Partial<TMapDispatchToProps> => {
   return {
-    setIdentityInStore: identity => {
+    setIdentityInStore: (identity: Identity) => {
       dispatch(setIdentity(identity))
     },
     resetIdentityInStore: () => {
@@ -247,4 +247,7 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppWrapped)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppWrapped)

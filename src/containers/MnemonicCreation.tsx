@@ -62,7 +62,7 @@ class MnemonicCreation extends React.Component<Props, State> {
         <View style={mainViewContainer}>
           <View style={sectionContainer}>
             <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>
-              Step 1: your identity phrase (= seed)
+              Step 1: Your identity phrase (= seed)
             </Text>
             <Mnemonic mnemonic={mnemonic} />
           </View>

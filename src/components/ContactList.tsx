@@ -62,7 +62,7 @@ export default class ContactList extends React.Component<Props> {
                     contactBadge,
                     {
                       backgroundColor: generateConstantColorFromStr(
-                        contact.name
+                        contact.address
                       ),
                     },
                   ]}>

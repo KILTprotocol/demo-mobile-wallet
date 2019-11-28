@@ -5,6 +5,8 @@ import { dialogContainer, dialogSection } from '../sharedStyles/styles.dialog'
 import { qrCodeScannerContainer } from '../sharedStyles/styles.layout'
 import AddressDisplay from './AddressDisplay'
 import QrCodeScanner from './QrCodeScanner'
+import { inputTxt } from '../sharedStyles/styles.typography'
+import { KILT_ORANGE_CLR } from '../sharedStyles/styles.consts.colors'
 
 const newContactLabel: ViewStyle = {
   paddingBottom: 6,
@@ -23,6 +25,7 @@ type Props = {
 class AddContactDialog extends React.Component<Props> {
   state = {
     // TODOprio set state as relevant apply styles to disabled btn
+    // TODOprio navigation
     isOKBtnDisabled: false,
   }
 
@@ -60,6 +63,13 @@ class AddContactDialog extends React.Component<Props> {
           returnKeyType="done"
           label="Name:"
           onChangeText={name => onChangeContactName(name)}
+          // a name shouldn't be spellchecked
+          // todo caret color for all inputs
+          // todo date picker for birthday
+          spellCheck={false}
+          autoCorrect={false}
+          style={inputTxt}
+          selectionColor={KILT_ORANGE_CLR}
         />
         <Dialog.Button onPress={onPressCancel} label="Cancel" />
         <Dialog.Button

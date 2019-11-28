@@ -1,14 +1,15 @@
-import { CONTACTS_SERVICE_URL, CLAIMER_DISPLAY_NAME } from '../_config'
+import { CONTACTS_SERVICE_URL } from '../_config'
 import { BasePostParams } from '../services/service.messaging'
 import { PublicIdentity } from '@kiltprotocol/sdk-js'
 
 async function saveIdentityAsContactInDemoServices(
-  publicIdentity: PublicIdentity
+  publicIdentity: PublicIdentity,
+  username: string
 ): Promise<void> {
   fetch(`${CONTACTS_SERVICE_URL}`, {
     ...BasePostParams,
     body: JSON.stringify({
-      metaData: { name: CLAIMER_DISPLAY_NAME },
+      metaData: { name: username },
       publicIdentity,
     }),
   }).then(response => {

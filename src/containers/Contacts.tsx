@@ -50,10 +50,10 @@ class Contacts extends React.Component<Props, State> {
   //   })
   // }
 
-  // todo prevent double add
+  // todoprio prevent double add
+  // todo change name, should not contain plural
 
   setNewContactName(newContactName: string): void {
-    // todo need or not
     this.setState({
       newContactName: newContactName.trimLeft().trimRight(),
     })
@@ -83,8 +83,8 @@ class Contacts extends React.Component<Props, State> {
 
   render(): JSX.Element {
     const { dialogVisible, newContactAddress } = this.state
-    const { contactsFromStore } = this.props
     // todo delete contacts on reset app
+    const { contactsFromStore } = this.props
     return (
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>

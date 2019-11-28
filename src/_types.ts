@@ -11,6 +11,8 @@ import {
   DELETE_ALL_CONTACTS,
   UPDATE_BALANCE,
   RESET_BALANCE,
+  SET_USERNAME,
+  RESET_USERNAME,
 } from './redux/actionTypes'
 import { CredentialStatus } from './_enums'
 
@@ -105,6 +107,15 @@ type TDeleteAllContactsAction = {
   type: typeof DELETE_ALL_CONTACTS
 }
 
+type TSetUsernameAction = {
+  type: typeof SET_USERNAME
+  payload: string
+}
+
+type TResetUsernameAction = {
+  type: typeof RESET_USERNAME
+}
+
 export type TAppAction =
   | TSetIdentityAction
   | TResetIdentityAction
@@ -117,6 +128,8 @@ export type TAppAction =
   | TDeleteAllContactsAction
   | TUpdateBalanceAction
   | TResetBalanceAction
+  | TSetUsernameAction
+  | TResetUsernameAction
 
 /* ---------------------------------- */
 /*      Redux: State and Dispatch     */
@@ -129,11 +142,12 @@ export type TMapDispatchToProps = {
   setIdentityInStore: (identity: Identity) => void
   setPublicIdentityInStore: (publicIdentity: PublicIdentity) => void
   resetPublicIdentityInStore: () => void
-  deleteAllCredentialsInStore: (hashAndStatus: THashAndClaimStatus) => void
+  deleteAllCredentialsInStore: () => void
   addContactInStore: (contact: TContact) => void
   deleteAllContactsInStore: () => void
   updateBalanceInStore: (balance: number) => void
   resetBalanceInStore: () => void
+  setUsernameInStore: (username: string) => void
 }
 
 export type TMapStateToProps = {
@@ -141,4 +155,5 @@ export type TMapStateToProps = {
   identityFromStore: Identity
   publicIdentityFromStore: PublicIdentity
   credentialsMapFromStore: TCredentialMapByHash
+  usernameFromStore: string
 }

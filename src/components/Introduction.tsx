@@ -19,7 +19,7 @@ import {
   titleInvertedClrTxt,
   emphasizedClrTxt,
 } from '../sharedStyles/styles.typography'
-import { MNEMONIC_CREATION } from '../_routes'
+import { MNEMONIC_CREATION, USERNAME_SETUP } from '../_routes'
 import WithIntroBackground from './WithIntroBackground'
 
 interface IProps {
@@ -47,7 +47,7 @@ const Introduction = ({ navigation }: IProps): JSX.Element => (
         <View style={flexRowEndLayout}>
           <KiltButton
             title="Get started >"
-            onPress={() => navigation.navigate(MNEMONIC_CREATION)}
+            onPress={() => navigation.navigate(USERNAME_SETUP)}
           />
         </View>
       </View>

@@ -23,6 +23,7 @@ const balanceNr: ViewStyle = {
   marginRight: 2,
 }
 
+// todo prio balance is not reset!!!
 const Balance: React.FunctionComponent<Props> = ({ balance }): JSX.Element => (
   <View style={flexRowLayoutBaseline}>
     <Text style={[bodyTxt, lTxt, balanceNr, balance > 0 ? plus : zero]}>

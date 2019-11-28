@@ -10,10 +10,6 @@ export const dialogContainer: ViewStyle = {
   paddingHorizontal: 18,
 }
 
-export const dialogInputTxt: TextStyle = {
-  fontSize: TXT_S_SIZE,
-}
-
 export const dialogTxt: TextStyle = {
   fontSize: TXT_S_SIZE,
 }

@@ -1,11 +1,7 @@
 import React from 'react'
 import Dialog from 'react-native-dialog'
 import { Text, View, ViewStyle } from 'react-native'
-import {
-  dialogInputTxt,
-  dialogContainer,
-  dialogSection,
-} from '../sharedStyles/styles.dialog'
+import { dialogContainer, dialogSection } from '../sharedStyles/styles.dialog'
 import LoadingIndicator from '../components/LoadingIndicator'
 import { AsyncStatus } from '../_enums'
 import TxtCentered from '../components/TxtCentered'
@@ -13,6 +9,7 @@ import {
   txtSuccess,
   bodyTxt,
   txtError,
+  inputTxt,
 } from '../sharedStyles/styles.typography'
 import {
   qrCodeScannerContainer,
@@ -66,7 +63,7 @@ class TokenTransferDialog extends React.Component<Props> {
           autoFocus
           keyboardType="decimal-pad"
           returnKeyType="done"
-          style={dialogInputTxt}
+          style={inputTxt}
           label="Amount to transfer (in KILT tokens):"
           onChangeText={tokenAmountToTransfer =>
             onChangeTokenAmountToTransfer(

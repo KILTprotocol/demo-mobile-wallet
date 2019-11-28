@@ -4,6 +4,7 @@ import credentialsReducer from './credentialsReducer'
 import contactsReducer from './contactsReducer'
 import identityReducer from './identityReducer'
 import publicIdentityReducer from './publicIdentityReducer'
+import usernameReducer from './usernameReducer'
 
 const rootReducer = combineReducers({
   identityReducer: identityReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   credentialsReducer: credentialsReducer,
   contactsReducer: contactsReducer,
   balanceReducer: balanceReducer,
+  usernameReducer: usernameReducer,
 })
 
 // TODO define TAppState type, so far issue with combineReducers that nests the ppties

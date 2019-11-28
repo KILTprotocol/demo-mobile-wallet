@@ -3,6 +3,7 @@ export const APP_STARTUP = 'AppStartup'
 export const IDENTITY_SETUP = 'IdentitySetup'
 export const MNEMONIC_CREATION = 'MnemonicCreation'
 export const INTRODUCTION = 'Introduction'
+export const USERNAME_SETUP = 'UsernameSetup'
 // Regular app
 export const APP = 'App'
 export const SETUP = 'Setup'

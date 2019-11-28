@@ -25,7 +25,7 @@ import IdentitySetupStep from '../components/IdentitySetupStep'
 import { setPublicIdentity, setIdentity } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
 import WithIntroBackground from '../components/WithIntroBackground'
-import { TMapDispatchToProps } from '../_types'
+import { TMapDispatchToProps, TMapStateToProps } from '../_types'
 import { getGenericPassword } from 'react-native-keychain'
 import { saveIdentityAsContactInDemoServices } from '../services/service.demo'
 
@@ -40,6 +40,7 @@ type Props = {
   setIdentityInStore: typeof setIdentity
   publicIdentityFromStore: PublicIdentity | null
   setPublicIdentityInStore: typeof setPublicIdentity
+  usernameFromStore: string
 }
 
 type State = {
@@ -88,6 +89,7 @@ class IdentitySetup extends React.Component<Props, State> {
       navigation,
       setPublicIdentityInStore,
       setIdentityInStore,
+      usernameFromStore,
     } = this.props
     const mnemonic: string = navigation.getParam('mnemonic')
     const identity = this.createIdentity(mnemonic)
@@ -170,7 +172,7 @@ class IdentitySetup extends React.Component<Props, State> {
         Because we're using the demo client app to attest and revoke, 
         the claimer needs to be known in the contact services
         (according to the logics in the demo client) */
-        saveIdentityAsContactInDemoServices(publicIdentity)
+        saveIdentityAsContactInDemoServices(publicIdentity, usernameFromStore)
       }, 3 * STEP_DURATION_MS + BUFFER_MS)
     }
   }
@@ -183,7 +185,7 @@ class IdentitySetup extends React.Component<Props, State> {
         <View style={mainViewContainer}>
           <View style={sectionContainer}>
             <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>
-              Step 2: Knitting your KILT account together
+              Step 3: Knitting your KILT account together
             </Text>
           </View>
           <View style={sectionContainer}>
@@ -220,10 +222,11 @@ IdentitySetup.defaultProps = {
   },
 }
 
-const mapStateToProps = (state: TAppState): TAppState => {
+const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => {
   return {
     identityFromStore: state.identityReducer.identity,
     publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
+    usernameFromStore: state.usernameReducer.username,
   }
 }
 
@@ -231,10 +234,10 @@ const mapDispatchToProps = (
   dispatch: Dispatch
 ): Partial<TMapDispatchToProps> => {
   return {
-    setPublicIdentityInStore: publicIdentity => {
+    setPublicIdentityInStore: (publicIdentity: PublicIdentity) => {
       dispatch(setPublicIdentity(publicIdentity))
     },
-    setIdentityInStore: identity => {
+    setIdentityInStore: (identity: Identity) => {
       dispatch(setIdentity(identity))
     },
   }

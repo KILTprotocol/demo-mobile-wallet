@@ -24,3 +24,9 @@ export const DELETE_ALL_CONTACTS = 'DELETE_ALL_CONTACTS'
 /* ---------------------------------- */
 export const UPDATE_BALANCE = 'UPDATE_BALANCE'
 export const RESET_BALANCE = 'RESET_BALANCE'
+
+/* ---------------------------------- */
+/*              Username              */
+/* ---------------------------------- */
+export const SET_USERNAME = 'SET_USERNAME'
+export const RESET_USERNAME = 'RESET_USERNAME'

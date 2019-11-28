@@ -11,6 +11,8 @@ import {
   DELETE_ALL_CONTACTS,
   UPDATE_BALANCE,
   RESET_BALANCE,
+  SET_USERNAME,
+  RESET_USERNAME,
 } from './actionTypes'
 import {
   TAppAction,
@@ -96,4 +98,17 @@ export const updateBalance = (balance: number): TAppAction => ({
 
 export const resetBalance = (): TAppAction => ({
   type: RESET_BALANCE,
+})
+
+/* ---------------------------------- */
+/*              Username              */
+/* ---------------------------------- */
+
+export const setUsername = (username: string): TAppAction => ({
+  type: SET_USERNAME,
+  payload: username,
+})
+
+export const resetUsername = (): TAppAction => ({
+  type: RESET_USERNAME,
 })

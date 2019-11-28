@@ -47,4 +47,7 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => {
   }
 }
 
-export default connect(mapStateToProps, null)(AppStartup)
+export default connect(
+  mapStateToProps,
+  null
+)(AppStartup)

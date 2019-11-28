@@ -5,6 +5,7 @@ import { store } from '../redux/store'
 
 const KILT_MICRO_COIN = 1000000
 // TODOprio credentials encryption
+// TODOprio navigation back to correct screen
 
 // TODOprio number vs balance....
 // todo cleanup
