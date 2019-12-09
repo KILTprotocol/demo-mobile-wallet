@@ -11,7 +11,7 @@ type Props = {
 
 const addressStyle: TextStyle = {
   color: TXT_LIGHT_CLR_NEUTRAL,
-  // Use a monospace font to ensure consistent length of the address display
+  // we use a monospace font to ensure consistent length of the address display
   fontFamily: 'Courier',
 }
 

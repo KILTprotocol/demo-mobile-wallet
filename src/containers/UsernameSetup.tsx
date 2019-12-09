@@ -91,13 +91,13 @@ class UsernameSetup extends React.Component<Props, State> {
           <View style={sectionContainer}>
             <Text style={[bodyTxt, labelStyle]}>Your first name</Text>
             <TextInput
-              style={[bodyTxt, bodyInvertedClrTxt, usernameInputStyle]}
+              autoCorrect={false}
+              autoFocus
+              onChangeText={username => this.onChangeUsername(username)}
               returnKeyType="done"
               selectionColor={KILT_ORANGE_CLR}
-              onChangeText={username => this.onChangeUsername(username)}
-              autoFocus
               spellCheck={false}
-              autoCorrect={false}
+              style={[bodyTxt, bodyInvertedClrTxt, usernameInputStyle]}
             />
           </View>
           <View style={sectionContainer}>

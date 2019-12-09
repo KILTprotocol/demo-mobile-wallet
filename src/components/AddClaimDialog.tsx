@@ -17,7 +17,7 @@ type Props = {
 
 class AddClaimDialog extends React.Component<Props> {
   // TODOprio set state as relevant apply styles to disabled btn
-
+  // todo change to functional component
   render(): JSX.Element {
     const {
       onPressOK,
