@@ -18,6 +18,7 @@ const persistConfig = {
     'contactsReducer',
     'balanceReducer',
     'usernameReducer',
+    'lastVisitedRouteReducer',
   ],
   blacklist: ['identityReducer'],
 }

@@ -13,6 +13,8 @@ import {
   RESET_BALANCE,
   SET_USERNAME,
   RESET_USERNAME,
+  RESET_LAST_VISITED_ROUTE,
+  UPDATE_LAST_VISITED_ROUTE,
 } from './actionTypes'
 import {
   TAppAction,
@@ -111,4 +113,19 @@ export const setUsername = (username: string): TAppAction => ({
 
 export const resetUsername = (): TAppAction => ({
   type: RESET_USERNAME,
+})
+
+/* ---------------------------------- */
+/*              Route/Nav             */
+/* ---------------------------------- */
+// todo update vs set
+export const updateLastVisitedRoute = (
+  lastVisitedRoute: string
+): TAppAction => ({
+  type: UPDATE_LAST_VISITED_ROUTE,
+  payload: lastVisitedRoute,
+})
+
+export const resetLastVisitedRoute = (): TAppAction => ({
+  type: RESET_LAST_VISITED_ROUTE,
 })

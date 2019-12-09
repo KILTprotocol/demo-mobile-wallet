@@ -5,14 +5,17 @@ import contactsReducer from './contactsReducer'
 import identityReducer from './identityReducer'
 import publicIdentityReducer from './publicIdentityReducer'
 import usernameReducer from './usernameReducer'
+import lastVisitedRouteReducer from './lastVisitedRouteReducer'
 
 const rootReducer = combineReducers({
+  // todo use modern syntax
   identityReducer: identityReducer,
   publicIdentityReducer: publicIdentityReducer,
   credentialsReducer: credentialsReducer,
   contactsReducer: contactsReducer,
   balanceReducer: balanceReducer,
   usernameReducer: usernameReducer,
+  lastVisitedRouteReducer: lastVisitedRouteReducer,
 })
 
 // TODO define TAppState type, so far issue with combineReducers that nests the ppties
