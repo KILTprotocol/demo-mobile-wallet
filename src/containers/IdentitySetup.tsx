@@ -10,7 +10,7 @@ import {
   NavigationParams,
 } from 'react-navigation'
 import { AsyncStatus } from '../_enums'
-import { HOME } from '../_routes'
+import { DASHBOARD } from '../_routes'
 import KiltButton from '../components/KiltButton'
 import {
   mainViewContainer,
@@ -204,7 +204,7 @@ class IdentitySetup extends React.Component<Props, State> {
               <KiltButton
                 disabled={isNextBtnDisabled}
                 title="Next >"
-                onPress={() => navigation.navigate(HOME)}
+                onPress={() => navigation.navigate(DASHBOARD)}
               />
             </View>
           </View>

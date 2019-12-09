@@ -173,7 +173,8 @@ class Dashboard extends React.Component<Props, State> {
     claimHashes.forEach(async h => {
       console.log('[ATTESTATION] Querying hash......')
       const attestation = await Attestation.query(h)
-      // todoprio why is the attestation not null?????/
+      // todoprio why is the attestation not null?????
+      // todoprio cleanup console.logs
       if (
         attestation &&
         attestation.cTypeHash !==

@@ -7,7 +7,6 @@ export const USERNAME_SETUP = 'UsernameSetup'
 // Regular app
 export const APP = 'App'
 export const SETUP = 'Setup'
-export const HOME = 'Home'
 export const DASHBOARD = 'Dashboard'
 export const SETTINGS = 'Settings'
 export const CONTACTS = 'Contacts'

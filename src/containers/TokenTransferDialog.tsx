@@ -18,6 +18,8 @@ import {
 import { disabledButton } from '../sharedStyles/styles.buttons'
 import AddressDisplay from '../components/AddressDisplay'
 import QrCodeScanner from '../components/QrCodeScanner'
+// todo kiltinput
+import { KILT_ORANGE_CLR } from '../sharedStyles/styles.consts.colors'
 
 const contentContainer: ViewStyle = {
   height: 150,
@@ -62,9 +64,10 @@ class TokenTransferDialog extends React.Component<Props> {
         <Dialog.Input
           autoFocus
           keyboardType="decimal-pad"
-          returnKeyType="done"
-          style={inputTxt}
           label="Amount to transfer (in KILT tokens):"
+          returnKeyType="done"
+          selectionColor={KILT_ORANGE_CLR}
+          style={inputTxt}
           onChangeText={tokenAmountToTransfer =>
             onChangeTokenAmountToTransfer(
               this.processTokenAmountToTransfer(tokenAmountToTransfer)

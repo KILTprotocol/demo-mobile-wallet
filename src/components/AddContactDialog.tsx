@@ -59,7 +59,6 @@ class AddContactDialog extends React.Component<Props> {
           label="Name:"
           onChangeText={name => onChangeContactName(name)}
           // a name shouldn't be spellchecked
-          // todo caret color for all inputs
           // todo date picker for birthday
           spellCheck={false}
           autoCorrect={false}
