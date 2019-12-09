@@ -12,11 +12,16 @@ import {
   PublicIdentity,
 } from '@kiltprotocol/sdk-js'
 import { APP_STARTUP, APP, SETUP } from '../_routes'
-import AppStack from '../components/AppStack'
+import AppTabs from '../components/AppTabs'
 import SetupStack from '../components/SetupStack'
 import AppStartup from '../containers/AppStartup'
 import { imgBckgrd } from '../sharedStyles/styles.layout'
-import { setIdentity, resetIdentity, updateBalance } from '../redux/actions'
+import {
+  setIdentity,
+  resetIdentity,
+  updateBalance,
+  updateLastVisitedRoute,
+} from '../redux/actions'
 import { TMapDispatchToProps } from '../_types'
 import { TAppState } from '../redux/reducers'
 import { BLOCKCHAIN_NODE } from '../_config'
@@ -25,13 +30,17 @@ import {
   getBalanceInKiltCoins,
 } from '../services/service.balance'
 import { AppLockStatus } from '../_enums'
+import {
+  getCurrentRoute,
+  setTopLevelNavigator,
+} from '../services/service.navigation'
 
-const obscurator = require('../assets/imgs/obscurator.jpg')
+const obscuratorSrc = require('../assets/imgs/obscurator.jpg')
 
 const RootSwitch = createSwitchNavigator(
   {
     [APP_STARTUP]: AppStartup,
-    [APP]: AppStack,
+    [APP]: AppTabs,
     [SETUP]: SetupStack,
   },
   {
@@ -47,6 +56,7 @@ type Props = {
   updateBalanceInStore: typeof updateBalance
   identityFromStore: Identity | null
   publicIdentityFromStore: PublicIdentity | null
+  updateLastVisitedRouteInStore: typeof updateLastVisitedRoute
 }
 
 class AppWrapped extends React.Component<Props> {
@@ -81,7 +91,7 @@ class AppWrapped extends React.Component<Props> {
       publicIdentityFromStore,
       updateBalanceInStore,
     } = this.props
-    // id has just been set up
+    // in this case, the identity has just been set up
     if (prevIdentityFromStore !== identityFromStore) {
       // todoprio Bug: we're disconnected when I request an attestation
       if (identityFromStore) {
@@ -89,13 +99,12 @@ class AppWrapped extends React.Component<Props> {
         await this.connectAndListen()
 
         if (publicIdentityFromStore) {
-          const bal = await getBalanceInKiltCoins(
+          const balance = await getBalanceInKiltCoins(
             publicIdentityFromStore.address
           )
-          updateBalanceInStore(bal)
+          updateBalanceInStore(balance)
         }
       } else {
-        // todo bug stream end encountered VS web socket connection not properly reopened once closed
         await this.disconnect()
       }
     }
@@ -127,9 +136,7 @@ class AppWrapped extends React.Component<Props> {
     const { publicIdentityFromStore } = this.props
     if (publicIdentityFromStore) {
       console.info('[SOCKET] Connecting and listening........')
-      const blockchainAPI = await Kilt.default.connect(BLOCKCHAIN_NODE)
-      // blockchainAPI.api.disconnect
-      console.info('---------------------------blockchainAPI', blockchainAPI)
+      await Kilt.default.connect(BLOCKCHAIN_NODE)
       await Balance.listenToBalanceChanges(
         publicIdentityFromStore.address,
         balanceListener
@@ -158,13 +165,14 @@ class AppWrapped extends React.Component<Props> {
   // todo clean async _handleAppStateChange(nextAppState) {
   _handleAppStateChange = async nextAppState => {
     const {
-      setIdentityInStore,
       resetIdentityInStore,
       identityFromStore,
       publicIdentityFromStore,
     } = this.props
+    // todo rename to appUiState
+    const { appState } = this.state
     console.info(
-      `[APP STATE] changed:  ${this.state.appState} ==> ${nextAppState} (identityFromStore: ${identityFromStore}) (publicIdentityFromStore: ${publicIdentityFromStore})`
+      `[APP STATE] changed:  ${appState} ==> ${nextAppState} (identityFromStore: ${identityFromStore}) (publicIdentityFromStore: ${publicIdentityFromStore})`
     )
 
     if (
@@ -205,6 +213,7 @@ class AppWrapped extends React.Component<Props> {
   }
 
   render(): JSX.Element {
+    const { updateLastVisitedRouteInStore } = this.props
     /* if the app goes in the background (= another app is used) or becomes inactive (! iOS only; when user scrolls through apps): 
     hide its contents, like in a banking app */
 
@@ -215,9 +224,19 @@ class AppWrapped extends React.Component<Props> {
     return (
       <>
         {showAppContents ? (
-          <Navigation />
+          <Navigation
+            onNavigationStateChange={() => {
+              const currentRoute = getCurrentRoute()
+              updateLastVisitedRouteInStore(
+                currentRoute ? currentRoute.routeName : ''
+              )
+            }}
+            ref={navigatorRef => {
+              setTopLevelNavigator(navigatorRef)
+            }}
+          />
         ) : (
-          <ImageBackground source={obscurator} style={imgBckgrd} />
+          <ImageBackground source={obscuratorSrc} style={imgBckgrd} />
         )}
       </>
     )
@@ -244,10 +263,10 @@ const mapDispatchToProps = (
     updateBalanceInStore: (balance: number) => {
       dispatch(updateBalance(balance))
     },
+    updateLastVisitedRouteInStore: (route: string) => {
+      dispatch(updateLastVisitedRoute(route))
+    },
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppWrapped)
+export default connect(mapStateToProps, mapDispatchToProps)(AppWrapped)
