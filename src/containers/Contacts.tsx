@@ -73,8 +73,15 @@ class Contacts extends React.Component<Props, State> {
 
   // todo create vs save vs add vs new
   addNewContact(): void {
-    const { addContactInStore } = this.props
+    const { addContactInStore, contactsFromStore } = this.props
     const { newContactAddress, newContactName } = this.state
+    if (
+      // the contact already exists
+      contactsFromStore.some(c => c.address === newContactAddress)
+    ) {
+      console.log('same')
+      return
+    }
     addContactInStore({
       name: newContactName,
       address: newContactAddress,
@@ -100,7 +107,6 @@ class Contacts extends React.Component<Props, State> {
                 }}
               />
             </View>
-            {/* todo also delete all contacts when settings */}
           </View>
           {/* todo refactor dialogs eg DRY */}
           <View>

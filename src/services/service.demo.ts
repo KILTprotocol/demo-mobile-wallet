@@ -15,7 +15,7 @@ async function saveIdentityAsContactInDemoServices(
     }),
   }).then(response => {
     console.info(
-      '[IDENTITY] Public identity saved as contact in the demo contact services, for convenience'
+      '[IDENTITY] Public identity saved as contact in the demo contact services for demo purposes'
     )
     if (!response.ok) {
       throw new Error(response.statusText)
