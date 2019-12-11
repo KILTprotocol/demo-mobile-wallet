@@ -20,6 +20,7 @@ import AddressDisplay from '../components/AddressDisplay'
 import QrCodeScanner from '../components/QrCodeScanner'
 // todo kiltinput
 import { KILT_ORANGE_CLR } from '../sharedStyles/styles.consts.colors'
+import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 
 const contentContainer: ViewStyle = {
   height: 150,
@@ -35,8 +36,8 @@ type Props = {
   onPressCancel: () => void
   onConfirmTransfer: () => void
   onChangeTokenAmountToTransfer: (tokenAmountToTransfer: number) => void
-  onTokenRecipientAddressRead: (address: string) => void
-  tokenRecipientAddress: string
+  onTokenRecipientAddressRead: (address: IPublicIdentity['address']) => void
+  tokenRecipientAddress: IPublicIdentity['address']
   visible: boolean
   isOkBtnDisabled: boolean
   transferAsyncStatus: AsyncStatus

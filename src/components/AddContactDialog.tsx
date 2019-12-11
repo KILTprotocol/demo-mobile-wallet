@@ -1,17 +1,17 @@
 import React from 'react'
 import Dialog from 'react-native-dialog'
-import { View, Text, ViewStyle } from 'react-native'
-import { dialogContainer, dialogSection } from '../sharedStyles/styles.dialog'
+import { View, Text } from 'react-native'
+import {
+  dialogContainer,
+  dialogSection,
+  formFreeLabel,
+} from '../sharedStyles/styles.dialog'
 import { qrCodeScannerContainer } from '../sharedStyles/styles.layout'
 import AddressDisplay from './AddressDisplay'
 import QrCodeScanner from './QrCodeScanner'
 import { inputTxt } from '../sharedStyles/styles.typography'
 import { KILT_ORANGE_CLR } from '../sharedStyles/styles.consts.colors'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
-
-const newContactLabel: ViewStyle = {
-  paddingBottom: 6,
-}
 
 type Props = {
   onPressCancel: () => void
@@ -39,7 +39,7 @@ class AddContactDialog extends React.Component<Props> {
       <Dialog.Container visible={visible} style={dialogContainer}>
         <Dialog.Title>Add new contact</Dialog.Title>
         <View style={dialogSection}>
-          <Text style={newContactLabel}>New contact address:</Text>
+          <Text style={formFreeLabel}>New contact address:</Text>
           <View>
             {address ? (
               <AddressDisplay address={address} />

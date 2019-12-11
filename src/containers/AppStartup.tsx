@@ -42,7 +42,6 @@ class AppStartup extends React.Component<Props> {
     // if an identity is already set up, navigate to the regular app
     // if not, navigate to the identity setup screen
     // todoprio draw this
-    // todoprio what if there's a public identity and last visited route is setup-wise? (which wouldn't make sense); also, last visited route is not used for setup screen
     // todo document that public id is used as a way to determine whether setup has been done
     // todo also probably the hide screen should be a dedicated route???
     // navigation.navigate(lastVisitedRouteFromStore)

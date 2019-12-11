@@ -37,7 +37,6 @@ type Props = {
 
 type State = {
   username: string
-  isNextBtnDisabled: boolean
 }
 
 const usernameInputStyle: ViewStyle = {
@@ -60,14 +59,12 @@ class UsernameSetup extends React.Component<Props, State> {
 
   state = {
     username: '',
-    isNextBtnDisabled: true,
   }
 
   onChangeUsername(username: string): void {
     const formattedUserName = username.trimLeft().trimRight()
     this.setState({
       username: formattedUserName,
-      isNextBtnDisabled: !formattedUserName,
     })
   }
 
@@ -80,16 +77,18 @@ class UsernameSetup extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
-    const { isNextBtnDisabled } = this.state
     return (
-      // todo font scaling in dialogs
       <WithIntroBackground>
         <ScrollView style={mainViewContainer}>
           <View style={sectionContainer}>
-            <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>Step 2</Text>
+            <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>
+              Step 2 (optional)
+            </Text>
           </View>
           <View style={sectionContainer}>
-            <Text style={[bodyTxt, labelStyle]}>Your first name</Text>
+            <Text style={[bodyTxt, labelStyle]}>
+              Your first name (optional)
+            </Text>
             <TextInput
               autoCorrect={false}
               autoFocus
@@ -103,7 +102,6 @@ class UsernameSetup extends React.Component<Props, State> {
           <View style={sectionContainer}>
             <View style={flexRowEndLayout}>
               <KiltButton
-                disabled={isNextBtnDisabled}
                 title="Next >"
                 onPress={() => this.saveUsernameAndGoNext()}
               />
