@@ -41,5 +41,4 @@ AppTabs.navigationOptions = {
   header: null,
 }
 
-// todo rename to appstack
 export default AppTabs

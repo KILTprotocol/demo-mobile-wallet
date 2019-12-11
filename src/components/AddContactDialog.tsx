@@ -7,6 +7,7 @@ import AddressDisplay from './AddressDisplay'
 import QrCodeScanner from './QrCodeScanner'
 import { inputTxt } from '../sharedStyles/styles.typography'
 import { KILT_ORANGE_CLR } from '../sharedStyles/styles.consts.colors'
+import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 
 const newContactLabel: ViewStyle = {
   paddingBottom: 6,
@@ -16,9 +17,9 @@ type Props = {
   onPressCancel: () => void
   onConfirmAddContact: () => void
   onChangeContactName: (name: string) => void
-  onNewContactAddressRead: (address: string) => void
+  onNewContactAddressRead: (address: IPublicIdentity['address']) => void
   visible: boolean
-  address: string
+  address: IPublicIdentity['address']
   isOkBtnDisabled: boolean
 }
 
@@ -59,7 +60,6 @@ class AddContactDialog extends React.Component<Props> {
           label="Name:"
           onChangeText={name => onChangeContactName(name)}
           // a name shouldn't be spellchecked
-          // todo date picker for birthday
           spellCheck={false}
           autoCorrect={false}
           style={inputTxt}

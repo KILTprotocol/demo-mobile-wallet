@@ -1,4 +1,4 @@
-import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
+import { Identity, PublicIdentity, IPublicIdentity } from '@kiltprotocol/sdk-js'
 import {
   SET_IDENTITY,
   RESET_IDENTITY,
@@ -49,7 +49,7 @@ export type TCredentialMapByHash = { [key: string]: TCredential }
 /* ---------------------------------- */
 
 export type TContact = {
-  address: string
+  address: IPublicIdentity['address']
   name: string
 }
 

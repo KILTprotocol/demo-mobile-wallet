@@ -5,6 +5,7 @@ import {
   KILT_PURPLE_CLR_MEDIUM,
   KILT_GREEN_CLR_DARK,
 } from '../sharedStyles/styles.consts.colors'
+import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 
 const COLORS = Object.freeze([
   KILT_ORANGE_CLR,
@@ -20,7 +21,7 @@ const ADDRESS_DISPLAY_END_LENGTH = 4
 /*               Address              */
 /* ---------------------------------- */
 
-const truncateAddress = (address: string): string =>
+const truncateAddress = (address: IPublicIdentity['address']): string =>
   `${address.substr(0, ADDRESS_DISPLAY_START_LENGTH)}...${address.substr(
     address.length - ADDRESS_DISPLAY_END_LENGTH,
     ADDRESS_DISPLAY_END_LENGTH

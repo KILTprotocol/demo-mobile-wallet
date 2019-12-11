@@ -19,7 +19,7 @@ import {
   titleInvertedClrTxt,
   emphasizedClrTxt,
 } from '../sharedStyles/styles.typography'
-import { MNEMONIC_CREATION, USERNAME_SETUP } from '../_routes'
+import { USERNAME_SETUP } from '../_routes'
 import WithIntroBackground from './WithIntroBackground'
 
 interface IProps {

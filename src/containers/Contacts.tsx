@@ -21,6 +21,7 @@ import { addContact } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
 import { TMapDispatchToProps, TContact } from '../_types'
 import ContactList from '../components/ContactList'
+import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -30,7 +31,7 @@ type Props = {
 
 type State = {
   dialogVisible: boolean
-  newContactAddress: string
+  newContactAddress: IPublicIdentity['address']
   newContactName: string
 }
 
@@ -40,18 +41,8 @@ class Contacts extends React.Component<Props, State> {
     newContactAddress: '',
     newContactName: '',
   }
-
-  // todo barcode type
-  // onBarCodeRead(barcode): void {
-  //   this.setState({
-  //     dialogVisible: true,
-  //     scannerOpen: false,
-  //     newContactAddress: barcode.data,
-  //   })
-  // }
-
-  // todoprio prevent double add
   // todo change name, should not contain plural
+  // also: create vs save vs add vs new
 
   setNewContactName(newContactName: string): void {
     this.setState({
@@ -71,26 +62,22 @@ class Contacts extends React.Component<Props, State> {
     })
   }
 
-  // todo create vs save vs add vs new
   addNewContact(): void {
     const { addContactInStore, contactsFromStore } = this.props
     const { newContactAddress, newContactName } = this.state
     if (
-      // the contact already exists
+      // the contact doesn't already exists
       contactsFromStore.some(c => c.address === newContactAddress)
     ) {
-      console.log('same')
-      return
+      addContactInStore({
+        name: newContactName,
+        address: newContactAddress,
+      })
     }
-    addContactInStore({
-      name: newContactName,
-      address: newContactAddress,
-    })
   }
 
   render(): JSX.Element {
     const { dialogVisible, newContactAddress } = this.state
-    // todo delete contacts on reset app
     const { contactsFromStore } = this.props
     return (
       <WithDefaultBackground>

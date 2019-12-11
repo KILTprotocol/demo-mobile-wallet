@@ -3,10 +3,11 @@ import { View } from 'react-native'
 import { QRCode } from 'react-native-custom-qr-codes'
 import { KILT_PURPLE_CLR_MEDIUM } from '../sharedStyles/styles.consts.colors'
 import { flexRowCenterLayout } from '../sharedStyles/styles.layout'
+import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 const kiltLogoSquare = require('../assets/imgs/kiltLogoSquare.jpg')
 
 type Props = {
-  address: string
+  address: IPublicIdentity['address']
 }
 
 const AddressQRCode: React.FunctionComponent<Props> = ({
