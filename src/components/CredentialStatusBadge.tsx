@@ -2,10 +2,10 @@ import React from 'react'
 import { Text, View, StyleSheet, ViewStyle, TextStyle } from 'react-native'
 import { flexRow } from '../sharedStyles/styles.layout'
 import {
-  ATT_PENDING_CLR,
-  ATT_VALID_CLR,
-  ATT_REVOKED_CLR,
-  TXT_INVERTED_CLR,
+  CLR_CLAIM_PENDING,
+  CLR_CLAIM_VALID,
+  CLR_CLAIM_REVOKED,
+  CLR_TXT_INVERTED,
 } from '../sharedStyles/styles.consts.colors'
 import { CredentialStatus } from '../_enums'
 import { TXT_XXS_SIZE } from '../sharedStyles/styles.consts.typography'
@@ -22,20 +22,20 @@ const badge: ViewStyle = {
 
 const badgeTxt: TextStyle = {
   textTransform: 'uppercase',
-  color: TXT_INVERTED_CLR,
+  color: CLR_TXT_INVERTED,
   fontSize: TXT_XXS_SIZE,
   fontWeight: '600',
 }
 
 const txtStyles = StyleSheet.create({
   pending: {
-    backgroundColor: ATT_PENDING_CLR,
+    backgroundColor: CLR_CLAIM_PENDING,
   },
   valid: {
-    backgroundColor: ATT_VALID_CLR,
+    backgroundColor: CLR_CLAIM_VALID,
   },
   revoked: {
-    backgroundColor: ATT_REVOKED_CLR,
+    backgroundColor: CLR_CLAIM_REVOKED,
   },
 })
 

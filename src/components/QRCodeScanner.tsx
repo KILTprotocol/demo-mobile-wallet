@@ -3,7 +3,7 @@ import { View, Text, TextStyle } from 'react-native'
 import { RNCamera } from 'react-native-camera'
 import {
   CLR_BCKGRD_DARK,
-  TXT_INVERTED_CLR,
+  CLR_TXT_INVERTED,
 } from '../sharedStyles/styles.consts.colors'
 import { flexRowWrap, fill } from '../sharedStyles/styles.layout'
 
@@ -17,7 +17,7 @@ const hintContainer: TextStyle = {
 }
 
 const hint: TextStyle = {
-  color: TXT_INVERTED_CLR,
+  color: CLR_TXT_INVERTED,
 }
 
 // todoprio not request microphone

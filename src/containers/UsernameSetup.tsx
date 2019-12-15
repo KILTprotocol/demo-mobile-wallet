@@ -24,9 +24,9 @@ import {
   bodyTxt,
 } from '../sharedStyles/styles.typography'
 import {
-  TXT_INVERTED_LIGHT_CLR_NEUTRAL,
-  KILT_ORANGE_CLR,
-  TXT_LIGHT_CLR_NEUTRAL,
+  CLR_TXT_INVERTED,
+  CLR_KILT_0,
+  CLR_TXT_LIGHT,
 } from '../sharedStyles/styles.consts.colors'
 import { IDENTITY_SETUP } from '../_routes'
 
@@ -41,14 +41,14 @@ type State = {
 
 const input: ViewStyle = {
   borderWidth: 1,
-  borderColor: TXT_INVERTED_LIGHT_CLR_NEUTRAL,
+  borderColor: CLR_TXT_INVERTED,
   borderRadius: 8,
   paddingVertical: 18,
   paddingHorizontal: 12,
 }
 
 const labelTxt: TextStyle = {
-  color: TXT_LIGHT_CLR_NEUTRAL,
+  color: CLR_TXT_LIGHT,
   marginBottom: 6,
 }
 
@@ -92,7 +92,7 @@ class UsernameSetup extends React.Component<Props, State> {
               autoFocus
               onChangeText={username => this.onChangeUsername(username)}
               returnKeyType="done"
-              selectionColor={KILT_ORANGE_CLR}
+              selectionColor={CLR_KILT_0}
               spellCheck={false}
               style={[bodyTxt, bodyInvertedClrTxt, input]}
             />
