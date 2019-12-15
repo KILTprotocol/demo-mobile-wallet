@@ -1,13 +1,13 @@
 import React from 'react'
 import { ImageBackground } from 'react-native'
-import { fullWidthAndHeight } from '../sharedStyles/styles.layout'
+import { fill } from '../sharedStyles/styles.layout'
 
 const mainBckgrdImgDark = require('../assets/imgs/mainBckgrdImgDark.jpg')
 
 const WithIntroBackground: React.FunctionComponent = ({
   children,
 }): JSX.Element => (
-  <ImageBackground source={mainBckgrdImgDark} style={fullWidthAndHeight}>
+  <ImageBackground source={mainBckgrdImgDark} style={fill}>
     {children}
   </ImageBackground>
 )

@@ -12,7 +12,7 @@ import {
 import {
   mainViewContainer,
   sectionContainer,
-  flexRowCenterLayout,
+  flexRowCenter,
 } from '../sharedStyles/styles.layout'
 import { mainTitleTxt } from '../sharedStyles/styles.typography'
 import WithDefaultBackground from '../components/WithDefaultBackground'
@@ -30,14 +30,14 @@ type Props = {
 }
 
 type State = {
-  dialogVisible: boolean
+  isDialogVisible: boolean
   newContactAddress: IPublicIdentity['address']
   newContactName: string
 }
 
 class Contacts extends React.Component<Props, State> {
   state = {
-    dialogVisible: false,
+    isDialogVisible: false,
     newContactAddress: '',
     newContactName: '',
   }
@@ -65,19 +65,19 @@ class Contacts extends React.Component<Props, State> {
   }
 
   closeDialog(): void {
-    this.setState({ dialogVisible: false })
+    this.setState({ isDialogVisible: false })
   }
 
   openDialog(): void {
     this.setState({
-      dialogVisible: true,
+      isDialogVisible: true,
       newContactAddress: '',
       newContactName: '',
     })
   }
 
   render(): JSX.Element {
-    const { dialogVisible, newContactAddress } = this.state
+    const { isDialogVisible, newContactAddress } = this.state
     const { contactsFromStore } = this.props
     return (
       <WithDefaultBackground>
@@ -86,7 +86,7 @@ class Contacts extends React.Component<Props, State> {
             <Text style={mainTitleTxt}>Contacts</Text>
           </View>
           <View style={sectionContainer}>
-            <View style={flexRowCenterLayout}>
+            <View style={flexRowCenter}>
               <KiltButton
                 title="＋ Add new contact"
                 onPress={() => {
@@ -100,7 +100,7 @@ class Contacts extends React.Component<Props, State> {
             <ContactList contacts={contactsFromStore} />
           </View>
           <AddContactDialog
-            visible={dialogVisible}
+            visible={isDialogVisible}
             address={newContactAddress}
             onPressCancel={() => this.closeDialog()}
             onChangeContactName={name => this.setNewContactName(name)}

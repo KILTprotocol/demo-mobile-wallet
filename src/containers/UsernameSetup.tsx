@@ -12,7 +12,7 @@ import {
 import {
   mainViewContainer,
   sectionContainer,
-  flexRowEndLayout,
+  flexRowEnd,
 } from '../sharedStyles/styles.layout'
 import { setUsername } from '../redux/actions'
 import { TMapDispatchToProps } from '../_types'
@@ -39,7 +39,7 @@ type State = {
   username: string
 }
 
-const txtInput: ViewStyle = {
+const input: ViewStyle = {
   borderWidth: 1,
   borderColor: TXT_INVERTED_LIGHT_CLR_NEUTRAL,
   borderRadius: 8,
@@ -94,11 +94,11 @@ class UsernameSetup extends React.Component<Props, State> {
               returnKeyType="done"
               selectionColor={KILT_ORANGE_CLR}
               spellCheck={false}
-              style={[bodyTxt, bodyInvertedClrTxt, txtInput]}
+              style={[bodyTxt, bodyInvertedClrTxt, input]}
             />
           </View>
           <View style={sectionContainer}>
-            <View style={flexRowEndLayout}>
+            <View style={flexRowEnd}>
               <KiltButton
                 title="Next >"
                 onPress={() => this.saveUsernameAndGoNext()}

@@ -3,22 +3,22 @@ import { ACCOUNT, CONTACTS, DASHBOARD, SETTINGS } from '../_routes'
 import Account from '../containers/Account'
 import Dashboard from '../containers/Dashboard'
 import Contacts from '../containers/Contacts'
-import Settings from './Settings'
+import Settings from '../containers/Settings'
 import { TXT_XS_SIZE } from '../sharedStyles/styles.consts.typography'
 import {
-  KILT_PURPLE_CLR,
-  TXT_INVERTED_CLR,
-  TXT_INVERTED_LIGHT_CLR,
+  CLR_KILT_1,
+  CLR_TXT_INVERTED,
+  CLR_TXT_INVERTED_LIGHT,
 } from '../sharedStyles/styles.consts.colors'
 
 const tabBarOptions = {
-  activeTintColor: TXT_INVERTED_CLR,
-  inactiveTintColor: TXT_INVERTED_LIGHT_CLR,
+  activeTintColor: CLR_TXT_INVERTED,
+  inactiveTintColor: CLR_TXT_INVERTED_LIGHT,
   labelStyle: {
     fontSize: TXT_XS_SIZE,
   },
   style: {
-    backgroundColor: KILT_PURPLE_CLR,
+    backgroundColor: CLR_KILT_1,
     height: 64,
     paddingVertical: 18,
   },

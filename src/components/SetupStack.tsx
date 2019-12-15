@@ -1,6 +1,6 @@
 import { createStackNavigator } from 'react-navigation-stack'
 import Introduction from './Introduction'
-import MnemonicCreation from '../containers/MnemonicCreation'
+import MnemonicCreation from '../components/MnemonicCreation'
 import IdentitySetup from '../containers/IdentitySetup'
 import UsernameSetup from '../containers/UsernameSetup'
 import {

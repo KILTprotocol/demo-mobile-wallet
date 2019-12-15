@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View, StyleSheet, ViewStyle, TextStyle } from 'react-native'
-import { flexRowLayout } from '../sharedStyles/styles.layout'
+import { flexRow } from '../sharedStyles/styles.layout'
 import {
   ATT_PENDING_CLR,
   ATT_VALID_CLR,
@@ -57,7 +57,7 @@ const statusToUiMapping = {
 const CredentialStatusBadge: React.FunctionComponent<Props> = ({
   status,
 }): JSX.Element => (
-  <View style={flexRowLayout}>
+  <View style={flexRow}>
     <View style={[badge, statusToUiMapping[status].style]}>
       <Text style={badgeTxt}>{statusToUiMapping[status].txt}</Text>
     </View>

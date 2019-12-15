@@ -8,11 +8,8 @@ import {
   ImageStyle,
 } from 'react-native'
 import { TXT_S_SIZE } from '../sharedStyles/styles.consts.typography'
-import {
-  TXT_DEFAULT_CLR,
-  TXT_LIGHT_CLR_NEUTRAL,
-} from '../sharedStyles/styles.consts.colors'
-import { imgBckgrd, flexRowLayout, card } from '../sharedStyles/styles.layout'
+import { CLR_TXT, CLR_TXT_LIGHT } from '../sharedStyles/styles.consts.colors'
+import { fill, flexRow, card } from '../sharedStyles/styles.layout'
 import { CredentialStatus } from '../_enums'
 import CredentialStatusBadge from './CredentialStatusBadge'
 import { bodyTxt } from '../sharedStyles/styles.typography'
@@ -33,7 +30,7 @@ const credentialTitleTxt: TextStyle = {
   marginBottom: 12,
   letterSpacing: 2,
   textTransform: 'uppercase',
-  color: TXT_DEFAULT_CLR,
+  color: CLR_TXT,
 }
 
 const credentialCard: ViewStyle = {
@@ -43,23 +40,21 @@ const credentialCard: ViewStyle = {
   shadowOpacity: 0.3,
 }
 
-const imgBckgrdExtraStyles: ImageStyle = {
-  borderRadius: 13,
+const bordered: ImageStyle = {
+  borderRadius: 10,
 }
 
-const credentialCardContentStyle: ViewStyle = {
-  width: '100%',
-  height: '100%',
+const credentialCardContent: ViewStyle = {
   padding: 12,
 }
 
-const credentialPptiesStyle: ViewStyle = {
+const credentialPpties: ViewStyle = {
   marginTop: 12,
 }
 
-const pptyLabelStyle: TextStyle = {
+const pptyLabel: TextStyle = {
   marginRight: 12,
-  color: TXT_LIGHT_CLR_NEUTRAL,
+  color: CLR_TXT_LIGHT,
   textTransform: 'capitalize',
 }
 
@@ -83,18 +78,18 @@ const CredentialCard: React.FunctionComponent<Props> = ({
   <View style={credentialCard}>
     <ImageBackground
       source={statusToUiMapping[status].imgSrc}
-      style={imgBckgrd}
-      imageStyle={imgBckgrdExtraStyles}>
-      <View style={credentialCardContentStyle}>
+      style={fill}
+      imageStyle={bordered}>
+      <View style={[credentialCardContent, fill]}>
         <Text style={credentialTitleTxt}>{title}</Text>
         <CredentialStatusBadge status={status} />
-        <View style={credentialPptiesStyle}>
+        <View style={credentialPpties}>
           {/* todoprio fix ppty order display */}
           {/* todoprio ppty type input type */}
           {Object.entries(contents).map(([pptyName, pptyValue]) => (
-            <View key={pptyName} style={flexRowLayout}>
-              <Text style={[bodyTxt, pptyLabelStyle]}>{pptyName}</Text>
-              <Text style={bodyTxt}>{pptyValue}</Text>
+            <View key={pptyName} style={flexRow}>
+              <Text style={[bodyTxt, pptyLabel]}>{pptyName}</Text>
+              <Text style={bodyTxt}>{pptyValue.toString()}</Text>
             </View>
           ))}
         </View>

@@ -1,18 +1,18 @@
 import {
-  KILT_ORANGE_CLR,
-  KILT_PURPLE_CLR,
-  KILT_GREEN_CLR,
-  KILT_PURPLE_CLR_MEDIUM,
-  KILT_GREEN_CLR_DARK,
+  CLR_KILT_0,
+  CLR_KILT_1,
+  CLR_KILT_2,
+  CLR_KILT_1_DARK,
+  CLR_KILT_2_DARK,
 } from '../sharedStyles/styles.consts.colors'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 
 const COLORS = Object.freeze([
-  KILT_ORANGE_CLR,
-  KILT_PURPLE_CLR,
-  KILT_PURPLE_CLR_MEDIUM,
-  KILT_GREEN_CLR,
-  KILT_GREEN_CLR_DARK,
+  CLR_KILT_0,
+  CLR_KILT_1,
+  CLR_KILT_1_DARK,
+  CLR_KILT_2,
+  CLR_KILT_2_DARK,
 ])
 const ADDRESS_DISPLAY_START_LENGTH = 8
 const ADDRESS_DISPLAY_END_LENGTH = 4

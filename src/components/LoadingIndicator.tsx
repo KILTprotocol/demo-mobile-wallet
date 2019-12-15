@@ -1,9 +1,10 @@
 import React from 'react'
 import { PulseIndicator } from 'react-native-indicators'
-import { KILT_ORANGE_CLR } from '../sharedStyles/styles.consts.colors'
+import { CLR_KILT_0 } from '../sharedStyles/styles.consts.colors'
 import { LoadingIndicatorSize } from '../_enums'
 
 const getSize = (size: LoadingIndicatorSize | undefined): number => {
+  // todo refactor
   switch (size) {
     case LoadingIndicatorSize.S:
       return 20
@@ -22,8 +23,6 @@ type Props = {
 
 const LoadingIndicator: React.FunctionComponent<Props> = ({
   size,
-}): JSX.Element => (
-  <PulseIndicator color={KILT_ORANGE_CLR} size={getSize(size)} />
-)
+}): JSX.Element => <PulseIndicator color={CLR_KILT_0} size={getSize(size)} />
 
 export default LoadingIndicator

@@ -25,7 +25,7 @@ import TokenTransferDialog from '../containers/TokenTransferDialog'
 import KiltButton from '../components/KiltButton'
 import BalanceComp from '../components/Balance'
 import { asMicroKiltCoins } from '../services/service.balance'
-import { getSdkIdentityFromStoredIdentity } from '../utils/utils.identity'
+import { fromStoredIdentity } from '../utils/utils.identity'
 import { AsyncStatus } from '../_enums'
 import { callWithDelay } from '../utils/utils.async'
 
@@ -36,7 +36,7 @@ type Props = {
 }
 
 type State = {
-  dialogVisible: boolean
+  isDialogVisible: boolean
   isDialogOkBtnDisabled: boolean
   tokenAmountToTransfer: number
   tokenRecipientAddress: IPublicIdentity['address']
@@ -45,7 +45,7 @@ type State = {
 
 class Account extends Component<Props, State> {
   defaultState = {
-    dialogVisible: false,
+    isDialogVisible: false,
     isDialogOkBtnDisabled: true,
     tokenAmountToTransfer: 0,
     tokenRecipientAddress: '',
@@ -81,9 +81,9 @@ class Account extends Component<Props, State> {
   }
 
   openDialog(): void {
-    // todo use .. this.state (needed???)
+    // todo reset dialog on close and use default state
     this.setState({
-      dialogVisible: true,
+      isDialogVisible: true,
       isDialogOkBtnDisabled: true,
       tokenAmountToTransfer: 0,
       tokenRecipientAddress: '',
@@ -92,9 +92,8 @@ class Account extends Component<Props, State> {
   }
 
   closeDialog(): void {
-    // todo rename booleans
     // todo use hooks for dialogs
-    this.setState({ dialogVisible: false })
+    this.setState({ isDialogVisible: false })
   }
 
   setTokenAmountToTransfer(tokenAmountToTransfer: number): void {
@@ -110,8 +109,6 @@ class Account extends Component<Props, State> {
   async transferTokens(): Promise<void> {
     // todo refactor nicely
     // TODOprio BUG always transfer one token more......
-    // todo transfer crashes when user has no tokens
-    // todo disable transfer token button when user has no token????
     const { tokenRecipientAddress, tokenAmountToTransfer } = this.state
     const { identityFromStore } = this.props
     if (identityFromStore && tokenRecipientAddress) {
@@ -123,7 +120,7 @@ class Account extends Component<Props, State> {
       try {
         console.info('[TRANSFER] Trying transfer...')
         await Balance.makeTransfer(
-          getSdkIdentityFromStoredIdentity(identityFromStore),
+          fromStoredIdentity(identityFromStore),
           tokenRecipientAddress,
           transferAmount
         )
@@ -151,7 +148,7 @@ class Account extends Component<Props, State> {
   render(): JSX.Element {
     const { publicIdentityFromStore, balanceFromStore } = this.props
     const {
-      dialogVisible,
+      isDialogVisible,
       tokenRecipientAddress,
       transferAsyncStatus,
       isDialogOkBtnDisabled,
@@ -190,7 +187,7 @@ class Account extends Component<Props, State> {
             />
           </View>
           <TokenTransferDialog
-            visible={dialogVisible}
+            visible={isDialogVisible}
             isOkBtnDisabled={isDialogOkBtnDisabled}
             tokenRecipientAddress={tokenRecipientAddress}
             onPressCancel={() => {

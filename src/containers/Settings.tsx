@@ -7,15 +7,17 @@ import {
   NavigationParams,
   ScrollView,
 } from 'react-navigation'
+import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
+import { Dispatch } from 'redux'
 import KiltButton from '../components/KiltButton'
+import WithDefaultBackground from '../components/WithDefaultBackground'
 import {
   mainViewContainer,
   sectionContainer,
-  flexRowCenterLayout,
+  flexRowCenter,
 } from '../sharedStyles/styles.layout'
 import { mainTitleTxt } from '../sharedStyles/styles.typography'
 import { APP_STARTUP } from '../_routes'
-import WithDefaultBackground from './WithDefaultBackground'
 import {
   resetBalance,
   resetIdentity,
@@ -23,8 +25,6 @@ import {
   resetPublicIdentity,
   deleteAllContacts,
 } from '../redux/actions'
-import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
-import { Dispatch } from 'redux'
 import { TMapDispatchToProps, TMapStateToProps } from '../_types'
 import { TAppState } from '../redux/reducers'
 import { ButtonType } from '../_enums'
@@ -79,7 +79,7 @@ class Settings extends React.Component<Props, null> {
             <Text style={mainTitleTxt}>Settings</Text>
           </View>
           <View style={sectionContainer}>
-            <View style={flexRowCenterLayout}>
+            <View style={flexRowCenter}>
               <KiltButton
                 onPress={() => {
                   deleteAllCredentialsInStore()
@@ -88,7 +88,7 @@ class Settings extends React.Component<Props, null> {
                 type={ButtonType.Danger}
               />
             </View>
-            <View style={flexRowCenterLayout}>
+            <View style={flexRowCenter}>
               <KiltButton
                 title="✕ Delete all contacts"
                 onPress={() => {
@@ -97,7 +97,7 @@ class Settings extends React.Component<Props, null> {
                 type={ButtonType.Danger}
               />
             </View>
-            <View style={flexRowCenterLayout}>
+            <View style={flexRowCenter}>
               <KiltButton
                 onPress={() => {
                   this.resetApp()

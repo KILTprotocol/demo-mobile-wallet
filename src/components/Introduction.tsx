@@ -9,7 +9,7 @@ import {
 import {
   mainViewContainer,
   sectionContainer,
-  flexRowEndLayout,
+  flexRowEnd,
 } from '../sharedStyles/styles.layout'
 import {
   bodyTxt,
@@ -44,7 +44,7 @@ const Introduction = ({ navigation }: IProps): JSX.Element => (
         </Text>
       </View>
       <View style={sectionContainer}>
-        <View style={flexRowEndLayout}>
+        <View style={flexRowEnd}>
           <KiltButton
             title="Get started >"
             onPress={() => navigation.navigate(USERNAME_SETUP)}

@@ -15,7 +15,7 @@ import { APP_STARTUP, APP, SETUP } from '../_routes'
 import AppTabs from '../components/AppTabs'
 import SetupStack from '../components/SetupStack'
 import AppStartup from '../containers/AppStartup'
-import { fullWidthAndHeight } from '../sharedStyles/styles.layout'
+import { fill } from '../sharedStyles/styles.layout'
 import {
   setIdentity,
   resetIdentity,
@@ -204,11 +204,11 @@ class AppWrapped extends React.Component<Props> {
   }
 
   // todo move to utils
-  isAppActive(): boolean {
-    return !this.isAppInactiveOrBackground()
+  checkIsAppActive(): boolean {
+    return !this.checkIsAppInactiveOrBackground()
   }
 
-  isAppInactiveOrBackground(): boolean {
+  checkIsAppInactiveOrBackground(): boolean {
     return !!this.state.appState.match(/inactive|background/)
   }
 
@@ -236,7 +236,7 @@ class AppWrapped extends React.Component<Props> {
             }}
           />
         ) : (
-          <ImageBackground source={obscuratorSrc} style={fullWidthAndHeight} />
+          <ImageBackground source={obscuratorSrc} style={fill} />
         )}
       </>
     )

@@ -18,7 +18,7 @@ import {
   INTRODUCTION,
   USERNAME_SETUP,
 } from '../_routes'
-import { mainViewContainer, fullCenter } from '../sharedStyles/styles.layout'
+import { mainViewContainer, fillCenter } from '../sharedStyles/styles.layout'
 import { TAppState } from '../redux/reducers'
 import { TMapStateToProps } from '../_types'
 
@@ -65,7 +65,7 @@ class AppStartup extends React.Component<Props> {
   render(): JSX.Element {
     return (
       <View style={mainViewContainer}>
-        <View style={fullCenter}>
+        <View style={fillCenter}>
           <LoadingIndicator />
         </View>
       </View>

@@ -1,9 +1,6 @@
 import React from 'react'
 import { Button } from 'react-native'
-import {
-  KILT_ORANGE_CLR,
-  DANGER_CLR,
-} from '../sharedStyles/styles.consts.colors'
+import { CLR_KILT_0, CLR_DANGER } from '../sharedStyles/styles.consts.colors'
 import { ButtonType } from '../_enums'
 
 type Props = {
@@ -16,7 +13,7 @@ type Props = {
 const KiltButton: React.FunctionComponent<Props> = (props): JSX.Element => (
   <Button
     {...props}
-    color={props.type === ButtonType.Danger ? DANGER_CLR : KILT_ORANGE_CLR}
+    color={props.type === ButtonType.Danger ? CLR_DANGER : CLR_KILT_0}
   />
 )
 

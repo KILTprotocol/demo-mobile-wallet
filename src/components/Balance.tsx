@@ -1,10 +1,10 @@
 import React from 'react'
 import { Text, View, TextStyle, ViewStyle } from 'react-native'
 import { bodyTxt, lTxt } from '../sharedStyles/styles.typography'
-import { flexRowLayoutBaseline } from '../sharedStyles/styles.layout'
+import { flexRowBaseline } from '../sharedStyles/styles.layout'
 import {
-  BALANCE_PLUS_CLR,
-  BALANCE_ZERO_CLR,
+  CLR_BALANCE_POSITIVE,
+  CLR_BALANCE_ZERO,
 } from '../sharedStyles/styles.consts.colors'
 
 type Props = {
@@ -12,21 +12,21 @@ type Props = {
 }
 
 const plus: TextStyle = {
-  color: BALANCE_PLUS_CLR,
+  color: CLR_BALANCE_POSITIVE,
 }
 
 const zero: TextStyle = {
-  color: BALANCE_ZERO_CLR,
+  color: CLR_BALANCE_ZERO,
 }
 
-const balanceNr: ViewStyle = {
+const balanceNumber: ViewStyle = {
   marginRight: 2,
 }
 
 // todo prio balance is not reset!!!
 const Balance: React.FunctionComponent<Props> = ({ balance }): JSX.Element => (
-  <View style={flexRowLayoutBaseline}>
-    <Text style={[bodyTxt, lTxt, balanceNr, balance > 0 ? plus : zero]}>
+  <View style={flexRowBaseline}>
+    <Text style={[bodyTxt, lTxt, balanceNumber, balance > 0 ? plus : zero]}>
       {balance}
     </Text>
     <Text style={[bodyTxt]}> KILT Coins</Text>

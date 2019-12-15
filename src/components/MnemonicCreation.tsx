@@ -8,13 +8,13 @@ import {
   bodyInvertedClrTxt,
 } from '../sharedStyles/styles.typography'
 import {
-  flexRowEndLayout,
+  flexRowEnd,
   mainViewContainer,
   sectionContainer,
 } from '../sharedStyles/styles.layout'
 import { IDENTITY_SETUP } from '../_routes'
 import MnemonicDialog from '../components/MnemonicDialog'
-import Mnemonic from '../components/Mnemonic'
+import MnemonicDisplay from '../components/MnemonicDisplay'
 import {
   NavigationScreenProp,
   NavigationState,
@@ -29,7 +29,7 @@ type Props = {
 
 type State = {
   mnemonic: string
-  dialogVisible: boolean
+  isDialogVisible: boolean
 }
 
 class MnemonicCreation extends React.Component<Props, State> {
@@ -39,7 +39,7 @@ class MnemonicCreation extends React.Component<Props, State> {
 
   state = {
     mnemonic: Identity.generateMnemonic(),
-    dialogVisible: false,
+    isDialogVisible: false,
   }
 
   componentWillUnmount(): void {
@@ -47,16 +47,16 @@ class MnemonicCreation extends React.Component<Props, State> {
   }
 
   closeDialog(): void {
-    this.setState({ dialogVisible: false })
+    this.setState({ isDialogVisible: false })
   }
 
   openDialog(): void {
-    this.setState({ dialogVisible: true })
+    this.setState({ isDialogVisible: true })
   }
 
   render(): JSX.Element {
     const { navigation } = this.props
-    const { mnemonic, dialogVisible } = this.state
+    const { mnemonic, isDialogVisible } = this.state
     return (
       <WithIntroBackground>
         <View style={mainViewContainer}>
@@ -64,7 +64,7 @@ class MnemonicCreation extends React.Component<Props, State> {
             <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>
               Step 1: Your identity phrase (= seed)
             </Text>
-            <Mnemonic mnemonic={mnemonic} />
+            <MnemonicDisplay mnemonic={mnemonic} />
           </View>
           <View style={sectionContainer}>
             <Text style={[bodyTxt, bodyInvertedClrTxt]}>
@@ -74,7 +74,7 @@ class MnemonicCreation extends React.Component<Props, State> {
             </Text>
           </View>
           <View style={sectionContainer}>
-            <View style={flexRowEndLayout}>
+            <View style={flexRowEnd}>
               <KiltButton
                 title="OK, I wrote it down >"
                 onPress={() => {
@@ -84,7 +84,7 @@ class MnemonicCreation extends React.Component<Props, State> {
             </View>
           </View>
           <MnemonicDialog
-            visible={dialogVisible}
+            visible={isDialogVisible}
             onPressCancel={() => this.closeDialog()}
             onPressOK={() => {
               this.closeDialog()

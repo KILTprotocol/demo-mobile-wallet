@@ -10,7 +10,7 @@ import { qrCodeScannerContainer } from '../sharedStyles/styles.layout'
 import AddressDisplay from './AddressDisplay'
 import QrCodeScanner from './QrCodeScanner'
 import { inputTxt } from '../sharedStyles/styles.typography'
-import { KILT_ORANGE_CLR } from '../sharedStyles/styles.consts.colors'
+import { CLR_KILT_0 } from '../sharedStyles/styles.consts.colors'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 
 type Props = {
@@ -63,7 +63,7 @@ class AddContactDialog extends React.Component<Props> {
           spellCheck={false}
           autoCorrect={false}
           style={inputTxt}
-          selectionColor={KILT_ORANGE_CLR}
+          selectionColor={CLR_KILT_0}
         />
         <Dialog.Button onPress={onPressCancel} label="Cancel" />
         <Dialog.Button

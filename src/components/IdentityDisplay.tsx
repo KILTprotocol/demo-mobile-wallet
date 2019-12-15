@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, ViewStyle } from 'react-native'
-import { flexRowCenterLayout } from '../sharedStyles/styles.layout'
+import { flexRowCenter } from '../sharedStyles/styles.layout'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 import AddressDisplay from './AddressDisplay'
 
@@ -16,7 +16,7 @@ const addressWrapper: ViewStyle = {
 const IdentityDisplay: React.FunctionComponent<Props> = ({
   address,
 }): JSX.Element => (
-  <View style={flexRowCenterLayout}>
+  <View style={flexRowCenter}>
     <View style={addressWrapper}>
       <AddressDisplay address={address} />
     </View>

@@ -15,19 +15,20 @@ import KiltButton from '../components/KiltButton'
 import {
   mainViewContainer,
   sectionContainer,
-  flexRowEndLayout,
+  flexRowEnd,
 } from '../sharedStyles/styles.layout'
 import {
   sectionTitleTxt,
   titleInvertedClrTxt,
 } from '../sharedStyles/styles.typography'
-import IdentitySetupStep from '../components/IdentitySetupStep'
+import IdentitySetupSubstep from '../components/IdentitySetupSubstep'
 import { setPublicIdentity, setIdentity } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
 import WithIntroBackground from '../components/WithIntroBackground'
 import { TMapDispatchToProps, TMapStateToProps } from '../_types'
 import { getGenericPassword } from 'react-native-keychain'
 import { saveIdentityAsContactInDemoServices } from '../services/service.demo'
+import { createIdentity } from '../utils/utils.identity'
 
 const STEP_CREATE = 'create'
 const STEP_SAVE = 'save'
@@ -62,9 +63,6 @@ class IdentitySetup extends React.Component<Props, State> {
     },
   }
 
-  // TODOprio move to utility file
-  createIdentity = (mnemonic: string) => Identity.buildFromMnemonic(mnemonic)
-
   componentDidUpdate(prevProps: Props): void {
     const { publicIdentityFromStore } = this.props
     // todo is this useful
@@ -91,8 +89,9 @@ class IdentitySetup extends React.Component<Props, State> {
       setIdentityInStore,
       usernameFromStore,
     } = this.props
+    // todo create strings for route params
     const mnemonic: string = navigation.getParam('mnemonic')
-    const identity = this.createIdentity(mnemonic)
+    const identity = createIdentity(mnemonic)
     const publicIdentity = new PublicIdentity(
       identity.address,
       identity.boxPublicKeyAsHex
@@ -191,7 +190,7 @@ class IdentitySetup extends React.Component<Props, State> {
           <View style={sectionContainer}>
             {Object.entries(stepsDescriptions).map(([name, description]) => (
               <View key={description} style={sectionContainer}>
-                <IdentitySetupStep
+                <IdentitySetupSubstep
                   description={description}
                   status={this.state.stepStatuses[name]}
                 />
@@ -200,7 +199,7 @@ class IdentitySetup extends React.Component<Props, State> {
           </View>
           {/* the button is enabled only if all steps were successful */}
           <View style={sectionContainer}>
-            <View style={flexRowEndLayout}>
+            <View style={flexRowEnd}>
               <KiltButton
                 disabled={isNextBtnDisabled}
                 title="Next >"

@@ -8,7 +8,7 @@ import {
   txtSuccess,
   txtError,
 } from '../sharedStyles/styles.typography'
-import { flexRowLayout } from '../sharedStyles/styles.layout'
+import { flexRow } from '../sharedStyles/styles.layout'
 import { AsyncStatus } from '../_enums'
 import LoadingIndicator from '../components/LoadingIndicator'
 import TxtCentered from './TxtCentered'
@@ -43,11 +43,11 @@ const statusToUiMapping = {
   },
 }
 
-const IdentitySetupStep: React.FunctionComponent<Props> = ({
+const IdentitySetupSubstep: React.FunctionComponent<Props> = ({
   description,
   status,
 }): JSX.Element => (
-  <View style={flexRowLayout}>
+  <View style={flexRow}>
     <View style={iconContainer}>{statusToUiMapping[status].component}</View>
     <Text
       style={[
@@ -60,4 +60,4 @@ const IdentitySetupStep: React.FunctionComponent<Props> = ({
   </View>
 )
 
-export default IdentitySetupStep
+export default IdentitySetupSubstep

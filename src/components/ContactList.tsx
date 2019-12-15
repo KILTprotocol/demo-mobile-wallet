@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, Text, TextStyle, ViewStyle } from 'react-native'
 import {
-  flexRowLayout,
-  flexRowLayoutSpaceBetween,
+  flexRow,
+  flexRowSpaceBetween,
   card,
-  flexRowCenterLayout,
+  flexRowCenter,
 } from '../sharedStyles/styles.layout'
 import { TContact } from '../_types'
 import { bodyTxt } from '../sharedStyles/styles.typography'
@@ -37,7 +37,7 @@ const contactCard: ViewStyle = {
 }
 
 const contactBadge: ViewStyle = {
-  ...flexRowCenterLayout,
+  ...flexRowCenter,
   width: MIN_SIZE_TOUCHABLE,
   height: MIN_SIZE_TOUCHABLE,
   borderRadius: 200,
@@ -51,8 +51,8 @@ export default class ContactList extends React.Component<Props> {
       <>
         {contacts.map((contact: TContact) => (
           <View style={contactCard} key={contact.address}>
-            <View style={flexRowLayoutSpaceBetween}>
-              <View style={flexRowLayout}>
+            <View style={flexRowSpaceBetween}>
+              <View style={flexRow}>
                 <View
                   style={[
                     contactBadge,
