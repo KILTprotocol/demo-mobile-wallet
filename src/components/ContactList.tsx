@@ -8,7 +8,7 @@ import {
 } from '../sharedStyles/styles.layout'
 import { TContact } from '../_types'
 import { bodyTxt } from '../sharedStyles/styles.typography'
-import { TXT_INVERTED_CLR } from '../sharedStyles/styles.consts.colors'
+import { CLR_TXT_INVERTED } from '../sharedStyles/styles.consts.colors'
 import { MIN_SIZE_TOUCHABLE } from '../sharedStyles/styles.consts.touchable'
 import {
   generateConstantColorFromStr,
@@ -25,7 +25,7 @@ const name: TextStyle = {
 }
 
 const badgeTxt: TextStyle = {
-  color: TXT_INVERTED_CLR,
+  color: CLR_TXT_INVERTED,
 }
 
 const contactCard: ViewStyle = {

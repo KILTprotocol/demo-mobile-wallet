@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 import { QRCode } from 'react-native-custom-qr-codes'
-import { KILT_PURPLE_CLR_MEDIUM } from '../sharedStyles/styles.consts.colors'
+import { CLR_KILT_1_DARK } from '../sharedStyles/styles.consts.colors'
 import { flexRowCenter } from '../sharedStyles/styles.layout'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 const kiltLogoSquare = require('../assets/imgs/kiltLogoSquare.jpg')
@@ -18,7 +18,7 @@ const AddressQRCode: React.FunctionComponent<Props> = ({
     <QRCode
       codeStyle="circle"
       content={address}
-      color={KILT_PURPLE_CLR_MEDIUM}
+      color={CLR_KILT_1_DARK}
       size={160}
       logo={kiltLogoSquare}
       logoSize={60}
