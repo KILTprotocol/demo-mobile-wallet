@@ -14,13 +14,13 @@ type Props = {
   status: CredentialStatus
 }
 
-const badgeDefaultStyle: ViewStyle = {
+const badge: ViewStyle = {
   paddingVertical: 2,
   paddingHorizontal: 10,
   borderRadius: 25,
 }
 
-const badgeTxtStyle: TextStyle = {
+const badgeTxt: TextStyle = {
   textTransform: 'uppercase',
   color: TXT_INVERTED_CLR,
   fontSize: TXT_XXS_SIZE,
@@ -58,8 +58,8 @@ const CredentialStatusBadge: React.FunctionComponent<Props> = ({
   status,
 }): JSX.Element => (
   <View style={flexRowLayout}>
-    <View style={[badgeDefaultStyle, statusToUiMapping[status].style]}>
-      <Text style={badgeTxtStyle}>{statusToUiMapping[status].txt}</Text>
+    <View style={[badge, statusToUiMapping[status].style]}>
+      <Text style={badgeTxt}>{statusToUiMapping[status].txt}</Text>
     </View>
   </View>
 )

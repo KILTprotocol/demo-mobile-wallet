@@ -20,11 +20,6 @@ const IdentityDisplay: React.FunctionComponent<Props> = ({
     <View style={addressWrapper}>
       <AddressDisplay address={address} />
     </View>
-    {/* todo use <Identicon
-          value={address}
-          size={size || DEFAULT_SIZE}
-          theme="substrate"
-        /> */}
   </View>
 )
 

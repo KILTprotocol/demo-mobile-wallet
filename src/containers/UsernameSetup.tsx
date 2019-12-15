@@ -39,7 +39,7 @@ type State = {
   username: string
 }
 
-const usernameInputStyle: ViewStyle = {
+const txtInput: ViewStyle = {
   borderWidth: 1,
   borderColor: TXT_INVERTED_LIGHT_CLR_NEUTRAL,
   borderRadius: 8,
@@ -47,7 +47,7 @@ const usernameInputStyle: ViewStyle = {
   paddingHorizontal: 12,
 }
 
-const labelStyle: TextStyle = {
+const labelTxt: TextStyle = {
   color: TXT_LIGHT_CLR_NEUTRAL,
   marginBottom: 6,
 }
@@ -86,9 +86,7 @@ class UsernameSetup extends React.Component<Props, State> {
             </Text>
           </View>
           <View style={sectionContainer}>
-            <Text style={[bodyTxt, labelStyle]}>
-              Your first name (optional)
-            </Text>
+            <Text style={[bodyTxt, labelTxt]}>Your first name (optional)</Text>
             <TextInput
               autoCorrect={false}
               autoFocus
@@ -96,7 +94,7 @@ class UsernameSetup extends React.Component<Props, State> {
               returnKeyType="done"
               selectionColor={KILT_ORANGE_CLR}
               spellCheck={false}
-              style={[bodyTxt, bodyInvertedClrTxt, usernameInputStyle]}
+              style={[bodyTxt, bodyInvertedClrTxt, txtInput]}
             />
           </View>
           <View style={sectionContainer}>

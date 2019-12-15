@@ -28,24 +28,20 @@ const badgeTxt: TextStyle = {
   color: TXT_INVERTED_CLR,
 }
 
-// todo
-// viewstyle vs stylesheet
-// this vs nested styles
-// dont append Style to styles
 const contactCard: ViewStyle = {
+  ...card,
   paddingHorizontal: 16,
   paddingVertical: 12,
-  ...card,
   shadowOpacity: 0.1,
   marginBottom: 8,
 }
 
 const contactBadge: ViewStyle = {
+  ...flexRowCenterLayout,
   width: MIN_SIZE_TOUCHABLE,
   height: MIN_SIZE_TOUCHABLE,
   borderRadius: 200,
   marginRight: 12,
-  ...flexRowCenterLayout,
 }
 
 export default class ContactList extends React.Component<Props> {

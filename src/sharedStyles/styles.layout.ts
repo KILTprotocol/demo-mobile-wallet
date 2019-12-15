@@ -19,6 +19,11 @@ export const fixedHeight: ViewStyle = {
   height: 24,
 }
 
+export const fullWidthAndHeight = {
+  height: '100%',
+  width: '100%',
+}
+
 /* ---------------------------------- */
 /*                Flex                */
 /* ---------------------------------- */
@@ -69,15 +74,6 @@ export const flexRowEndLayout: ViewStyle = {
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'flex-end',
-}
-
-/* ---------------------------------- */
-/*          Image background          */
-/* ---------------------------------- */
-
-export const imgBckgrd = {
-  height: '100%',
-  width: '100%',
 }
 
 /* ---------------------------------- */

@@ -9,7 +9,6 @@ async function saveIdentityAsContactInDemoServices(
   fetch(`${CONTACTS_SERVICE_URL}`, {
     ...BasePostParams,
     body: JSON.stringify({
-      // todo check if crash demo client when username empty; if so should protect against that
       metaData: { name: username },
       publicIdentity,
     }),
