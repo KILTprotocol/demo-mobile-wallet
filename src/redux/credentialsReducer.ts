@@ -10,7 +10,6 @@ const INITIAL_STATE = {
   credentialsMap: <TCredentialMapByHash>{},
 }
 
-// TODO change name of credential, since a credential is only when attested
 export default function credentialsReducer(
   state = INITIAL_STATE,
   action: TAppAction

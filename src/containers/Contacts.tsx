@@ -50,6 +50,20 @@ class Contacts extends React.Component<Props, State> {
     })
   }
 
+  addNewContact(): void {
+    const { addContactInStore, contactsFromStore } = this.props
+    const { newContactAddress, newContactName } = this.state
+    if (
+      // the contact doesn't already exists
+      !contactsFromStore.some(c => c.address === newContactAddress)
+    ) {
+      addContactInStore({
+        name: newContactName,
+        address: newContactAddress,
+      })
+    }
+  }
+
   closeDialog(): void {
     this.setState({ dialogVisible: false })
   }
@@ -60,20 +74,6 @@ class Contacts extends React.Component<Props, State> {
       newContactAddress: '',
       newContactName: '',
     })
-  }
-
-  addNewContact(): void {
-    const { addContactInStore, contactsFromStore } = this.props
-    const { newContactAddress, newContactName } = this.state
-    if (
-      // the contact doesn't already exists
-      contactsFromStore.some(c => c.address === newContactAddress)
-    ) {
-      addContactInStore({
-        name: newContactName,
-        address: newContactAddress,
-      })
-    }
   }
 
   render(): JSX.Element {

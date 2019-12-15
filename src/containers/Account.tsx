@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import { ScrollView, View, Text } from 'react-native'
-import { PublicIdentity, Identity, Balance } from '@kiltprotocol/sdk-js'
+import {
+  PublicIdentity,
+  Identity,
+  Balance,
+  IPublicIdentity,
+} from '@kiltprotocol/sdk-js'
 import { connect } from 'react-redux'
 import {
   mainViewContainer,
@@ -34,7 +39,7 @@ type State = {
   dialogVisible: boolean
   isDialogOkBtnDisabled: boolean
   tokenAmountToTransfer: number
-  tokenRecipientAddress: string
+  tokenRecipientAddress: IPublicIdentity['address']
   transferAsyncStatus: AsyncStatus
 }
 
@@ -96,13 +101,15 @@ class Account extends Component<Props, State> {
     this.setState({ tokenAmountToTransfer })
   }
 
-  setTokenRecipientAddress(tokenRecipientAddress: string): void {
+  setTokenRecipientAddress(
+    tokenRecipientAddress: IPublicIdentity['address']
+  ): void {
     this.setState({ tokenRecipientAddress })
   }
 
   async transferTokens(): Promise<void> {
     // todo refactor nicely
-    // TODOprio bug always transfer one token more......
+    // TODOprio BUG always transfer one token more......
     // todo transfer crashes when user has no tokens
     // todo disable transfer token button when user has no token????
     const { tokenRecipientAddress, tokenAmountToTransfer } = this.state
@@ -194,7 +201,9 @@ class Account extends Component<Props, State> {
             onChangeTokenAmountToTransfer={amount =>
               this.setTokenAmountToTransfer(amount)
             }
-            onTokenRecipientAddressRead={(recipientAddress: string) => {
+            onTokenRecipientAddressRead={(
+              recipientAddress: IPublicIdentity['address']
+            ) => {
               this.setTokenRecipientAddress(recipientAddress)
             }}
             onConfirmTransfer={async () => {

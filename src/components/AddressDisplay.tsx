@@ -9,7 +9,7 @@ type Props = {
   address: IPublicIdentity['address']
 }
 
-const addressStyle: TextStyle = {
+const addressTxt: TextStyle = {
   color: TXT_LIGHT_CLR_NEUTRAL,
   // we use a monospace font to ensure consistent length of the address display
   fontFamily: 'Courier',
@@ -18,7 +18,7 @@ const addressStyle: TextStyle = {
 const AddressDisplay: React.FunctionComponent<Props> = ({
   address,
 }): JSX.Element => (
-  <Text style={[bodyTxt, addressStyle]}>{truncateAddress(address)}</Text>
+  <Text style={[bodyTxt, addressTxt]}>{truncateAddress(address)}</Text>
 )
 
 export default AddressDisplay

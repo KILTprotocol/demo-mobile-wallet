@@ -15,7 +15,7 @@ import { APP_STARTUP, APP, SETUP } from '../_routes'
 import AppTabs from '../components/AppTabs'
 import SetupStack from '../components/SetupStack'
 import AppStartup from '../containers/AppStartup'
-import { imgBckgrd } from '../sharedStyles/styles.layout'
+import { fullWidthAndHeight } from '../sharedStyles/styles.layout'
 import {
   setIdentity,
   resetIdentity,
@@ -93,7 +93,7 @@ class AppWrapped extends React.Component<Props> {
     } = this.props
     // in this case, the identity has just been set up
     if (prevIdentityFromStore !== identityFromStore) {
-      // todoprio Bug: we're disconnected when I request an attestation
+      // todoprio BUG: we're disconnected when I request an attestation
       if (identityFromStore) {
         console.info('[SOCKET] Reconnecting.......')
         await this.connectAndListen()
@@ -236,7 +236,7 @@ class AppWrapped extends React.Component<Props> {
             }}
           />
         ) : (
-          <ImageBackground source={obscuratorSrc} style={imgBckgrd} />
+          <ImageBackground source={obscuratorSrc} style={fullWidthAndHeight} />
         )}
       </>
     )
