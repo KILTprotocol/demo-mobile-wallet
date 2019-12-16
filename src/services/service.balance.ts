@@ -8,7 +8,6 @@ const KILT_MICRO_COIN = 1000000
 
 // TODOprio number vs balance....
 // todo cleanup
-// token initialization??
 
 async function getBalanceRaw(address: IPublicIdentity['address']): Promise<BN> {
   // only OK if connection open

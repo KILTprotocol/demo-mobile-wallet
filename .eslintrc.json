@@ -18,7 +18,8 @@
   },
   "plugins": [
       "@typescript-eslint",
-      "prettier"
+      "prettier",
+      "@react-native-community"
   ],
   "rules": {
       "prettier/prettier": "error",

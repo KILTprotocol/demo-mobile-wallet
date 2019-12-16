@@ -36,12 +36,55 @@ import {
 } from '../_types'
 import CredentialList from '../components/CredentialList'
 import { POLLING_PERIOD_MS } from '../_config'
-import { getSdkIdentityFromStoredIdentity } from '../utils/utils.identity'
+import { fromStoredIdentity } from '../utils/utils.identity'
 import { TMapDispatchToProps, TMapStateToProps } from '../_types'
+import { NAME, BIRTHDAY, PREMIUM } from '../data/claimProperties'
 
 const ctype = require('../data/ctypeMembership.json')
-const claimPpties = Object.keys(ctype.metadata.properties)
-const isName = (ppty: string): boolean => ppty.toLowerCase().includes('name')
+
+const propertiesNames = Object.keys(ctype.schema.properties)
+console.log(propertiesNames)
+
+const claimProperties = propertiesNames.reduce(
+  (acc, c) => [
+    ...acc,
+    {
+      id: c,
+      ...ctype.schema.properties[c],
+    },
+  ],
+  []
+)
+
+// console.log(claimProperties)
+
+// const start = {
+//   name: {
+//     type: 'string',
+//   },
+//   birthday: {
+//     type: 'string',
+//     format: 'date',
+//   },
+//   premium: {
+//     type: 'boolean',
+//   },
+// }
+// const end = [
+//   {
+//     id: 'name',
+//     type: 'string',
+//   },
+//   {
+//     id: 'birthday',
+//     type: 'string',
+//     format: 'date',
+//   },
+//   {
+//     id: 'premium',
+//     type: 'boolean',
+//   },
+// ]
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -54,8 +97,8 @@ type Props = {
 }
 
 type State = {
-  dialogVisible: boolean
   claimContents: object
+  isDialogVisible: boolean
   isDialogOkBtnDisabled: boolean
 }
 
@@ -66,30 +109,32 @@ class Dashboard extends React.Component<Props, State> {
 
   static interval: NodeJS.Timeout
 
-  // for convenience and simplicity in this demo app:
-  // any ppty that looks like name will be filled with the USERNAME stored in the redux store;
-  // ofc this stops working when using a cType with multiple name-like properties
-  claimContentsDefault = claimPpties.reduce((acc, ppty) => {
-    return { ...acc, [ppty]: isName(ppty) ? this.props.usernameFromStore : '' }
-  }, {})
+  claimContentsDefault = {
+    [NAME]: this.props.usernameFromStore,
+    [BIRTHDAY]: Date.now(),
+    [PREMIUM]: true,
+  }
 
   state = {
-    dialogVisible: false,
+    isDialogVisible: false,
     isDialogOkBtnDisabled: true,
-    claimContents: this.claimContentsDefault,
+    claimContents: {
+      [NAME]: this.props.usernameFromStore,
+      [BIRTHDAY]: Date.now(),
+      [PREMIUM]: true,
+    },
   }
 
   areClaimContentsOk(claimContents): boolean {
-    const areAllPptiesPresent =
-      Object.keys(claimContents).length === claimPpties.length
-    const areAllPptiesTruthy = !Object.values(claimContents).some(
-      pptyValue => !pptyValue
+    const areAllClaimPropertiesPresent =
+      Object.keys(claimContents).length === claimProperties.length
+    const areAllClaimPropertiesTruthy = !Object.values(claimContents).some(
+      claimPropertyValue => !claimPropertyValue
     )
-    return areAllPptiesPresent && areAllPptiesTruthy
+    return areAllClaimPropertiesPresent && areAllClaimPropertiesTruthy
   }
 
   // todo reorder methods so that lifecycle hooks are above
-  // const isName = (ppty: string): boolean => ppty.toLowerCase().includes('name')
   componentDidUpdate(): void {
     const { claimContents, isDialogOkBtnDisabled } = this.state
     const areClaimContentsOk = this.areClaimContentsOk(claimContents)
@@ -101,26 +146,50 @@ class Dashboard extends React.Component<Props, State> {
   }
 
   closeDialog(): void {
-    this.setState({ dialogVisible: false })
+    this.setState({ isDialogVisible: false })
   }
 
   openDialog(): void {
-    this.setState({ dialogVisible: true })
+    this.setState({ isDialogVisible: true })
+  }
+
+  // not so cool
+  // todo move
+  formatDateForClaim(inputDate): string {
+    // "2019-02-13"
+    const date = new Date(inputDate)
+    const yy = date.getFullYear()
+    const mm = `${
+      `${date.getMonth() + 1}`.length < 2 ? 0 : ''
+    }${date.getMonth() + 1}`
+    const dd = `${`${date.getDate() + 1}`.length < 2 ? 0 : ''}${date.getDate()}`
+    return `${yy}-${mm}-${dd}`
   }
 
   // TODO function styles
   async createClaimAndRequestAttestation(): Promise<void> {
     const { claimContents } = this.state
+    const formatted = {
+      name: claimContents.name,
+      premium: claimContents.premium,
+      birthday: this.formatDateForClaim(claimContents.birthday),
+    }
+
+    console.log('NOOOOOOOOW SAVING claimContents', formatted)
+    //     "name":"Maud"
+    // "birthday":"2019-09-12"
+    // "premium":true
     const { identityFromStore, addCredentialInStore } = this.props
     try {
       if (identityFromStore) {
         const claim = createMembershipClaim(
-          claimContents as TClaimContents,
+          formatted as TClaimContents,
           identityFromStore
         )
         if (!claim || !identityFromStore) {
           return
         }
+        console.log('requestForAttestation', requestForAttestation)
         const requestForAttestation = createRequestForAttestation(
           claim,
           identityFromStore
@@ -134,9 +203,7 @@ class Dashboard extends React.Component<Props, State> {
             contents: requestForAttestation.claim.contents,
             requestTimestamp: Date.now(),
           })
-          const claimerIdentity = getSdkIdentityFromStoredIdentity(
-            identityFromStore
-          )
+          const claimerIdentity = fromStoredIdentity(identityFromStore)
           sendRequestForAttestation(requestForAttestation, claimerIdentity)
         }
       } else {
@@ -147,10 +214,13 @@ class Dashboard extends React.Component<Props, State> {
     }
   }
 
-  onChangeClaimContentsInputs = (inputValue: string, ppty: string) => {
+  onChangeClaimContentsInputs = (
+    inputValue: string,
+    claimPropertyId: string
+  ) => {
     // claim contents are generated from the input fields, which themselves are generated from the CTYPE json, to be flexible. Changing the CTYPE automatically changes this logics.
     this.setState(state => ({
-      claimContents: { ...state.claimContents, [ppty]: inputValue },
+      claimContents: { ...state.claimContents, [claimPropertyId]: inputValue },
     }))
   }
 
@@ -174,7 +244,7 @@ class Dashboard extends React.Component<Props, State> {
       console.log('[ATTESTATION] Querying hash......')
       const attestation = await Attestation.query(h)
       // todoprio why is the attestation not null?????
-      // todoprio cleanup console.logs
+      // todo cleanup console.logs
       if (
         attestation &&
         attestation.cTypeHash !==
@@ -205,8 +275,7 @@ class Dashboard extends React.Component<Props, State> {
 
   render(): JSX.Element {
     const { credentialsMapFromStore, usernameFromStore } = this.props
-    const { isDialogOkBtnDisabled } = this.state
-    const { dialogVisible } = this.state
+    const { isDialogVisible, isDialogOkBtnDisabled, claimContents } = this.state
     const credentials = Object.values(credentialsMapFromStore)
     return (
       <WithDefaultBackground>
@@ -228,8 +297,9 @@ class Dashboard extends React.Component<Props, State> {
           <CredentialList credentials={credentials || []} />
         </ScrollView>
         <AddClaimDialog
-          visible={dialogVisible}
-          isOkBtnDisabled={isDialogOkBtnDisabled}
+          visible={isDialogVisible}
+          isOkBtnDisabled={false}
+          // isOkBtnDisabled={isDialogOkBtnDisabled}
           onPressCancel={() => this.closeDialog()}
           onPressOK={async () => {
             // todo move to "onpressOK" separate function
@@ -237,12 +307,12 @@ class Dashboard extends React.Component<Props, State> {
             this.closeDialog()
             this.setState({ claimContents: this.claimContentsDefault })
           }}
-          onChangeText={(inputValue, ppty) =>
-            this.onChangeClaimContentsInputs(inputValue, ppty)
-          }
+          onChangeValue={(value, claimPropertyId) => {
+            this.onChangeClaimContentsInputs(value, claimPropertyId)
+          }}
           username={usernameFromStore}
-          claimPpties={claimPpties}
           claimContentsDefault={this.claimContentsDefault}
+          claimContents={claimContents}
         />
       </WithDefaultBackground>
     )

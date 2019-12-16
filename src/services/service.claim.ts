@@ -40,7 +40,7 @@ function sendRequestForAttestation(
   // TODO why phrase, why metaData
   const sender = {
     identity,
-    // TODO add name
+    // TODO remove all unneeded
     metaData: {
       name: '',
     },

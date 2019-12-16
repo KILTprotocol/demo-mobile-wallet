@@ -13,6 +13,7 @@ import { fill, flexRow, card } from '../sharedStyles/styles.layout'
 import { CredentialStatus } from '../_enums'
 import CredentialStatusBadge from './CredentialStatusBadge'
 import { bodyTxt } from '../sharedStyles/styles.typography'
+import { PREMIUM, NAME, BIRTHDAY } from '../data/claimProperties'
 const claimBckgrdPending = require('../assets/imgs/claimBckgrdPending.jpg')
 const claimBckgrdValid = require('../assets/imgs/claimBckgrdValid.jpg')
 const claimBckgrdRevoked = require('../assets/imgs/claimBckgrdRevoked.jpg')
@@ -48,11 +49,11 @@ const credentialCardContent: ViewStyle = {
   padding: 12,
 }
 
-const credentialPpties: ViewStyle = {
+const credentialProperties: ViewStyle = {
   marginTop: 12,
 }
 
-const pptyLabel: TextStyle = {
+const label: TextStyle = {
   marginRight: 12,
   color: CLR_TXT_LIGHT,
   textTransform: 'capitalize',
@@ -70,6 +71,8 @@ const statusToUiMapping = {
   },
 }
 
+const order = [NAME, BIRTHDAY, PREMIUM]
+
 const CredentialCard: React.FunctionComponent<Props> = ({
   title,
   status,
@@ -83,15 +86,18 @@ const CredentialCard: React.FunctionComponent<Props> = ({
       <View style={[credentialCardContent, fill]}>
         <Text style={credentialTitleTxt}>{title}</Text>
         <CredentialStatusBadge status={status} />
-        <View style={credentialPpties}>
-          {/* todoprio fix ppty order display */}
-          {/* todoprio ppty type input type */}
-          {Object.entries(contents).map(([pptyName, pptyValue]) => (
-            <View key={pptyName} style={flexRow}>
-              <Text style={[bodyTxt, pptyLabel]}>{pptyName}</Text>
-              <Text style={bodyTxt}>{pptyValue.toString()}</Text>
-            </View>
-          ))}
+        <View style={credentialProperties}>
+          {[...Object.entries(contents)]
+            .sort(
+              (entryA, entryB) =>
+                order.indexOf(entryA[0]) - order.indexOf(entryB[0])
+            )
+            .map(([propertyName, propertyValue]) => (
+              <View key={propertyName} style={flexRow}>
+                <Text style={[bodyTxt, label]}>{propertyName}</Text>
+                <Text style={bodyTxt}>{propertyValue.toString()}</Text>
+              </View>
+            ))}
         </View>
       </View>
     </ImageBackground>

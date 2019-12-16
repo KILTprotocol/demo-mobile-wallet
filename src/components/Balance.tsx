@@ -23,7 +23,7 @@ const balanceNumber: ViewStyle = {
   marginRight: 2,
 }
 
-// todo prio balance is not reset!!!
+// todo prio balance is not reset!!! also: check OK when request tokens
 const Balance: React.FunctionComponent<Props> = ({ balance }): JSX.Element => (
   <View style={flexRowBaseline}>
     <Text style={[bodyTxt, lTxt, balanceNumber, balance > 0 ? plus : zero]}>
