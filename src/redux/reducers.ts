@@ -17,7 +17,6 @@ const rootReducer = combineReducers({
   lastVisitedRouteReducer,
 })
 
-// TODO define TAppState type, so far issue with combineReducers that nests the properties
 export type TAppState = any
 
 export default rootReducer
