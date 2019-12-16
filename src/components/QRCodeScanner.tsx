@@ -5,11 +5,7 @@ import {
   CLR_BCKGRD_DARK,
   CLR_TXT_INVERTED,
 } from '../sharedStyles/styles.consts.colors'
-import {
-  flexRowWrap,
-  fill,
-  qrCodeScannerContainer,
-} from '../sharedStyles/styles.layout'
+import { flexRowWrap, fill } from '../sharedStyles/styles.layout'
 
 const hintContainer: TextStyle = {
   backgroundColor: CLR_BCKGRD_DARK,
@@ -24,7 +20,10 @@ const hint: TextStyle = {
   color: CLR_TXT_INVERTED,
 }
 
-// todoprio not request microphone
+const qrCodeScannerContainer: ViewStyle = {
+  height: 200,
+}
+
 // todoprio no bioemtric input set up
 type Props = {
   onBarCodeRead: (barcode: any) => void
@@ -40,6 +39,7 @@ const QrCodeScanner: React.FunctionComponent<Props> = ({
         type={RNCamera.Constants.Type.back}
         flashMode={RNCamera.Constants.FlashMode.on}
         onBarCodeRead={barcode => onBarCodeRead(barcode)}
+        captureAudio={false}
       />
       <View style={[hintContainer, flexRowWrap]}>
         <Text style={hint}>Scan a KILT address QR code</Text>
