@@ -23,11 +23,6 @@ export const fill = {
   width: '100%',
 }
 
-// todo move to file
-export const qrCodeScannerContainer: ViewStyle = {
-  height: 200,
-}
-
 /* ---------------------------------- */
 /*                Flex                */
 /* ---------------------------------- */

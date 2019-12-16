@@ -11,14 +11,10 @@ import {
   txtError,
   inputTxt,
 } from '../sharedStyles/styles.typography'
-import {
-  qrCodeScannerContainer,
-  flexRowCenter,
-} from '../sharedStyles/styles.layout'
+import { flexRowCenter } from '../sharedStyles/styles.layout'
 import { disabledButton } from '../sharedStyles/styles.buttons'
 import AddressDisplay from '../components/AddressDisplay'
 import QrCodeScanner from '../components/QrCodeScanner'
-// todo kiltinput
 import { CLR_KILT_0 } from '../sharedStyles/styles.consts.colors'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 

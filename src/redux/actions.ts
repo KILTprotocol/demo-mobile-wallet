@@ -31,11 +31,13 @@ export const setIdentity = (identity: Identity | null): TAppAction => ({
   payload: identity,
 })
 
-// TODO change name of credential (since a credential is only when attested
-// todo rename reset identity to delete in store
-// todo harmonize create vs add in dialog names, action names, reducers, color names, etc
-// todo rename mnemonic dialog
-// TODOprio fix folder structure
+// todo renamings:
+// update vs set in actions.ts
+// reset identity ==> delete in store
+// harmonize create vs add in dialog names, action names, reducers, color names, etc
+// rename mnemonic dialog
+// harmonize add contact vs create contact naming
+// change name of credential (since a credential is only when attested
 
 export const resetIdentity = (): TAppAction => ({
   type: RESET_IDENTITY,
@@ -114,7 +116,6 @@ export const resetUsername = (): TAppAction => ({
 /* ---------------------------------- */
 /*              Route/Nav             */
 /* ---------------------------------- */
-// todo update vs set
 export const updateLastVisitedRoute = (
   lastVisitedRoute: string
 ): TAppAction => ({

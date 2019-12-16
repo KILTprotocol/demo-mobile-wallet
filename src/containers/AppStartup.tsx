@@ -41,10 +41,6 @@ class AppStartup extends React.Component<Props> {
     } = this.props
     // if an identity is already set up, navigate to the regular app
     // if not, navigate to the identity setup screen
-    // todo draw this + flow and architecture
-    // todo document that public id is used as a way to determine whether setup has been done
-    // todo also probably the hide screen should be a dedicated route???
-
     if (
       (publicIdentityFromStore &&
         [DASHBOARD, ACCOUNT, CONTACTS, SETTINGS].includes(

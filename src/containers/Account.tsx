@@ -21,7 +21,7 @@ import AddressQrCode from '../components/AddressQrCode'
 import RequestTokensButton from '../components/RequestTokensButton'
 import { TAppState } from '../redux/reducers'
 import { TMapStateToProps } from '../_types'
-import TokenTransferDialog from '../containers/TokenTransferDialog'
+import TokenTransferDialog from '../components/TokenTransferDialog'
 import KiltButton from '../components/KiltButton'
 import BalanceComp from '../components/Balance'
 import { asMicroKiltCoins } from '../services/service.balance'
@@ -92,7 +92,6 @@ class Account extends Component<Props, State> {
   }
 
   closeDialog(): void {
-    // todo use hooks for dialogs
     this.setState({ isDialogVisible: false })
   }
 
@@ -191,7 +190,6 @@ class Account extends Component<Props, State> {
             isOkBtnDisabled={isDialogOkBtnDisabled}
             tokenRecipientAddress={tokenRecipientAddress}
             onPressCancel={() => {
-              // todo rename to "reset" function
               this.setState({ tokenRecipientAddress: '' })
               this.closeDialog()
             }}
