@@ -16,7 +16,7 @@ export const mainTitleTxt: TextStyle = {
   fontFamily: 'Montserrat-Bold',
   fontSize: TXT_L_SIZE,
   fontWeight: '600',
-  marginBottom: 10,
+  marginBottom: 6,
   color: CLR_TXT_STANDOUT,
   letterSpacing: 2,
   textTransform: 'uppercase',

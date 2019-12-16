@@ -44,7 +44,6 @@ class AppStartup extends React.Component<Props> {
     // todo draw this + flow and architecture
     // todo document that public id is used as a way to determine whether setup has been done
     // todo also probably the hide screen should be a dedicated route???
-    // navigation.navigate(lastVisitedRouteFromStore)
 
     if (
       (publicIdentityFromStore &&

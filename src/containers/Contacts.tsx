@@ -94,7 +94,6 @@ class Contacts extends React.Component<Props, State> {
               />
             </View>
           </View>
-          {/* todo refactor dialogs eg DRY */}
           <View>
             <ContactList contacts={contactsFromStore} />
           </View>

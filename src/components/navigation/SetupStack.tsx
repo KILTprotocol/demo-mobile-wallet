@@ -1,16 +1,16 @@
 import { createStackNavigator } from 'react-navigation-stack'
-import Introduction from './Introduction'
-import MnemonicCreation from '../components/MnemonicCreation'
-import IdentitySetup from '../containers/IdentitySetup'
-import UsernameSetup from '../containers/UsernameSetup'
+import Introduction from './../Introduction'
+import MnemonicCreation from '../../components/MnemonicCreation'
+import IdentitySetup from '../../containers/IdentitySetup'
+import UsernameSetup from '../../containers/UsernameSetup'
 import {
   INTRODUCTION,
   MNEMONIC_CREATION,
   IDENTITY_SETUP,
   USERNAME_SETUP,
-} from '../_routes'
+} from '../../_routes'
 
-export const SetupStack = createStackNavigator({
+const SetupStack = createStackNavigator({
   [INTRODUCTION]: Introduction,
   [USERNAME_SETUP]: UsernameSetup,
   [MNEMONIC_CREATION]: MnemonicCreation,

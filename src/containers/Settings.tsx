@@ -60,8 +60,6 @@ class Settings extends React.Component<Props, null> {
       resetBalanceInStore,
     } = this.props
     // the app is mono-identity so `resetIdentity` means deleting the claims as well
-    // Todo ask user for their thumb!!
-    // todo replace this with a full store reset??
     // reset all
     resetPublicIdentityInStore()
     resetIdentityInStore()
