@@ -45,7 +45,7 @@ type Props = {
 
 class TokenTransferDialog extends React.Component<Props> {
   processTokenAmountToTransfer(tokenAmountToTransfer: string): number {
-    return parseFloat(tokenAmountToTransfer)
+    return Number(tokenAmountToTransfer)
   }
 
   render(): JSX.Element {

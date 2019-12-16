@@ -36,7 +36,6 @@ export const setIdentity = (identity: Identity | null): TAppAction => ({
 // todo harmonize create vs add in dialog names, action names, reducers, color names, etc
 // todo rename mnemonic dialog
 // TODOprio fix folder structure
-// todo draw flow and architecture
 
 export const resetIdentity = (): TAppAction => ({
   type: RESET_IDENTITY,

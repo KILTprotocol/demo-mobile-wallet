@@ -21,6 +21,7 @@ const hint: TextStyle = {
 }
 
 // todoprio not request microphone
+// todoprio no bioemtric input set up
 type Props = {
   onBarCodeRead: (barcode: any) => void
 }

@@ -108,7 +108,7 @@ class Account extends Component<Props, State> {
 
   async transferTokens(): Promise<void> {
     // todo refactor nicely
-    // TODOprio BUG always transfer one token more......
+    // TODOprio balance not updated after request
     const { tokenRecipientAddress, tokenAmountToTransfer } = this.state
     const { identityFromStore } = this.props
     if (identityFromStore && tokenRecipientAddress) {

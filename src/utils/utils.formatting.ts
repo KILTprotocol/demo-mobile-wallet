@@ -36,7 +36,7 @@ const generateConstantColorFromStr = (str: string): string => {
   const sum = str.split('').reduce((acc, c, idx) => {
     return acc + str.charCodeAt(idx)
   }, 0)
-  /* get last digit of the sum (last is arbitrary; we could also take the first, but the last induces more variablity since strings might iften have the same length and similar letters) */
+  /* get last digit of the sum (last is arbitrary; we could also take the first, but the last induces more variablity since strings might have similar length) */
   const lastDigit = parseInt(`${sum}`[`${sum}`.length - 1], 10)
   return COLORS[lastDigit % COLORS.length]
 }

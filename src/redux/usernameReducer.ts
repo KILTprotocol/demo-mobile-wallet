@@ -16,7 +16,9 @@ export default function usernameReducer(
     case SET_USERNAME:
       return {
         ...state,
-        username: action.payload,
+        username: action.payload.trimLeft().trimRight()
+          ? action.payload.trimLeft().trimRight()
+          : usernameDefault,
       }
     case RESET_USERNAME:
       return {

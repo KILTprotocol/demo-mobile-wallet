@@ -11,13 +11,11 @@ type Props = {
   onChangeValue: (inputValue: any, claimPropertyId: string) => void
   visible: boolean
   username: string
-  isOkBtnDisabled: boolean
   claimContentsDefault: any
   claimContents: any
 }
 
 class AddClaimDialog extends React.Component<Props> {
-  // TODOprio set state as relevant apply styles to disabled btn
   // todo change to functional component
   render(): JSX.Element {
     const {
@@ -25,7 +23,6 @@ class AddClaimDialog extends React.Component<Props> {
       onPressCancel,
       onChangeValue,
       visible,
-      isOkBtnDisabled,
       claimContentsDefault,
       claimContents,
     } = this.props
@@ -39,12 +36,7 @@ class AddClaimDialog extends React.Component<Props> {
           onChangeValue={onChangeValue}
         />
         <Dialog.Button onPress={onPressCancel} label="Cancel" />
-        <Dialog.Button
-          onPress={onPressOK}
-          label="Create &  Request"
-          disabled={isOkBtnDisabled}
-          style={isOkBtnDisabled ? disabledButton : {}}
-        />
+        <Dialog.Button onPress={onPressOK} label="Create &  Request" />
       </Dialog.Container>
     )
   }

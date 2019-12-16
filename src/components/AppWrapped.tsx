@@ -97,7 +97,6 @@ class AppWrapped extends React.Component<Props> {
       if (identityFromStore) {
         console.info('[SOCKET] Reconnecting.......')
         await this.connectAndListen()
-
         if (publicIdentityFromStore) {
           const balance = await getBalanceInKiltCoins(
             publicIdentityFromStore.address
@@ -130,7 +129,7 @@ class AppWrapped extends React.Component<Props> {
   }
 
   async connectAndListen(): Promise<void> {
-    // TODO prio bug in token transfer: 1 too much
+    // TODOprio bug in token transfer: 1 too much
     // not reconnecting when app comes back from background!
     // but ok when totally switched off (??)
     const { publicIdentityFromStore } = this.props

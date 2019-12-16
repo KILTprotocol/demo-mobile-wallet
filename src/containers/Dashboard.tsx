@@ -99,7 +99,6 @@ type Props = {
 type State = {
   claimContents: object
   isDialogVisible: boolean
-  isDialogOkBtnDisabled: boolean
 }
 
 class Dashboard extends React.Component<Props, State> {
@@ -117,7 +116,6 @@ class Dashboard extends React.Component<Props, State> {
 
   state = {
     isDialogVisible: false,
-    isDialogOkBtnDisabled: true,
     claimContents: {
       [NAME]: this.props.usernameFromStore,
       [BIRTHDAY]: Date.now(),
@@ -132,17 +130,6 @@ class Dashboard extends React.Component<Props, State> {
       claimPropertyValue => !claimPropertyValue
     )
     return areAllClaimPropertiesPresent && areAllClaimPropertiesTruthy
-  }
-
-  // todo reorder methods so that lifecycle hooks are above
-  componentDidUpdate(): void {
-    const { claimContents, isDialogOkBtnDisabled } = this.state
-    const areClaimContentsOk = this.areClaimContentsOk(claimContents)
-    if (!!areClaimContentsOk !== !isDialogOkBtnDisabled) {
-      this.setState({
-        isDialogOkBtnDisabled: !areClaimContentsOk,
-      })
-    }
   }
 
   closeDialog(): void {
@@ -275,7 +262,7 @@ class Dashboard extends React.Component<Props, State> {
 
   render(): JSX.Element {
     const { credentialsMapFromStore, usernameFromStore } = this.props
-    const { isDialogVisible, isDialogOkBtnDisabled, claimContents } = this.state
+    const { isDialogVisible, claimContents } = this.state
     const credentials = Object.values(credentialsMapFromStore)
     return (
       <WithDefaultBackground>
@@ -298,8 +285,6 @@ class Dashboard extends React.Component<Props, State> {
         </ScrollView>
         <AddClaimDialog
           visible={isDialogVisible}
-          isOkBtnDisabled={false}
-          // isOkBtnDisabled={isDialogOkBtnDisabled}
           onPressCancel={() => this.closeDialog()}
           onPressOK={async () => {
             // todo move to "onpressOK" separate function
