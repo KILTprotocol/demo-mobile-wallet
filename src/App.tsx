@@ -2,7 +2,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { store, persistor } from './redux/store'
-import AppWrapped from './components/AppWrapped'
+import AppWrapped from './containers/AppWrapped'
 
 class App extends React.Component {
   render(): JSX.Element {
