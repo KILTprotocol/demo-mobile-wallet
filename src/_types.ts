@@ -90,7 +90,6 @@ type TUpdateCredentialStatusAction = {
   payload: THashAndClaimStatus
 }
 
-// todo harmonize add contact vs create contact naming
 type TAddContactAction = {
   type: typeof ADD_CONTACT
   payload: TContact
