@@ -142,7 +142,7 @@ class Dashboard extends React.Component<Props, State> {
 
   // not so cool
   // todo move
-  formatDateForClaim(inputDate): string {
+  formatDateForClaim(inputDate: number): string {
     // "2019-02-13"
     const date = new Date(inputDate)
     const yy = date.getFullYear()
@@ -176,7 +176,6 @@ class Dashboard extends React.Component<Props, State> {
         if (!claim || !identityFromStore) {
           return
         }
-        console.log('requestForAttestation', requestForAttestation)
         const requestForAttestation = createRequestForAttestation(
           claim,
           identityFromStore
@@ -205,7 +204,6 @@ class Dashboard extends React.Component<Props, State> {
     inputValue: string,
     claimPropertyId: string
   ) => {
-    // claim contents are generated from the input fields, which themselves are generated from the CTYPE json, to be flexible. Changing the CTYPE automatically changes this logics.
     this.setState(state => ({
       claimContents: { ...state.claimContents, [claimPropertyId]: inputValue },
     }))

@@ -4,10 +4,10 @@ import {
   RequestForAttestation,
   MessageBodyType,
 } from '@kiltprotocol/sdk-js'
-import MessageService from './service.messaging'
 import { ATTESTER_MNEMONIC } from '../_config'
 import { TClaimContents } from '../_types'
 import { fromStoredIdentity } from '../utils/utils.identity'
+import { singleSend } from './service.messaging'
 
 const ATTESTER_IDENTITY = Identity.buildFromMnemonic(ATTESTER_MNEMONIC)
 
@@ -53,7 +53,7 @@ function sendRequestForAttestation(
     publicIdentity: ATTESTER_IDENTITY,
   }
   // TODO async and deal with singleSend's errors
-  MessageService.singleSend(
+  singleSend(
     {
       content: requestForAttestation,
       type: MessageBodyType.REQUEST_ATTESTATION_FOR_CLAIM,

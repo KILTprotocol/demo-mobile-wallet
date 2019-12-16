@@ -41,7 +41,6 @@ class Contacts extends React.Component<Props, State> {
     newContactAddress: '',
     newContactName: '',
   }
-  // todo change name, should not contain plural
   // also: create vs save vs add vs new
 
   setNewContactName(newContactName: string): void {

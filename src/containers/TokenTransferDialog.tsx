@@ -81,13 +81,11 @@ class TokenTransferDialog extends React.Component<Props> {
             {tokenRecipientAddress ? (
               <AddressDisplay address={tokenRecipientAddress} />
             ) : (
-              <View style={qrCodeScannerContainer}>
-                <QrCodeScanner
-                  onBarCodeRead={barcode => {
-                    onTokenRecipientAddressRead(barcode.data)
-                  }}
-                />
-              </View>
+              <QrCodeScanner
+                onBarCodeRead={barcode => {
+                  onTokenRecipientAddressRead(barcode.data)
+                }}
+              />
             )}
           </View>
         </View>

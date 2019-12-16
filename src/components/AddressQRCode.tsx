@@ -10,8 +10,7 @@ type Props = {
   address: IPublicIdentity['address']
 }
 
-// todo rename to Qr (or the other to QR)
-const AddressQRCode: React.FunctionComponent<Props> = ({
+const AddressQrCode: React.FunctionComponent<Props> = ({
   address,
 }): JSX.Element => (
   <View style={flexRowCenter}>
@@ -26,4 +25,4 @@ const AddressQRCode: React.FunctionComponent<Props> = ({
   </View>
 )
 
-export default AddressQRCode
+export default AddressQrCode

@@ -32,14 +32,12 @@ export interface IMessageOutput extends IMessage {
   sender?: IContact
 }
 
-/**
- * as in prototype/services
- */
-// TODO: are IContact and IMyIdentity needed?
+// As in prototype/services
+
 export interface IContact {
   metaData: {
     name: string
-    addedAt?: number // timestamp
+    addedAt?: number
     addedBy?: IMyIdentity['identity']['address']
     unregistered?: boolean
   }
@@ -51,9 +49,6 @@ export interface IContact {
   publicIdentity: PublicIdentity
 }
 
-/**
- * local Identity
- */
 export interface IMyIdentity {
   identity: Identity
   metaData: {
@@ -64,41 +59,36 @@ export interface IMyIdentity {
   createdAt?: number
 }
 
-// TODO class for namespacing vs.
-class MessageService {
-  public static async singleSend(
-    messageBody: MessageBody,
-    sender: IMyIdentity,
-    receiver: IContact
-  ): Promise<any> {
-    try {
-      const message: Message = new Message(
-        messageBody,
-        sender.identity,
-        receiver.publicIdentity
-      )
-      return fetch(`${MESSAGING_SERVICE_URL}`, {
-        ...BasePostParams,
-        body: JSON.stringify(message.getEncryptedMessage()),
+export async function singleSend(
+  messageBody: MessageBody,
+  sender: IMyIdentity,
+  receiver: IContact
+): Promise<any> {
+  try {
+    const message: Message = new Message(
+      messageBody,
+      sender.identity,
+      receiver.publicIdentity
+    )
+    return fetch(`${MESSAGING_SERVICE_URL}`, {
+      ...BasePostParams,
+      body: JSON.stringify(message.getEncryptedMessage()),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.statusText)
+        }
+        return response
       })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(response.statusText)
-          }
-          return response
-        })
-        .then(response => response.json())
-        .then(() => {
-          console.info('[MESSAGE] Message sent')
-        })
-        .catch(error => {
-          console.info(error)
-        })
-    } catch (error) {
-      console.info(error)
-      return Promise.reject()
-    }
+      .then(response => response.json())
+      .then(() => {
+        console.info('[MESSAGE] Message sent')
+      })
+      .catch(error => {
+        console.info(error)
+      })
+  } catch (error) {
+    console.info(error)
+    return Promise.reject()
   }
 }
-
-export default MessageService

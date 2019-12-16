@@ -5,7 +5,11 @@ import {
   CLR_BCKGRD_DARK,
   CLR_TXT_INVERTED,
 } from '../sharedStyles/styles.consts.colors'
-import { flexRowWrap, fill } from '../sharedStyles/styles.layout'
+import {
+  flexRowWrap,
+  fill,
+  qrCodeScannerContainer,
+} from '../sharedStyles/styles.layout'
 
 const hintContainer: TextStyle = {
   backgroundColor: CLR_BCKGRD_DARK,
@@ -29,15 +33,17 @@ type Props = {
 const QrCodeScanner: React.FunctionComponent<Props> = ({
   onBarCodeRead,
 }): JSX.Element => (
-  <View style={fill}>
-    <RNCamera
-      style={fill}
-      type={RNCamera.Constants.Type.back}
-      flashMode={RNCamera.Constants.FlashMode.on}
-      onBarCodeRead={barcode => onBarCodeRead(barcode)}
-    />
-    <View style={[hintContainer, flexRowWrap]}>
-      <Text style={hint}>Scan a KILT address QR code</Text>
+  <View style={qrCodeScannerContainer}>
+    <View style={fill}>
+      <RNCamera
+        style={fill}
+        type={RNCamera.Constants.Type.back}
+        flashMode={RNCamera.Constants.FlashMode.on}
+        onBarCodeRead={barcode => onBarCodeRead(barcode)}
+      />
+      <View style={[hintContainer, flexRowWrap]}>
+        <Text style={hint}>Scan a KILT address QR code</Text>
+      </View>
     </View>
   </View>
 )

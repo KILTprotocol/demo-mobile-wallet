@@ -130,6 +130,7 @@ class AppWrapped extends React.Component<Props> {
 
   async connectAndListen(): Promise<void> {
     // TODOprio bug in token transfer: 1 too much
+    // TODOprio react airbnb setup
     // not reconnecting when app comes back from background!
     // but ok when totally switched off (??)
     const { publicIdentityFromStore } = this.props

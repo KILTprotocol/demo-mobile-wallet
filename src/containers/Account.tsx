@@ -17,7 +17,7 @@ import {
   sectionTitleTxt,
 } from '../sharedStyles/styles.typography'
 import IdentityDisplay from '../components/IdentityDisplay'
-import AddressQRCode from '../components/AddressQRCode'
+import AddressQrCode from '../components/AddressQrCode'
 import RequestTokensButton from '../components/RequestTokensButton'
 import { TAppState } from '../redux/reducers'
 import { TMapStateToProps } from '../_types'
@@ -166,7 +166,7 @@ class Account extends Component<Props, State> {
             <Text style={sectionTitleTxt}>My address</Text>
             {address && (
               <>
-                <AddressQRCode address={address} />
+                <AddressQrCode address={address} />
                 <IdentityDisplay address={address} />
               </>
             )}
