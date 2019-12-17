@@ -26,6 +26,9 @@ import {
   createMembershipClaim,
   createRequestForAttestation,
   sendRequestForAttestation,
+  queryAttestationByHash,
+  checkAttestationExistsOnChain,
+  formatDateForClaim,
 } from '../services/service.claim'
 import { addCredential, updateCredentialStatus } from '../redux/actions'
 import {
@@ -43,7 +46,6 @@ import { NAME, BIRTHDAY, PREMIUM } from '../data/claimProperties'
 const ctype = require('../data/ctypeMembership.json')
 
 const propertiesNames = Object.keys(ctype.schema.properties)
-console.log(propertiesNames)
 
 const claimProperties = propertiesNames.reduce(
   (acc, c) => [
@@ -55,8 +57,6 @@ const claimProperties = propertiesNames.reduce(
   ],
   []
 )
-
-// console.log(claimProperties)
 
 // const start = {
 //   name: {
@@ -123,7 +123,7 @@ class Dashboard extends React.Component<Props, State> {
     },
   }
 
-  areClaimContentsOk(claimContents): boolean {
+  areClaimContentsOk(claimContents: any): boolean {
     const areAllClaimPropertiesPresent =
       Object.keys(claimContents).length === claimProperties.length
     const areAllClaimPropertiesTruthy = !Object.values(claimContents).some(
@@ -140,37 +140,19 @@ class Dashboard extends React.Component<Props, State> {
     this.setState({ isDialogVisible: true })
   }
 
-  // not so cool
-  // todo move
-  formatDateForClaim(inputDate: number): string {
-    // "2019-02-13"
-    const date = new Date(inputDate)
-    const yy = date.getFullYear()
-    const mm = `${
-      `${date.getMonth() + 1}`.length < 2 ? 0 : ''
-    }${date.getMonth() + 1}`
-    const dd = `${`${date.getDate() + 1}`.length < 2 ? 0 : ''}${date.getDate()}`
-    return `${yy}-${mm}-${dd}`
-  }
-
-  // TODO function styles
   async createClaimAndRequestAttestation(): Promise<void> {
     const { claimContents } = this.state
-    const formatted = {
+    const formattedClaimContents = {
       name: claimContents.name,
       premium: claimContents.premium,
-      birthday: this.formatDateForClaim(claimContents.birthday),
+      birthday: formatDateForClaim(claimContents.birthday),
     }
 
-    console.log('NOOOOOOOOW SAVING claimContents', formatted)
-    //     "name":"Maud"
-    // "birthday":"2019-09-12"
-    // "premium":true
     const { identityFromStore, addCredentialInStore } = this.props
     try {
       if (identityFromStore) {
         const claim = createMembershipClaim(
-          formatted as TClaimContents,
+          formattedClaimContents as TClaimContents,
           identityFromStore
         )
         if (!claim || !identityFromStore) {
@@ -190,13 +172,16 @@ class Dashboard extends React.Component<Props, State> {
             requestTimestamp: Date.now(),
           })
           const claimerIdentity = fromStoredIdentity(identityFromStore)
-          sendRequestForAttestation(requestForAttestation, claimerIdentity)
+          await sendRequestForAttestation(
+            requestForAttestation,
+            claimerIdentity
+          )
         }
       } else {
-        console.info('No identity found')
+        console.info('[CREATE REQUEST] No identity found')
       }
     } catch (error) {
-      console.info('OK', error)
+      console.info('[CREATE REQUEST] Error:', error)
     }
   }
 
@@ -215,7 +200,6 @@ class Dashboard extends React.Component<Props, State> {
       this.queryChainAndUpdateCredentialsInStore,
       POLLING_PERIOD_MS
     )
-    // TODO: long poll, static vs not, async function subscribe()... ????
   }
 
   queryChainAndUpdateCredentialsInStore = async () => {
@@ -224,18 +208,11 @@ class Dashboard extends React.Component<Props, State> {
       updateCredentialStatusInStore,
     } = this.props
     const claimHashes = Object.keys(credentialsMapFromStore)
-    console.log(`${claimHashes.length} hashes to query`)
     claimHashes.forEach(async h => {
-      console.log('[ATTESTATION] Querying hash......')
-      const attestation = await Attestation.query(h)
-      // todoprio why is the attestation not null?????
-      // todo cleanup console.logs
-      if (
-        attestation &&
-        attestation.cTypeHash !==
-          '0x0000000000000000000000000000000000000000000000000000000000000000'
-      ) {
-        console.log(
+      console.info('[ATTESTATION] Querying hash...')
+      const attestation = await queryAttestationByHash(h)
+      if (checkAttestationExistsOnChain(attestation)) {
+        console.info(
           '[ATTESTATION] OK found on chain with not 0 ctype hash',
           attestation
         )
@@ -247,9 +224,10 @@ class Dashboard extends React.Component<Props, State> {
         }
         updateCredentialStatusInStore(hashAndStatus)
       } else {
-        console.log('[ATTESTATION] Not found on chain aka PENDING', attestation)
-        // state should remain pending
-        // .... maybe log an error here
+        console.info(
+          '[ATTESTATION] Not found on chain aka PENDING',
+          attestation
+        )
       }
     })
   }
@@ -285,7 +263,6 @@ class Dashboard extends React.Component<Props, State> {
           visible={isDialogVisible}
           onPressCancel={() => this.closeDialog()}
           onPressOK={async () => {
-            // todo move to "onpressOK" separate function
             await this.createClaimAndRequestAttestation()
             this.closeDialog()
             this.setState({ claimContents: this.claimContentsDefault })

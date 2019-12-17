@@ -3,6 +3,7 @@ import {
   Identity,
   RequestForAttestation,
   MessageBodyType,
+  Attestation,
 } from '@kiltprotocol/sdk-js'
 import { ATTESTER_MNEMONIC } from '../_config'
 import { TClaimContents } from '../_types'
@@ -33,14 +34,12 @@ function createRequestForAttestation(
   return null
 }
 
-function sendRequestForAttestation(
+async function sendRequestForAttestation(
   requestForAttestation: RequestForAttestation,
   identity: Identity
-): void {
-  // TODO why phrase, why metaData
+): Promise<void> {
   const sender = {
     identity,
-    // TODO remove all unneeded
     metaData: {
       name: '',
     },
@@ -52,8 +51,7 @@ function sendRequestForAttestation(
     },
     publicIdentity: ATTESTER_IDENTITY,
   }
-  // TODO async and deal with singleSend's errors
-  singleSend(
+  await singleSend(
     {
       content: requestForAttestation,
       type: MessageBodyType.REQUEST_ATTESTATION_FOR_CLAIM,
@@ -63,8 +61,38 @@ function sendRequestForAttestation(
   )
 }
 
+async function queryAttestationByHash(
+  hash: string
+): Promise<Attestation | null> {
+  const attestation = await Attestation.query(hash)
+  return attestation
+}
+
+function checkAttestationExistsOnChain(
+  attestation: Attestation | null
+): boolean {
+  return attestation
+    ? // workaround
+      attestation.cTypeHash !==
+        '0x0000000000000000000000000000000000000000000000000000000000000000'
+    : false
+}
+
+// date --> "2019-02-13" (YYYY-MM-DD)
+function formatDateForClaim(inputDate: number): string {
+  const date = new Date(inputDate)
+  const yy = date.getFullYear()
+  const mm = `${`${date.getMonth() + 1}`.length < 2 ? 0 : ''}${date.getMonth() +
+    1}`
+  const dd = `${`${date.getDate() + 1}`.length < 2 ? 0 : ''}${date.getDate()}`
+  return `${yy}-${mm}-${dd}`
+}
+
 export {
   createMembershipClaim,
   createRequestForAttestation,
+  formatDateForClaim,
   sendRequestForAttestation,
+  queryAttestationByHash,
+  checkAttestationExistsOnChain,
 }
