@@ -105,15 +105,13 @@ class Account extends Component<Props, State> {
   }
 
   async transferTokens(): Promise<void> {
-    // todo refactor nicely
-    // TODOprio balance not updated after request
     const { tokenRecipientAddress, tokenAmountToTransfer } = this.state
     const { identityFromStore } = this.props
     if (identityFromStore && tokenRecipientAddress) {
       this.setState({ transferAsyncStatus: AsyncStatus.Pending })
       const transferAmount = asMicroKiltCoins(tokenAmountToTransfer)
       console.info(
-        `[TRANSFER] Starting transfer of ${tokenAmountToTransfer} (${transferAmount})...`
+        `[TRANSFER] Transferring ${tokenAmountToTransfer} (${transferAmount})...`
       )
       try {
         console.info('[TRANSFER] Trying transfer...')
@@ -124,8 +122,8 @@ class Account extends Component<Props, State> {
         )
         this.setState({ transferAsyncStatus: AsyncStatus.Success })
       } catch (error) {
-        console.info(`[TRANSFER] Blockchain error: ${error}`)
         this.setState({ transferAsyncStatus: AsyncStatus.Error })
+        console.info(`[TRANSFER] Blockchain error: ${error}`)
       }
     } else {
       this.setState({ transferAsyncStatus: AsyncStatus.Error })
