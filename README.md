@@ -4,10 +4,9 @@
 
 [Specs for the S, M and L versions](https://docs.google.com/document/d/14gR8-lnnevRxU5TQ6pHAxvqktfOA6wGutgXmPFcFCTM/edit#)
 
-## Demo setup
+## Demo flow
 
-If you'd like to demo the attestation part of tehe flow via the demo-client, you'll need to create a new identity in the demo-client **with the following mnemonic**:
-
+If you'd like to demo the attestation part of the flow via the demo-client, you'll need to create a new identity in the demo-client **with the following mnemonic**:
 `daring able century salute oxygen purse hub boat dry three core opera`
 
 ## Stack & Tools
@@ -23,7 +22,7 @@ Utilities such as prettier, eslint and commit linting are set up.
 - `brew install cocoapods`
 - Clone and set up locally the [kilt-cli](https://github.com/KILTprotocol/kilt-cli/blob/master/kilt-cli.ts). This will be used as an attestation service.
 
-### How to run
+### Run on a simulator
 
 - Clone the project
 - `yarn install` or `yarn` (please do use yarn)
