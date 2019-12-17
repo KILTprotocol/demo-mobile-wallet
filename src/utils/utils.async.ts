@@ -1,14 +1,17 @@
-const DEFAULT_DELAY = 800
+const DEFAULT_TIMEOUT = 800
 
 // used for UI, to prevent rendering flashes
 async function callWithDelay<T>(
   func: (...args: any[]) => T,
   params: any[] = [],
-  delay = DEFAULT_DELAY
+  timeout = DEFAULT_TIMEOUT
 ): Promise<T> {
   return new Promise(resolve =>
-    setTimeout(() => resolve(func(...params)), delay)
+    setTimeout(() => resolve(func(...params)), timeout)
   )
 }
 
-export { callWithDelay }
+const delay = (timeout: number): Promise<any> =>
+  new Promise(resolve => setTimeout(resolve, timeout))
+
+export { callWithDelay, delay }

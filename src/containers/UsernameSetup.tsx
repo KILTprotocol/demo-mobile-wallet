@@ -71,7 +71,6 @@ class UsernameSetup extends React.Component<Props, State> {
   saveUsernameAndNavigateNext(): void {
     const { navigation, setUsernameInStore } = this.props
     const { username } = this.state
-    // todo then
     setUsernameInStore(username)
     navigation.navigate(MNEMONIC_CREATION)
   }
