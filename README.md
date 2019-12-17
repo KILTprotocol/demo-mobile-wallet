@@ -26,12 +26,16 @@ However, feel free to open issues if you note that something is off.
 
 ## Specifications
 
-- Supported devices: iPhone 8 or later model (tested until iPhone X). Note that on the iPhone X, FaceID is not supported yet so the passcode is used. **Tested on ioS only. Not tested on Android.** 
+- Supported devices: iPhone 8 or later model (tested until iPhone X). Note that on the iPhone X, FaceID is not supported yet so the passcode is used. **Tested on iOS only. Not tested on Android.** 
 - Prerequisites: A passcode or TouchID should be set up on your device.
 
 ## Demo flow
+
 You can demo the mobile wallet as a claimer, and use the demo-client to demo the attester.
 [Here's an example of a demo flow.](https://github.com/KILTprotocol/demo-mobile-wallet/blob/master/docs/Demo%20Flow.md)
+
+Alternatively, if you don't want to use the demo-client and if you do have access to the [KILT CLI](https://github.com/KILTprotocol/kilt-cli) (internal use only), you can run the automatic attestation service:
+  `npx ts-node kilt-cli.ts --ctype "0x4edaa5b8eea2e071dfe48724f6789d6741c1ce0e0f4466079a1d78ef0c02aea2" --seed <mnemonic> --timeout 1`
 
 ## Stack & Tools
 
@@ -53,6 +57,7 @@ Note that we're also using [rn-nodeify](https://www.npmjs.com/package/rn-nodeify
 - Clone the project
 - `yarn install` or `yarn` (please do use yarn)
 - In the `iOS` folder, run `pod install`
+- You might need to adapt `src/_config.ts` if you're runnning some services or the chain locally
 
 ### Run on an iPhone (recommended dev setup)
 
@@ -67,8 +72,6 @@ Note that we're also using [rn-nodeify](https://www.npmjs.com/package/rn-nodeify
   - You should see `Loading dependency graph, done.` at some point
   - In the second terminal, run `react-native run-ios`
   - The iPhone simulator should open automatically and your app should run
-- Start the automatic attestation service (kilt-cli):
-  `npx ts-node kilt-cli.ts --ctype "0x4edaa5b8eea2e071dfe48724f6789d6741c1ce0e0f4466079a1d78ef0c02aea2" --seed <mnemonic> --timeout 1`
 
 ### Debug
 
