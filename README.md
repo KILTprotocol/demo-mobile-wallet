@@ -1,3 +1,8 @@
+<p align="center">
+<img width="220" src="https://user-images.githubusercontent.com/9762897/67468312-9176b700-f64a-11e9-8d88-1441380a71f6.jpg">  
+  <div align="center"><sup><a href="kilt.io">kilt.io</a></sup></div> 
+</p>
+
 # KILT Demo Mobile Wallet (Sporran)
 
 ## Specifications
@@ -6,7 +11,7 @@
 
 ## Disclaimer
 
-This app was designed to demo the core feature set of KILT. We don't recommend using it in production and it is a Eork In Progress. 
+This app was designed to demo the core feature set of KILT. We don't recommend using it in production and it is a Work In Progress. 
 However feel free to open issues if you note that something is off.
 
 ## Demo flow
