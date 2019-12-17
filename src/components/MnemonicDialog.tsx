@@ -1,6 +1,8 @@
 import React from 'react'
 import Dialog from 'react-native-dialog'
-import { dialogContainer } from '../sharedStyles/styles.dialog'
+import { Text, View } from 'react-native'
+import { dialogContainer, dialogSection } from '../sharedStyles/styles.dialog'
+import { bodyTxt } from '../sharedStyles/styles.typography'
 
 type Props = {
   onPressCancel: () => void
@@ -15,10 +17,12 @@ const MnemonicDialog: React.FunctionComponent<Props> = ({
 }): JSX.Element => (
   <Dialog.Container visible={visible} style={dialogContainer}>
     <Dialog.Title>Already wrote it down?</Dialog.Title>
-    <Dialog.Description>
-      This is important! Your identity phrase (seed) will help you recover your
-      KILT coins if you lose your wallet.
-    </Dialog.Description>
+    <View style={dialogSection}>
+      <Text style={bodyTxt}>
+        This is important! Your identity phrase (seed) will help you recover
+        your KILT coins if you lose your wallet.
+      </Text>
+    </View>
     <Dialog.Button onPress={onPressCancel} label="Cancel" />
     <Dialog.Button onPress={onPressOK} label="Yes, Continue" />
   </Dialog.Container>

@@ -28,7 +28,7 @@ const Balance: React.FunctionComponent<Props> = ({ balance }): JSX.Element => (
     <Text style={[bodyTxt, lTxt, balanceNumber, balance > 0 ? plus : zero]}>
       {balance}
     </Text>
-    <Text style={[bodyTxt]}> KILT Coins</Text>
+    <Text style={bodyTxt}> KILT Coins</Text>
   </View>
 )
 
