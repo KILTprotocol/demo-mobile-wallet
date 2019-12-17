@@ -4,9 +4,6 @@ import { updateBalance } from '../redux/actions'
 import { store } from '../redux/store'
 
 const KILT_MICRO_COIN = 1000000
-// TODOprio credentials encryption
-
-// TODOprio number vs balance cleanup
 
 async function getBalanceRaw(address: IPublicIdentity['address']): Promise<BN> {
   // only OK if connection open

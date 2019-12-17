@@ -10,8 +10,8 @@ import {
 import { TXT_S_SIZE } from '../sharedStyles/styles.consts.typography'
 import { CLR_TXT, CLR_TXT_LIGHT } from '../sharedStyles/styles.consts.colors'
 import { fill, flexRow, card } from '../sharedStyles/styles.layout'
-import { CredentialStatus } from '../_enums'
-import CredentialStatusBadge from './CredentialStatusBadge'
+import { ClaimStatus } from '../_enums'
+import ClaimStatusBadge from './ClaimStatusBadge'
 import { bodyTxt } from '../sharedStyles/styles.typography'
 import { PREMIUM, NAME, BIRTHDAY } from '../data/claimProperties'
 const claimBckgrdPending = require('../assets/imgs/claimBckgrdPending.jpg')
@@ -20,11 +20,11 @@ const claimBckgrdRevoked = require('../assets/imgs/claimBckgrdRevoked.jpg')
 
 type Props = {
   title: string
-  status: CredentialStatus
+  status: ClaimStatus
   contents: object
 }
 
-const credentialTitleTxt: TextStyle = {
+const titleTxt: TextStyle = {
   fontFamily: 'Montserrat-Bold',
   fontSize: TXT_S_SIZE,
   fontWeight: '600',
@@ -34,7 +34,7 @@ const credentialTitleTxt: TextStyle = {
   color: CLR_TXT,
 }
 
-const credentialCard: ViewStyle = {
+const claimCard: ViewStyle = {
   height: 200,
   borderRadius: 10,
   ...card,
@@ -45,11 +45,11 @@ const bordered: ImageStyle = {
   borderRadius: 10,
 }
 
-const credentialCardContent: ViewStyle = {
+const cardContent: ViewStyle = {
   padding: 12,
 }
 
-const credentialProperties: ViewStyle = {
+const claimProperties: ViewStyle = {
   marginTop: 12,
 }
 
@@ -60,33 +60,33 @@ const label: TextStyle = {
 }
 
 const statusToUiMapping = {
-  [CredentialStatus.AttestationPending]: {
+  [ClaimStatus.AttestationPending]: {
     imgSrc: claimBckgrdPending,
   },
-  [CredentialStatus.Valid]: {
+  [ClaimStatus.Valid]: {
     imgSrc: claimBckgrdValid,
   },
-  [CredentialStatus.Revoked]: {
+  [ClaimStatus.Revoked]: {
     imgSrc: claimBckgrdRevoked,
   },
 }
 
 const order = [NAME, BIRTHDAY, PREMIUM]
 
-const CredentialCard: React.FunctionComponent<Props> = ({
+const ClaimCard: React.FunctionComponent<Props> = ({
   title,
   status,
   contents,
 }): JSX.Element => (
-  <View style={credentialCard}>
+  <View style={claimCard}>
     <ImageBackground
       source={statusToUiMapping[status].imgSrc}
       style={fill}
       imageStyle={bordered}>
-      <View style={[credentialCardContent, fill]}>
-        <Text style={credentialTitleTxt}>{title}</Text>
-        <CredentialStatusBadge status={status} />
-        <View style={credentialProperties}>
+      <View style={[cardContent, fill]}>
+        <Text style={titleTxt}>{title}</Text>
+        <ClaimStatusBadge status={status} />
+        <View style={claimProperties}>
           {[...Object.entries(contents)]
             .sort(
               (entryA, entryB) =>
@@ -104,4 +104,4 @@ const CredentialCard: React.FunctionComponent<Props> = ({
   </View>
 )
 
-export default CredentialCard
+export default ClaimCard

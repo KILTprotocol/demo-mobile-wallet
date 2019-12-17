@@ -21,7 +21,7 @@ import { APP_STARTUP } from '../_routes'
 import {
   resetBalance,
   resetIdentity,
-  deleteAllCredentials,
+  deleteAllClaims,
   resetPublicIdentity,
   deleteAllContacts,
 } from '../redux/actions'
@@ -36,7 +36,7 @@ type Props = {
   resetIdentityInStore: typeof resetIdentity
   resetBalanceInStore: typeof resetBalance
   resetPublicIdentityInStore: typeof resetPublicIdentity
-  deleteAllCredentialsInStore: typeof deleteAllCredentials
+  deleteAllClaimsInStore: typeof deleteAllClaims
   deleteAllContactsInStore: typeof deleteAllContacts
 }
 
@@ -55,7 +55,7 @@ class Settings extends React.Component<Props, null> {
     const {
       resetPublicIdentityInStore,
       resetIdentityInStore,
-      deleteAllCredentialsInStore,
+      deleteAllClaimsInStore,
       deleteAllContactsInStore,
       resetBalanceInStore,
     } = this.props
@@ -64,12 +64,12 @@ class Settings extends React.Component<Props, null> {
     resetPublicIdentityInStore()
     resetIdentityInStore()
     resetBalanceInStore()
-    deleteAllCredentialsInStore()
+    deleteAllClaimsInStore()
     deleteAllContactsInStore()
   }
 
   render(): JSX.Element {
-    const { deleteAllCredentialsInStore, deleteAllContactsInStore } = this.props
+    const { deleteAllClaimsInStore, deleteAllContactsInStore } = this.props
     return (
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>
@@ -80,7 +80,7 @@ class Settings extends React.Component<Props, null> {
             <View style={flexRowCenter}>
               <KiltButton
                 onPress={() => {
-                  deleteAllCredentialsInStore()
+                  deleteAllClaimsInStore()
                 }}
                 title="✕ Delete all credentials from this wallet"
                 type={ButtonType.Danger}
@@ -128,8 +128,8 @@ const mapDispatchToProps = (
     resetPublicIdentityInStore: () => {
       dispatch(resetPublicIdentity())
     },
-    deleteAllCredentialsInStore: () => {
-      dispatch(deleteAllCredentials())
+    deleteAllClaimsInStore: () => {
+      dispatch(deleteAllClaims())
     },
     deleteAllContactsInStore: () => {
       dispatch(deleteAllContacts())

@@ -112,7 +112,6 @@ class AppRoot extends React.Component<Props> {
   }
 
   async connectAndListen(): Promise<void> {
-    // TODOprio bug in token transfer: 1 too much
     const { publicIdentityFromStore } = this.props
     if (publicIdentityFromStore) {
       console.info('[SOCKET] Connecting and listening...')

@@ -7,11 +7,11 @@ export const SET_PUBLIC_IDENTITY = 'SET_PUBLIC_IDENTITY'
 export const RESET_PUBLIC_IDENTITY = 'RESET_PUBLIC_IDENTITY'
 
 /* ---------------------------------- */
-/*             Credentials            */
+/*             Claims            */
 /* ---------------------------------- */
-export const ADD_CREDENTIAL = 'ADD_CREDENTIAL'
-export const DELETE_ALL_CREDENTIALS = 'DELETE_ALL_CREDENTIALS'
-export const UPDATE_CREDENTIAL_STATUS = 'UPDATE_CREDENTIAL_STATUS'
+export const ADD_CLAIM = 'ADD_CLAIM'
+export const DELETE_ALL_CLAIMS = 'DELETE_ALL_CLAIMS'
+export const UPDATE_CLAIM_STATUS = 'UPDATE_CLAIM_STATUS'
 
 /* ---------------------------------- */
 /*              Contacts              */

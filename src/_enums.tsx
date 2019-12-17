@@ -9,7 +9,7 @@ export enum AsyncStatus {
   Error,
 }
 
-export enum CredentialStatus {
+export enum ClaimStatus {
   Valid,
   Revoked,
   AttestationPending,
