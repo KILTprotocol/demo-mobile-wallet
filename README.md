@@ -5,16 +5,20 @@
 
 # KILT Demo Mobile Wallet (Sporran)
 
+## About
 _The sporran (/ˈspɒrən/; Scottish Gaelic for "purse"), a traditional part of Scottish Highland dress, is a pouch that performs the same function as pockets on the pocketless kilt. Made of leather or fur, the sporran serves as a **wallet** for any other necessary personal items._ (Source: https://en.wikipedia.org/wiki/Sporran)
 
-## Specifications
-- Supported devices: iPhone 8 or later model (tested until iPhone X). Note that on the iPhone X, FaceID is not supported yet so the passcode is used. **Not tested on Android.** 
-- Prerequisites: A passcode or TouchID should be set up on your device.
+**Sporran** is the demo mobile wallet for a KILT Claimer. A claimer can use Sporran to create claims, request attestations, add contacts and transfer KILT Tokens.
 
 ## Disclaimer
 
-This app was designed to demo the core feature set of KILT. We don't recommend using it in production and it is a Work In Progress. 
-However feel free to open issues if you note that something is off.
+⚠️ This app was designed to demo the core feature set of KILT. We don't recommend using it in production and it is a Work In Progress. 
+However, feel free to open issues if you note that something is off.
+
+## Specifications
+
+- Supported devices: iPhone 8 or later model (tested until iPhone X). Note that on the iPhone X, FaceID is not supported yet so the passcode is used. **Not tested on Android.** 
+- Prerequisites: A passcode or TouchID should be set up on your device.
 
 ## Demo flow
 
@@ -24,8 +28,9 @@ If you'd like to demo the attestation part of the flow via the demo-client, you'
 ## Stack & Tools
 
 This project is built with react-native and is written in TypeScript.
-
 Utilities such as prettier, eslint and commit linting are set up.
+
+For storage and state management, we combine [redux-persist](https://github.com/rt2zz/redux-persist) with [react-native-keychain](https://github.com/oblador/react-native-keychain) (for encrypted data).
 
 ## Dev setup
 
