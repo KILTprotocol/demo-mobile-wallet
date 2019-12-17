@@ -5,6 +5,8 @@
 
 # KILT Demo Mobile Wallet (Sporran)
 
+_The sporran (/ˈspɒrən/; Scottish Gaelic for "purse"), a traditional part of Scottish Highland dress, is a pouch that performs the same function as pockets on the pocketless kilt. Made of leather or fur, the sporran serves as a **wallet** for any other necessary personal items._ (Source: https://en.wikipedia.org/wiki/Sporran)
+
 ## Specifications
 - Supported devices: iPhone 8 or later model (tested until iPhone X). Note that on the iPhone X, FaceID is not supported yet so the passcode is used. **Not tested on Android.** 
 - Prerequisites: A passcode or TouchID should be set up on your device.
