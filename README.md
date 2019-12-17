@@ -29,7 +29,7 @@ However, feel free to open issues if you note that something is off.
 - Supported devices: iPhone 8 or later model (tested until iPhone X). Note that on the iPhone X, FaceID is not supported yet so the passcode is used. **Not tested on Android.** 
 - Prerequisites: A passcode or TouchID should be set up on your device.
 
-### Demo flow
+## Demo flow
 You can demo the mobile wallet as a claimer, and use the demo-client to demo the attester.
 [Here's an example of a demo flow.](https://github.com/KILTprotocol/demo-mobile-wallet/blob/master/docs/Demo%20Flow.md)
 
