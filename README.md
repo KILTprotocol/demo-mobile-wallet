@@ -10,7 +10,9 @@ _The sporran (/ˈspɒrən/; Scottish Gaelic for "purse"), a traditional part of 
 
 **Sporran** is the demo mobile wallet for a KILT Claimer. A claimer can use Sporran to create claims, request attestations, add contacts and transfer KILT Tokens.
 
-![File](https://user-images.githubusercontent.com/9762897/71015282-9d837000-20f3-11ea-88a8-16c39a74f10a.jpg)
+<p align="center">
+<img width="300" src="https://user-images.githubusercontent.com/9762897/71015282-9d837000-20f3-11ea-88a8-16c39a74f10a.jpg">  
+</p>
 
 ## Disclaimer
 
