@@ -1,6 +1,6 @@
 <p align="center">
 <img width="220" src="https://user-images.githubusercontent.com/9762897/67468312-9176b700-f64a-11e9-8d88-1441380a71f6.jpg">  
-  <div align="center"><sup><a href="kilt.io">kilt.io</a></sup></div> 
+  <div align="center"><sup><a href="https://kilt.io">kilt.io</a></sup></div> 
 </p>
 
 # KILT Demo Mobile Wallet (Sporran)
