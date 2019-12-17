@@ -1,8 +1,13 @@
-# KILT Demo Mobile Wallet
+# KILT Demo Mobile Wallet (Sporran)
 
 ## Specifications
+- Supported devices: iPhone 8 or later model (tested until iPhone X). Note that on the iPhone X, FaceID is not supported yet so the passcode is used. **Not tested on Android.** 
+- Prerequisites: A passcode or TouchID should be set up on your device.
 
-[Specs for the S, M and L versions](https://docs.google.com/document/d/14gR8-lnnevRxU5TQ6pHAxvqktfOA6wGutgXmPFcFCTM/edit#)
+## Disclaimer
+
+This app was designed to demo the core feature set of KILT. We don't recommend using it in production and it is a Eork In Progress. 
+However feel free to open issues if you note that something is off.
 
 ## Demo flow
 
