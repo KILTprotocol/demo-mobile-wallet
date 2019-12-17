@@ -3,7 +3,7 @@
 ## Preparation steps
 
 * 📱in the mobile app: make sure you're connected to WLAN / data network
-* 💻on demo.kilt.io: 
+* 💻on [demo.kilt.io](https://demo.kilt.io/dashboard): 
   * create a new identity
   * request tokens for it
   * paste its mnemonic into `_config.ts` as `ATTESTER_MNEMONIC`; this is the Attester.
