@@ -61,7 +61,7 @@ class TokenTransferDialog extends React.Component<Props> {
         <Dialog.Input
           autoFocus
           keyboardType="decimal-pad"
-          label="Amount to transfer (in KILT tokens):"
+          label="Amount to transfer in KILT tokens (transaction cost = 1 Token):"
           returnKeyType="done"
           selectionColor={CLR_KILT_0}
           style={inputTxt}
