@@ -29,14 +29,11 @@ import { TMapDispatchToProps, TMapStateToProps } from '../_types'
 import { getGenericPassword } from 'react-native-keychain'
 import { saveIdentityAsContactInDemoServices } from '../services/service.demo'
 import { createIdentity } from '../utils/utils.identity'
-
-const STEP_CREATE = 'create'
-const STEP_SAVE = 'save'
-const STEP_SECURE = 'secure'
+import { MNEMONIC } from '../_routeParameters'
+import { delay } from '../utils/utils.async'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
-  stepsDescriptions: object
   identityFromStore: Identity | null
   setIdentityInStore: typeof setIdentity
   publicIdentityFromStore: PublicIdentity | null
@@ -46,7 +43,35 @@ type Props = {
 
 type State = {
   isNextBtnDisabled: boolean
-  stepStatuses: object
+  stepStatuses: AsyncStatus[]
+}
+
+const STEPS_DESCRIPTIONS = [
+  'Creating your identity',
+  'Saving your identity',
+  'Securing your wallet: identify yourself',
+]
+
+const STEP_DURATION_MS = 1100
+const BUFFER_MS = 100
+
+const getStateForIdx = (idx: number, stepIdx: number): AsyncStatus => {
+  if (idx === stepIdx) {
+    return AsyncStatus.Pending
+  } else if (idx < stepIdx) {
+    return AsyncStatus.Success
+  } else {
+    return AsyncStatus.NotStarted
+  }
+}
+
+const getStateForStepIdx = (stepIdx: number): AsyncStatus[] =>
+  [...Array(3).keys()].map(k => getStateForIdx(k, stepIdx))
+
+const delayAndCall = (idx, cb): Promise<void> => {
+  return delay(BUFFER_MS * (idx < 0 ? 1 : 0) + STEP_DURATION_MS).then(() =>
+    cb()
+  )
 }
 
 class IdentitySetup extends React.Component<Props, State> {
@@ -56,29 +81,20 @@ class IdentitySetup extends React.Component<Props, State> {
 
   state = {
     isNextBtnDisabled: true,
-    stepStatuses: {
-      [STEP_CREATE]: AsyncStatus.NotStarted,
-      [STEP_SAVE]: AsyncStatus.NotStarted,
-      [STEP_SECURE]: AsyncStatus.NotStarted,
-    },
+    stepStatuses: getStateForStepIdx(-1),
   }
 
   componentDidUpdate(prevProps: Props): void {
     const { publicIdentityFromStore } = this.props
-    // todo is this useful
     if (
       prevProps.publicIdentityFromStore !== publicIdentityFromStore &&
       publicIdentityFromStore !== null
     ) {
-      this.setState(prevState => ({
-        ...prevState,
-        stepStatuses: {
-          [STEP_CREATE]: AsyncStatus.Success,
-          [STEP_SAVE]: AsyncStatus.Success,
-          [STEP_SECURE]: AsyncStatus.Success,
-        },
+      this.setState({
+        stepStatuses: getStateForStepIdx(3),
+        // the button is enabled only if all steps were successful
         isNextBtnDisabled: false,
-      }))
+      })
     }
   }
 
@@ -89,96 +105,62 @@ class IdentitySetup extends React.Component<Props, State> {
       setIdentityInStore,
       usernameFromStore,
     } = this.props
-    // todo create strings for route params
-    const mnemonic: string = navigation.getParam('mnemonic')
+    const mnemonic: string = navigation.getParam(MNEMONIC)
     const identity = createIdentity(mnemonic)
     const publicIdentity = new PublicIdentity(
       identity.address,
       identity.boxPublicKeyAsHex
     )
 
-    // todo refactor
-    const STEP_DURATION_MS = 1000
-    const BUFFER_MS = 200
-
     if (identity && publicIdentity) {
-      setTimeout(() => {
-        this.setState(prevState => ({
-          ...prevState,
-          stepStatuses: {
-            [STEP_CREATE]: AsyncStatus.Pending,
-            [STEP_SAVE]: AsyncStatus.NotStarted,
-            [STEP_SECURE]: AsyncStatus.NotStarted,
-          },
-        }))
-      }, BUFFER_MS)
+      await delayAndCall(0, () =>
+        this.setState({
+          stepStatuses: getStateForStepIdx(0),
+        })
+      )
+      await delayAndCall(1, () =>
+        this.setState({
+          stepStatuses: getStateForStepIdx(1),
+        })
+      )
+      await delayAndCall(2, () =>
+        this.setState({
+          stepStatuses: getStateForStepIdx(2),
+        })
+      )
 
-      setTimeout(() => {
-        this.setState(prevState => ({
-          ...prevState,
-          stepStatuses: {
-            [STEP_CREATE]: AsyncStatus.Success,
-            [STEP_SAVE]: AsyncStatus.Pending,
-            [STEP_SECURE]: AsyncStatus.NotStarted,
-          },
-        }))
-      }, STEP_DURATION_MS)
-
-      setTimeout(() => {
-        this.setState(prevState => ({
-          ...prevState,
-          stepStatuses: {
-            [STEP_CREATE]: AsyncStatus.Success,
-            [STEP_SAVE]: AsyncStatus.Success,
-            [STEP_SECURE]: AsyncStatus.Pending,
-          },
-        }))
-      }, 2 * STEP_DURATION_MS)
-
-      // TODO: handle error cases
-      // TODO move to utility file
-      // TODO separate these into their own functions
-      // TODO use const "identity" for this
-
-      setTimeout(async () => {
-        // todoprio move to separate file (utility)
+      await delayAndCall(3, async () => {
+        // todoprio move to separate file (utility) and use const "identity"
         await Keychain.setGenericPassword(
           'identity',
           JSON.stringify(identity),
           {
-            accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_ANY,
+            accessControl: Keychain.ACCESS_CONTROL.USER_PRESENCE,
             accessible: Keychain.ACCESSIBLE.WHEN_PASSCODE_SET_THIS_DEVICE_ONLY,
+            authenticationPrompt: 'Identity',
+            authenticationType:
+              Keychain.AUTHENTICATION_TYPE.DEVICE_PASSCODE_OR_BIOMETRICS,
           }
         )
 
         const identityWrapper = await getGenericPassword()
         if (identityWrapper) {
+          setPublicIdentityInStore(publicIdentity)
           // decrypt identity
           const identityDecrypted = JSON.parse(identityWrapper.password)
           setIdentityInStore(identityDecrypted)
         }
-        // todo async?
-        setPublicIdentityInStore(publicIdentity)
-        this.setState(prevState => ({
-          ...prevState,
-          stepStatuses: {
-            [STEP_CREATE]: AsyncStatus.Success,
-            [STEP_SAVE]: AsyncStatus.Success,
-            [STEP_SECURE]: AsyncStatus.Success,
-          },
-        }))
-        /* Not strictly needed for the demo wallet but it makes demo setup easier.
-        Because we're using the demo client app to attest and revoke, 
-        the claimer needs to be known in the contact services
-        (according to the logics in the demo client) */
-        saveIdentityAsContactInDemoServices(publicIdentity, usernameFromStore)
-      }, 3 * STEP_DURATION_MS + BUFFER_MS)
+        await saveIdentityAsContactInDemoServices(
+          publicIdentity,
+          usernameFromStore
+        )
+      })
     }
   }
 
   render(): React.ReactNode {
-    const { navigation, stepsDescriptions } = this.props
-    const { isNextBtnDisabled } = this.state
+    const { navigation } = this.props
+    const { isNextBtnDisabled, stepStatuses } = this.state
     return (
       <WithIntroBackground>
         <View style={mainViewContainer}>
@@ -188,16 +170,15 @@ class IdentitySetup extends React.Component<Props, State> {
             </Text>
           </View>
           <View style={sectionContainer}>
-            {Object.entries(stepsDescriptions).map(([name, description]) => (
-              <View key={description} style={sectionContainer}>
+            {STEPS_DESCRIPTIONS.map((description, idx) => (
+              <View key={description.substring(0, 4)} style={sectionContainer}>
                 <IdentitySetupSubstep
                   description={description}
-                  status={this.state.stepStatuses[name]}
+                  status={stepStatuses[idx]}
                 />
               </View>
             ))}
           </View>
-          {/* the button is enabled only if all steps were successful */}
           <View style={sectionContainer}>
             <View style={flexRowEnd}>
               <KiltButton
@@ -211,14 +192,6 @@ class IdentitySetup extends React.Component<Props, State> {
       </WithIntroBackground>
     )
   }
-}
-
-IdentitySetup.defaultProps = {
-  stepsDescriptions: {
-    [STEP_CREATE]: 'Creating your identity',
-    [STEP_SAVE]: 'Saving your identity',
-    [STEP_SECURE]: 'Securing your wallet: identify yourself',
-  },
 }
 
 const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => {
