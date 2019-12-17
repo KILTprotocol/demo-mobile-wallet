@@ -43,7 +43,7 @@ Utilities such as prettier, eslint and commit linting are set up.
 - Connect your phone to your laptop, you should see your device displayed as a target in XCode
 - Hit "launch" in XCode
 
-### How to debug
+### Debug
 
 - Visit http://localhost:8081/debugger-ui/
 - Open the console
