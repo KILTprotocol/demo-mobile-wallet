@@ -9,9 +9,9 @@
 _The sporran (/ˈspɒrən/; Scottish Gaelic for "purse"), a traditional part of Scottish Highland dress, is a pouch that performs the same function as pockets on the pocketless kilt. Made of leather or fur, the sporran serves as a **wallet** for any other necessary personal items._ ([Source](https://en.wikipedia.org/wiki/Sporran))
 
 **Sporran** is the demo mobile wallet for a KILT Claimer. A claimer can use Sporran to:
-* Create an idenity and store it encrypted on the device;
+* Create an identity and store it encrypted on the device;
 * Create claims;
-* Request attestations; 
+* Request attestations for these claims; 
 * Add contacts by scanning their address as a QRCode;
 * Transfer KILT Tokens.
 
@@ -26,7 +26,7 @@ However, feel free to open issues if you note that something is off.
 
 ## Specifications
 
-- Supported devices: iPhone 8 or later model (tested until iPhone X). Note that on the iPhone X, FaceID is not supported yet so the passcode is used. **Not tested on Android.** 
+- Supported devices: iPhone 8 or later model (tested until iPhone X). Note that on the iPhone X, FaceID is not supported yet so the passcode is used. **Tested on ioS only. Not tested on Android.** 
 - Prerequisites: A passcode or TouchID should be set up on your device.
 
 ## Demo flow
