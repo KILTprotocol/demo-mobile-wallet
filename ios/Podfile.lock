@@ -235,7 +235,7 @@ PODS:
     - React
   - RNGestureHandler (1.4.1):
     - React
-  - RNKeychain (4.0.1):
+  - RNKeychain (4.0.4):
     - React
   - RNPermissions (2.0.3):
     - React
@@ -408,7 +408,7 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 60a80e72d95bf02a01cace55d3697d9724f0d77f
   RNDateTimePicker: 9db00606d689f5653f08aa601c81b9d3266a0a19
   RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
-  RNKeychain: 45dbd50d1ac4bd42c3740f76ffb135abf05746d0
+  RNKeychain: 79cfca6cd5030bbabcd1a2c009531b84e358116d
   RNPermissions: 9e437a90de84a5402ff689d4da233730b81556c2
   RNReanimated: 6abbbae2e5e72609d85aabd92a982a94566885f1
   RNScreens: f28b48b8345f2f5f39ed6195518291515032a788
