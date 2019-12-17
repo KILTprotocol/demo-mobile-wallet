@@ -7,11 +7,11 @@ import {
   CLR_CLAIM_REVOKED,
   CLR_TXT_INVERTED,
 } from '../sharedStyles/styles.consts.colors'
-import { CredentialStatus } from '../_enums'
+import { ClaimStatus } from '../_enums'
 import { TXT_XXS_SIZE } from '../sharedStyles/styles.consts.typography'
 
 type Props = {
-  status: CredentialStatus
+  status: ClaimStatus
 }
 
 const badge: ViewStyle = {
@@ -40,21 +40,21 @@ const txtStyles = StyleSheet.create({
 })
 
 const statusToUiMapping = {
-  [CredentialStatus.AttestationPending]: {
+  [ClaimStatus.AttestationPending]: {
     txt: 'pending',
     style: txtStyles.pending,
   },
-  [CredentialStatus.Valid]: {
+  [ClaimStatus.Valid]: {
     txt: 'valid',
     style: txtStyles.valid,
   },
-  [CredentialStatus.Revoked]: {
+  [ClaimStatus.Revoked]: {
     txt: 'revoked',
     style: txtStyles.revoked,
   },
 }
 
-const CredentialStatusBadge: React.FunctionComponent<Props> = ({
+const ClaimStatusBadge: React.FunctionComponent<Props> = ({
   status,
 }): JSX.Element => (
   <View style={flexRow}>
@@ -64,4 +64,4 @@ const CredentialStatusBadge: React.FunctionComponent<Props> = ({
   </View>
 )
 
-export default CredentialStatusBadge
+export default ClaimStatusBadge

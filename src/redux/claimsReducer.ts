@@ -1,48 +1,48 @@
 import {
-  ADD_CREDENTIAL,
-  DELETE_ALL_CREDENTIALS,
-  UPDATE_CREDENTIAL_STATUS,
+  ADD_CLAIM,
+  DELETE_ALL_CLAIMS,
+  UPDATE_CLAIM_STATUS,
 } from './actionTypes'
-import { TAppAction, TCredentialMapByHash } from '../_types'
+import { TAppAction, TClaimMapByHash } from '../_types'
 import { TAppState } from './reducers'
 
 const INITIAL_STATE = {
-  credentialsMap: <TCredentialMapByHash>{},
+  claimsMap: <TClaimMapByHash>{},
 }
 
-export default function credentialsReducer(
+export default function claimsReducer(
   state = INITIAL_STATE,
   action: TAppAction
 ): TAppState {
   switch (action.type) {
-    case ADD_CREDENTIAL:
+    case ADD_CLAIM:
       return {
         ...state,
-        credentialsMap: {
-          ...state.credentialsMap,
+        claimsMap: {
+          ...state.claimsMap,
           [action.payload.hash]: action.payload,
         },
       }
-    case DELETE_ALL_CREDENTIALS:
+    case DELETE_ALL_CLAIMS:
       return {
         ...state,
-        credentialsMap: {},
+        claimsMap: {},
       }
-    case UPDATE_CREDENTIAL_STATUS:
+    case UPDATE_CLAIM_STATUS:
       console.info(
-        '[CREDENTIAL REDUCER] Updating credential status:',
+        '[CLAIM REDUCER] Updating credential status:',
         action.payload.hash
       )
       const { hash: claimHash, status: claimStatus } = action.payload
-      const credentialToUpdate = state.credentialsMap[claimHash]
+      const claimToUpdate = state.claimsMap[claimHash]
       return {
         ...state,
-        credentialsMap: {
-          ...state.credentialsMap,
+        claimsMap: {
+          ...state.claimsMap,
           // only update the credential if a relevant update msg is sent
-          ...(credentialToUpdate && {
+          ...(claimToUpdate && {
             [claimHash]: {
-              ...credentialToUpdate,
+              ...claimToUpdate,
               status: claimStatus,
             },
           }),

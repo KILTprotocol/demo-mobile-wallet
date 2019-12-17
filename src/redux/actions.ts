@@ -2,9 +2,9 @@ import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
 import {
   RESET_IDENTITY,
   SET_IDENTITY,
-  ADD_CREDENTIAL,
-  DELETE_ALL_CREDENTIALS,
-  UPDATE_CREDENTIAL_STATUS,
+  ADD_CLAIM,
+  DELETE_ALL_CLAIMS,
+  UPDATE_CLAIM_STATUS,
   SET_PUBLIC_IDENTITY,
   RESET_PUBLIC_IDENTITY,
   ADD_CONTACT,
@@ -16,12 +16,7 @@ import {
   RESET_LAST_VISITED_ROUTE,
   UPDATE_LAST_VISITED_ROUTE,
 } from './actionTypes'
-import {
-  TAppAction,
-  TCredential,
-  THashAndClaimStatus,
-  TContact,
-} from '../_types'
+import { TAppAction, TClaim, THashAndClaimStatus, TContact } from '../_types'
 
 /* ---------------------------------- */
 /*              Identity              */
@@ -47,23 +42,23 @@ export const resetPublicIdentity = (): TAppAction => ({
 })
 
 /* ---------------------------------- */
-/*             Credentials            */
+/*             Claims            */
 /* ---------------------------------- */
 
-export const addCredential = (credential: TCredential): TAppAction => ({
-  type: ADD_CREDENTIAL,
-  payload: credential,
+export const addClaim = (claim: TClaim): TAppAction => ({
+  type: ADD_CLAIM,
+  payload: claim,
 })
 
-export const updateCredentialStatus = (
+export const updateClaimStatus = (
   statusAndHash: THashAndClaimStatus
 ): TAppAction => ({
-  type: UPDATE_CREDENTIAL_STATUS,
+  type: UPDATE_CLAIM_STATUS,
   payload: statusAndHash,
 })
 
-export const deleteAllCredentials = (): TAppAction => ({
-  type: DELETE_ALL_CREDENTIALS,
+export const deleteAllClaims = (): TAppAction => ({
+  type: DELETE_ALL_CLAIMS,
 })
 
 /* ---------------------------------- */

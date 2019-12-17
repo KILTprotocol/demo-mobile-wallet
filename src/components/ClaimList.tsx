@@ -1,26 +1,26 @@
 import React from 'react'
 import { View } from 'react-native'
 import { sectionContainer } from '../sharedStyles/styles.layout'
-import CredentialCard from './CredentialCard'
-import { TCredential } from '../_types'
+import ClaimCard from './ClaimCard'
+import { TClaim } from '../_types'
 
 type Props = {
-  credentials: TCredential[]
+  claims: TClaim[]
 }
 
-export default class CredentialList extends React.Component<Props> {
+export default class ClaimList extends React.Component<Props> {
   render(): JSX.Element {
-    const { credentials } = this.props
+    const { claims } = this.props
     return (
       <View>
-        {/* sort credentials by creation date, newest on top */}
+        {/* sort claims by creation date, newest on top */}
         {[
-          ...credentials.sort((claimA, claimB) =>
+          ...claims.sort((claimA, claimB) =>
             claimA.requestTimestamp > claimB.requestTimestamp ? -1 : 1
           ),
-        ].map((cred: TCredential) => (
+        ].map((cred: TClaim) => (
           <View style={sectionContainer} key={cred.hash}>
-            <CredentialCard
+            <ClaimCard
               title={cred.title}
               status={cred.status}
               contents={cred.contents}

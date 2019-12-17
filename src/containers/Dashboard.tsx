@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from 'react-navigation'
 import { TAppState } from '../redux/reducers'
-import { CredentialStatus } from '../_enums'
+import { ClaimStatus } from '../_enums'
 import KiltButton from '../components/KiltButton'
 import {
   mainViewContainer,
@@ -30,14 +30,14 @@ import {
   checkAttestationExistsOnChain,
   formatDateForClaim,
 } from '../services/service.claim'
-import { addCredential, updateCredentialStatus } from '../redux/actions'
+import { addClaim, updateClaimStatus } from '../redux/actions'
 import {
-  TCredential,
+  TClaim,
   THashAndClaimStatus,
   TClaimContents,
-  TCredentialMapByHash,
+  TClaimMapByHash,
 } from '../_types'
-import CredentialList from '../components/CredentialList'
+import ClaimList from '../components/ClaimList'
 import { POLLING_PERIOD_MS } from '../_config'
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { TMapDispatchToProps, TMapStateToProps } from '../_types'
@@ -90,9 +90,9 @@ type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   identityFromStore: Identity | null
   publicIdentityFromStore: PublicIdentity | null
-  credentialsMapFromStore: TCredentialMapByHash
-  addCredentialInStore: typeof addCredential
-  updateCredentialStatusInStore: typeof updateCredentialStatus
+  claimsMapFromStore: TClaimMapByHash
+  addClaimInStore: typeof addClaim
+  updateClaimStatusInStore: typeof updateClaimStatus
   usernameFromStore: string
 }
 
@@ -148,7 +148,7 @@ class Dashboard extends React.Component<Props, State> {
       birthday: formatDateForClaim(claimContents.birthday),
     }
 
-    const { identityFromStore, addCredentialInStore } = this.props
+    const { identityFromStore, addClaimInStore } = this.props
     try {
       if (identityFromStore) {
         const claim = createMembershipClaim(
@@ -163,11 +163,11 @@ class Dashboard extends React.Component<Props, State> {
           identityFromStore
         )
         if (requestForAttestation) {
-          addCredentialInStore({
+          addClaimInStore({
             title: 'Membership Card',
             hash: requestForAttestation.hash,
             cTypeHash: requestForAttestation.ctypeHash.hash,
-            status: CredentialStatus.AttestationPending,
+            status: ClaimStatus.AttestationPending,
             contents: requestForAttestation.claim.contents,
             requestTimestamp: Date.now(),
           })
@@ -197,17 +197,14 @@ class Dashboard extends React.Component<Props, State> {
   async componentDidMount(): Promise<void> {
     // polling for new messages
     Dashboard.interval = setInterval(
-      this.queryChainAndUpdateCredentialsInStore,
+      this.queryChainAndUpdateClaimsInStore,
       POLLING_PERIOD_MS
     )
   }
 
-  queryChainAndUpdateCredentialsInStore = async () => {
-    const {
-      credentialsMapFromStore,
-      updateCredentialStatusInStore,
-    } = this.props
-    const claimHashes = Object.keys(credentialsMapFromStore)
+  queryChainAndUpdateClaimsInStore = async () => {
+    const { claimsMapFromStore, updateClaimStatusInStore } = this.props
+    const claimHashes = Object.keys(claimsMapFromStore)
     claimHashes.forEach(async h => {
       console.info('[ATTESTATION] Querying hash...')
       const attestation = await queryAttestationByHash(h)
@@ -218,11 +215,9 @@ class Dashboard extends React.Component<Props, State> {
         )
         const hashAndStatus = {
           hash: h,
-          status: attestation.revoked
-            ? CredentialStatus.Revoked
-            : CredentialStatus.Valid,
+          status: attestation.revoked ? ClaimStatus.Revoked : ClaimStatus.Valid,
         }
-        updateCredentialStatusInStore(hashAndStatus)
+        updateClaimStatusInStore(hashAndStatus)
       } else {
         console.info(
           '[ATTESTATION] Not found on chain aka PENDING',
@@ -237,9 +232,9 @@ class Dashboard extends React.Component<Props, State> {
   }
 
   render(): JSX.Element {
-    const { credentialsMapFromStore, usernameFromStore } = this.props
+    const { claimsMapFromStore, usernameFromStore } = this.props
     const { isDialogVisible, claimContents } = this.state
-    const credentials = Object.values(credentialsMapFromStore)
+    const claims = Object.values(claimsMapFromStore)
     return (
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>
@@ -248,7 +243,7 @@ class Dashboard extends React.Component<Props, State> {
           </View>
           <View style={sectionContainer}>
             <Text style={sectionTitleTxt}>
-              My credentials ({credentials.length})
+              My credentials ({claims.length})
             </Text>
             <KiltButton
               title="＋ Request membership card"
@@ -257,7 +252,7 @@ class Dashboard extends React.Component<Props, State> {
               }}
             />
           </View>
-          <CredentialList credentials={credentials || []} />
+          <ClaimList claims={claims || []} />
         </ScrollView>
         <AddClaimDialog
           visible={isDialogVisible}
@@ -282,7 +277,7 @@ class Dashboard extends React.Component<Props, State> {
 const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
   identityFromStore: state.identityReducer.identity,
   publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
-  credentialsMapFromStore: state.credentialsReducer.credentialsMap,
+  claimsMapFromStore: state.claimsReducer.claimsMap,
   usernameFromStore: state.usernameReducer.username,
 })
 
@@ -290,11 +285,11 @@ const mapDispatchToProps = (
   dispatch: Dispatch
 ): Partial<TMapDispatchToProps> => {
   return {
-    addCredentialInStore: (credential: TCredential) => {
-      dispatch(addCredential(credential))
+    addClaimInStore: (claim: TClaim) => {
+      dispatch(addClaim(claim))
     },
-    updateCredentialStatusInStore: (hashAndStatus: THashAndClaimStatus) => {
-      dispatch(updateCredentialStatus(hashAndStatus))
+    updateClaimStatusInStore: (hashAndStatus: THashAndClaimStatus) => {
+      dispatch(updateClaimStatus(hashAndStatus))
     },
   }
 }

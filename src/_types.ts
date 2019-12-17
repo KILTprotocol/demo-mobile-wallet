@@ -2,9 +2,9 @@ import { Identity, PublicIdentity, IPublicIdentity } from '@kiltprotocol/sdk-js'
 import {
   SET_IDENTITY,
   RESET_IDENTITY,
-  ADD_CREDENTIAL,
-  DELETE_ALL_CREDENTIALS,
-  UPDATE_CREDENTIAL_STATUS,
+  ADD_CLAIM,
+  DELETE_ALL_CLAIMS,
+  UPDATE_CLAIM_STATUS,
   RESET_PUBLIC_IDENTITY,
   SET_PUBLIC_IDENTITY,
   ADD_CONTACT,
@@ -16,23 +16,24 @@ import {
   RESET_LAST_VISITED_ROUTE,
   UPDATE_LAST_VISITED_ROUTE,
 } from './redux/actionTypes'
-import { CredentialStatus } from './_enums'
+import { ClaimStatus } from './_enums'
 
 /* ---------------------------------- */
-/*         Claims, Credentials        */
+/*               Claims               */
 /* ---------------------------------- */
 
-export type TCredential = {
+// This is NOT an SDK-like Claim type. TClaim is a hybrid of Claim and AttestedClaim; it's a claim that has a status.
+export type TClaim = {
   title: string
   contents: object
   hash: string
   cTypeHash: string
-  status: CredentialStatus
+  status: ClaimStatus
   requestTimestamp: number
 }
 
 export type THashAndClaimStatus = {
-  status: CredentialStatus
+  status: ClaimStatus
   hash: string
 }
 
@@ -42,7 +43,7 @@ export type TClaimContents = {
   type: string
 }
 
-export type TCredentialMapByHash = { [key: string]: TCredential }
+export type TClaimMapByHash = { [key: string]: TClaim }
 
 /* ---------------------------------- */
 /*              Contacts              */
@@ -75,17 +76,17 @@ type TResetPublicIdentityAction = {
   type: typeof RESET_PUBLIC_IDENTITY
 }
 
-type TAddCredentialAction = {
-  type: typeof ADD_CREDENTIAL
-  payload: TCredential
+type TAddClaimAction = {
+  type: typeof ADD_CLAIM
+  payload: TClaim
 }
 
-type TDeleteAllCredentialsAction = {
-  type: typeof DELETE_ALL_CREDENTIALS
+type TDeleteAllClaimsAction = {
+  type: typeof DELETE_ALL_CLAIMS
 }
 
-type TUpdateCredentialStatusAction = {
-  type: typeof UPDATE_CREDENTIAL_STATUS
+type TUpdateClaimStatusAction = {
+  type: typeof UPDATE_CLAIM_STATUS
   // payload = status and hash
   payload: THashAndClaimStatus
 }
@@ -131,9 +132,9 @@ export type TAppAction =
   | TResetIdentityAction
   | TSetPublicIdentityAction
   | TResetPublicIdentityAction
-  | TAddCredentialAction
-  | TDeleteAllCredentialsAction
-  | TUpdateCredentialStatusAction
+  | TAddClaimAction
+  | TDeleteAllClaimsAction
+  | TUpdateClaimStatusAction
   | TAddContactAction
   | TDeleteAllContactsAction
   | TUpdateBalanceAction
@@ -149,13 +150,13 @@ export type TAppAction =
 /* ---------------------------------- */
 
 export type TMapDispatchToProps = {
-  addCredentialInStore: (credential: TCredential) => void
-  updateCredentialStatusInStore: (hashAndStatus: THashAndClaimStatus) => void
+  addClaimInStore: (claim: TClaim) => void
+  updateClaimStatusInStore: (hashAndStatus: THashAndClaimStatus) => void
   resetIdentityInStore: () => void
   setIdentityInStore: (identity: Identity) => void
   setPublicIdentityInStore: (publicIdentity: PublicIdentity) => void
   resetPublicIdentityInStore: () => void
-  deleteAllCredentialsInStore: () => void
+  deleteAllClaimsInStore: () => void
   addContactInStore: (contact: TContact) => void
   deleteAllContactsInStore: () => void
   updateBalanceInStore: (balance: number) => void
@@ -168,7 +169,7 @@ export type TMapStateToProps = {
   balanceFromStore: number
   identityFromStore: Identity
   publicIdentityFromStore: PublicIdentity
-  credentialsMapFromStore: TCredentialMapByHash
+  claimsMapFromStore: TClaimMapByHash
   usernameFromStore: string
   lastVisitedRouteFromStore: string
 }
