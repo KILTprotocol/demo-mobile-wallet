@@ -30,10 +30,14 @@ You can demo the mobile wallet as a claimer, and use the demo-client to demo the
 
 ## Stack & Tools
 
-This project is built with react-native and is written in TypeScript.
+This project is built with react-native and is written in **TypeScript**; it's detached from Expo.
 Utilities such as prettier, eslint and commit linting are set up.
 
-For storage and state management, we combine [redux-persist](https://github.com/rt2zz/redux-persist) with [react-native-keychain](https://github.com/oblador/react-native-keychain) (for encrypted data).
+For **storage and state management**, we combine [redux-persist](https://github.com/rt2zz/redux-persist) with [react-native-keychain](https://github.com/oblador/react-native-keychain) (for encrypted data).
+
+The wallet uses the [KILT SDK](https://github.com/KILTprotocol/sdk-js).
+
+Note that we're also using [rn-nodeify](https://www.npmjs.com/package/rn-nodeify) (see `postinstall` step in `package.json`) in order to be able to use Crypto features as secondary dependencies of the KILT SDK.
 
 ## Dev setup
 
