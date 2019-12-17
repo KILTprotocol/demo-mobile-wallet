@@ -6,9 +6,11 @@
 # KILT Demo Mobile Wallet (Sporran)
 
 ## About
-_The sporran (/ˈspɒrən/; Scottish Gaelic for "purse"), a traditional part of Scottish Highland dress, is a pouch that performs the same function as pockets on the pocketless kilt. Made of leather or fur, the sporran serves as a **wallet** for any other necessary personal items._ (Source: https://en.wikipedia.org/wiki/Sporran)
+_The sporran (/ˈspɒrən/; Scottish Gaelic for "purse"), a traditional part of Scottish Highland dress, is a pouch that performs the same function as pockets on the pocketless kilt. Made of leather or fur, the sporran serves as a **wallet** for any other necessary personal items._ ([Source](https://en.wikipedia.org/wiki/Sporran))
 
 **Sporran** is the demo mobile wallet for a KILT Claimer. A claimer can use Sporran to create claims, request attestations, add contacts and transfer KILT Tokens.
+
+![File](https://user-images.githubusercontent.com/9762897/71015282-9d837000-20f3-11ea-88a8-16c39a74f10a.jpg)
 
 ## Disclaimer
 
