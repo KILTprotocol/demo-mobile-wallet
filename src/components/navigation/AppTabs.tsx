@@ -24,7 +24,6 @@ const tabBarOptions = {
   },
 }
 
-// todoprio bigger touch targets for tabs
 const AppTabs = createBottomTabNavigator(
   {
     [DASHBOARD]: Dashboard,

@@ -81,7 +81,6 @@ class Account extends Component<Props, State> {
   }
 
   openDialog(): void {
-    // todo reset dialog on close and use default state
     this.setState({
       isDialogVisible: true,
       isDialogOkBtnDisabled: true,

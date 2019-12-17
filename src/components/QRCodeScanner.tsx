@@ -24,7 +24,6 @@ const qrCodeScannerContainer: ViewStyle = {
   height: 200,
 }
 
-// todoprio no bioemtric input set up
 type Props = {
   onBarCodeRead: (barcode: any) => void
 }

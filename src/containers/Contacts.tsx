@@ -128,7 +128,6 @@ const mapDispatchToProps = (
   dispatch: Dispatch
 ): Partial<TMapDispatchToProps> => {
   return {
-    // todo replace any
     addContactInStore: (contact: TContact) => {
       dispatch(addContact(contact))
     },

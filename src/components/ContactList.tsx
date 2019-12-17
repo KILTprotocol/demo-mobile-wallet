@@ -12,7 +12,7 @@ import { CLR_TXT_INVERTED } from '../sharedStyles/styles.consts.colors'
 import { MIN_SIZE_TOUCHABLE } from '../sharedStyles/styles.consts.touchable'
 import {
   generateConstantColorFromStr,
-  takeFirstLetter,
+  getFirstCharacter,
 } from '../utils/utils.formatting'
 import AddressDisplay from './AddressDisplay'
 
@@ -63,7 +63,7 @@ export default class ContactList extends React.Component<Props> {
                     },
                   ]}>
                   <Text style={[bodyTxt, badgeTxt]}>
-                    {takeFirstLetter(contact.name)}
+                    {getFirstCharacter(contact.name)}
                   </Text>
                 </View>
                 <Text style={[bodyTxt, name]}>{contact.name}</Text>

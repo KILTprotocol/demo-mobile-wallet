@@ -22,6 +22,7 @@ import {
 } from 'react-navigation'
 import KiltButton from '../components/KiltButton'
 import WithIntroBackground from '../components/WithIntroBackground'
+import { MNEMONIC } from '../_routeParameters'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -89,7 +90,7 @@ class MnemonicCreation extends React.Component<Props, State> {
             onPressOK={() => {
               this.closeDialog()
               navigation.navigate(IDENTITY_SETUP, {
-                mnemonic,
+                [MNEMONIC]: mnemonic,
               })
             }}
           />

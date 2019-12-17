@@ -85,10 +85,10 @@ export async function singleSend(
         console.info('[MESSAGE] Message sent')
       })
       .catch(error => {
-        console.info(error)
+        console.info('[MESSAGE] Error:', error)
       })
   } catch (error) {
-    console.info(error)
+    console.info('[MESSAGE] Error:', error)
     return Promise.reject()
   }
 }

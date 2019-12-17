@@ -45,13 +45,6 @@ const generateConstantColorFromStr = (str: string): string => {
 /*            Shared utils            */
 /* ---------------------------------- */
 
-const takeFirstLetter = (str: string): string => `${str.substring(0, 1)}`
-const capitalizeFirstLetter = (str: string): string =>
-  `${str.substring(0, 1).toUpperCase()}${str.substring(1)}`
+const getFirstCharacter = (str: string): string => `${str.substring(0, 1)}`
 
-export {
-  generateConstantColorFromStr,
-  takeFirstLetter,
-  capitalizeFirstLetter,
-  truncateAddress,
-}
+export { generateConstantColorFromStr, getFirstCharacter, truncateAddress }
