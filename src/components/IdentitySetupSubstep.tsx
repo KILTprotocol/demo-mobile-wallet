@@ -8,7 +8,7 @@ import {
   txtSuccess,
   txtError,
 } from '../sharedStyles/styles.typography'
-import { flexRowLayout } from '../sharedStyles/styles.layout'
+import { flexRow } from '../sharedStyles/styles.layout'
 import { AsyncStatus } from '../_enums'
 import LoadingIndicator from '../components/LoadingIndicator'
 import TxtCentered from './TxtCentered'
@@ -27,33 +27,37 @@ const iconContainer = {
 const statusToUiMapping = {
   [AsyncStatus.NotStarted]: {
     component: <TxtCentered />,
-    txtStyle: txtNotStarted,
+    statusTxt: txtNotStarted,
   },
   [AsyncStatus.Pending]: {
     component: <LoadingIndicator />,
-    txtStyle: txtPending,
+    statusTxt: txtPending,
   },
   [AsyncStatus.Success]: {
     component: <TxtCentered style={txtSuccess}>✓</TxtCentered>,
-    txtStyle: txtSuccess,
+    statusTxt: txtSuccess,
   },
   [AsyncStatus.Error]: {
     component: <TxtCentered>❌</TxtCentered>,
-    txtStyle: txtError,
+    statusTxt: txtError,
   },
 }
 
-const IdentitySetupStep: React.FunctionComponent<Props> = ({
+const IdentitySetupSubstep: React.FunctionComponent<Props> = ({
   description,
   status,
 }): JSX.Element => (
-  <View style={flexRowLayout}>
+  <View style={flexRow}>
     <View style={iconContainer}>{statusToUiMapping[status].component}</View>
     <Text
-      style={[bodyTxt, bodyInvertedClrTxt, statusToUiMapping[status].txtStyle]}>
+      style={[
+        bodyTxt,
+        bodyInvertedClrTxt,
+        statusToUiMapping[status].statusTxt,
+      ]}>
       {description}
     </Text>
   </View>
 )
 
-export default IdentitySetupStep
+export default IdentitySetupSubstep

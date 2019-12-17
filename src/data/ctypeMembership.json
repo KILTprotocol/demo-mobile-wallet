@@ -1,23 +1,24 @@
 {
   "schema": {
-    "$id": "driverslicenseminimal",
+    "$id": "membershipcard",
     "$schema": "http://kilt-protocol.org/draft-01/ctype#",
     "properties": {
       "name": {
         "type": "string"
       },
       "birthday": {
-        "type": "string"
+        "type": "string",
+        "format": "date"
       },
-      "license": {
-        "type": "string"
+      "premium": {
+        "type": "boolean"
       }
     },
     "type": "object"
   },
   "metadata": {
     "title": {
-      "default": "driverslicenseminimal"
+      "default": "membershipcard"
     },
     "description": {},
     "properties": {
@@ -31,14 +32,13 @@
           "default": "birthday"
         }
       },
-      "license": {
+      "premium": {
         "title": {
-          "default": "license"
+          "default": "premium"
         }
       }
     }
   },
-  "owner": "5EeL6Hermg1c9fEDyuRQjwMu4XVGqqPwgrLhckjDh1RtLGd9",
-  "hash": "0x4edaa5b8eea2e071dfe48724f6789d6741c1ce0e0f4466079a1d78ef0c02aea2"
+  "owner": "5HSYJoFy49r4x71oF87BQXjv8LMPQxRuqaVztC7rEyj6FjxK",
+  "hash": "0xcddf06c5ae7589faffaa6a216c468d6601573dfac97fcfe4b9be66672c36a6fc"
 }
-// todo recreate this in the demo client

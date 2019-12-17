@@ -7,15 +7,17 @@ import {
   NavigationParams,
   ScrollView,
 } from 'react-navigation'
+import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
+import { Dispatch } from 'redux'
 import KiltButton from '../components/KiltButton'
+import WithDefaultBackground from '../components/WithDefaultBackground'
 import {
   mainViewContainer,
   sectionContainer,
-  flexRowCenterLayout,
+  flexRowCenter,
 } from '../sharedStyles/styles.layout'
 import { mainTitleTxt } from '../sharedStyles/styles.typography'
 import { APP_STARTUP } from '../_routes'
-import WithDefaultBackground from './WithDefaultBackground'
 import {
   resetBalance,
   resetIdentity,
@@ -23,8 +25,6 @@ import {
   resetPublicIdentity,
   deleteAllContacts,
 } from '../redux/actions'
-import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
-import { Dispatch } from 'redux'
 import { TMapDispatchToProps, TMapStateToProps } from '../_types'
 import { TAppState } from '../redux/reducers'
 import { ButtonType } from '../_enums'
@@ -42,8 +42,8 @@ type Props = {
 
 class Settings extends React.Component<Props, null> {
   static navigationOptions: { header: null }
+
   componentDidUpdate(): void {
-    // todo: we might want to move this logics up to a higher level component eg AppWrapper
     const { publicIdentityFromStore, navigation } = this.props
     // if the public identity is reset, navigate to app startup to let the user set their identity anew
     if (!publicIdentityFromStore) {
@@ -60,8 +60,6 @@ class Settings extends React.Component<Props, null> {
       resetBalanceInStore,
     } = this.props
     // the app is mono-identity so `resetIdentity` means deleting the claims as well
-    // Todo ask user for their thumb!!
-    // todo replace this with a full store reset??
     // reset all
     resetPublicIdentityInStore()
     resetIdentityInStore()
@@ -79,7 +77,7 @@ class Settings extends React.Component<Props, null> {
             <Text style={mainTitleTxt}>Settings</Text>
           </View>
           <View style={sectionContainer}>
-            <View style={flexRowCenterLayout}>
+            <View style={flexRowCenter}>
               <KiltButton
                 onPress={() => {
                   deleteAllCredentialsInStore()
@@ -88,7 +86,7 @@ class Settings extends React.Component<Props, null> {
                 type={ButtonType.Danger}
               />
             </View>
-            <View style={flexRowCenterLayout}>
+            <View style={flexRowCenter}>
               <KiltButton
                 title="✕ Delete all contacts"
                 onPress={() => {
@@ -97,7 +95,7 @@ class Settings extends React.Component<Props, null> {
                 type={ButtonType.Danger}
               />
             </View>
-            <View style={flexRowCenterLayout}>
+            <View style={flexRowCenter}>
               <KiltButton
                 onPress={() => {
                   this.resetApp()

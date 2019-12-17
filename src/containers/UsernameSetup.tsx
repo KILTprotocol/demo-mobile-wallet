@@ -12,7 +12,7 @@ import {
 import {
   mainViewContainer,
   sectionContainer,
-  flexRowEndLayout,
+  flexRowEnd,
 } from '../sharedStyles/styles.layout'
 import { setUsername } from '../redux/actions'
 import { TMapDispatchToProps } from '../_types'
@@ -24,11 +24,11 @@ import {
   bodyTxt,
 } from '../sharedStyles/styles.typography'
 import {
-  TXT_INVERTED_LIGHT_CLR_NEUTRAL,
-  KILT_ORANGE_CLR,
-  TXT_LIGHT_CLR_NEUTRAL,
+  CLR_TXT_INVERTED,
+  CLR_KILT_0,
+  CLR_TXT_LIGHT,
 } from '../sharedStyles/styles.consts.colors'
-import { IDENTITY_SETUP } from '../_routes'
+import { MNEMONIC_CREATION } from '../_routes'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -37,19 +37,18 @@ type Props = {
 
 type State = {
   username: string
-  isNextBtnDisabled: boolean
 }
 
-const usernameInputStyle: ViewStyle = {
+const input: ViewStyle = {
   borderWidth: 1,
-  borderColor: TXT_INVERTED_LIGHT_CLR_NEUTRAL,
+  borderColor: CLR_TXT_INVERTED,
   borderRadius: 8,
   paddingVertical: 18,
   paddingHorizontal: 12,
 }
 
-const labelStyle: TextStyle = {
-  color: TXT_LIGHT_CLR_NEUTRAL,
+const labelTxt: TextStyle = {
+  color: CLR_TXT_LIGHT,
   marginBottom: 6,
 }
 
@@ -60,52 +59,48 @@ class UsernameSetup extends React.Component<Props, State> {
 
   state = {
     username: '',
-    isNextBtnDisabled: true,
   }
 
   onChangeUsername(username: string): void {
-    const formattedUserName = username.trimLeft().trimRight()
+    const formattedUsername = username.trimLeft().trimRight()
     this.setState({
-      username: formattedUserName,
-      isNextBtnDisabled: !formattedUserName,
+      username: formattedUsername,
     })
   }
 
-  saveUsernameAndGoNext(): void {
+  saveUsernameAndNavigateNext(): void {
     const { navigation, setUsernameInStore } = this.props
     const { username } = this.state
-    // todo then
     setUsernameInStore(username)
-    navigation.navigate(IDENTITY_SETUP)
+    navigation.navigate(MNEMONIC_CREATION)
   }
 
   render(): JSX.Element {
-    const { isNextBtnDisabled } = this.state
     return (
-      // todo font scaling in dialogs
       <WithIntroBackground>
         <ScrollView style={mainViewContainer}>
           <View style={sectionContainer}>
-            <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>Step 2</Text>
+            <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>
+              Step 1 (optional)
+            </Text>
           </View>
           <View style={sectionContainer}>
-            <Text style={[bodyTxt, labelStyle]}>Your first name</Text>
+            <Text style={[bodyTxt, labelTxt]}>Your first name (optional)</Text>
             <TextInput
-              style={[bodyTxt, bodyInvertedClrTxt, usernameInputStyle]}
-              returnKeyType="done"
-              selectionColor={KILT_ORANGE_CLR}
-              onChangeText={username => this.onChangeUsername(username)}
-              autoFocus
-              spellCheck={false}
               autoCorrect={false}
+              autoFocus
+              onChangeText={username => this.onChangeUsername(username)}
+              returnKeyType="done"
+              selectionColor={CLR_KILT_0}
+              spellCheck={false}
+              style={[bodyTxt, bodyInvertedClrTxt, input]}
             />
           </View>
           <View style={sectionContainer}>
-            <View style={flexRowEndLayout}>
+            <View style={flexRowEnd}>
               <KiltButton
-                disabled={isNextBtnDisabled}
                 title="Next >"
-                onPress={() => this.saveUsernameAndGoNext()}
+                onPress={() => this.saveUsernameAndNavigateNext()}
               />
             </View>
           </View>

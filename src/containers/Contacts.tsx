@@ -12,7 +12,7 @@ import {
 import {
   mainViewContainer,
   sectionContainer,
-  flexRowCenterLayout,
+  flexRowCenter,
 } from '../sharedStyles/styles.layout'
 import { mainTitleTxt } from '../sharedStyles/styles.typography'
 import WithDefaultBackground from '../components/WithDefaultBackground'
@@ -21,6 +21,7 @@ import { addContact } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
 import { TMapDispatchToProps, TContact } from '../_types'
 import ContactList from '../components/ContactList'
+import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -29,29 +30,18 @@ type Props = {
 }
 
 type State = {
-  dialogVisible: boolean
-  newContactAddress: string
+  isDialogVisible: boolean
+  newContactAddress: IPublicIdentity['address']
   newContactName: string
 }
 
 class Contacts extends React.Component<Props, State> {
   state = {
-    dialogVisible: false,
+    isDialogVisible: false,
     newContactAddress: '',
     newContactName: '',
   }
-
-  // todo barcode type
-  // onBarCodeRead(barcode): void {
-  //   this.setState({
-  //     dialogVisible: true,
-  //     scannerOpen: false,
-  //     newContactAddress: barcode.data,
-  //   })
-  // }
-
-  // todoprio prevent double add
-  // todo change name, should not contain plural
+  // also: create vs save vs add vs new
 
   setNewContactName(newContactName: string): void {
     this.setState({
@@ -59,31 +49,34 @@ class Contacts extends React.Component<Props, State> {
     })
   }
 
+  addNewContact(): void {
+    const { addContactInStore, contactsFromStore } = this.props
+    const { newContactAddress, newContactName } = this.state
+    if (
+      // the contact doesn't already exists
+      !contactsFromStore.some(c => c.address === newContactAddress)
+    ) {
+      addContactInStore({
+        name: newContactName,
+        address: newContactAddress,
+      })
+    }
+  }
+
   closeDialog(): void {
-    this.setState({ dialogVisible: false })
+    this.setState({ isDialogVisible: false })
   }
 
   openDialog(): void {
     this.setState({
-      dialogVisible: true,
+      isDialogVisible: true,
       newContactAddress: '',
       newContactName: '',
     })
   }
 
-  // todo create vs save vs add vs new
-  addNewContact(): void {
-    const { addContactInStore } = this.props
-    const { newContactAddress, newContactName } = this.state
-    addContactInStore({
-      name: newContactName,
-      address: newContactAddress,
-    })
-  }
-
   render(): JSX.Element {
-    const { dialogVisible, newContactAddress } = this.state
-    // todo delete contacts on reset app
+    const { isDialogVisible, newContactAddress } = this.state
     const { contactsFromStore } = this.props
     return (
       <WithDefaultBackground>
@@ -92,7 +85,7 @@ class Contacts extends React.Component<Props, State> {
             <Text style={mainTitleTxt}>Contacts</Text>
           </View>
           <View style={sectionContainer}>
-            <View style={flexRowCenterLayout}>
+            <View style={flexRowCenter}>
               <KiltButton
                 title="＋ Add new contact"
                 onPress={() => {
@@ -100,14 +93,12 @@ class Contacts extends React.Component<Props, State> {
                 }}
               />
             </View>
-            {/* todo also delete all contacts when settings */}
           </View>
-          {/* todo refactor dialogs eg DRY */}
           <View>
             <ContactList contacts={contactsFromStore} />
           </View>
           <AddContactDialog
-            visible={dialogVisible}
+            visible={isDialogVisible}
             address={newContactAddress}
             onPressCancel={() => this.closeDialog()}
             onChangeContactName={name => this.setNewContactName(name)}
@@ -137,7 +128,6 @@ const mapDispatchToProps = (
   dispatch: Dispatch
 ): Partial<TMapDispatchToProps> => {
   return {
-    // todo replace any
     addContactInStore: (contact: TContact) => {
       dispatch(addContact(contact))
     },

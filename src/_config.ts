@@ -1,6 +1,5 @@
 const ATTESTER_MNEMONIC =
-  'snake rabbit relief hotel naive quiz chicken square office identify obscure tired'
-// 5FVqnXPPCTBKtkJMvBnifLiXFfXhNQnxh7xSmmYmXx7J1zux
+  'daring able century salute oxygen purse hub boat dry three core opera'
 const BLOCKCHAIN_NODE = 'wss://full-nodes.kilt.io:9944'
 const MESSAGING_SERVICE_URL = 'https://services.kilt.io:443/messaging'
 const CONTACTS_SERVICE_URL = 'https://services.kilt.io:443/contacts'

@@ -1,4 +1,4 @@
-import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
+import { Identity, PublicIdentity, IPublicIdentity } from '@kiltprotocol/sdk-js'
 import {
   SET_IDENTITY,
   RESET_IDENTITY,
@@ -13,6 +13,8 @@ import {
   RESET_BALANCE,
   SET_USERNAME,
   RESET_USERNAME,
+  RESET_LAST_VISITED_ROUTE,
+  UPDATE_LAST_VISITED_ROUTE,
 } from './redux/actionTypes'
 import { CredentialStatus } from './_enums'
 
@@ -47,7 +49,7 @@ export type TCredentialMapByHash = { [key: string]: TCredential }
 /* ---------------------------------- */
 
 export type TContact = {
-  address: string
+  address: IPublicIdentity['address']
   name: string
 }
 
@@ -88,7 +90,6 @@ type TUpdateCredentialStatusAction = {
   payload: THashAndClaimStatus
 }
 
-// todo harmonize add contact vs create contact naming
 type TAddContactAction = {
   type: typeof ADD_CONTACT
   payload: TContact
@@ -116,6 +117,15 @@ type TResetUsernameAction = {
   type: typeof RESET_USERNAME
 }
 
+type TUpdateLastVisitedRouteAction = {
+  type: typeof UPDATE_LAST_VISITED_ROUTE
+  payload: string
+}
+
+type TResetLastVisitedRouteAction = {
+  type: typeof RESET_LAST_VISITED_ROUTE
+}
+
 export type TAppAction =
   | TSetIdentityAction
   | TResetIdentityAction
@@ -130,6 +140,9 @@ export type TAppAction =
   | TResetBalanceAction
   | TSetUsernameAction
   | TResetUsernameAction
+  | TResetUsernameAction
+  | TUpdateLastVisitedRouteAction
+  | TResetLastVisitedRouteAction
 
 /* ---------------------------------- */
 /*      Redux: State and Dispatch     */
@@ -148,6 +161,7 @@ export type TMapDispatchToProps = {
   updateBalanceInStore: (balance: number) => void
   resetBalanceInStore: () => void
   setUsernameInStore: (username: string) => void
+  updateLastVisitedRouteInStore: (route: string) => void
 }
 
 export type TMapStateToProps = {
@@ -156,4 +170,5 @@ export type TMapStateToProps = {
   publicIdentityFromStore: PublicIdentity
   credentialsMapFromStore: TCredentialMapByHash
   usernameFromStore: string
+  lastVisitedRouteFromStore: string
 }

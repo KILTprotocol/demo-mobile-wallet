@@ -30,3 +30,9 @@ export const RESET_BALANCE = 'RESET_BALANCE'
 /* ---------------------------------- */
 export const SET_USERNAME = 'SET_USERNAME'
 export const RESET_USERNAME = 'RESET_USERNAME'
+
+/* ---------------------------------- */
+/*              Route/Nav             */
+/* ---------------------------------- */
+export const UPDATE_LAST_VISITED_ROUTE = 'UPDATE_LAST_VISITED_ROUTE'
+export const RESET_LAST_VISITED_ROUTE = 'RESET_LAST_VISITED_ROUTE'

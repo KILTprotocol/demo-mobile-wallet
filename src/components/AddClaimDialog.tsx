@@ -1,57 +1,38 @@
 import React from 'react'
 import Dialog from 'react-native-dialog'
 import { dialogContainer } from '../sharedStyles/styles.dialog'
-import ClaimPptyInput from './ClaimPptyInput'
-import { disabledButton } from '../sharedStyles/styles.buttons'
+import ClaimForm from './ClaimForm'
+import { NAME, BIRTHDAY, PREMIUM } from '../data/claimProperties'
 
 type Props = {
   onPressCancel: () => void
   onPressOK: () => void
-  onChangeText: (inputValue: string, ppty: string) => void
+  onChangeValue: (inputValue: any, claimPropertyId: string) => void
   visible: boolean
   username: string
-  isOkBtnDisabled: boolean
-  claimPpties: string[]
   claimContentsDefault: any
+  claimContents: any
 }
 
-class AddClaimDialog extends React.Component<Props> {
-  // TODOprio set state as relevant apply styles to disabled btn
-
-  render(): JSX.Element {
-    const {
-      onPressOK,
-      onPressCancel,
-      onChangeText,
-      visible,
-      username,
-      isOkBtnDisabled,
-      claimPpties,
-      claimContentsDefault,
-    } = this.props
-    return (
-      <Dialog.Container visible={visible} style={dialogContainer}>
-        <Dialog.Title>Request membership card</Dialog.Title>
-        {claimPpties.map(ppty => (
-          // todo refactor since username shouldnt need to be passed to each claimppty input
-          <ClaimPptyInput
-            key={ppty}
-            ppty={ppty}
-            username={username}
-            onChangeText={inputValue => onChangeText(inputValue, ppty)}
-            defaultValue={claimContentsDefault[ppty]}
-          />
-        ))}
-        <Dialog.Button onPress={onPressCancel} label="Cancel" />
-        <Dialog.Button
-          onPress={onPressOK}
-          label="Create &  Request"
-          disabled={isOkBtnDisabled}
-          style={isOkBtnDisabled ? disabledButton : {}}
-        />
-      </Dialog.Container>
-    )
-  }
-}
+const AddClaimDialog: React.FunctionComponent<Props> = ({
+  onPressOK,
+  onPressCancel,
+  onChangeValue,
+  visible,
+  claimContentsDefault,
+  claimContents,
+}): JSX.Element => (
+  <Dialog.Container visible={visible} style={dialogContainer}>
+    <Dialog.Title>Request membership card</Dialog.Title>
+    <ClaimForm
+      nameDefaultValue={claimContentsDefault[NAME]}
+      birthdayValueAsNumber={claimContents[BIRTHDAY]}
+      premiumValue={claimContents[PREMIUM]}
+      onChangeValue={onChangeValue}
+    />
+    <Dialog.Button onPress={onPressCancel} label="Cancel" />
+    <Dialog.Button onPress={onPressOK} label="Create &  Request" />
+  </Dialog.Container>
+)
 
 export default AddClaimDialog

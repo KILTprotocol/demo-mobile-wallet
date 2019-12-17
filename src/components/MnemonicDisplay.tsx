@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import WithFadeInAnimation from '../components/WithFadeInAnimation'
-import { flexRowWrapLayout } from '../sharedStyles/styles.layout'
+import { flexRowWrap } from '../sharedStyles/styles.layout'
 import { bodyEmphasizedTxt } from '../sharedStyles/styles.typography'
 
 type Props = {
@@ -11,10 +11,10 @@ type Props = {
 const TOTAL_ANIM_DURATION_MS = 1100
 const MAX_DELAY_MS = 900
 
-const Mnemonic: React.FunctionComponent<Props> = ({
+const MnemonicDisplay: React.FunctionComponent<Props> = ({
   mnemonic,
 }): JSX.Element => (
-  <View style={flexRowWrapLayout}>
+  <View style={flexRowWrap}>
     {mnemonic.split(' ').map((word, idx) => (
       <WithFadeInAnimation
         key={`${word}${idx}`}
@@ -26,4 +26,4 @@ const Mnemonic: React.FunctionComponent<Props> = ({
   </View>
 )
 
-export default Mnemonic
+export default MnemonicDisplay

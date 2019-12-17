@@ -15,8 +15,8 @@ export default class CredentialList extends React.Component<Props> {
       <View>
         {/* sort credentials by creation date, newest on top */}
         {[
-          ...credentials.sort((c1, c2) =>
-            c1.requestTimestamp > c2.requestTimestamp ? -1 : 1
+          ...credentials.sort((claimA, claimB) =>
+            claimA.requestTimestamp > claimB.requestTimestamp ? -1 : 1
           ),
         ].map((cred: TCredential) => (
           <View style={sectionContainer} key={cred.hash}>

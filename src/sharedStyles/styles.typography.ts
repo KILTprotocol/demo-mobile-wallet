@@ -1,13 +1,13 @@
 import {
-  TXT_DEFAULT_CLR,
-  KILT_ORANGE_CLR,
-  KILT_ORANGE_X_LIGHT_CLR,
-  TXT_LIGHT_CLR,
-  TXT_INVERTED_CLR,
-  TXT_INVERTED_LIGHT_CLR_NEUTRAL,
-  TXT_INVERTED_LIGHT_CLR,
-  SUCCESS_CLR,
-  ERROR_CLR,
+  CLR_TXT,
+  CLR_KILT_0,
+  CLR_KILT_0_LIGHT,
+  CLR_TXT_STANDOUT,
+  CLR_TXT_INVERTED,
+  CLR_TXT_INVERTED_LIGHT_STANDOUT,
+  CLR_TXT_INVERTED_LIGHT,
+  CLR_SUCCESS,
+  CLR_ERROR,
 } from './styles.consts.colors'
 import { TextStyle } from 'react-native'
 import { TXT_S_SIZE, TXT_M_SIZE, TXT_L_SIZE } from './styles.consts.typography'
@@ -16,8 +16,8 @@ export const mainTitleTxt: TextStyle = {
   fontFamily: 'Montserrat-Bold',
   fontSize: TXT_L_SIZE,
   fontWeight: '600',
-  marginBottom: 10,
-  color: TXT_LIGHT_CLR,
+  marginBottom: 6,
+  color: CLR_TXT_STANDOUT,
   letterSpacing: 2,
   textTransform: 'uppercase',
 }
@@ -27,13 +27,13 @@ export const sectionTitleTxt: TextStyle = {
   fontSize: TXT_M_SIZE,
   fontWeight: '600',
   marginBottom: 12,
-  color: TXT_LIGHT_CLR,
+  color: CLR_TXT_STANDOUT,
 }
 
 export const bodyTxt: TextStyle = {
   fontSize: TXT_S_SIZE,
   fontWeight: '500',
-  color: TXT_DEFAULT_CLR,
+  color: CLR_TXT,
 }
 
 export const inputTxt = bodyTxt
@@ -57,40 +57,44 @@ export const disabledTxt: TextStyle = {
 export const bodyEmphasizedTxt: TextStyle = {
   fontSize: TXT_M_SIZE,
   fontWeight: '400',
-  color: KILT_ORANGE_CLR,
-  backgroundColor: KILT_ORANGE_X_LIGHT_CLR,
+  color: CLR_KILT_0,
+  backgroundColor: CLR_KILT_0_LIGHT,
   paddingVertical: 2,
   paddingHorizontal: 3,
 }
 
 export const titleInvertedClrTxt: TextStyle = {
-  color: TXT_INVERTED_LIGHT_CLR_NEUTRAL,
+  color: CLR_TXT_INVERTED_LIGHT_STANDOUT,
 }
 
 export const bodyInvertedClrTxt: TextStyle = {
-  color: TXT_INVERTED_CLR,
+  color: CLR_TXT_INVERTED,
 }
 
 export const emphasizedClrTxt: TextStyle = {
-  color: KILT_ORANGE_CLR,
+  color: CLR_KILT_0,
 }
 
 export const txtCentered: TextStyle = {
   textAlign: 'center',
 }
 
+/* ---------------------------------- */
+/*          Async status text         */
+/* ---------------------------------- */
+
 export const txtNotStarted: TextStyle = {
-  color: TXT_INVERTED_LIGHT_CLR,
+  color: CLR_TXT_INVERTED_LIGHT,
 }
 
 export const txtSuccess: TextStyle = {
-  color: SUCCESS_CLR,
+  color: CLR_SUCCESS,
 }
 
 export const txtError: TextStyle = {
-  color: ERROR_CLR,
+  color: CLR_ERROR,
 }
 
 export const txtPending: TextStyle = {
-  color: KILT_ORANGE_CLR,
+  color: CLR_KILT_0,
 }

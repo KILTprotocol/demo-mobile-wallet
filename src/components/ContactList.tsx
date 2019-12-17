@@ -1,18 +1,18 @@
 import React from 'react'
 import { View, Text, TextStyle, ViewStyle } from 'react-native'
 import {
-  flexRowLayout,
-  flexRowLayoutSpaceBetween,
+  flexRow,
+  flexRowSpaceBetween,
   card,
-  flexRowCenterLayout,
+  flexRowCenter,
 } from '../sharedStyles/styles.layout'
 import { TContact } from '../_types'
 import { bodyTxt } from '../sharedStyles/styles.typography'
-import { TXT_INVERTED_CLR } from '../sharedStyles/styles.consts.colors'
+import { CLR_TXT_INVERTED } from '../sharedStyles/styles.consts.colors'
 import { MIN_SIZE_TOUCHABLE } from '../sharedStyles/styles.consts.touchable'
 import {
   generateConstantColorFromStr,
-  takeFirstLetter,
+  getFirstCharacter,
 } from '../utils/utils.formatting'
 import AddressDisplay from './AddressDisplay'
 
@@ -25,27 +25,23 @@ const name: TextStyle = {
 }
 
 const badgeTxt: TextStyle = {
-  color: TXT_INVERTED_CLR,
+  color: CLR_TXT_INVERTED,
 }
 
-// todo
-// viewstyle vs stylesheet
-// this vs nested styles
-// dont append Style to styles
 const contactCard: ViewStyle = {
+  ...card,
   paddingHorizontal: 16,
   paddingVertical: 12,
-  ...card,
   shadowOpacity: 0.1,
   marginBottom: 8,
 }
 
 const contactBadge: ViewStyle = {
+  ...flexRowCenter,
   width: MIN_SIZE_TOUCHABLE,
   height: MIN_SIZE_TOUCHABLE,
   borderRadius: 200,
   marginRight: 12,
-  ...flexRowCenterLayout,
 }
 
 export default class ContactList extends React.Component<Props> {
@@ -55,8 +51,8 @@ export default class ContactList extends React.Component<Props> {
       <>
         {contacts.map((contact: TContact) => (
           <View style={contactCard} key={contact.address}>
-            <View style={flexRowLayoutSpaceBetween}>
-              <View style={flexRowLayout}>
+            <View style={flexRowSpaceBetween}>
+              <View style={flexRow}>
                 <View
                   style={[
                     contactBadge,
@@ -67,7 +63,7 @@ export default class ContactList extends React.Component<Props> {
                     },
                   ]}>
                   <Text style={[bodyTxt, badgeTxt]}>
-                    {takeFirstLetter(contact.name)}
+                    {getFirstCharacter(contact.name)}
                   </Text>
                 </View>
                 <Text style={[bodyTxt, name]}>{contact.name}</Text>

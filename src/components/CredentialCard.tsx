@@ -8,14 +8,12 @@ import {
   ImageStyle,
 } from 'react-native'
 import { TXT_S_SIZE } from '../sharedStyles/styles.consts.typography'
-import {
-  TXT_DEFAULT_CLR,
-  TXT_LIGHT_CLR_NEUTRAL,
-} from '../sharedStyles/styles.consts.colors'
-import { imgBckgrd, flexRowLayout, card } from '../sharedStyles/styles.layout'
+import { CLR_TXT, CLR_TXT_LIGHT } from '../sharedStyles/styles.consts.colors'
+import { fill, flexRow, card } from '../sharedStyles/styles.layout'
 import { CredentialStatus } from '../_enums'
 import CredentialStatusBadge from './CredentialStatusBadge'
 import { bodyTxt } from '../sharedStyles/styles.typography'
+import { PREMIUM, NAME, BIRTHDAY } from '../data/claimProperties'
 const claimBckgrdPending = require('../assets/imgs/claimBckgrdPending.jpg')
 const claimBckgrdValid = require('../assets/imgs/claimBckgrdValid.jpg')
 const claimBckgrdRevoked = require('../assets/imgs/claimBckgrdRevoked.jpg')
@@ -33,7 +31,7 @@ const credentialTitleTxt: TextStyle = {
   marginBottom: 12,
   letterSpacing: 2,
   textTransform: 'uppercase',
-  color: TXT_DEFAULT_CLR,
+  color: CLR_TXT,
 }
 
 const credentialCard: ViewStyle = {
@@ -43,23 +41,21 @@ const credentialCard: ViewStyle = {
   shadowOpacity: 0.3,
 }
 
-const imgBckgrdExtraStyles: ImageStyle = {
-  borderRadius: 13,
+const bordered: ImageStyle = {
+  borderRadius: 10,
 }
 
-const credentialCardContentStyle: ViewStyle = {
-  width: '100%',
-  height: '100%',
+const credentialCardContent: ViewStyle = {
   padding: 12,
 }
 
-const credentialPptiesStyle: ViewStyle = {
+const credentialProperties: ViewStyle = {
   marginTop: 12,
 }
 
-const pptyLabelStyle: TextStyle = {
+const label: TextStyle = {
   marginRight: 12,
-  color: TXT_LIGHT_CLR_NEUTRAL,
+  color: CLR_TXT_LIGHT,
   textTransform: 'capitalize',
 }
 
@@ -75,6 +71,8 @@ const statusToUiMapping = {
   },
 }
 
+const order = [NAME, BIRTHDAY, PREMIUM]
+
 const CredentialCard: React.FunctionComponent<Props> = ({
   title,
   status,
@@ -83,20 +81,23 @@ const CredentialCard: React.FunctionComponent<Props> = ({
   <View style={credentialCard}>
     <ImageBackground
       source={statusToUiMapping[status].imgSrc}
-      style={imgBckgrd}
-      imageStyle={imgBckgrdExtraStyles}>
-      <View style={credentialCardContentStyle}>
+      style={fill}
+      imageStyle={bordered}>
+      <View style={[credentialCardContent, fill]}>
         <Text style={credentialTitleTxt}>{title}</Text>
         <CredentialStatusBadge status={status} />
-        <View style={credentialPptiesStyle}>
-          {/* todoprio fix ppty order display */}
-          {/* todoprio ppty type input type */}
-          {Object.entries(contents).map(([pptyName, pptyValue]) => (
-            <View key={pptyName} style={flexRowLayout}>
-              <Text style={[bodyTxt, pptyLabelStyle]}>{pptyName}</Text>
-              <Text style={bodyTxt}>{pptyValue}</Text>
-            </View>
-          ))}
+        <View style={credentialProperties}>
+          {[...Object.entries(contents)]
+            .sort(
+              (entryA, entryB) =>
+                order.indexOf(entryA[0]) - order.indexOf(entryB[0])
+            )
+            .map(([propertyName, propertyValue]) => (
+              <View key={propertyName} style={flexRow}>
+                <Text style={[bodyTxt, label]}>{propertyName}</Text>
+                <Text style={bodyTxt}>{propertyValue.toString()}</Text>
+              </View>
+            ))}
         </View>
       </View>
     </ImageBackground>

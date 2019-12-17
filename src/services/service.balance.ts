@@ -5,12 +5,8 @@ import { store } from '../redux/store'
 
 const KILT_MICRO_COIN = 1000000
 // TODOprio credentials encryption
-// TODOprio navigation back to correct screen
 
-// TODOprio number vs balance....
-// todo cleanup
-// token initialization??
-// todo address string vs ci dessous
+// TODOprio number vs balance cleanup
 
 async function getBalanceRaw(address: IPublicIdentity['address']): Promise<BN> {
   // only OK if connection open
@@ -38,9 +34,9 @@ function balanceListener(
   balance: BN,
   change: BN
 ): void {
-  if (change.toNumber()) {
+  if (!change.isZero()) {
     console.info(
-      `[BALANCE LISTENER] Balance has changed by ${change.toNumber()} to ${balance.toNumber()}`
+      `[BALANCE LISTENER] Balance has changed by ${change} to ${balance}`
     )
     // save new balance in store
     store.dispatch(updateBalance(asKiltCoins(balance)))

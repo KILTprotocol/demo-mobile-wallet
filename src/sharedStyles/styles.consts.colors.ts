@@ -1,36 +1,38 @@
 /* ---------------------------------- */
 /*             Main colors            */
 /* ---------------------------------- */
-export const KILT_ORANGE_CLR = '#f05a28'
-export const KILT_ORANGE_X_LIGHT_CLR = 'rgba(240,90,40,0.09)'
-export const KILT_PURPLE_CLR = '#280021'
-export const KILT_PURPLE_CLR_MEDIUM = '#751869'
-export const KILT_GREEN_CLR = '#22c5aa'
-export const KILT_GREEN_CLR_DARK = '#007360'
 export const CLR_BCKGRD_DARK = 'rgba(0, 0, 0, 0.5)'
+// primary: orange
+export const CLR_KILT_0 = '#f05a28'
+export const CLR_KILT_0_LIGHT = 'rgba(240,90,40,0.09)'
+// secondary: purple
+export const CLR_KILT_1 = '#280021'
+export const CLR_KILT_1_DARK = '#751869'
+// turquoise
+export const CLR_KILT_2 = '#22c5aa'
+export const CLR_KILT_2_DARK = '#007360'
 
 /* ---------------------------------- */
 /*             Txt colors             */
 /* ---------------------------------- */
-// TODO rename colors
-export const TXT_DEFAULT_CLR = 'rgba(0, 0, 0, 0.8)'
-export const TXT_LIGHT_CLR = '#282c34'
-export const TXT_LIGHT_CLR_NEUTRAL = '#A9A9A9'
-export const TXT_INVERTED_CLR = 'white'
-export const TXT_INVERTED_LIGHT_CLR = 'rgba(255, 255, 255, 0.7)'
-export const TXT_INVERTED_LIGHT_CLR_NEUTRAL = '#868686'
+export const CLR_TXT = 'rgba(0, 0, 0, 0.8)'
+export const CLR_TXT_STANDOUT = '#282c34'
+export const CLR_TXT_LIGHT = '#A9A9A9'
+export const CLR_TXT_INVERTED = 'white'
+export const CLR_TXT_INVERTED_LIGHT = 'rgba(255, 255, 255, 0.7)'
+export const CLR_TXT_INVERTED_LIGHT_STANDOUT = '#868686'
 
 /* ---------------------------------- */
 /*           Semantic colors          */
 /* ---------------------------------- */
 // greenish
-export const SUCCESS_CLR = '#009c84'
+export const CLR_SUCCESS = '#009c84'
 // redish
-export const ERROR_CLR = '#b30000'
+export const CLR_ERROR = '#b30000'
 // semantic colors derived from these
-export const BALANCE_PLUS_CLR = SUCCESS_CLR
-export const BALANCE_ZERO_CLR = ERROR_CLR
-export const ATT_VALID_CLR = SUCCESS_CLR
-export const ATT_REVOKED_CLR = ERROR_CLR
-export const ATT_PENDING_CLR = TXT_LIGHT_CLR_NEUTRAL
-export const DANGER_CLR = ERROR_CLR
+export const CLR_BALANCE_POSITIVE = CLR_SUCCESS
+export const CLR_BALANCE_ZERO = CLR_ERROR
+export const CLR_CLAIM_VALID = CLR_SUCCESS
+export const CLR_CLAIM_REVOKED = CLR_ERROR
+export const CLR_CLAIM_PENDING = CLR_TXT_LIGHT
+export const CLR_DANGER = CLR_ERROR

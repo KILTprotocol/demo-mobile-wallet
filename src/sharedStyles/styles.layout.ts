@@ -6,12 +6,11 @@ import { ViewStyle } from 'react-native'
 
 export const mainViewContainer: ViewStyle = {
   paddingHorizontal: 18,
-  paddingBottom: 12,
-  paddingTop: 44,
+  marginTop: 44,
 }
 
 export const sectionContainer: ViewStyle = {
-  marginBottom: 24,
+  marginBottom: 32,
   paddingHorizontal: 12,
 }
 
@@ -19,65 +18,59 @@ export const fixedHeight: ViewStyle = {
   height: 24,
 }
 
+export const fill = {
+  height: '100%',
+  width: '100%',
+}
+
 /* ---------------------------------- */
 /*                Flex                */
 /* ---------------------------------- */
 
-export const flexRowWrapLayout: ViewStyle = {
+export const flexRowWrap: ViewStyle = {
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
 }
 
-export const fullCenter: ViewStyle = {
+export const fillCenter: ViewStyle = {
+  ...fill,
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
-  height: '100%',
-  width: '100%',
 }
 
-export const flexRowLayout: ViewStyle = {
+export const flexRow: ViewStyle = {
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
 }
 
-export const flexRowLayoutBaseline: ViewStyle = {
+export const flexRowBaseline: ViewStyle = {
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'baseline',
 }
 
-export const flexRowLayoutSpaceBetween: ViewStyle = {
+export const flexRowSpaceBetween: ViewStyle = {
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'space-between',
 }
 
-// todo remove "layout" from all names
-export const flexRowCenterLayout: ViewStyle = {
+export const flexRowCenter: ViewStyle = {
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
 }
 
-export const flexRowEndLayout: ViewStyle = {
+export const flexRowEnd: ViewStyle = {
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'flex-end',
-}
-
-/* ---------------------------------- */
-/*          Image background          */
-/* ---------------------------------- */
-
-export const imgBckgrd = {
-  height: '100%',
-  width: '100%',
 }
 
 /* ---------------------------------- */
@@ -94,12 +87,4 @@ export const card: ViewStyle = {
   shadowOpacity: 0.3,
   shadowRadius: 9,
   elevation: 16,
-}
-
-/* ---------------------------------- */
-/*       QrCodeScannerContainer       */
-/* ---------------------------------- */
-
-export const qrCodeScannerContainer: ViewStyle = {
-  height: 200,
 }

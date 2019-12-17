@@ -8,14 +8,24 @@ import { View } from 'react-native'
 import { PublicIdentity } from '@kiltprotocol/sdk-js'
 import { connect } from 'react-redux'
 import LoadingIndicator from '../components/LoadingIndicator'
-import { APP, SETUP } from '../_routes'
-import { mainViewContainer, fullCenter } from '../sharedStyles/styles.layout'
+import {
+  APP,
+  DASHBOARD,
+  ACCOUNT,
+  CONTACTS,
+  SETTINGS,
+  MNEMONIC_CREATION,
+  INTRODUCTION,
+  USERNAME_SETUP,
+} from '../_routes'
+import { mainViewContainer, fillCenter } from '../sharedStyles/styles.layout'
 import { TAppState } from '../redux/reducers'
 import { TMapStateToProps } from '../_types'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   publicIdentityFromStore: PublicIdentity | null
+  lastVisitedRouteFromStore: string
 }
 
 class AppStartup extends React.Component<Props> {
@@ -24,16 +34,33 @@ class AppStartup extends React.Component<Props> {
   }
 
   bootstrapAsync = async () => {
-    const { publicIdentityFromStore, navigation } = this.props
+    const {
+      publicIdentityFromStore,
+      navigation,
+      lastVisitedRouteFromStore,
+    } = this.props
     // if an identity is already set up, navigate to the regular app
     // if not, navigate to the identity setup screen
-    navigation.navigate(publicIdentityFromStore ? APP : SETUP)
+    if (
+      (publicIdentityFromStore &&
+        [DASHBOARD, ACCOUNT, CONTACTS, SETTINGS].includes(
+          lastVisitedRouteFromStore
+        )) ||
+      (publicIdentityFromStore &&
+        [MNEMONIC_CREATION, INTRODUCTION, USERNAME_SETUP].includes(
+          lastVisitedRouteFromStore
+        ))
+    ) {
+      navigation.navigate(lastVisitedRouteFromStore)
+    } else {
+      navigation.navigate(publicIdentityFromStore ? APP : INTRODUCTION)
+    }
   }
 
   render(): JSX.Element {
     return (
       <View style={mainViewContainer}>
-        <View style={fullCenter}>
+        <View style={fillCenter}>
           <LoadingIndicator />
         </View>
       </View>
@@ -44,10 +71,8 @@ class AppStartup extends React.Component<Props> {
 const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => {
   return {
     publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
+    lastVisitedRouteFromStore: state.lastVisitedRouteReducer.lastVisitedRoute,
   }
 }
 
-export default connect(
-  mapStateToProps,
-  null
-)(AppStartup)
+export default connect(mapStateToProps, null)(AppStartup)

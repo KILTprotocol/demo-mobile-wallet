@@ -1,13 +1,13 @@
 import React from 'react'
 import { Linking } from 'react-native'
+import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 import KiltButton from './KiltButton'
 import { getRequestTokensUrl } from '../utils/utils.faucet'
 
 type Props = {
-  address: string
+  address: IPublicIdentity['address']
 }
 
-// TODOmedium tab state
 const RequestTokensButton: React.FunctionComponent<Props> = ({
   address,
 }): JSX.Element => (

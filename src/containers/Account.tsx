@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import { ScrollView, View, Text } from 'react-native'
-import { PublicIdentity, Identity, Balance } from '@kiltprotocol/sdk-js'
+import {
+  PublicIdentity,
+  Identity,
+  Balance,
+  IPublicIdentity,
+} from '@kiltprotocol/sdk-js'
 import { connect } from 'react-redux'
 import {
   mainViewContainer,
@@ -12,15 +17,15 @@ import {
   sectionTitleTxt,
 } from '../sharedStyles/styles.typography'
 import IdentityDisplay from '../components/IdentityDisplay'
-import AddressQRCode from '../components/AddressQRCode'
+import AddressQrCode from '../components/AddressQrCode'
 import RequestTokensButton from '../components/RequestTokensButton'
 import { TAppState } from '../redux/reducers'
 import { TMapStateToProps } from '../_types'
-import TokenTransferDialog from '../containers/TokenTransferDialog'
+import TokenTransferDialog from '../components/TokenTransferDialog'
 import KiltButton from '../components/KiltButton'
 import BalanceComp from '../components/Balance'
 import { asMicroKiltCoins } from '../services/service.balance'
-import { getSdkIdentityFromStoredIdentity } from '../utils/utils.identity'
+import { fromStoredIdentity } from '../utils/utils.identity'
 import { AsyncStatus } from '../_enums'
 import { callWithDelay } from '../utils/utils.async'
 
@@ -31,16 +36,16 @@ type Props = {
 }
 
 type State = {
-  dialogVisible: boolean
+  isDialogVisible: boolean
   isDialogOkBtnDisabled: boolean
   tokenAmountToTransfer: number
-  tokenRecipientAddress: string
+  tokenRecipientAddress: IPublicIdentity['address']
   transferAsyncStatus: AsyncStatus
 }
 
 class Account extends Component<Props, State> {
   defaultState = {
-    dialogVisible: false,
+    isDialogVisible: false,
     isDialogOkBtnDisabled: true,
     tokenAmountToTransfer: 0,
     tokenRecipientAddress: '',
@@ -76,9 +81,8 @@ class Account extends Component<Props, State> {
   }
 
   openDialog(): void {
-    // todo use .. this.state (needed???)
     this.setState({
-      dialogVisible: true,
+      isDialogVisible: true,
       isDialogOkBtnDisabled: true,
       tokenAmountToTransfer: 0,
       tokenRecipientAddress: '',
@@ -87,43 +91,39 @@ class Account extends Component<Props, State> {
   }
 
   closeDialog(): void {
-    // todo rename booleans
-    // todo use hooks for dialogs
-    this.setState({ dialogVisible: false })
+    this.setState({ isDialogVisible: false })
   }
 
   setTokenAmountToTransfer(tokenAmountToTransfer: number): void {
     this.setState({ tokenAmountToTransfer })
   }
 
-  setTokenRecipientAddress(tokenRecipientAddress: string): void {
+  setTokenRecipientAddress(
+    tokenRecipientAddress: IPublicIdentity['address']
+  ): void {
     this.setState({ tokenRecipientAddress })
   }
 
   async transferTokens(): Promise<void> {
-    // todo refactor nicely
-    // TODOprio bug always transfer one token more......
-    // todo transfer crashes when user has no tokens
-    // todo disable transfer token button when user has no token????
     const { tokenRecipientAddress, tokenAmountToTransfer } = this.state
     const { identityFromStore } = this.props
     if (identityFromStore && tokenRecipientAddress) {
       this.setState({ transferAsyncStatus: AsyncStatus.Pending })
       const transferAmount = asMicroKiltCoins(tokenAmountToTransfer)
       console.info(
-        `[TRANSFER] Starting transfer of ${tokenAmountToTransfer} (${transferAmount})...`
+        `[TRANSFER] Transferring ${tokenAmountToTransfer} (${transferAmount})...`
       )
       try {
         console.info('[TRANSFER] Trying transfer...')
         await Balance.makeTransfer(
-          getSdkIdentityFromStoredIdentity(identityFromStore),
+          fromStoredIdentity(identityFromStore),
           tokenRecipientAddress,
           transferAmount
         )
         this.setState({ transferAsyncStatus: AsyncStatus.Success })
       } catch (error) {
-        console.info(`[TRANSFER] Blockchain error: ${error}`)
         this.setState({ transferAsyncStatus: AsyncStatus.Error })
+        console.info(`[TRANSFER] Blockchain error: ${error}`)
       }
     } else {
       this.setState({ transferAsyncStatus: AsyncStatus.Error })
@@ -144,7 +144,7 @@ class Account extends Component<Props, State> {
   render(): JSX.Element {
     const { publicIdentityFromStore, balanceFromStore } = this.props
     const {
-      dialogVisible,
+      isDialogVisible,
       tokenRecipientAddress,
       transferAsyncStatus,
       isDialogOkBtnDisabled,
@@ -162,7 +162,7 @@ class Account extends Component<Props, State> {
             <Text style={sectionTitleTxt}>My address</Text>
             {address && (
               <>
-                <AddressQRCode address={address} />
+                <AddressQrCode address={address} />
                 <IdentityDisplay address={address} />
               </>
             )}
@@ -183,18 +183,19 @@ class Account extends Component<Props, State> {
             />
           </View>
           <TokenTransferDialog
-            visible={dialogVisible}
+            visible={isDialogVisible}
             isOkBtnDisabled={isDialogOkBtnDisabled}
             tokenRecipientAddress={tokenRecipientAddress}
             onPressCancel={() => {
-              // todo rename to "reset" function
               this.setState({ tokenRecipientAddress: '' })
               this.closeDialog()
             }}
             onChangeTokenAmountToTransfer={amount =>
               this.setTokenAmountToTransfer(amount)
             }
-            onTokenRecipientAddressRead={(recipientAddress: string) => {
+            onTokenRecipientAddressRead={(
+              recipientAddress: IPublicIdentity['address']
+            ) => {
               this.setTokenRecipientAddress(recipientAddress)
             }}
             onConfirmTransfer={async () => {

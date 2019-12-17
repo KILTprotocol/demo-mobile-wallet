@@ -11,17 +11,16 @@ import {
   txtError,
   inputTxt,
 } from '../sharedStyles/styles.typography'
-import {
-  qrCodeScannerContainer,
-  flexRowCenterLayout,
-} from '../sharedStyles/styles.layout'
+import { flexRowCenter } from '../sharedStyles/styles.layout'
 import { disabledButton } from '../sharedStyles/styles.buttons'
 import AddressDisplay from '../components/AddressDisplay'
 import QrCodeScanner from '../components/QrCodeScanner'
+import { CLR_KILT_0 } from '../sharedStyles/styles.consts.colors'
+import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 
 const contentContainer: ViewStyle = {
   height: 150,
-  ...flexRowCenterLayout,
+  ...flexRowCenter,
   paddingBottom: 12,
 }
 
@@ -33,8 +32,8 @@ type Props = {
   onPressCancel: () => void
   onConfirmTransfer: () => void
   onChangeTokenAmountToTransfer: (tokenAmountToTransfer: number) => void
-  onTokenRecipientAddressRead: (address: string) => void
-  tokenRecipientAddress: string
+  onTokenRecipientAddressRead: (address: IPublicIdentity['address']) => void
+  tokenRecipientAddress: IPublicIdentity['address']
   visible: boolean
   isOkBtnDisabled: boolean
   transferAsyncStatus: AsyncStatus
@@ -42,7 +41,7 @@ type Props = {
 
 class TokenTransferDialog extends React.Component<Props> {
   processTokenAmountToTransfer(tokenAmountToTransfer: string): number {
-    return parseFloat(tokenAmountToTransfer)
+    return Number(tokenAmountToTransfer)
   }
 
   render(): JSX.Element {
@@ -62,9 +61,10 @@ class TokenTransferDialog extends React.Component<Props> {
         <Dialog.Input
           autoFocus
           keyboardType="decimal-pad"
-          returnKeyType="done"
-          style={inputTxt}
           label="Amount to transfer (in KILT tokens):"
+          returnKeyType="done"
+          selectionColor={CLR_KILT_0}
+          style={inputTxt}
           onChangeText={tokenAmountToTransfer =>
             onChangeTokenAmountToTransfer(
               this.processTokenAmountToTransfer(tokenAmountToTransfer)
@@ -77,13 +77,11 @@ class TokenTransferDialog extends React.Component<Props> {
             {tokenRecipientAddress ? (
               <AddressDisplay address={tokenRecipientAddress} />
             ) : (
-              <View style={qrCodeScannerContainer}>
-                <QrCodeScanner
-                  onBarCodeRead={barcode => {
-                    onTokenRecipientAddressRead(barcode.data)
-                  }}
-                />
-              </View>
+              <QrCodeScanner
+                onBarCodeRead={barcode => {
+                  onTokenRecipientAddressRead(barcode.data)
+                }}
+              />
             )}
           </View>
         </View>

@@ -13,6 +13,8 @@ import {
   RESET_BALANCE,
   SET_USERNAME,
   RESET_USERNAME,
+  RESET_LAST_VISITED_ROUTE,
+  UPDATE_LAST_VISITED_ROUTE,
 } from './actionTypes'
 import {
   TAppAction,
@@ -28,16 +30,6 @@ export const setIdentity = (identity: Identity | null): TAppAction => ({
   type: SET_IDENTITY,
   payload: identity,
 })
-
-// TODO rename credentials vs claims
-// todo rename reset identity to delete in store
-// todo harmonize create vs add in dialog names, action names, reducers, color names, etc
-// todo rename mnemonic dialog
-// todo rename InStore to InRdxStore
-
-// TODOprio fix folder structure
-
-// todo draw flow and architecture
 
 export const resetIdentity = (): TAppAction => ({
   type: RESET_IDENTITY,
@@ -111,4 +103,18 @@ export const setUsername = (username: string): TAppAction => ({
 
 export const resetUsername = (): TAppAction => ({
   type: RESET_USERNAME,
+})
+
+/* ---------------------------------- */
+/*              Route/Nav             */
+/* ---------------------------------- */
+export const updateLastVisitedRoute = (
+  lastVisitedRoute: string
+): TAppAction => ({
+  type: UPDATE_LAST_VISITED_ROUTE,
+  payload: lastVisitedRoute,
+})
+
+export const resetLastVisitedRoute = (): TAppAction => ({
+  type: RESET_LAST_VISITED_ROUTE,
 })
