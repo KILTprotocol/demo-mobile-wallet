@@ -47,7 +47,7 @@
 		00E356F21AD99517003FC87E /* KILTDemoMobileWalletTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KILTDemoMobileWalletTests.m; sourceTree = "<group>"; };
 		00E9EB4C635977BB59C57802 /* Pods-KILTDemoMobileWallet-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KILTDemoMobileWallet-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-KILTDemoMobileWallet-tvOSTests/Pods-KILTDemoMobileWallet-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		09A08EAB69FD4118B529AB95 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* KILTDemoMobileWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KILTDemoMobileWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Sporran - KILT Demo Mobile Wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sporran - KILT Demo Mobile Wallet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = KILTDemoMobileWallet/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = KILTDemoMobileWallet/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -232,7 +232,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* KILTDemoMobileWallet.app */,
+				13B07F961A680F5B00A75B9A /* Sporran - KILT Demo Mobile Wallet.app */,
 				00E356EE1AD99517003FC87E /* KILTDemoMobileWalletTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* KILTDemoMobileWallet-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* KILTDemoMobileWallet-tvOSTests.xctest */,
@@ -280,7 +280,7 @@
 			);
 			name = KILTDemoMobileWallet;
 			productName = KILTDemoMobileWallet;
-			productReference = 13B07F961A680F5B00A75B9A /* KILTDemoMobileWallet.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Sporran - KILT Demo Mobile Wallet.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* KILTDemoMobileWallet-tvOS */ = {
@@ -728,14 +728,16 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = Y5H5WSVL45;
 				INFOPLIST_FILE = KILTDemoMobileWallet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.botlabs.KILTDemoMobileWallet;
-				PRODUCT_NAME = KILTDemoMobileWallet;
+				PRODUCT_NAME = "Sporran - KILT Demo Mobile Wallet";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -747,14 +749,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = KILTDemoMobileWallet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.botlabs.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = KILTDemoMobileWallet;
+				PRODUCT_NAME = "Sporran - KILT Demo Mobile Wallet";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -915,7 +919,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -961,7 +965,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
