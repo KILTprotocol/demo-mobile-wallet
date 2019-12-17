@@ -1,6 +1,7 @@
 {
   "name": "kilt-demo-mobile-wallet",
   "version": "0.0.1",
+  "license": "BSD-4-Clause",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
