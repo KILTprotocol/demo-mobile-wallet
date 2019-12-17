@@ -2,7 +2,6 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { Dispatch } from 'redux'
 import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
-import * as Keychain from 'react-native-keychain'
 import { connect } from 'react-redux'
 import {
   NavigationScreenProp,
@@ -26,8 +25,11 @@ import { setPublicIdentity, setIdentity } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
 import WithIntroBackground from '../components/WithIntroBackground'
 import { TMapDispatchToProps, TMapStateToProps } from '../_types'
-import { getGenericPassword } from 'react-native-keychain'
 import { saveIdentityAsContactInDemoServices } from '../services/service.demo'
+import {
+  setIdentityEncrypted,
+  promptUserAndGetIdentityDecrypted,
+} from '../services/service.keychain'
 import { createIdentity } from '../utils/utils.identity'
 import { MNEMONIC } from '../_routeParameters'
 import { delay } from '../utils/utils.async'
@@ -130,24 +132,10 @@ class IdentitySetup extends React.Component<Props, State> {
       )
 
       await delayAndCall(3, async () => {
-        // todoprio move to separate file (utility) and use const "identity"
-        await Keychain.setGenericPassword(
-          'identity',
-          JSON.stringify(identity),
-          {
-            accessControl: Keychain.ACCESS_CONTROL.USER_PRESENCE,
-            accessible: Keychain.ACCESSIBLE.WHEN_PASSCODE_SET_THIS_DEVICE_ONLY,
-            authenticationPrompt: 'Identity',
-            authenticationType:
-              Keychain.AUTHENTICATION_TYPE.DEVICE_PASSCODE_OR_BIOMETRICS,
-          }
-        )
-
-        const identityWrapper = await getGenericPassword()
-        if (identityWrapper) {
+        await setIdentityEncrypted(identity)
+        const identityDecrypted = await promptUserAndGetIdentityDecrypted()
+        if (identityDecrypted) {
           setPublicIdentityInStore(publicIdentity)
-          // decrypt identity
-          const identityDecrypted = JSON.parse(identityWrapper.password)
           setIdentityInStore(identityDecrypted)
         }
         await saveIdentityAsContactInDemoServices(

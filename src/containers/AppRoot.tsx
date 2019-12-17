@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { AppState, ImageBackground } from 'react-native'
 import { createAppContainer } from 'react-navigation'
-import { getGenericPassword } from 'react-native-keychain'
 import * as Kilt from '@kiltprotocol/sdk-js'
 import {
   Identity,
@@ -31,6 +30,7 @@ import {
   setTopLevelNavigator,
 } from '../services/service.navigation'
 import RootSwitch from '../components/navigation/RootSwitch'
+import { promptUserAndGetIdentityDecrypted } from '../services/service.keychain'
 
 const obscuratorSrc = require('../assets/imgs/obscurator.jpg')
 
@@ -125,25 +125,14 @@ class AppRoot extends React.Component<Props> {
     }
   }
 
-  async promptAndDecryptIdentity(): Promise<any> {
-    const identityWrapper = await getGenericPassword()
-    if (!identityWrapper) {
-      return ''
-    }
-    const identityDecrypted = JSON.parse(identityWrapper.password)
-    return identityDecrypted
-  }
-
   async promptAndSetDecryptedIdentity(): Promise<void> {
     console.info('[ENCRYPTION] Decrypting and setting identity in store')
     const { setIdentityInStore } = this.props
-    const identityDecrypted = await this.promptAndDecryptIdentity()
+    const identityDecrypted = await promptUserAndGetIdentityDecrypted()
     // add decrypted identity to Redux store for use anywhere in the app, until user leaves the app again OR screen locks
     setIdentityInStore(identityDecrypted)
   }
 
-  // todo refactor and use strings for active
-  // todo move connections, app status and prompt user to utils
   handleAppStateChange = async nextAppUiState => {
     const { resetIdentityInStore } = this.props
     const { appUiState } = this.state
