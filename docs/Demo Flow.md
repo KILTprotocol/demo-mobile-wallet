@@ -6,7 +6,7 @@
 * 💻 on the [deployed demo-client](https://demo.kilt.io/dashboard), or your locally running demo-client: 
   * create a new identity
   * request tokens for it
-  * paste its mnemonic into `_config.ts` as `ATTESTER_MNEMONIC`; this is the Attester.
+  * paste its mnemonic into `_config.ts` as `ATTESTER_MNEMONIC`; this is the Attester. **Note**: this setup is temporary and only for convenience; a mnemonic is secret and should never be shared anywhere.
 * 📱 in the mobile app: follow the onboarding steps.
 
 ## Demo steps
