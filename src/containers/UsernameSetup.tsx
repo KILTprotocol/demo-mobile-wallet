@@ -28,7 +28,7 @@ import {
   CLR_KILT_0,
   CLR_TXT_LIGHT,
 } from '../sharedStyles/styles.consts.colors'
-import { IDENTITY_SETUP } from '../_routes'
+import { MNEMONIC_CREATION } from '../_routes'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -62,18 +62,18 @@ class UsernameSetup extends React.Component<Props, State> {
   }
 
   onChangeUsername(username: string): void {
-    const formattedUserName = username.trimLeft().trimRight()
+    const formattedUsername = username.trimLeft().trimRight()
     this.setState({
-      username: formattedUserName,
+      username: formattedUsername,
     })
   }
 
-  saveUsernameAndGoNext(): void {
+  saveUsernameAndNavigateNext(): void {
     const { navigation, setUsernameInStore } = this.props
     const { username } = this.state
     // todo then
     setUsernameInStore(username)
-    navigation.navigate(IDENTITY_SETUP)
+    navigation.navigate(MNEMONIC_CREATION)
   }
 
   render(): JSX.Element {
@@ -82,7 +82,7 @@ class UsernameSetup extends React.Component<Props, State> {
         <ScrollView style={mainViewContainer}>
           <View style={sectionContainer}>
             <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>
-              Step 2 (optional)
+              Step 1 (optional)
             </Text>
           </View>
           <View style={sectionContainer}>
@@ -101,7 +101,7 @@ class UsernameSetup extends React.Component<Props, State> {
             <View style={flexRowEnd}>
               <KiltButton
                 title="Next >"
-                onPress={() => this.saveUsernameAndGoNext()}
+                onPress={() => this.saveUsernameAndNavigateNext()}
               />
             </View>
           </View>

@@ -42,8 +42,8 @@ type Props = {
 
 class Settings extends React.Component<Props, null> {
   static navigationOptions: { header: null }
+
   componentDidUpdate(): void {
-    // todo: we might want to move this logics up to a higher level component eg AppWrapper
     const { publicIdentityFromStore, navigation } = this.props
     // if the public identity is reset, navigate to app startup to let the user set their identity anew
     if (!publicIdentityFromStore) {

@@ -34,7 +34,7 @@ export const setIdentity = (identity: Identity | null): TAppAction => ({
 // todo renamings:
 // update vs set in actions.ts
 // reset identity ==> delete in store
-// harmonize create vs add in dialog names, action names, reducers, color names, etc
+// harmonize create vs add in dialog names, action names, reducers
 // rename mnemonic dialog
 // harmonize add contact vs create contact naming
 // change name of credential (since a credential is only when attested
