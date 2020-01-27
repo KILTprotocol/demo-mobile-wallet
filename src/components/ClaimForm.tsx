@@ -1,11 +1,12 @@
 import React from 'react'
-import { Text, View, TextStyle, Picker, ViewStyle } from 'react-native'
+import { Text, View, TextStyle, Picker } from 'react-native'
 import Dialog from 'react-native-dialog'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { dialogSection } from '../sharedStyles/styles.dialog'
 import { CLR_KILT_0 } from '../sharedStyles/styles.consts.colors'
 import { bodyTxt, disabledTxt } from '../sharedStyles/styles.typography'
 import { BIRTHDAY, NAME, PREMIUM } from '../data/claimProperties'
+import { sPicker, lPicker } from '../sharedStyles/styles.pickers'
 
 type Props = {
   nameDefaultValue: string
@@ -16,20 +17,6 @@ type Props = {
 
 const labelTxt: TextStyle = {
   paddingLeft: 10,
-}
-
-const picker: ViewStyle = {
-  transform: [{ translateY: -10 }],
-}
-
-const sPicker = {
-  ...picker,
-  height: 100,
-}
-
-const lPicker = {
-  ...picker,
-  height: 200,
 }
 
 const ClaimForm: React.FunctionComponent<Props> = ({
