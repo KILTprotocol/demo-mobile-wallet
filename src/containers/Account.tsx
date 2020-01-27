@@ -10,14 +10,10 @@ import { connect } from 'react-redux'
 import {
   mainViewContainer,
   sectionContainer,
+  centered,
 } from '../sharedStyles/styles.layout'
 import WithDefaultBackground from '../components/WithDefaultBackground'
-import {
-  mainTitleTxt,
-  sectionTitleTxt,
-} from '../sharedStyles/styles.typography'
-import IdentityDisplay from '../components/IdentityDisplay'
-import AddressQrCode from '../components/AddressQrCode'
+import { h1, h2 } from '../sharedStyles/styles.typography'
 import RequestTokensButton from '../components/RequestTokensButton'
 import { TAppState } from '../redux/reducers'
 import { TMapStateToProps } from '../_types'
@@ -28,6 +24,8 @@ import { asMicroKiltCoins } from '../services/service.balance'
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { AsyncStatus } from '../_enums'
 import { callWithDelay } from '../utils/utils.async'
+import PublicIdentityQrCode from '../components/PublicIdentityQrCode'
+import AddressDisplay from '../components/AddressDisplay'
 
 type Props = {
   publicIdentityFromStore: PublicIdentity | null
@@ -156,23 +154,25 @@ class Account extends Component<Props, State> {
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>
           <View style={sectionContainer}>
-            <Text style={mainTitleTxt}>Account</Text>
+            <Text style={h1}>Account</Text>
           </View>
           <View style={sectionContainer}>
-            <Text style={sectionTitleTxt}>My address</Text>
+            <Text style={h2}>My identity</Text>
             {address && (
-              <>
-                <AddressQrCode address={address} />
-                <IdentityDisplay address={address} />
-              </>
+              <View style={centered}>
+                <PublicIdentityQrCode
+                  publicIdentity={publicIdentityFromStore}
+                />
+                <AddressDisplay address={address} />
+              </View>
             )}
           </View>
           <View style={sectionContainer}>
-            <Text style={sectionTitleTxt}>My KILT account balance</Text>
+            <Text style={h2}>My KILT account balance</Text>
             <BalanceComp balance={balanceFromStore} />
           </View>
           <View style={sectionContainer}>
-            <Text style={sectionTitleTxt}>Actions</Text>
+            <Text style={h2}>Actions</Text>
             {address && <RequestTokensButton address={address} />}
             <KiltButton
               disabled={!balanceFromStore}
