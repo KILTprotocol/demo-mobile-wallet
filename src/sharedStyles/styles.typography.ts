@@ -12,7 +12,7 @@ import {
 import { TextStyle } from 'react-native'
 import { TXT_S_SIZE, TXT_M_SIZE, TXT_L_SIZE } from './styles.consts.typography'
 
-export const mainTitleTxt: TextStyle = {
+export const h1: TextStyle = {
   fontFamily: 'Montserrat-Bold',
   fontSize: TXT_L_SIZE,
   fontWeight: '600',
@@ -22,7 +22,7 @@ export const mainTitleTxt: TextStyle = {
   textTransform: 'uppercase',
 }
 
-export const sectionTitleTxt: TextStyle = {
+export const h2: TextStyle = {
   fontFamily: 'Montserrat-Bold',
   fontSize: TXT_M_SIZE,
   fontWeight: '600',

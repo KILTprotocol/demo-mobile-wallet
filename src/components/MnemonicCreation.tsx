@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import { Identity } from '@kiltprotocol/sdk-js'
 import {
   bodyTxt,
-  sectionTitleTxt,
+  h2,
   titleInvertedClrTxt,
   bodyInvertedClrTxt,
 } from '../sharedStyles/styles.typography'
@@ -62,7 +62,7 @@ class MnemonicCreation extends React.Component<Props, State> {
       <WithIntroBackground>
         <View style={mainViewContainer}>
           <View style={sectionContainer}>
-            <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>
+            <Text style={[h2, titleInvertedClrTxt]}>
               Step 2: Your identity phrase (= seed)
             </Text>
             <MnemonicDisplay mnemonic={mnemonic} />

@@ -13,8 +13,8 @@ import {
 } from '../sharedStyles/styles.layout'
 import {
   bodyTxt,
-  mainTitleTxt,
-  sectionTitleTxt,
+  h1,
+  h2,
   bodyInvertedClrTxt,
   titleInvertedClrTxt,
   emphasizedClrTxt,
@@ -30,12 +30,12 @@ const Introduction = ({ navigation }: IProps): JSX.Element => (
   <WithIntroBackground>
     <View style={mainViewContainer}>
       <View style={sectionContainer}>
-        <Text style={[mainTitleTxt, emphasizedClrTxt]}>
+        <Text style={[h1, emphasizedClrTxt]}>
           KILT - Your credentials for web3.
         </Text>
       </View>
       <View style={sectionContainer}>
-        <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>
+        <Text style={[h2, titleInvertedClrTxt]}>
           This is your very own KILT wallet.
         </Text>
         <Text style={[bodyTxt, bodyInvertedClrTxt]}>
