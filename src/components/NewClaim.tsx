@@ -40,7 +40,7 @@ import { ClaimStatus } from '../_enums'
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { CLR_KILT_0, CLR_TXT } from '../sharedStyles/styles.consts.colors'
 import { sPicker } from '../sharedStyles/styles.pickers'
-import { CTYPE, CLAIMS_TITLE } from '../_config'
+import { CTYPE, CLAIM_CARD_TITLE } from '../_config'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -135,7 +135,7 @@ class NewClaim extends React.Component<Props, State> {
         )
         if (requestForAttestation) {
           addClaimInStore({
-            title: CLAIMS_TITLE,
+            title: CLAIM_CARD_TITLE,
             hash: requestForAttestation.hash,
             cTypeHash: requestForAttestation.ctypeHash.hash,
             status: ClaimStatus.AttestationPending,

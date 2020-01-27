@@ -6,7 +6,7 @@ const POLLING_PERIOD_MS = 3000
 
 const CTYPE = require('./data/ctype.json')
 // display name: used in the Dashboard as a title for each claim card
-const CLAIMS_TITLE = 'Claim'
+const CLAIM_CARD_TITLE = 'Claim'
 
 export {
   BLOCKCHAIN_NODE,
@@ -15,5 +15,5 @@ export {
   CONTACTS_SERVICE_URL,
   POLLING_PERIOD_MS,
   CTYPE,
-  CLAIMS_TITLE,
+  CLAIM_CARD_TITLE,
 }
