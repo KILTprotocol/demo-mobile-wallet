@@ -19,7 +19,7 @@ import { TMapDispatchToProps } from '../_types'
 import WithIntroBackground from '../components/WithIntroBackground'
 import {
   titleInvertedClrTxt,
-  sectionTitleTxt,
+  h2,
   bodyInvertedClrTxt,
   bodyTxt,
 } from '../sharedStyles/styles.typography'
@@ -80,9 +80,7 @@ class UsernameSetup extends React.Component<Props, State> {
       <WithIntroBackground>
         <ScrollView style={mainViewContainer}>
           <View style={sectionContainer}>
-            <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>
-              Step 1 (optional)
-            </Text>
+            <Text style={[h2, titleInvertedClrTxt]}>Step 1 (optional)</Text>
           </View>
           <View style={sectionContainer}>
             <Text style={[bodyTxt, labelTxt]}>Your first name (optional)</Text>

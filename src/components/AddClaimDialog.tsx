@@ -23,7 +23,7 @@ const AddClaimDialog: React.FunctionComponent<Props> = ({
   claimContents,
 }): JSX.Element => (
   <Dialog.Container visible={visible} style={dialogContainer}>
-    <Dialog.Title>Request membership card</Dialog.Title>
+    <Dialog.Title>Create claim & request attestation</Dialog.Title>
     <ClaimForm
       nameDefaultValue={claimContentsDefault[NAME]}
       birthdayValueAsNumber={claimContents[BIRTHDAY]}
