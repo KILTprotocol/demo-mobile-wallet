@@ -10,8 +10,12 @@ export const mainViewContainer: ViewStyle = {
 }
 
 export const sectionContainer: ViewStyle = {
-  marginBottom: 32,
   paddingHorizontal: 12,
+  marginBottom: 32,
+}
+
+export const paddedSection: ViewStyle = {
+  paddingBottom: 10,
 }
 
 /* ---------------------------------- */
