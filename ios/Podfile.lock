@@ -192,6 +192,8 @@ PODS:
     - React
   - react-native-randombytes (3.5.3):
     - React
+  - react-native-segmented-control (1.1.1):
+    - React
   - react-native-udp (2.6.1):
     - React
   - React-RCTActionSheet (0.61.2):
@@ -270,6 +272,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
+  - "react-native-segmented-control (from `../node_modules/@react-native-community/segmented-control`)"
   - react-native-udp (from `../node_modules/react-native-udp`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -331,6 +334,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-randombytes:
     :path: "../node_modules/react-native-randombytes"
+  react-native-segmented-control:
+    :path: "../node_modules/@react-native-community/segmented-control"
   react-native-udp:
     :path: "../node_modules/react-native-udp"
   React-RCTActionSheet:
@@ -394,6 +399,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 111d7d342b07a904c400592e02a2b958f1098b60
   react-native-camera: c529629e3ecd017dcdacfd0355576ef489d9d198
   react-native-randombytes: 3638d24759d67c68f6ccba60c52a7a8a8faa6a23
+  react-native-segmented-control: ce117efd6429051d42a17ddbafa3c7b4b2434aa2
   react-native-udp: 54a1aa9bf5c0824f930b1ba6dbfb3fd3e733bba9
   React-RCTActionSheet: 89b037c0fb7d2671607cb645760164e7e0c013f6
   React-RCTAnimation: e3cefa93c38c004c318f7ec04b883eb14b8b8235
