@@ -14,7 +14,7 @@ import {
   sectionContainer,
   flexRowCenter,
 } from '../sharedStyles/styles.layout'
-import { mainTitleTxt } from '../sharedStyles/styles.typography'
+import { h1 } from '../sharedStyles/styles.typography'
 import WithDefaultBackground from '../components/WithDefaultBackground'
 import AddContactDialog from '../components/AddContactDialog'
 import { addContact } from '../redux/actions'
@@ -53,7 +53,7 @@ class Contacts extends React.Component<Props, State> {
     const { addContactInStore, contactsFromStore } = this.props
     const { newContactAddress, newContactName } = this.state
     if (
-      // the contact doesn't already exists
+      // check if the contact already exists
       !contactsFromStore.some(c => c.address === newContactAddress)
     ) {
       addContactInStore({
@@ -82,7 +82,7 @@ class Contacts extends React.Component<Props, State> {
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>
           <View style={sectionContainer}>
-            <Text style={mainTitleTxt}>Contacts</Text>
+            <Text style={h1}>Contacts</Text>
           </View>
           <View style={sectionContainer}>
             <View style={flexRowCenter}>
