@@ -4,21 +4,20 @@ import {
   RequestForAttestation,
   MessageBodyType,
   Attestation,
+  PublicIdentity,
 } from '@kiltprotocol/sdk-js'
-import { ATTESTER_MNEMONIC } from '../_config'
 import { TClaimContents } from '../_types'
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { singleSend } from './service.messaging'
 
-const ATTESTER_IDENTITY = Identity.buildFromMnemonic(ATTESTER_MNEMONIC)
+const CTYPE = require('../data/ctype.json')
 
-function createMembershipClaim(
+function createClaim(
   claimContents: TClaimContents,
   claimerIdentity: Identity | null
 ): Claim | null {
   if (claimerIdentity) {
-    const ctype = require('../data/ctypeMembership.json')
-    return new Claim(ctype, claimContents, claimerIdentity)
+    return new Claim(CTYPE, claimContents, claimerIdentity)
   }
   return null
 }
@@ -36,10 +35,11 @@ function createRequestForAttestation(
 
 async function sendRequestForAttestation(
   requestForAttestation: RequestForAttestation,
-  identity: Identity
+  claimerIdentity: Identity,
+  attesterIdentity: PublicIdentity
 ): Promise<void> {
   const sender = {
-    identity,
+    identity: claimerIdentity,
     metaData: {
       name: '',
     },
@@ -49,7 +49,7 @@ async function sendRequestForAttestation(
     metaData: {
       name: '',
     },
-    publicIdentity: ATTESTER_IDENTITY,
+    publicIdentity: attesterIdentity,
   }
   await singleSend(
     {
@@ -89,7 +89,7 @@ function formatDateForClaim(inputDate: number): string {
 }
 
 export {
-  createMembershipClaim,
+  createClaim,
   createRequestForAttestation,
   formatDateForClaim,
   sendRequestForAttestation,
