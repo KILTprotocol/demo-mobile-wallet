@@ -13,7 +13,6 @@ import { fill, flexRow, card } from '../sharedStyles/styles.layout'
 import { ClaimStatus } from '../_enums'
 import ClaimStatusBadge from './ClaimStatusBadge'
 import { bodyTxt } from '../sharedStyles/styles.typography'
-import { PREMIUM, NAME, BIRTHDAY } from '../data/claimProperties'
 const claimBckgrdPending = require('../assets/imgs/claimBckgrdPending.jpg')
 const claimBckgrdValid = require('../assets/imgs/claimBckgrdValid.jpg')
 const claimBckgrdRevoked = require('../assets/imgs/claimBckgrdRevoked.jpg')
@@ -71,8 +70,6 @@ const statusToUiMapping = {
   },
 }
 
-const order = [NAME, BIRTHDAY, PREMIUM]
-
 const ClaimCard: React.FunctionComponent<Props> = ({
   title,
   status,
@@ -87,17 +84,14 @@ const ClaimCard: React.FunctionComponent<Props> = ({
         <Text style={titleTxt}>{title}</Text>
         <ClaimStatusBadge status={status} />
         <View style={claimProperties}>
-          {[...Object.entries(contents)]
-            .sort(
-              (entryA, entryB) =>
-                order.indexOf(entryA[0]) - order.indexOf(entryB[0])
-            )
-            .map(([propertyName, propertyValue]) => (
+          {[...Object.entries(contents)].map(
+            ([propertyName, propertyValue]) => (
               <View key={propertyName} style={flexRow}>
                 <Text style={[bodyTxt, label]}>{propertyName}</Text>
-                <Text style={bodyTxt}>{propertyValue.toString()}</Text>
+                <Text style={bodyTxt}>{propertyValue}</Text>
               </View>
-            ))}
+            )
+          )}
         </View>
       </View>
     </ImageBackground>

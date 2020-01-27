@@ -6,7 +6,6 @@ import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { Identity, PublicIdentity, IPublicIdentity } from '@kiltprotocol/sdk-js'
 import ClaimForm from './ClaimForm'
-import { NAME, BIRTHDAY, PREMIUM } from '../data/claimProperties'
 import KiltButton from './KiltButton'
 import {
   NavigationScreenProp,
@@ -41,6 +40,7 @@ import { ClaimStatus } from '../_enums'
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { CLR_KILT_0, CLR_TXT } from '../sharedStyles/styles.consts.colors'
 import { sPicker } from '../sharedStyles/styles.pickers'
+import { CTYPE } from '../_config'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -59,6 +59,31 @@ type State = {
 
 const ATTESTER_METHODS = ['Scan QR Code', 'Select from Contacts']
 
+const propertiesNames = Object.keys(CTYPE.schema.properties)
+const claimProperties = CTYPE.schema.properties
+
+const getDefaultClaimPropertyValue = (type: string, format: string): any => {
+  if (type === 'boolean') {
+    return false
+  } else if (type === 'string' && format === 'date') {
+    return Date.now()
+  } else {
+    return ''
+  }
+}
+
+const claimContentsDefault = propertiesNames.reduce(
+  (acc, claimPropertyName) => ({
+    ...acc,
+    [claimPropertyName]: getDefaultClaimPropertyValue(
+      claimProperties[claimPropertyName].type,
+      claimProperties[claimPropertyName].format
+    ),
+  }),
+  {}
+)
+console.log(claimContentsDefault)
+
 class NewClaim extends React.Component<Props, State> {
   static navigationOptions = {
     title: 'New Claim',
@@ -75,29 +100,25 @@ class NewClaim extends React.Component<Props, State> {
     // ),
   }
 
-  claimContentsDefault = {
-    [NAME]: this.props.usernameFromStore,
-    [BIRTHDAY]: Date.now(),
-    [PREMIUM]: true,
-  }
-
   state = {
-    claimContents: {
-      [NAME]: this.props.usernameFromStore,
-      [BIRTHDAY]: Date.now(),
-      [PREMIUM]: true,
-    },
+    claimContents: claimContentsDefault,
     attesterPublicIdentity: null,
     selectedAttesterMethod: 0,
   }
 
   async createClaimAndRequestAttestation(): Promise<void> {
     const { claimContents, attesterPublicIdentity } = this.state
-    const formattedClaimContents = {
-      name: claimContents.name,
-      premium: claimContents.premium,
-      birthday: formatDateForClaim(claimContents.birthday),
-    }
+    const formattedClaimContents = Object.keys(claimContents).reduce(
+      (acc, propertyName) => {
+        const propertyValue =
+          claimProperties[propertyName].format === 'date'
+            ? formatDateForClaim(claimContents[propertyName])
+            : claimContents[propertyName]
+        return { ...acc, [propertyName]: propertyValue }
+      },
+      {}
+    )
+
     const { identityFromStore, addClaimInStore } = this.props
     try {
       if (identityFromStore && attesterPublicIdentity) {
@@ -152,15 +173,13 @@ class NewClaim extends React.Component<Props, State> {
       selectedAttesterMethod,
     } = this.state
     const { contactsFromStore, navigation } = this.props
-    console.log('NAV', navigation)
     return (
       <ScrollView style={mainViewContainer}>
         <Text style={h2}>Data</Text>
         <Text style={bodyTxt}>Fill in data for your claim.</Text>
         <ClaimForm
-          nameDefaultValue={this.claimContentsDefault[NAME]}
-          birthdayValueAsNumber={claimContents[BIRTHDAY]}
-          premiumValue={claimContents[PREMIUM]}
+          claimContents={claimContents}
+          claimProperties={claimProperties}
           onChangeValue={(value, claimPropertyId) => {
             this.onChangeClaimContentsInputs(value, claimPropertyId)
           }}

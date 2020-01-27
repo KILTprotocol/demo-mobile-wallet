@@ -37,11 +37,7 @@ export type THashAndClaimStatus = {
   hash: string
 }
 
-export type TClaimContents = {
-  name: string
-  birthday: number
-  type: string
-}
+export type TClaimContents = object
 
 export type TClaimMapByHash = { [key: string]: TClaim }
 

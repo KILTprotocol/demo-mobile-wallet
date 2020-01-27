@@ -9,8 +9,7 @@ import {
 import { TClaimContents } from '../_types'
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { singleSend } from './service.messaging'
-
-const CTYPE = require('../data/ctype.json')
+import { CTYPE } from '../_config'
 
 function createClaim(
   claimContents: TClaimContents,
