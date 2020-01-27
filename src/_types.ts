@@ -167,6 +167,7 @@ export type TMapDispatchToProps = {
 
 export type TMapStateToProps = {
   balanceFromStore: number
+  contactsFromStore: TContact[]
   identityFromStore: Identity
   publicIdentityFromStore: PublicIdentity
   claimsMapFromStore: TClaimMapByHash
