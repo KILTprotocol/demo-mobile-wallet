@@ -5,6 +5,8 @@ const MESSAGING_INBOX_URL = `${MESSAGING_SERVICE_URL}/inbox`
 const POLLING_PERIOD_MS = 3000
 
 const CTYPE = require('./data/ctype.json')
+// display name: used in the Dashboard as a title for each claim card
+const CLAIMS_TITLE = 'Claim'
 
 export {
   BLOCKCHAIN_NODE,
@@ -13,4 +15,5 @@ export {
   CONTACTS_SERVICE_URL,
   POLLING_PERIOD_MS,
   CTYPE,
+  CLAIMS_TITLE,
 }

@@ -18,12 +18,12 @@ export default class ClaimList extends React.Component<Props> {
           ...claims.sort((claimA, claimB) =>
             claimA.requestTimestamp > claimB.requestTimestamp ? -1 : 1
           ),
-        ].map((cred: TClaim) => (
-          <View style={sectionContainer} key={cred.hash}>
+        ].map((claim: TClaim) => (
+          <View style={sectionContainer} key={claim.hash}>
             <ClaimCard
-              title={cred.title}
-              status={cred.status}
-              contents={cred.contents}
+              title={claim.title}
+              status={claim.status}
+              contents={claim.contents}
             />
           </View>
         ))}
