@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { ACCOUNT, CONTACTS, DASHBOARD, SETTINGS } from '../../_routes'
 import Account from '../../containers/Account'
-import Dashboard from '../../containers/Dashboard'
+import DashboardStack from './DashboardStack'
 import Contacts from '../../containers/Contacts'
 import Settings from '../../containers/Settings'
 import { TXT_XS_SIZE } from '../../sharedStyles/styles.consts.typography'
@@ -26,7 +26,7 @@ const tabBarOptions = {
 
 const AppTabs = createBottomTabNavigator(
   {
-    [DASHBOARD]: Dashboard,
+    [DASHBOARD]: DashboardStack,
     [ACCOUNT]: Account,
     [CONTACTS]: Contacts,
     [SETTINGS]: Settings,
