@@ -30,7 +30,7 @@ export default function claimsReducer(
       }
     case UPDATE_CLAIM_STATUS:
       console.info(
-        '[CLAIM REDUCER] Updating credential status:',
+        '[CLAIM REDUCER] Updating claim status:',
         action.payload.hash
       )
       const { hash: claimHash, status: claimStatus } = action.payload
@@ -39,7 +39,7 @@ export default function claimsReducer(
         ...state,
         claimsMap: {
           ...state.claimsMap,
-          // only update the credential if a relevant update msg is sent
+          // only update the claim if a relevant update msg is sent
           ...(claimToUpdate && {
             [claimHash]: {
               ...claimToUpdate,

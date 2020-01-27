@@ -16,10 +16,7 @@ import {
   sectionContainer,
   flexRowEnd,
 } from '../sharedStyles/styles.layout'
-import {
-  sectionTitleTxt,
-  titleInvertedClrTxt,
-} from '../sharedStyles/styles.typography'
+import { h2, titleInvertedClrTxt } from '../sharedStyles/styles.typography'
 import IdentitySetupSubstep from '../components/IdentitySetupSubstep'
 import { setPublicIdentity, setIdentity } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
@@ -153,7 +150,7 @@ class IdentitySetup extends React.Component<Props, State> {
       <WithIntroBackground>
         <View style={mainViewContainer}>
           <View style={sectionContainer}>
-            <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>
+            <Text style={[h2, titleInvertedClrTxt]}>
               Step 3: Knitting your KILT account together
             </Text>
           </View>
