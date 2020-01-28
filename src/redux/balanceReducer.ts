@@ -1,5 +1,5 @@
 import { UPDATE_BALANCE, RESET_BALANCE } from './actionTypes'
-import { TAppAction } from '../_types'
+import { TAppAction } from '../types'
 import { TAppState } from './reducers'
 
 const balanceDefault = 0

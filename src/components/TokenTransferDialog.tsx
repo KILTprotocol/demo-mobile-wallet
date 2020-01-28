@@ -3,20 +3,20 @@ import Dialog from 'react-native-dialog'
 import { Text, View, ViewStyle } from 'react-native'
 import { dialogContainer, dialogSection } from '../sharedStyles/styles.dialog'
 import LoadingIndicator from '../components/LoadingIndicator'
-import { AsyncStatus } from '../_enums'
+import { AsyncStatus } from '../enums'
 import TxtCentered from '../components/TxtCentered'
 import {
   txtSuccess,
   bodyTxt,
   txtError,
-  inputTxt,
 } from '../sharedStyles/styles.typography'
 import { flexRowCenter } from '../sharedStyles/styles.layout'
 import { disabledButton } from '../sharedStyles/styles.buttons'
 import AddressDisplay from '../components/AddressDisplay'
 import QrCodeScanner from '../components/QrCodeScanner'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
-import { CLR_PRIMARY } from '../_custom/theme'
+import { CONFIG_THEME } from '../config'
+import { inputTxt } from '../sharedStyles/styles.form'
 
 const contentContainer: ViewStyle = {
   height: 150,
@@ -63,7 +63,7 @@ class TokenTransferDialog extends React.Component<Props> {
           keyboardType="decimal-pad"
           label="Amount to transfer in KILT tokens (transaction cost = 1 Token):"
           returnKeyType="done"
-          selectionColor={CLR_PRIMARY}
+          selectionColor={CONFIG_THEME.CLR_PRIMARY}
           style={inputTxt}
           onChangeText={tokenAmountToTransfer =>
             onChangeTokenAmountToTransfer(

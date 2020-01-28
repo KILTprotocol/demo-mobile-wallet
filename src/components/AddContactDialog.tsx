@@ -1,6 +1,7 @@
 import React from 'react'
 import Dialog from 'react-native-dialog'
 import { View, Text } from 'react-native'
+import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 import {
   dialogContainer,
   dialogSection,
@@ -8,9 +9,8 @@ import {
 } from '../sharedStyles/styles.dialog'
 import AddressDisplay from './AddressDisplay'
 import QrCodeScanner from './QrCodeScanner'
-import { inputTxt } from '../sharedStyles/styles.typography'
-import { IPublicIdentity } from '@kiltprotocol/sdk-js'
-import { CLR_PRIMARY } from '../_custom/theme'
+import { inputTxt } from '../sharedStyles/styles.form'
+import { CONFIG_THEME } from '../config'
 
 type Props = {
   onPressCancel: () => void
@@ -56,7 +56,7 @@ const AddContactDialog: React.FunctionComponent<Props> = ({
       spellCheck={false}
       autoCorrect={false}
       style={inputTxt}
-      selectionColor={CLR_PRIMARY}
+      selectionColor={CONFIG_THEME.CLR_PRIMARY}
     />
     <Dialog.Button onPress={onPressCancel} label="Cancel" />
     <Dialog.Button

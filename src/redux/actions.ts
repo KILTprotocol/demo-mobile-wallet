@@ -16,7 +16,7 @@ import {
   RESET_LAST_VISITED_ROUTE,
   UPDATE_LAST_VISITED_ROUTE,
 } from './actionTypes'
-import { TAppAction, TClaim, THashAndClaimStatus, TContact } from '../_types'
+import { TAppAction, TClaim, THashAndClaimStatus, TContact } from '../types'
 
 /* ---------------------------------- */
 /*              Identity              */

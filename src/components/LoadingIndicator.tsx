@@ -1,7 +1,7 @@
 import React from 'react'
 import { PulseIndicator } from 'react-native-indicators'
-import { LoadingIndicatorSize } from '../_enums'
-import { CLR_PRIMARY } from '../_custom/theme'
+import { LoadingIndicatorSize } from '../enums'
+import { CONFIG_THEME } from '../config'
 
 const SIZE_DEFAULT = 40
 const sizes = {
@@ -19,6 +19,8 @@ type Props = {
 
 const LoadingIndicator: React.FunctionComponent<Props> = ({
   size,
-}): JSX.Element => <PulseIndicator color={CLR_PRIMARY} size={getSize(size)} />
+}): JSX.Element => (
+  <PulseIndicator color={CONFIG_THEME.CLR_PRIMARY} size={getSize(size)} />
+)
 
 export default LoadingIndicator

@@ -6,17 +6,17 @@ import {
   Attestation,
   PublicIdentity,
 } from '@kiltprotocol/sdk-js'
-import { TClaimContents } from '../_types'
+import { TClaimContents } from '../types'
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { singleSend } from './service.messaging'
-import { CTYPE } from '../_config'
+import { CONFIG_CLAIM } from '../config'
 
 function createClaim(
   claimContents: TClaimContents,
   claimerIdentity: Identity | null
 ): Claim | null {
   if (claimerIdentity) {
-    return new Claim(CTYPE, claimContents, claimerIdentity)
+    return new Claim(CONFIG_CLAIM.CTYPE, claimContents, claimerIdentity)
   }
   return null
 }

@@ -10,7 +10,7 @@ import {
 } from './styles.consts.colors'
 import { TextStyle } from 'react-native'
 import { TXT_S_SIZE, TXT_M_SIZE, TXT_L_SIZE } from './styles.consts.typography'
-import { CLR_PRIMARY, CLR_PRIMARY_LIGHT } from '../_custom/theme'
+import { CONFIG_THEME } from '../config'
 
 /* ---------------------------------- */
 /*           Titles + Body            */
@@ -77,8 +77,8 @@ export const emptyStateBodyTxt: TextStyle = {
 export const bodyEmphasizedTxt: TextStyle = {
   fontSize: TXT_M_SIZE,
   fontWeight: '400',
-  color: CLR_PRIMARY,
-  backgroundColor: CLR_PRIMARY_LIGHT,
+  color: CONFIG_THEME.CLR_PRIMARY,
+  backgroundColor: CONFIG_THEME.CLR_PRIMARY_LIGHT,
   paddingVertical: 2,
   paddingHorizontal: 3,
 }
@@ -92,7 +92,7 @@ export const bodyInvertedClrTxt: TextStyle = {
 }
 
 export const emphasizedClrTxt: TextStyle = {
-  color: CLR_PRIMARY,
+  color: CONFIG_THEME.CLR_PRIMARY,
 }
 
 /* ---------------------------------- */
@@ -112,5 +112,5 @@ export const txtError: TextStyle = {
 }
 
 export const txtPending: TextStyle = {
-  color: CLR_PRIMARY,
+  color: CONFIG_THEME.CLR_PRIMARY,
 }

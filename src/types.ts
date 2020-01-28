@@ -16,7 +16,7 @@ import {
   RESET_LAST_VISITED_ROUTE,
   UPDATE_LAST_VISITED_ROUTE,
 } from './redux/actionTypes'
-import { ClaimStatus } from './_enums'
+import { ClaimStatus } from './enums'
 
 /* ---------------------------------- */
 /*               Claims               */

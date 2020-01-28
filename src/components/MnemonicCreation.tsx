@@ -12,7 +12,7 @@ import {
   mainViewContainer,
   sectionContainer,
 } from '../sharedStyles/styles.layout'
-import { IDENTITY_SETUP } from '../_routes'
+import { IDENTITY_SETUP } from '../routes'
 import MnemonicDialog from '../components/MnemonicDialog'
 import MnemonicDisplay from '../components/MnemonicDisplay'
 import {
@@ -22,7 +22,7 @@ import {
 } from 'react-navigation'
 import KiltButton from '../components/KiltButton'
 import WithIntroBackground from '../components/WithIntroBackground'
-import { MNEMONIC } from '../_routeParameters'
+import { MNEMONIC } from '../routeParameters'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>

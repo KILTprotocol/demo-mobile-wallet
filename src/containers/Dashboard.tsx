@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from 'react-navigation'
 import { TAppState } from '../redux/reducers'
-import { ClaimStatus } from '../_enums'
+import { ClaimStatus } from '../enums'
 import KiltButton from '../components/KiltButton'
 import {
   mainViewContainer,
@@ -22,11 +22,11 @@ import {
   checkAttestationExistsOnChain,
 } from '../services/service.claim'
 import { updateClaimStatus } from '../redux/actions'
-import { THashAndClaimStatus, TClaimMapByHash } from '../_types'
+import { THashAndClaimStatus, TClaimMapByHash } from '../types'
 import ClaimList from '../components/ClaimList'
-import { POLLING_PERIOD_MS } from '../_config'
-import { TMapDispatchToProps, TMapStateToProps } from '../_types'
-import { NEW_CLAIM } from '../_routes'
+import { TMapDispatchToProps, TMapStateToProps } from '../types'
+import { NEW_CLAIM } from '../routes'
+import { CONFIG_ENDPOINTS } from '../config'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -45,7 +45,7 @@ class Dashboard extends React.Component<Props> {
     // polling for new messages
     Dashboard.interval = setInterval(
       this.queryChainAndUpdateClaimsInStore,
-      POLLING_PERIOD_MS
+      CONFIG_ENDPOINTS.POLLING_PERIOD_MS
     )
   }
 

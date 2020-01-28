@@ -15,7 +15,7 @@ import {
   flexRowEnd,
 } from '../sharedStyles/styles.layout'
 import { setUsername } from '../redux/actions'
-import { TMapDispatchToProps } from '../_types'
+import { TMapDispatchToProps } from '../types'
 import WithIntroBackground from '../components/WithIntroBackground'
 import {
   titleInvertedClrTxt,
@@ -23,8 +23,8 @@ import {
   bodyInvertedClrTxt,
   bodyTxt,
 } from '../sharedStyles/styles.typography'
-import { MNEMONIC_CREATION } from '../_routes'
-import { CLR_PRIMARY } from '../_custom/theme'
+import { MNEMONIC_CREATION } from '../routes'
+import { CONFIG_THEME } from '../config'
 import { labelTxt, input } from '../sharedStyles/styles.form'
 
 type Props = {
@@ -73,7 +73,7 @@ class UsernameSetup extends React.Component<Props, State> {
               autoFocus
               onChangeText={username => this.onChangeUsername(username)}
               returnKeyType="done"
-              selectionColor={CLR_PRIMARY}
+              selectionColor={CONFIG_THEME.CLR_PRIMARY}
               spellCheck={false}
               style={[bodyTxt, bodyInvertedClrTxt, input]}
             />

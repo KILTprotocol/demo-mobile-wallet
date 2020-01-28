@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import { sectionContainer } from '../sharedStyles/styles.layout'
 import ClaimCard from './ClaimCard'
-import { TClaim } from '../_types'
+import { TClaim } from '../types'
 
 type Props = {
   claims: TClaim[]

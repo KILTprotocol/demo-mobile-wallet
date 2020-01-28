@@ -1,21 +1,18 @@
 import React from 'react'
 import { ImageBackground, View, Image } from 'react-native'
 import { fill, fillCenter } from '../sharedStyles/styles.layout'
-import {
-  LOGO_HORIZONTAL_WIDTH,
-  LOGO_HORIZONTAL_HEIGHT,
-} from '../_custom/config.styles'
+import { CONFIG_THEME } from '../config'
 
 const mainBckgrdImgDark = require('../assets/imgs/mainBckgrdImgDark.jpg')
-const logo = require('../_custom/logo_horizontal.png')
+const logo = require('../assets/imgs/logo/logo_horizontal.png')
 
 const LockScreen: React.FunctionComponent = (): JSX.Element => (
   <ImageBackground source={mainBckgrdImgDark} style={fill}>
     <View style={fillCenter}>
       <Image
         style={{
-          width: LOGO_HORIZONTAL_WIDTH,
-          height: LOGO_HORIZONTAL_HEIGHT,
+          width: CONFIG_THEME.LOGO_HORIZONTAL_WIDTH,
+          height: CONFIG_THEME.LOGO_HORIZONTAL_HEIGHT,
         }}
         source={logo}
       />

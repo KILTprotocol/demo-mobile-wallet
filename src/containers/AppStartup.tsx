@@ -17,10 +17,10 @@ import {
   MNEMONIC_CREATION,
   INTRODUCTION,
   USERNAME_SETUP,
-} from '../_routes'
+} from '../routes'
 import { mainViewContainer, fillCenter } from '../sharedStyles/styles.layout'
 import { TAppState } from '../redux/reducers'
-import { TMapStateToProps } from '../_types'
+import { TMapStateToProps } from '../types'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>

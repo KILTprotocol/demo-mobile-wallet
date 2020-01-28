@@ -6,7 +6,7 @@ import {
   card,
   flexRowCenter,
 } from '../sharedStyles/styles.layout'
-import { TContact } from '../_types'
+import { TContact } from '../types'
 import { bodyTxt } from '../sharedStyles/styles.typography'
 import { CLR_TXT_INVERTED } from '../sharedStyles/styles.consts.colors'
 import { MIN_SIZE_TOUCHABLE } from '../sharedStyles/styles.consts.touchable'

@@ -31,7 +31,7 @@ import {
   THashAndClaimStatus,
   TClaimContents,
   TContact,
-} from '../_types'
+} from '../types'
 import { TAppState } from '../redux/reducers'
 import { addClaim, updateClaimStatus } from '../redux/actions'
 import AddressDisplay from './AddressDisplay'
@@ -41,12 +41,11 @@ import {
   createRequestForAttestation,
   sendRequestForAttestation,
 } from '../services/service.claim'
-import { ClaimStatus } from '../_enums'
+import { ClaimStatus } from '../enums'
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { CLR_TXT } from '../sharedStyles/styles.consts.colors'
 import { sPicker } from '../sharedStyles/styles.form'
-import { CTYPE, CLAIM_CARD_TITLE } from '../_config'
-import { CLR_PRIMARY } from '../_custom/theme'
+import { CONFIG_THEME, CONFIG_CLAIM } from '../config'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -65,8 +64,8 @@ type State = {
 
 const ATTESTER_METHODS = ['Scan QR Code', 'Select from Contacts']
 
-const propertiesNames = Object.keys(CTYPE.schema.properties)
-const claimProperties = CTYPE.schema.properties
+const propertiesNames = Object.keys(CONFIG_CLAIM.CTYPE.schema.properties)
+const claimProperties = CONFIG_CLAIM.CTYPE.schema.properties
 
 const getDefaultClaimPropertyValue = (type: string, format: string): any => {
   if (type === 'boolean') {
@@ -139,9 +138,9 @@ class NewClaim extends React.Component<Props, State> {
           claim,
           identityFromStore
         )
-        if (requestForAttestation) {
+        if (requestForAttestation && attesterPublicIdentity) {
           addClaimInStore({
-            title: CLAIM_CARD_TITLE,
+            title: CONFIG_CLAIM.CLAIM_CARD_TITLE,
             hash: requestForAttestation.hash,
             cTypeHash: requestForAttestation.ctypeHash.hash,
             status: ClaimStatus.AttestationPending,
@@ -194,25 +193,31 @@ class NewClaim extends React.Component<Props, State> {
         />
         <View style={sectionContainer}>
           <Text style={h2}>Attester</Text>
-          <Text style={bodyTxt}>Define the attester for your claim.</Text>
-          <SegmentedControlIOS
-            tintColor={CLR_PRIMARY}
-            textColor={CLR_TXT}
-            style={{
-              height: 44,
-              fontSize: 40,
-              marginTop: 24,
-              marginBottom: 12,
-              borderRadius: 2,
-            }}
-            values={ATTESTER_METHODS}
-            selectedIndex={this.state.selectedAttesterMethod}
-            onChange={event => {
-              this.setState({
-                selectedAttesterMethod: event.nativeEvent.selectedSegmentIndex,
-              })
-            }}
-          />
+          {!attesterPublicIdentity && (
+            <>
+              <Text style={bodyTxt}>Define the attester for your claim.</Text>
+              <SegmentedControlIOS
+                tintColor={CONFIG_THEME.CLR_PRIMARY}
+                textColor={CLR_TXT}
+                style={{
+                  height: 44,
+                  fontSize: 40,
+                  marginTop: 24,
+                  marginBottom: 12,
+                  borderRadius: 2,
+                }}
+                values={ATTESTER_METHODS}
+                selectedIndex={this.state.selectedAttesterMethod}
+                onChange={event => {
+                  this.setState({
+                    selectedAttesterMethod:
+                      event.nativeEvent.selectedSegmentIndex,
+                  })
+                }}
+              />
+            </>
+          )}
+
           {selectedAttesterMethod === 0 ? (
             attesterPublicIdentity ? (
               <AddressDisplay address={attesterPublicIdentity.address} />
@@ -252,7 +257,7 @@ class NewClaim extends React.Component<Props, State> {
           )}
           <View style={paddedVerticalM}>
             <KiltButton
-              disabled
+              disabled={!attesterPublicIdentity}
               onPress={async () => {
                 await this.createClaimAndRequestAttestation()
                 navigation.goBack()

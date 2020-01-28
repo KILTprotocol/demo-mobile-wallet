@@ -1,5 +1,5 @@
 import { RESET_USERNAME, SET_USERNAME } from './actionTypes'
-import { TAppAction } from '../_types'
+import { TAppAction } from '../types'
 import { TAppState } from './reducers'
 
 const usernameDefault = 'MOBILE_WALLET_CLAIMER'

@@ -3,7 +3,7 @@ import {
   DELETE_ALL_CLAIMS,
   UPDATE_CLAIM_STATUS,
 } from './actionTypes'
-import { TAppAction, TClaimMapByHash } from '../_types'
+import { TAppAction, TClaimMapByHash } from '../types'
 import { TAppState } from './reducers'
 
 const INITIAL_STATE = {

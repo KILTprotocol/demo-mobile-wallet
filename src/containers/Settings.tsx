@@ -17,7 +17,7 @@ import {
   flexRowCenter,
 } from '../sharedStyles/styles.layout'
 import { h1 } from '../sharedStyles/styles.typography'
-import { APP_STARTUP } from '../_routes'
+import { APP_STARTUP } from '../routes'
 import {
   resetBalance,
   resetIdentity,
@@ -25,9 +25,9 @@ import {
   resetPublicIdentity,
   deleteAllContacts,
 } from '../redux/actions'
-import { TMapDispatchToProps, TMapStateToProps } from '../_types'
+import { TMapDispatchToProps, TMapStateToProps } from '../types'
 import { TAppState } from '../redux/reducers'
-import { ButtonType } from '../_enums'
+import { ButtonType } from '../enums'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>

@@ -7,7 +7,7 @@ import {
   CLR_CLAIM_REVOKED,
   CLR_TXT_INVERTED,
 } from '../sharedStyles/styles.consts.colors'
-import { ClaimStatus } from '../_enums'
+import { ClaimStatus } from '../enums'
 import { TXT_XXS_SIZE } from '../sharedStyles/styles.consts.typography'
 
 type Props = {

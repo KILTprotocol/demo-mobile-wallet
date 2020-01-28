@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { AppState, ImageBackground, Image, View } from 'react-native'
+import { AppState } from 'react-native'
 import { createAppContainer } from 'react-navigation'
 import * as Kilt from '@kiltprotocol/sdk-js'
 import {
@@ -10,21 +10,20 @@ import {
   Balance,
   PublicIdentity,
 } from '@kiltprotocol/sdk-js'
-import { fill, fillCenter } from '../sharedStyles/styles.layout'
 import {
   setIdentity,
   resetIdentity,
   updateBalance,
   updateLastVisitedRoute,
 } from '../redux/actions'
-import { TMapDispatchToProps } from '../_types'
+import { TMapDispatchToProps } from '../types'
 import { TAppState } from '../redux/reducers'
-import { BLOCKCHAIN_NODE } from '../_config'
+import { CONFIG_ENDPOINTS } from '../config'
 import {
   balanceListener,
   getBalanceInKiltCoins,
 } from '../services/service.balance'
-import { AppLockStatus } from '../_enums'
+import { AppLockStatus } from '../enums'
 import {
   getCurrentRoute,
   setTopLevelNavigator,
@@ -98,11 +97,13 @@ class AppRoot extends React.Component<Props> {
 
   async disconnect(): Promise<void> {
     console.info('[SOCKET] Try disconnecting...')
-    const blockchain = await BlockchainApiConnection.getCached(BLOCKCHAIN_NODE)
+    const blockchain = await BlockchainApiConnection.getCached(
+      CONFIG_ENDPOINTS.BLOCKCHAIN_NODE
+    )
     if (blockchain) {
       try {
         await blockchain.api.disconnect()
-        Kilt.BlockchainApiConnection.clearCache()
+        // Kilt.BlockchainApiConnection.clearCache()
         console.info('[SOCKET] OK disconnected')
       } catch (error) {
         console.info('[SOCKET] Error:', error)
@@ -114,7 +115,7 @@ class AppRoot extends React.Component<Props> {
     const { publicIdentityFromStore } = this.props
     if (publicIdentityFromStore) {
       console.info('[SOCKET] Connecting and listening...')
-      await Kilt.default.connect(BLOCKCHAIN_NODE)
+      await Kilt.default.connect(CONFIG_ENDPOINTS.BLOCKCHAIN_NODE)
       await Balance.listenToBalanceChanges(
         publicIdentityFromStore.address,
         balanceListener

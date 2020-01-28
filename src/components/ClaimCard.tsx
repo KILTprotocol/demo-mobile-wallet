@@ -10,7 +10,7 @@ import {
 import { TXT_S_SIZE } from '../sharedStyles/styles.consts.typography'
 import { CLR_TXT, CLR_TXT_LIGHT } from '../sharedStyles/styles.consts.colors'
 import { fill, flexRow, card } from '../sharedStyles/styles.layout'
-import { ClaimStatus } from '../_enums'
+import { ClaimStatus } from '../enums'
 import ClaimStatusBadge from './ClaimStatusBadge'
 import { bodyTxt } from '../sharedStyles/styles.typography'
 const claimBckgrdPending = require('../assets/imgs/claimBckgrdPending.jpg')

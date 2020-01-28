@@ -19,7 +19,7 @@ import WithDefaultBackground from '../components/WithDefaultBackground'
 import AddContactDialog from '../components/AddContactDialog'
 import { addContact } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
-import { TMapDispatchToProps, TContact } from '../_types'
+import { TMapDispatchToProps, TContact } from '../types'
 import ContactList from '../components/ContactList'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 

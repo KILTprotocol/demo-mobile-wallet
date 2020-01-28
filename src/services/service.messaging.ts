@@ -7,7 +7,7 @@ import {
   PublicIdentity,
   MessageBody,
 } from '@kiltprotocol/sdk-js'
-import { MESSAGING_SERVICE_URL } from '../_config'
+import { CONFIG_ENDPOINTS } from '../config'
 
 export const BaseFetchParams: Partial<RequestInit> = {
   cache: 'no-cache',
@@ -70,7 +70,7 @@ export async function singleSend(
       sender.identity,
       receiver.publicIdentity
     )
-    return fetch(`${MESSAGING_SERVICE_URL}`, {
+    return fetch(`${CONFIG_ENDPOINTS.MESSAGING_SERVICE_URL_FALLBACK}`, {
       ...BasePostParams,
       body: JSON.stringify(message.getEncryptedMessage()),
     })

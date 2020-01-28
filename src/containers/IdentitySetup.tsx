@@ -8,8 +8,8 @@ import {
   NavigationState,
   NavigationParams,
 } from 'react-navigation'
-import { AsyncStatus } from '../_enums'
-import { DASHBOARD } from '../_routes'
+import { AsyncStatus } from '../enums'
+import { DASHBOARD } from '../routes'
 import KiltButton from '../components/KiltButton'
 import {
   mainViewContainer,
@@ -21,14 +21,14 @@ import IdentitySetupSubstep from '../components/IdentitySetupSubstep'
 import { setPublicIdentity, setIdentity } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
 import WithIntroBackground from '../components/WithIntroBackground'
-import { TMapDispatchToProps, TMapStateToProps } from '../_types'
+import { TMapDispatchToProps, TMapStateToProps } from '../types'
 import { saveIdentityAsContactInDemoServices } from '../services/service.demo'
 import {
   setIdentityEncrypted,
   promptUserAndGetIdentityDecrypted,
 } from '../services/service.keychain'
 import { createIdentity } from '../utils/utils.identity'
-import { MNEMONIC } from '../_routeParameters'
+import { MNEMONIC } from '../routeParameters'
 import { delay } from '../utils/utils.async'
 
 type Props = {

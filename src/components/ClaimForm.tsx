@@ -5,7 +5,7 @@ import { CLR_TXT_MEDIUM } from '../sharedStyles/styles.consts.colors'
 import { sPicker, lPicker } from '../sharedStyles/styles.form'
 import { paddedBottomS } from '../sharedStyles/styles.layout'
 import { TXT_XS_SIZE } from '../sharedStyles/styles.consts.typography'
-import { CLR_PRIMARY } from '../_custom/theme'
+import { CONFIG_THEME } from '../config'
 import { input } from '../sharedStyles/styles.form'
 
 type Props = {
@@ -29,7 +29,7 @@ const claimFormItemMap = {
         returnKeyType="done"
         onChangeText={txt => onChangeValue(txt, propertyName)}
         style={input}
-        selectionColor={CLR_PRIMARY}
+        selectionColor={CONFIG_THEME.CLR_PRIMARY}
       />
     </>
   ),
@@ -69,13 +69,13 @@ const ClaimForm: React.FunctionComponent<Props> = ({
   return (
     <>
       {Object.keys(claimProperties).map(propertyName => {
-        const type = claimProperties[propertyName].type
-        const format = claimProperties[propertyName].format
-        const func = claimFormItemMap[`${type}${format ? format : ''}`]
+        const { format, type } = claimProperties[propertyName]
+        const componentFunction =
+          claimFormItemMap[`${type}${format ? format : ''}`]
         const value = claimContents[propertyName]
         return (
-          <View style={paddedBottomS}>
-            {func(propertyName, onChangeValue, value)}
+          <View style={paddedBottomS} key={propertyName}>
+            {componentFunction(propertyName, onChangeValue, value)}
           </View>
         )
       })}
