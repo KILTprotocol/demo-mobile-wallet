@@ -1,7 +1,6 @@
 import React from 'react'
 import { Text, View, Picker } from 'react-native'
 import SegmentedControlIOS from '@react-native-community/segmented-control'
-import { QRCode } from 'react-native-custom-qr-codes'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { Identity, PublicIdentity, IPublicIdentity } from '@kiltprotocol/sdk-js'
@@ -13,10 +12,16 @@ import {
   NavigationParams,
   ScrollView,
 } from 'react-navigation'
-import { h2, bodyTxt } from '../sharedStyles/styles.typography'
+import {
+  h2,
+  bodyTxt,
+  emptyStateBodyTxt,
+} from '../sharedStyles/styles.typography'
 import {
   mainViewContainer,
   sectionContainer,
+  paddedVerticalM,
+  paddedBottomM,
 } from '../sharedStyles/styles.layout'
 import QrCodeScanner from './QrCodeScanner'
 import {
@@ -39,7 +44,7 @@ import {
 import { ClaimStatus } from '../_enums'
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { CLR_TXT } from '../sharedStyles/styles.consts.colors'
-import { sPicker } from '../sharedStyles/styles.pickers'
+import { sPicker } from '../sharedStyles/styles.form'
 import { CTYPE, CLAIM_CARD_TITLE } from '../_config'
 import { CLR_PRIMARY } from '../_custom/theme'
 
@@ -177,7 +182,9 @@ class NewClaim extends React.Component<Props, State> {
     return (
       <ScrollView style={mainViewContainer}>
         <Text style={h2}>Data</Text>
-        <Text style={bodyTxt}>Fill in data for your claim.</Text>
+        <View style={paddedBottomM}>
+          <Text style={bodyTxt}>Fill in data for your claim.</Text>
+        </View>
         <ClaimForm
           claimContents={claimContents}
           claimProperties={claimProperties}
@@ -196,6 +203,7 @@ class NewClaim extends React.Component<Props, State> {
               fontSize: 40,
               marginTop: 24,
               marginBottom: 12,
+              borderRadius: 2,
             }}
             values={ATTESTER_METHODS}
             selectedIndex={this.state.selectedAttesterMethod}
@@ -221,7 +229,7 @@ class NewClaim extends React.Component<Props, State> {
                 }}
               />
             )
-          ) : (
+          ) : contactsFromStore.length > 0 ? (
             <Picker
               itemStyle={sPicker}
               style={sPicker}
@@ -237,14 +245,21 @@ class NewClaim extends React.Component<Props, State> {
                 />
               ))}
             </Picker>
+          ) : (
+            <View style={paddedVerticalM}>
+              <Text style={emptyStateBodyTxt}>No contacts yet.</Text>
+            </View>
           )}
-          <KiltButton
-            onPress={async () => {
-              await this.createClaimAndRequestAttestation()
-              navigation.goBack()
-            }}
-            title="✓ Send"
-          />
+          <View style={paddedVerticalM}>
+            <KiltButton
+              disabled
+              onPress={async () => {
+                await this.createClaimAndRequestAttestation()
+                navigation.goBack()
+              }}
+              title="✓ OK, send Claim to Attester"
+            />
+          </View>
         </View>
       </ScrollView>
     )

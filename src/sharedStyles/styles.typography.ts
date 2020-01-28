@@ -1,16 +1,20 @@
 import {
   CLR_TXT,
-  CLR_PRIMARY,
-  CLR_PRIMARY_LIGHT,
   CLR_TXT_STANDOUT,
   CLR_TXT_INVERTED,
   CLR_TXT_INVERTED_LIGHT_STANDOUT,
   CLR_TXT_INVERTED_LIGHT,
   CLR_SUCCESS,
   CLR_ERROR,
+  CLR_TXT_LIGHT,
 } from './styles.consts.colors'
 import { TextStyle } from 'react-native'
 import { TXT_S_SIZE, TXT_M_SIZE, TXT_L_SIZE } from './styles.consts.typography'
+import { CLR_PRIMARY, CLR_PRIMARY_LIGHT } from '../_custom/theme'
+
+/* ---------------------------------- */
+/*           Titles + Body            */
+/* ---------------------------------- */
 
 export const h1: TextStyle = {
   fontFamily: 'Montserrat-Bold',
@@ -36,7 +40,9 @@ export const bodyTxt: TextStyle = {
   color: CLR_TXT,
 }
 
-export const inputTxt = bodyTxt
+/* ---------------------------------- */
+/*             Text sizes             */
+/* ---------------------------------- */
 
 export const mTxt: TextStyle = {
   fontSize: TXT_M_SIZE,
@@ -46,12 +52,26 @@ export const lTxt: TextStyle = {
   fontSize: TXT_L_SIZE,
 }
 
+/* ---------------------------------- */
+/*                Misc                */
+/* ---------------------------------- */
+
 export const boldTxt: TextStyle = {
   fontWeight: '900',
 }
 
 export const disabledTxt: TextStyle = {
   color: 'grey',
+}
+
+export const txtCentered: TextStyle = {
+  textAlign: 'center',
+}
+
+export const emptyStateBodyTxt: TextStyle = {
+  ...bodyTxt,
+  ...txtCentered,
+  color: CLR_TXT_LIGHT,
 }
 
 export const bodyEmphasizedTxt: TextStyle = {
@@ -73,10 +93,6 @@ export const bodyInvertedClrTxt: TextStyle = {
 
 export const emphasizedClrTxt: TextStyle = {
   color: CLR_PRIMARY,
-}
-
-export const txtCentered: TextStyle = {
-  textAlign: 'center',
 }
 
 /* ---------------------------------- */

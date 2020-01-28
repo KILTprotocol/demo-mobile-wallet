@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TextInput, Text, ViewStyle, TextStyle } from 'react-native'
+import { View, TextInput, Text } from 'react-native'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import KiltButton from '../components/KiltButton'
@@ -23,12 +23,9 @@ import {
   bodyInvertedClrTxt,
   bodyTxt,
 } from '../sharedStyles/styles.typography'
-import {
-  CLR_TXT_INVERTED,
-  CLR_TXT_LIGHT,
-} from '../sharedStyles/styles.consts.colors'
 import { MNEMONIC_CREATION } from '../_routes'
 import { CLR_PRIMARY } from '../_custom/theme'
+import { labelTxt, input } from '../sharedStyles/styles.form'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -37,19 +34,6 @@ type Props = {
 
 type State = {
   username: string
-}
-
-const input: ViewStyle = {
-  borderWidth: 1,
-  borderColor: CLR_TXT_INVERTED,
-  borderRadius: 8,
-  paddingVertical: 18,
-  paddingHorizontal: 12,
-}
-
-const labelTxt: TextStyle = {
-  color: CLR_TXT_LIGHT,
-  marginBottom: 6,
 }
 
 class UsernameSetup extends React.Component<Props, State> {

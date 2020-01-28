@@ -1,13 +1,12 @@
 import React from 'react'
-import { Text, View, TextStyle, Picker } from 'react-native'
-import Dialog from 'react-native-dialog'
+import { Text, View, TextStyle, Picker, TextInput } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { CLR_TXT_MEDIUM } from '../sharedStyles/styles.consts.colors'
-import { bodyTxt } from '../sharedStyles/styles.typography'
-import { sPicker, lPicker } from '../sharedStyles/styles.pickers'
-import { paddedSection } from '../sharedStyles/styles.layout'
+import { sPicker, lPicker } from '../sharedStyles/styles.form'
+import { paddedBottomS } from '../sharedStyles/styles.layout'
 import { TXT_XS_SIZE } from '../sharedStyles/styles.consts.typography'
 import { CLR_PRIMARY } from '../_custom/theme'
+import { input } from '../sharedStyles/styles.form'
 
 type Props = {
   onChangeValue: (value: any, claimPropertyId: string) => void
@@ -19,16 +18,17 @@ const labelTxt: TextStyle = {
   textTransform: 'capitalize',
   color: CLR_TXT_MEDIUM,
   fontSize: TXT_XS_SIZE,
+  paddingBottom: 4,
 }
 
 const claimFormItemMap = {
   string: (propertyName: string, onChangeValue) => (
     <>
-      <Dialog.Input
+      <Text style={labelTxt}>{propertyName}:</Text>
+      <TextInput
         returnKeyType="done"
-        label={propertyName}
         onChangeText={txt => onChangeValue(txt, propertyName)}
-        style={bodyTxt}
+        style={input}
         selectionColor={CLR_PRIMARY}
       />
     </>
@@ -74,7 +74,7 @@ const ClaimForm: React.FunctionComponent<Props> = ({
         const func = claimFormItemMap[`${type}${format ? format : ''}`]
         const value = claimContents[propertyName]
         return (
-          <View style={paddedSection}>
+          <View style={paddedBottomS}>
             {func(propertyName, onChangeValue, value)}
           </View>
         )

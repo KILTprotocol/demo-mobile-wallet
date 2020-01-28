@@ -1,12 +1,12 @@
 import { ViewStyle } from 'react-native'
 
 /* ---------------------------------- */
-/*             Containers             */
+/*              Spacing               */
 /* ---------------------------------- */
 
 export const mainViewContainer: ViewStyle = {
   paddingHorizontal: 18,
-  marginTop: 32,
+  paddingTop: 32,
 }
 
 export const sectionContainer: ViewStyle = {
@@ -14,8 +14,16 @@ export const sectionContainer: ViewStyle = {
   marginBottom: 32,
 }
 
-export const paddedSection: ViewStyle = {
-  paddingBottom: 10,
+export const paddedBottomS: ViewStyle = {
+  paddingBottom: 14,
+}
+
+export const paddedBottomM: ViewStyle = {
+  paddingBottom: 28,
+}
+
+export const paddedVerticalM: ViewStyle = {
+  paddingVertical: 28,
 }
 
 /* ---------------------------------- */
