@@ -26,7 +26,7 @@ import { THashAndClaimStatus, TClaimMapByHash } from '../types'
 import ClaimList from '../components/ClaimList'
 import { TMapDispatchToProps, TMapStateToProps } from '../types'
 import { NEW_CLAIM } from '../routes'
-import { CONFIG_ENDPOINTS } from '../config'
+import { CONFIG_CONNECT } from '../config'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -45,7 +45,7 @@ class Dashboard extends React.Component<Props> {
     // polling for new messages
     Dashboard.interval = setInterval(
       this.queryChainAndUpdateClaimsInStore,
-      CONFIG_ENDPOINTS.POLLING_PERIOD_MS
+      CONFIG_CONNECT.POLLING_PERIOD_MS
     )
   }
 

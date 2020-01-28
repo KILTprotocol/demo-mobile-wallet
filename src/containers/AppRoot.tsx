@@ -18,7 +18,7 @@ import {
 } from '../redux/actions'
 import { TMapDispatchToProps } from '../types'
 import { TAppState } from '../redux/reducers'
-import { CONFIG_ENDPOINTS } from '../config'
+import { CONFIG_CONNECT } from '../config'
 import {
   balanceListener,
   getBalanceInKiltCoins,
@@ -98,7 +98,7 @@ class AppRoot extends React.Component<Props> {
   async disconnect(): Promise<void> {
     console.info('[SOCKET] Try disconnecting...')
     const blockchain = await BlockchainApiConnection.getCached(
-      CONFIG_ENDPOINTS.BLOCKCHAIN_NODE
+      CONFIG_CONNECT.BLOCKCHAIN_NODE
     )
     if (blockchain) {
       try {
@@ -115,7 +115,7 @@ class AppRoot extends React.Component<Props> {
     const { publicIdentityFromStore } = this.props
     if (publicIdentityFromStore) {
       console.info('[SOCKET] Connecting and listening...')
-      await Kilt.default.connect(CONFIG_ENDPOINTS.BLOCKCHAIN_NODE)
+      await Kilt.default.connect(CONFIG_CONNECT.BLOCKCHAIN_NODE)
       await Balance.listenToBalanceChanges(
         publicIdentityFromStore.address,
         balanceListener

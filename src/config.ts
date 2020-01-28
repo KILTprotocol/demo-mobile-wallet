@@ -3,6 +3,17 @@
 const cType = require('./data/ctype.json')
 
 const CONFIG = Object.freeze({
+  CONNECT: {
+    BLOCKCHAIN_NODE: 'wss://full-nodes.kilt.io:9944',
+    MESSAGING_SERVICE_URL_FALLBACK: 'https://services.kilt.io:443/messaging',
+    CONTACTS_SERVICE_URL: 'https://services.kilt.io:443/contacts',
+    POLLING_PERIOD_MS: 3000,
+  },
+  CLAIM: {
+    CTYPE: cType,
+    // display name: used in the Dashboard as a title for each claim card
+    CLAIM_CARD_TITLE: 'Claim',
+  },
   THEME: {
     // primary: used for buttons, selection highlight and contacts
     CLR_PRIMARY: '#f05a28',
@@ -14,20 +25,9 @@ const CONFIG = Object.freeze({
     LOGO_HORIZONTAL_WIDTH: 320,
     LOGO_HORIZONTAL_HEIGHT: 148,
   },
-  ENDPOINTS: {
-    BLOCKCHAIN_NODE: 'wss://full-nodes.kilt.io:9944',
-    MESSAGING_SERVICE_URL_FALLBACK: 'https://services.kilt.io:443/messaging',
-    CONTACTS_SERVICE_URL: 'https://services.kilt.io:443/contacts',
-    POLLING_PERIOD_MS: 3000,
-  },
-  CLAIM: {
-    CTYPE: cType,
-    // display name: used in the Dashboard as a title for each claim card
-    CLAIM_CARD_TITLE: 'Claim',
-  },
 })
 
 export default CONFIG
 export const CONFIG_THEME = CONFIG.THEME
-export const CONFIG_ENDPOINTS = CONFIG.ENDPOINTS
+export const CONFIG_CONNECT = CONFIG.CONNECT
 export const CONFIG_CLAIM = CONFIG.CLAIM
