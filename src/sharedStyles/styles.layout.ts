@@ -6,7 +6,7 @@ import { ViewStyle } from 'react-native'
 
 export const mainViewContainer: ViewStyle = {
   paddingHorizontal: 18,
-  marginTop: 24,
+  marginTop: 32,
 }
 
 export const sectionContainer: ViewStyle = {
