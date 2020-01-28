@@ -38,9 +38,10 @@ import {
 } from '../services/service.claim'
 import { ClaimStatus } from '../_enums'
 import { fromStoredIdentity } from '../utils/utils.identity'
-import { CLR_KILT_0, CLR_TXT } from '../sharedStyles/styles.consts.colors'
+import { CLR_TXT } from '../sharedStyles/styles.consts.colors'
 import { sPicker } from '../sharedStyles/styles.pickers'
 import { CTYPE, CLAIM_CARD_TITLE } from '../_config'
+import { CLR_PRIMARY } from '../_custom/theme'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -188,7 +189,7 @@ class NewClaim extends React.Component<Props, State> {
           <Text style={h2}>Attester</Text>
           <Text style={bodyTxt}>Define the attester for your claim.</Text>
           <SegmentedControlIOS
-            tintColor={CLR_KILT_0}
+            tintColor={CLR_PRIMARY}
             textColor={CLR_TXT}
             style={{
               height: 44,

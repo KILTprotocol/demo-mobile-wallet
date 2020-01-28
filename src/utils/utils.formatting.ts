@@ -1,19 +1,11 @@
-import {
-  CLR_KILT_0,
-  CLR_KILT_1,
-  CLR_KILT_2,
-  CLR_KILT_1_DARK,
-  CLR_KILT_2_DARK,
-} from '../sharedStyles/styles.consts.colors'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
+import {
+  CLR_PRIMARY,
+  CLR_SECONDARY,
+  CLR_SECONDARY_DARK,
+} from '../_custom/theme'
 
-const COLORS = Object.freeze([
-  CLR_KILT_0,
-  CLR_KILT_1,
-  CLR_KILT_1_DARK,
-  CLR_KILT_2,
-  CLR_KILT_2_DARK,
-])
+const COLORS = Object.freeze([CLR_PRIMARY, CLR_SECONDARY, CLR_SECONDARY_DARK])
 const ADDRESS_DISPLAY_START_LENGTH = 8
 const ADDRESS_DISPLAY_END_LENGTH = 4
 

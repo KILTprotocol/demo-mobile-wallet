@@ -2,15 +2,6 @@
 /*             Main colors            */
 /* ---------------------------------- */
 export const CLR_BCKGRD_DARK = 'rgba(0, 0, 0, 0.5)'
-// primary: orange
-export const CLR_KILT_0 = '#f05a28'
-export const CLR_KILT_0_LIGHT = 'rgba(240,90,40,0.09)'
-// secondary: purple
-export const CLR_KILT_1 = '#280021'
-export const CLR_KILT_1_DARK = '#751869'
-// turquoise
-export const CLR_KILT_2 = '#22c5aa'
-export const CLR_KILT_2_DARK = '#007360'
 
 /* ---------------------------------- */
 /*             Txt colors             */

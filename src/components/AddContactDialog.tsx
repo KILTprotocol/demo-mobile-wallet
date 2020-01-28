@@ -9,8 +9,8 @@ import {
 import AddressDisplay from './AddressDisplay'
 import QrCodeScanner from './QrCodeScanner'
 import { inputTxt } from '../sharedStyles/styles.typography'
-import { CLR_KILT_0 } from '../sharedStyles/styles.consts.colors'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
+import { CLR_PRIMARY } from '../_custom/theme'
 
 type Props = {
   onPressCancel: () => void
@@ -56,7 +56,7 @@ const AddContactDialog: React.FunctionComponent<Props> = ({
       spellCheck={false}
       autoCorrect={false}
       style={inputTxt}
-      selectionColor={CLR_KILT_0}
+      selectionColor={CLR_PRIMARY}
     />
     <Dialog.Button onPress={onPressCancel} label="Cancel" />
     <Dialog.Button

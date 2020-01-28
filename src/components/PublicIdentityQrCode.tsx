@@ -2,9 +2,9 @@ import React from 'react'
 import { View } from 'react-native'
 import { QRCode } from 'react-native-custom-qr-codes'
 import { PublicIdentity } from '@kiltprotocol/sdk-js'
-import { CLR_KILT_1_DARK } from '../sharedStyles/styles.consts.colors'
 import { flexRowCenter } from '../sharedStyles/styles.layout'
-const kiltLogoSquare = require('../assets/imgs/kiltLogoSquare.jpg')
+import { CLR_SECONDARY_DARK } from '../_custom/theme'
+const logo = require('../_custom/logo_square.jpg')
 
 type Props = {
   publicIdentity: PublicIdentity | null
@@ -17,9 +17,9 @@ const PublicIdentityQrCode: React.FunctionComponent<Props> = ({
     <QRCode
       codeStyle="circle"
       content={JSON.stringify(publicIdentity || '')}
-      color={CLR_KILT_1_DARK}
+      color={CLR_SECONDARY_DARK}
       size={220}
-      logo={kiltLogoSquare}
+      logo={logo}
       logoSize={50}
     />
   </View>

@@ -15,8 +15,8 @@ import { flexRowCenter } from '../sharedStyles/styles.layout'
 import { disabledButton } from '../sharedStyles/styles.buttons'
 import AddressDisplay from '../components/AddressDisplay'
 import QrCodeScanner from '../components/QrCodeScanner'
-import { CLR_KILT_0 } from '../sharedStyles/styles.consts.colors'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
+import { CLR_PRIMARY } from '../_custom/theme'
 
 const contentContainer: ViewStyle = {
   height: 150,
@@ -63,7 +63,7 @@ class TokenTransferDialog extends React.Component<Props> {
           keyboardType="decimal-pad"
           label="Amount to transfer in KILT tokens (transaction cost = 1 Token):"
           returnKeyType="done"
-          selectionColor={CLR_KILT_0}
+          selectionColor={CLR_PRIMARY}
           style={inputTxt}
           onChangeText={tokenAmountToTransfer =>
             onChangeTokenAmountToTransfer(

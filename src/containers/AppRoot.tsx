@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { AppState, ImageBackground } from 'react-native'
+import { AppState, ImageBackground, Image, View } from 'react-native'
 import { createAppContainer } from 'react-navigation'
 import * as Kilt from '@kiltprotocol/sdk-js'
 import {
@@ -10,7 +10,7 @@ import {
   Balance,
   PublicIdentity,
 } from '@kiltprotocol/sdk-js'
-import { fill } from '../sharedStyles/styles.layout'
+import { fill, fillCenter } from '../sharedStyles/styles.layout'
 import {
   setIdentity,
   resetIdentity,
@@ -31,8 +31,7 @@ import {
 } from '../services/service.navigation'
 import RootSwitch from '../components/navigation/RootSwitch'
 import { promptUserAndGetIdentityDecrypted } from '../services/service.keychain'
-
-const obscuratorSrc = require('../assets/imgs/obscurator.jpg')
+import LockScreen from '../components/LockScreen'
 
 const Navigation = createAppContainer(RootSwitch)
 
@@ -178,7 +177,7 @@ class AppRoot extends React.Component<Props> {
             }}
           />
         ) : (
-          <ImageBackground source={obscuratorSrc} style={fill} />
+          <LockScreen />
         )}
       </>
     )

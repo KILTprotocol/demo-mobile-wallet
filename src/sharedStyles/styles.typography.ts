@@ -1,7 +1,7 @@
 import {
   CLR_TXT,
-  CLR_KILT_0,
-  CLR_KILT_0_LIGHT,
+  CLR_PRIMARY,
+  CLR_PRIMARY_LIGHT,
   CLR_TXT_STANDOUT,
   CLR_TXT_INVERTED,
   CLR_TXT_INVERTED_LIGHT_STANDOUT,
@@ -57,8 +57,8 @@ export const disabledTxt: TextStyle = {
 export const bodyEmphasizedTxt: TextStyle = {
   fontSize: TXT_M_SIZE,
   fontWeight: '400',
-  color: CLR_KILT_0,
-  backgroundColor: CLR_KILT_0_LIGHT,
+  color: CLR_PRIMARY,
+  backgroundColor: CLR_PRIMARY_LIGHT,
   paddingVertical: 2,
   paddingHorizontal: 3,
 }
@@ -72,7 +72,7 @@ export const bodyInvertedClrTxt: TextStyle = {
 }
 
 export const emphasizedClrTxt: TextStyle = {
-  color: CLR_KILT_0,
+  color: CLR_PRIMARY,
 }
 
 export const txtCentered: TextStyle = {
@@ -96,5 +96,5 @@ export const txtError: TextStyle = {
 }
 
 export const txtPending: TextStyle = {
-  color: CLR_KILT_0,
+  color: CLR_PRIMARY,
 }

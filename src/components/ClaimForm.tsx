@@ -2,14 +2,12 @@ import React from 'react'
 import { Text, View, TextStyle, Picker } from 'react-native'
 import Dialog from 'react-native-dialog'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import {
-  CLR_KILT_0,
-  CLR_TXT_MEDIUM,
-} from '../sharedStyles/styles.consts.colors'
+import { CLR_TXT_MEDIUM } from '../sharedStyles/styles.consts.colors'
 import { bodyTxt } from '../sharedStyles/styles.typography'
 import { sPicker, lPicker } from '../sharedStyles/styles.pickers'
 import { paddedSection } from '../sharedStyles/styles.layout'
 import { TXT_XS_SIZE } from '../sharedStyles/styles.consts.typography'
+import { CLR_PRIMARY } from '../_custom/theme'
 
 type Props = {
   onChangeValue: (value: any, claimPropertyId: string) => void
@@ -31,7 +29,7 @@ const claimFormItemMap = {
         label={propertyName}
         onChangeText={txt => onChangeValue(txt, propertyName)}
         style={bodyTxt}
-        selectionColor={CLR_KILT_0}
+        selectionColor={CLR_PRIMARY}
       />
     </>
   ),

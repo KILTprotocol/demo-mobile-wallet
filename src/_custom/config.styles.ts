@@ -1,0 +1,2 @@
+export const LOGO_HORIZONTAL_WIDTH = 320
+export const LOGO_HORIZONTAL_HEIGHT = 148

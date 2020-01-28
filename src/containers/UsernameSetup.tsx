@@ -25,10 +25,10 @@ import {
 } from '../sharedStyles/styles.typography'
 import {
   CLR_TXT_INVERTED,
-  CLR_KILT_0,
   CLR_TXT_LIGHT,
 } from '../sharedStyles/styles.consts.colors'
 import { MNEMONIC_CREATION } from '../_routes'
+import { CLR_PRIMARY } from '../_custom/theme'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -89,7 +89,7 @@ class UsernameSetup extends React.Component<Props, State> {
               autoFocus
               onChangeText={username => this.onChangeUsername(username)}
               returnKeyType="done"
-              selectionColor={CLR_KILT_0}
+              selectionColor={CLR_PRIMARY}
               spellCheck={false}
               style={[bodyTxt, bodyInvertedClrTxt, input]}
             />

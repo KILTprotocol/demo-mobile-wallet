@@ -147,6 +147,7 @@ class Account extends Component<Props, State> {
       transferAsyncStatus,
       isDialogOkBtnDisabled,
     } = this.state
+    console.log(publicIdentityFromStore)
     const address = publicIdentityFromStore
       ? publicIdentityFromStore.address
       : null

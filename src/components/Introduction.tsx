@@ -36,7 +36,7 @@ const Introduction = ({ navigation }: IProps): JSX.Element => (
       </View>
       <View style={sectionContainer}>
         <Text style={[h2, titleInvertedClrTxt]}>
-          This is your very own KILT wallet.
+          This is your very own credentials wallet.
         </Text>
         <Text style={[bodyTxt, bodyInvertedClrTxt]}>
           Your wallet is the place for you to request and store all of your

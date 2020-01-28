@@ -151,7 +151,7 @@ class IdentitySetup extends React.Component<Props, State> {
         <View style={mainViewContainer}>
           <View style={sectionContainer}>
             <Text style={[h2, titleInvertedClrTxt]}>
-              Step 3: Knitting your KILT account together
+              Step 3: Knitting your account together
             </Text>
           </View>
           <View style={sectionContainer}>

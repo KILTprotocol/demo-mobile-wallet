@@ -6,10 +6,10 @@ import Contacts from '../../containers/Contacts'
 import Settings from '../../containers/Settings'
 import { TXT_XS_SIZE } from '../../sharedStyles/styles.consts.typography'
 import {
-  CLR_KILT_1,
   CLR_TXT_INVERTED,
   CLR_TXT_INVERTED_LIGHT,
 } from '../../sharedStyles/styles.consts.colors'
+import { CLR_SECONDARY } from '../../_custom/theme'
 
 const tabBarOptions = {
   activeTintColor: CLR_TXT_INVERTED,
@@ -18,7 +18,7 @@ const tabBarOptions = {
     fontSize: TXT_XS_SIZE,
   },
   style: {
-    backgroundColor: CLR_KILT_1,
+    backgroundColor: CLR_SECONDARY,
     height: 64,
     paddingVertical: 18,
   },
