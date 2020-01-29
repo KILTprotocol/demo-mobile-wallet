@@ -11,7 +11,7 @@ type Props = {
 const TOTAL_ANIM_DURATION_MS = 1100
 const MAX_DELAY_MS = 900
 
-const MnemonicDisplay: React.FunctionComponent<Props> = ({
+const Mnemonic: React.FunctionComponent<Props> = ({
   mnemonic,
 }): JSX.Element => (
   <View style={flexRowWrap}>
@@ -26,4 +26,4 @@ const MnemonicDisplay: React.FunctionComponent<Props> = ({
   </View>
 )
 
-export default MnemonicDisplay
+export default Mnemonic

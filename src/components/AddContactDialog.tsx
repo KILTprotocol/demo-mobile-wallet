@@ -7,7 +7,7 @@ import {
   dialogSection,
   formFreeLabel,
 } from '../sharedStyles/styles.dialog'
-import AddressDisplay from './AddressDisplay'
+import Address from './Address'
 import QrCodeScanner from './QrCodeScanner'
 import { inputTxt } from '../sharedStyles/styles.form'
 import { CONFIG_THEME } from '../config'
@@ -36,8 +36,7 @@ const AddContactDialog: React.FunctionComponent<Props> = ({
     <View style={dialogSection}>
       <Text style={formFreeLabel}>New contact address:</Text>
       <View>
-        {address ? (
-          <AddressDisplay address={address} />
+          <Address address={publicIdentity.address} />
         ) : (
           <QrCodeScanner
             onBarCodeRead={barcode => {

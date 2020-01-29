@@ -34,7 +34,7 @@ import {
 } from '../types'
 import { TAppState } from '../redux/reducers'
 import { addClaim, updateClaimStatus } from '../redux/actions'
-import AddressDisplay from './AddressDisplay'
+import Address from './Address'
 import {
   formatDateForClaim,
   createClaim,
@@ -221,7 +221,7 @@ class NewClaim extends React.Component<Props, State> {
 
           {selectedAttesterMethod === 0 ? (
             attesterPublicIdentity ? (
-              <AddressDisplay address={attesterPublicIdentity.address} />
+              <Address address={attesterPublicIdentity.address} />
             ) : (
               <QrCodeScanner
                 onBarCodeRead={barcode => {

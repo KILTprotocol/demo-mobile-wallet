@@ -12,7 +12,7 @@ import {
 } from '../sharedStyles/styles.typography'
 import { flexRowCenter } from '../sharedStyles/styles.layout'
 import { disabledButton } from '../sharedStyles/styles.buttons'
-import AddressDisplay from '../components/AddressDisplay'
+import Address from '../components/Address'
 import QrCodeScanner from '../components/QrCodeScanner'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 import { CONFIG_THEME } from '../config'
@@ -75,7 +75,7 @@ class TokenTransferDialog extends React.Component<Props> {
           <Text style={recipientLabel}>Recipient:</Text>
           <View>
             {tokenRecipientAddress ? (
-              <AddressDisplay address={tokenRecipientAddress} />
+              <Address address={tokenRecipientAddress} />
             ) : (
               <QrCodeScanner
                 onBarCodeRead={barcode => {

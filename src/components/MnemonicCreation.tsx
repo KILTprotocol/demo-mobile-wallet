@@ -14,7 +14,7 @@ import {
 } from '../sharedStyles/styles.layout'
 import { IDENTITY_SETUP } from '../routes'
 import MnemonicDialog from '../components/MnemonicDialog'
-import MnemonicDisplay from '../components/MnemonicDisplay'
+import Mnemonic from '../components/Mnemonic'
 import {
   NavigationScreenProp,
   NavigationState,
@@ -65,7 +65,7 @@ class MnemonicCreation extends React.Component<Props, State> {
             <Text style={[h2, titleInvertedClrTxt]}>
               Step 2: Your identity phrase (= seed)
             </Text>
-            <MnemonicDisplay mnemonic={mnemonic} />
+            <Mnemonic mnemonic={mnemonic} />
           </View>
           <View style={sectionContainer}>
             <Text style={[bodyTxt, bodyInvertedClrTxt]}>

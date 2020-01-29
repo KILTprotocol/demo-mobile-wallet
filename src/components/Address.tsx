@@ -26,9 +26,7 @@ const shiftedUp: ViewStyle = {
   height: 14,
 }
 
-const AddressDisplay: React.FunctionComponent<Props> = ({
-  address,
-}): JSX.Element => (
+const Address: React.FunctionComponent<Props> = ({ address }): JSX.Element => (
   <>
     <View>
       <Text style={[bodyTxt, addressTxt]}>{truncateAddress(address)}</Text>
@@ -43,4 +41,4 @@ const AddressDisplay: React.FunctionComponent<Props> = ({
   </>
 )
 
-export default AddressDisplay
+export default Address

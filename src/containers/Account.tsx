@@ -26,7 +26,7 @@ import { fromStoredIdentity } from '../utils/utils.identity'
 import { AsyncStatus } from '../enums'
 import { callWithDelay } from '../utils/utils.async'
 import PublicIdentityQrCode from '../components/PublicIdentityQrCode'
-import AddressDisplay from '../components/AddressDisplay'
+import Address from '../components/Address'
 
 type Props = {
   publicIdentityFromStore: PublicIdentity | null
@@ -165,7 +165,7 @@ class Account extends Component<Props, State> {
                   publicIdentity={publicIdentityFromStore}
                 />
                 <View style={paddedTopS}>
-                  <AddressDisplay address={address} />
+                  <Address address={address} />
                 </View>
               </View>
             )}
