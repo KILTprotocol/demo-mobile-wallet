@@ -13,8 +13,11 @@ const ADDRESS_DISPLAY_END_LENGTH = 4
 /*               Address              */
 /* ---------------------------------- */
 
-const truncateAddress = (address: IPublicIdentity['address']): string =>
-  `${address.substr(0, ADDRESS_DISPLAY_START_LENGTH)}...${address.substr(
+const truncateAddress = (
+  address: IPublicIdentity['address'],
+  startLength = ADDRESS_DISPLAY_START_LENGTH
+): string =>
+  `${address.substr(0, startLength)}...${address.substr(
     address.length - ADDRESS_DISPLAY_END_LENGTH,
     ADDRESS_DISPLAY_END_LENGTH
   )}`
