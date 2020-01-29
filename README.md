@@ -13,8 +13,8 @@ _The sporran (/ˈspɒrən/; Scottish Gaelic for "purse"), a traditional part of 
 
 - Create an identity and store it encrypted on the device;
 - Create claims;
-- Request attestations for these claims;
-- Add contacts by scanning their public identity as a QRCode;
+- Request attestations for these claims to specific attesters by scanning their public identity QR Code;
+- Add contacts by scanning their public identity as a QR Code;
 - Transfer KILT Tokens.
 
 <p align="center">
@@ -38,6 +38,28 @@ You can demo the mobile wallet as a claimer, and use the demo-client to demo the
 
 Alternatively, if you don't want to use the demo-client and if you do have access to the [KILT CLI](https://github.com/KILTprotocol/kilt-cli) (internal use only), you can run the automatic attestation service:
 `npx ts-node kilt-cli.ts --ctype "0x4edaa5b8eea2e071dfe48724f6789d6741c1ce0e0f4466079a1d78ef0c02aea2" --seed <mnemonic> --timeout 1`
+
+## Make it yours!
+
+You can configure Sporran to fit your needs and branding in a few minutes!
+
+You can customize the logos and theme, endpoints, and most importantly the business logic (credential type = claim type = CTYPE) super easily.
+
+Check out how in the table below:
+
+| What you can customize   | How to customize it                                                                                                                                                                                                                        |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Branding: colors         | Change the theme colors in `src/config.ts`                                                                                                                                                                                                 |
+| Branding: logo           | Replace the logos in the `src/assets/imgs/logos` folder with your logo and specify the logo dimensions in `src/config.ts`                                                                                                                  |
+| Endpoints and blockchain | Change these in `src/config.ts`. Note that when a request for attestation is sent, the destination (`serviceAddress`) is specified in the attester QR Code the user scans; otherwise a fallback destination is used (see `src/config.ts`). |
+| CTYPE                    | Create a CTYPE and replace `ctype.json` in `src/data` with your CTYPE as json. The form will update automatically in the UI! Right now the supported types for claim properties are strings, strings formatted as dates and booleans.      |
+
+export default CONFIG
+export const CONFIG_THEME = CONFIG.THEME
+export const CONFIG_CONNECT = CONFIG.CONNECT
+export const CONFIG_CLAIM = CONFIG.CLAIM
+
+NB: to customize then run the app, look at the `## Dev setup` section in this document.
 
 ## Stack & Tools
 
