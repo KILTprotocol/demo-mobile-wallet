@@ -35,7 +35,7 @@ function createRequestForAttestation(
 async function sendRequestForAttestation(
   requestForAttestation: RequestForAttestation,
   claimerIdentity: Identity,
-  attesterIdentity: PublicIdentity
+  attesterPublicIdentity: PublicIdentity
 ): Promise<void> {
   const sender = {
     identity: claimerIdentity,
@@ -48,7 +48,7 @@ async function sendRequestForAttestation(
     metaData: {
       name: '',
     },
-    publicIdentity: attesterIdentity,
+    publicIdentity: attesterPublicIdentity,
   }
   await singleSend(
     {
@@ -56,7 +56,8 @@ async function sendRequestForAttestation(
       type: MessageBodyType.REQUEST_ATTESTATION_FOR_CLAIM,
     },
     sender,
-    receiver
+    receiver,
+    attesterPublicIdentity.serviceAddress
   )
 }
 

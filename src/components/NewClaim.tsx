@@ -46,6 +46,7 @@ import { fromStoredIdentity } from '../utils/utils.identity'
 import { CLR_TXT } from '../sharedStyles/styles.consts.colors'
 import { sPicker } from '../sharedStyles/styles.form'
 import { CONFIG_THEME, CONFIG_CLAIM } from '../config'
+import { decodePublicIdentity } from '../utils/utils.qrCode'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -224,11 +225,15 @@ class NewClaim extends React.Component<Props, State> {
             ) : (
               <QrCodeScanner
                 onBarCodeRead={barcode => {
-                  const publicIdentity = JSON.parse(barcode.data)
+                  const publicIdentityEncoded = JSON.parse(barcode.data)
+                  const publicIdentity = decodePublicIdentity(
+                    publicIdentityEncoded
+                  )
                   this.setState({
                     attesterPublicIdentity: new PublicIdentity(
                       publicIdentity.address,
-                      publicIdentity.boxPublicKeyAsHex
+                      publicIdentity.boxPublicKeyAsHex,
+                      publicIdentity.serviceAddress
                     ),
                   })
                 }}

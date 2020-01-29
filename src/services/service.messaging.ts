@@ -62,7 +62,8 @@ export interface IMyIdentity {
 export async function singleSend(
   messageBody: MessageBody,
   sender: IMyIdentity,
-  receiver: IContact
+  receiver: IContact,
+  serviceAddress?: string
 ): Promise<any> {
   try {
     const message: Message = new Message(
@@ -70,10 +71,17 @@ export async function singleSend(
       sender.identity,
       receiver.publicIdentity
     )
-    return fetch(`${CONFIG_CONNECT.MESSAGING_SERVICE_URL_FALLBACK}`, {
-      ...BasePostParams,
-      body: JSON.stringify(message.getEncryptedMessage()),
-    })
+    console.log(
+      'sending to',
+      serviceAddress || CONFIG_CONNECT.MESSAGING_SERVICE_URL_FALLBACK
+    )
+    return fetch(
+      `${serviceAddress || CONFIG_CONNECT.MESSAGING_SERVICE_URL_FALLBACK}`,
+      {
+        ...BasePostParams,
+        body: JSON.stringify(message.getEncryptedMessage()),
+      }
+    )
       .then(response => {
         if (!response.ok) {
           throw new Error(response.statusText)
