@@ -11,6 +11,7 @@ import {
   mainViewContainer,
   sectionContainer,
   centered,
+  paddedTopS,
 } from '../sharedStyles/styles.layout'
 import WithDefaultBackground from '../components/WithDefaultBackground'
 import { h1, h2 } from '../sharedStyles/styles.typography'
@@ -147,7 +148,6 @@ class Account extends Component<Props, State> {
       transferAsyncStatus,
       isDialogOkBtnDisabled,
     } = this.state
-    console.log(publicIdentityFromStore)
     const address = publicIdentityFromStore
       ? publicIdentityFromStore.address
       : null
@@ -164,7 +164,9 @@ class Account extends Component<Props, State> {
                 <PublicIdentityQrCode
                   publicIdentity={publicIdentityFromStore}
                 />
-                <AddressDisplay address={address} />
+                <View style={paddedTopS}>
+                  <AddressDisplay address={address} />
+                </View>
               </View>
             )}
           </View>

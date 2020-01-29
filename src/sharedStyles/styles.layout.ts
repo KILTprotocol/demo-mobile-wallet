@@ -26,6 +26,10 @@ export const paddedVerticalM: ViewStyle = {
   paddingVertical: 28,
 }
 
+export const paddedTopS: ViewStyle = {
+  paddingTop: 14,
+}
+
 /* ---------------------------------- */
 /*          Height and layout         */
 /* ---------------------------------- */
