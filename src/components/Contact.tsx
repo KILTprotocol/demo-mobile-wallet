@@ -59,7 +59,7 @@ const Contact: React.FunctionComponent<Props> = ({ contact }): JSX.Element => (
         <Text style={[bodyTxt, name]}>{contact.name}</Text>
         <View style={check}>
           {contact.publicIdentity.serviceAddress && (
-            <Text style={bodyTxt}>✓</Text>
+            <Text style={bodyTxt}>➿</Text>
           )}
         </View>
       </View>

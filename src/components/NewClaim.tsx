@@ -250,7 +250,9 @@ class NewClaim extends React.Component<Props, State> {
               }>
               {contactsFromStore.map(contact => (
                 <Picker.Item
-                  label={contact.name}
+                  label={`${contact.name}${
+                    contact.publicIdentity.serviceAddress ? '➿' : ''
+                  }`}
                   value={contact.publicIdentity}
                 />
               ))}

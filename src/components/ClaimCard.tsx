@@ -93,7 +93,11 @@ const ClaimCard: React.FunctionComponent<Props> = ({
             .map(([propertyName, propertyValue]) => (
               <View key={propertyName} style={flexRow}>
                 <Text style={[bodyTxt, label]}>{propertyName}</Text>
-                <Text style={bodyTxt}>{propertyValue}</Text>
+                {typeof propertyValue === 'boolean' ? (
+                  <Text style={bodyTxt}>{propertyValue ? 'yes' : 'no'}</Text>
+                ) : (
+                  <Text style={bodyTxt}>{propertyValue}</Text>
+                )}
               </View>
             ))}
         </View>

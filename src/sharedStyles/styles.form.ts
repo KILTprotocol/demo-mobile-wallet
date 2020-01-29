@@ -1,6 +1,6 @@
 import { ViewStyle, TextStyle } from 'react-native'
 import { CLR_TXT_MEDIUM, CLR_TXT_X_LIGHT } from './styles.consts.colors'
-import { TXT_XS_SIZE } from './styles.consts.typography'
+import { TXT_XS_SIZE, TXT_S_SIZE } from './styles.consts.typography'
 import { bodyTxt } from './styles.typography'
 
 export const picker: ViewStyle = {
@@ -24,6 +24,7 @@ export const input: ViewStyle = {
   borderColor: CLR_TXT_X_LIGHT,
   borderRadius: 5,
   padding: 8,
+  fontSize: TXT_S_SIZE,
 }
 
 export const inputTxt = bodyTxt
