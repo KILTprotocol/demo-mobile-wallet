@@ -21,7 +21,7 @@ const invisibleTxt: TextStyle = {
 }
 
 const shiftedUp: ViewStyle = {
-  transform: [{ translateY: -14 }],
+  position: 'absolute',
   width: 160,
   height: 14,
 }

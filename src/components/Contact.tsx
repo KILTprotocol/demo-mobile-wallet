@@ -9,7 +9,6 @@ import { TContact } from '../types'
 import {
   flexRowCenter,
   flexRowSpaceBetween,
-  flexRow,
 } from '../sharedStyles/styles.layout'
 import { MIN_SIZE_TOUCHABLE } from '../sharedStyles/styles.consts.touchable'
 import { bodyTxt } from '../sharedStyles/styles.typography'
@@ -24,10 +23,15 @@ const contactBadge: ViewStyle = {
   width: MIN_SIZE_TOUCHABLE,
   height: MIN_SIZE_TOUCHABLE,
   borderRadius: 200,
-  marginRight: 12,
+  marginRight: 8,
 }
 
 const name: TextStyle = {
+  marginRight: 4,
+}
+
+const check: ViewStyle = {
+  width: 24,
   marginRight: 12,
 }
 
@@ -37,7 +41,7 @@ const badgeTxt: TextStyle = {
 
 const Contact: React.FunctionComponent<Props> = ({ contact }): JSX.Element => (
   <View style={flexRowSpaceBetween}>
-    <View style={flexRow}>
+    <View style={flexRowSpaceBetween}>
       <View
         style={[
           contactBadge,
@@ -51,12 +55,19 @@ const Contact: React.FunctionComponent<Props> = ({ contact }): JSX.Element => (
           {getFirstCharacter(contact.name)}
         </Text>
       </View>
-      <Text style={[bodyTxt, name]}>{contact.name}</Text>
-      <Text style={[bodyTxt, name]}>
-        {contact.publicIdentity.serviceAddress}
-      </Text>
+      <View style={flexRowSpaceBetween}>
+        <Text style={[bodyTxt, name]}>{contact.name}</Text>
+        <View style={check}>
+          {contact.publicIdentity.serviceAddress && (
+            <Text style={bodyTxt}>✓</Text>
+          )}
+        </View>
+      </View>
     </View>
-    <Address address={contact.publicIdentity.address} />
+
+    <View>
+      <Address address={contact.publicIdentity.address} />
+    </View>
   </View>
 )
 

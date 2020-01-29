@@ -53,7 +53,19 @@ export const lTxt: TextStyle = {
 }
 
 /* ---------------------------------- */
-/*                Misc                */
+/*              Layout                */
+/* ---------------------------------- */
+
+export const txtCentered: TextStyle = {
+  textAlign: 'center',
+}
+
+export const txtRight: TextStyle = {
+  textAlign: 'right',
+}
+
+/* ---------------------------------- */
+/*       Color and special text       */
 /* ---------------------------------- */
 
 export const boldTxt: TextStyle = {
@@ -62,10 +74,6 @@ export const boldTxt: TextStyle = {
 
 export const disabledTxt: TextStyle = {
   color: 'grey',
-}
-
-export const txtCentered: TextStyle = {
-  textAlign: 'center',
 }
 
 export const emptyStateBodyTxt: TextStyle = {
