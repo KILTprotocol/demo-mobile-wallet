@@ -29,7 +29,7 @@ export default class ContactList extends React.Component<Props> {
       <>
         <View style={paddedBottomM}>
           <Text style={bodyTxt}>
-            Contacts marked with "➿" embed a service address
+            Contacts marked with "📭" embed a service address
           </Text>
         </View>
         <FlatList

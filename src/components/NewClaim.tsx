@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, Picker } from 'react-native'
+import { Text, View, Picker, Switch, TextInput } from 'react-native'
 import SegmentedControlIOS from '@react-native-community/segmented-control'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
@@ -22,6 +22,7 @@ import {
   sectionContainer,
   paddedVerticalM,
   paddedBottomM,
+  paddedBottomS,
 } from '../sharedStyles/styles.layout'
 import QrCodeScanner from './QrCodeScanner'
 import {
@@ -44,9 +45,10 @@ import {
 import { ClaimStatus } from '../enums'
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { CLR_TXT } from '../sharedStyles/styles.consts.colors'
-import { sPicker } from '../sharedStyles/styles.form'
+import { sPicker, labelTxt, input } from '../sharedStyles/styles.form'
 import { CONFIG_THEME, CONFIG_CLAIM } from '../config'
 import { decodePublicIdentity } from '../utils/utils.encoding'
+import { truncateAddress } from '../utils/utils.formatting'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -194,34 +196,46 @@ class NewClaim extends React.Component<Props, State> {
         />
         <View style={sectionContainer}>
           <Text style={h2}>Attester</Text>
-          {!attesterPublicIdentity && (
-            <>
-              <Text style={bodyTxt}>Define the attester for your claim.</Text>
-              <SegmentedControlIOS
-                tintColor={CONFIG_THEME.CLR_PRIMARY}
-                textColor={CLR_TXT}
-                style={{
-                  height: 44,
-                  fontSize: 40,
-                  marginTop: 24,
-                  marginBottom: 12,
-                  borderRadius: 2,
-                }}
-                values={ATTESTER_METHODS}
-                selectedIndex={this.state.selectedAttesterMethod}
-                onChange={event => {
-                  this.setState({
-                    selectedAttesterMethod:
-                      event.nativeEvent.selectedSegmentIndex,
-                  })
-                }}
-              />
-            </>
-          )}
+
+          <Text style={bodyTxt}>Define the attester for your claim.</Text>
+          <SegmentedControlIOS
+            tintColor={CONFIG_THEME.CLR_PRIMARY}
+            textColor={CLR_TXT}
+            style={{
+              height: 44,
+              fontSize: 40,
+              marginTop: 24,
+              marginBottom: 12,
+              borderRadius: 2,
+            }}
+            values={ATTESTER_METHODS}
+            selectedIndex={this.state.selectedAttesterMethod}
+            onChange={event => {
+              this.setState({
+                attesterPublicIdentity: null,
+                selectedAttesterMethod: event.nativeEvent.selectedSegmentIndex,
+              })
+            }}
+          />
 
           {selectedAttesterMethod === 0 ? (
             attesterPublicIdentity ? (
-              <Address address={attesterPublicIdentity.address} />
+              <>
+                <Address address={attesterPublicIdentity.address} />
+                <View>
+                  <Switch onValueChange={v => console.log(v)} />
+                  <Text style={[bodyTxt, labelTxt]}>
+                    Also add this attester to my contacts Contact name:
+                  </Text>
+                  <Text style={[bodyTxt, labelTxt]}>Contact name:</Text>
+                  <TextInput
+                    returnKeyType="done"
+                    onChangeText={txt => onChangeValue(txt, propertyName)}
+                    style={input}
+                    selectionColor={CONFIG_THEME.CLR_PRIMARY}
+                  />
+                </View>
+              </>
             ) : (
               <QrCodeScanner
                 onBarCodeRead={barcode => {
@@ -240,23 +254,44 @@ class NewClaim extends React.Component<Props, State> {
               />
             )
           ) : contactsFromStore.length > 0 ? (
-            <Picker
-              itemStyle={sPicker}
-              style={sPicker}
-              onValueChange={publicIdentity =>
-                this.setState({
-                  attesterPublicIdentity: publicIdentity,
-                })
-              }>
-              {contactsFromStore.map(contact => (
-                <Picker.Item
-                  label={`${contact.name}${
-                    contact.publicIdentity.serviceAddress ? '➿' : ''
-                  }`}
-                  value={contact.publicIdentity}
-                />
-              ))}
-            </Picker>
+            <View style={paddedVerticalM}>
+              <Text style={[bodyTxt, labelTxt]}>Contacts:</Text>
+              <Picker
+                itemStyle={{ ...sPicker, textAlign: 'left' }}
+                style={sPicker}
+                selectedValue={
+                  attesterPublicIdentity ? attesterPublicIdentity.address : null
+                }
+                onValueChange={address => {
+                  // const publicIdentity = findPublicIdentityFromAddress()
+
+                  const contact = contactsFromStore.find(
+                    contact => contact.publicIdentity.address === address
+                  )
+                  if (contact) {
+                    this.setState({
+                      address: address,
+                      attesterPublicIdentity: contact.publicIdentity,
+                    })
+                  } else {
+                    this.setState({
+                      // address: address,
+                      attesterPublicIdentity: null,
+                    })
+                  }
+                }}>
+                <Picker.Item label={'(↓ Select a contact)'} value={null} />
+                {contactsFromStore.map(contact => (
+                  <Picker.Item
+                    label={`${contact.name}  (${truncateAddress(
+                      contact.publicIdentity.address,
+                      2
+                    )})${contact.publicIdentity.serviceAddress ? '📭' : ''}`}
+                    value={contact.publicIdentity.address}
+                  />
+                ))}
+              </Picker>
+            </View>
           ) : (
             <View style={paddedVerticalM}>
               <Text style={emptyStateBodyTxt}>No contacts yet.</Text>

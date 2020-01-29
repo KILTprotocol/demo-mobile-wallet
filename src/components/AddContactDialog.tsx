@@ -53,7 +53,7 @@ const AddContactDialog: React.FunctionComponent<Props> = ({
       returnKeyType="done"
       label="Name:"
       onChangeText={name => onChangeContactName(name)}
-      // a name shouldn't be spellchecked
+      // don't spellcheck the name
       spellCheck={false}
       autoCorrect={false}
       style={inputTxt}

@@ -9,7 +9,7 @@ export const picker: ViewStyle = {
 
 export const sPicker: ViewStyle = {
   ...picker,
-  height: 100,
+  height: 120,
 }
 
 export const lPicker: ViewStyle = {
