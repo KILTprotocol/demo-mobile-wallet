@@ -84,14 +84,18 @@ const ClaimCard: React.FunctionComponent<Props> = ({
         <Text style={titleTxt}>{title}</Text>
         <ClaimStatusBadge status={status} />
         <View style={claimProperties}>
-          {[...Object.entries(contents)].map(
-            ([propertyName, propertyValue]) => (
+          {[...Object.entries(contents)]
+            // sort by property name alphanumerically
+            .sort(
+              (entryA, entryB) =>
+                entryA[0].charCodeAt(0) - entryB[0].charCodeAt(0)
+            )
+            .map(([propertyName, propertyValue]) => (
               <View key={propertyName} style={flexRow}>
                 <Text style={[bodyTxt, label]}>{propertyName}</Text>
                 <Text style={bodyTxt}>{propertyValue}</Text>
               </View>
-            )
-          )}
+            ))}
         </View>
       </View>
     </ImageBackground>
