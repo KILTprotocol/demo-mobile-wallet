@@ -6,14 +6,16 @@
 # KILT Demo Mobile Wallet (Sporran)
 
 ## About
+
 _The sporran (/ˈspɒrən/; Scottish Gaelic for "purse"), a traditional part of Scottish Highland dress, is a pouch that performs the same function as pockets on the pocketless kilt. Made of leather or fur, the sporran serves as a **wallet** for any other necessary personal items._ ([Source](https://en.wikipedia.org/wiki/Sporran))
 
 **Sporran** is the demo mobile wallet for a KILT Claimer. A claimer can use Sporran to:
-* Create an identity and store it encrypted on the device;
-* Create claims;
-* Request attestations for these claims; 
-* Add contacts by scanning their address as a QRCode;
-* Transfer KILT Tokens.
+
+- Create an identity and store it encrypted on the device;
+- Create claims;
+- Request attestations for these claims;
+- Add contacts by scanning their public identity as a QRCode;
+- Transfer KILT Tokens.
 
 <p align="center">
 <img width="300" src="https://user-images.githubusercontent.com/9762897/71015282-9d837000-20f3-11ea-88a8-16c39a74f10a.jpg">  
@@ -21,12 +23,12 @@ _The sporran (/ˈspɒrən/; Scottish Gaelic for "purse"), a traditional part of 
 
 ## Disclaimer
 
-⚠️ This app was designed to demo the core feature set of KILT. We don't recommend using it in production and it is a Work In Progress. 
+⚠️ This app was designed to demo the core feature set of KILT. We don't recommend using it in production and it is a Work In Progress.
 However, feel free to open issues if you note that something is off.
 
 ## Specifications
 
-- Supported devices: iPhone 8 or later model (tested until iPhone X). Note that on the iPhone X, FaceID is not supported yet so the passcode is used. **Tested on iOS only. Not tested on Android.** 
+- Supported devices: iPhone 8 or later model (tested until iPhone X). Note that on the iPhone X, FaceID is not supported yet so the passcode is used. **Tested on iOS only. Not tested on Android.**
 - Prerequisites: A passcode or TouchID should be set up on your device.
 
 ## Demo flow
@@ -35,7 +37,7 @@ You can demo the mobile wallet as a claimer, and use the demo-client to demo the
 [Here's an example of a demo flow.](https://github.com/KILTprotocol/demo-mobile-wallet/blob/master/docs/Demo%20Flow.md)
 
 Alternatively, if you don't want to use the demo-client and if you do have access to the [KILT CLI](https://github.com/KILTprotocol/kilt-cli) (internal use only), you can run the automatic attestation service:
-  `npx ts-node kilt-cli.ts --ctype "0x4edaa5b8eea2e071dfe48724f6789d6741c1ce0e0f4466079a1d78ef0c02aea2" --seed <mnemonic> --timeout 1`
+`npx ts-node kilt-cli.ts --ctype "0x4edaa5b8eea2e071dfe48724f6789d6741c1ce0e0f4466079a1d78ef0c02aea2" --seed <mnemonic> --timeout 1`
 
 ## Stack & Tools
 
@@ -67,6 +69,7 @@ Note that we're also using [rn-nodeify](https://www.npmjs.com/package/rn-nodeify
 - Hit "launch" in XCode
 
 ### Run on a simulator
+
 - Open two terminal windows:
   - In one terminal run `yarn start`
   - You should see `Loading dependency graph, done.` at some point
@@ -82,10 +85,10 @@ Note that we're also using [rn-nodeify](https://www.npmjs.com/package/rn-nodeify
 <img width="1429" alt="debug" src="https://user-images.githubusercontent.com/9762897/66653699-e8d35b00-ec38-11e9-994b-8219b67cf0a1.png">
 
 - If you need to explore the UI, use your simulator. On an iPhone simulator:
+
   - Menu > Hardware > Shake gesture
-  - Select Toggle inspector  
-  
+  - Select Toggle inspector
+
 ### Troubleshooting
+
 [Troubleshooting](https://github.com/KILTprotocol/demo-mobile-wallet/blob/master/docs/Troubleshooting.md)
-
-
