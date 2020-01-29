@@ -16,9 +16,9 @@ type Props = {
   onPressCancel: () => void
   onConfirmAddContact: () => void
   onChangeContactName: (name: string) => void
-  onNewContactAddressRead: (address: IPublicIdentity['address']) => void
+  onNewContactPublicIdentityRead: (address: IPublicIdentity['address']) => void
   visible: boolean
-  address: IPublicIdentity['address']
+  publicIdentity: IPublicIdentity
   isOkBtnDisabled: boolean
 }
 
@@ -26,9 +26,9 @@ const AddContactDialog: React.FunctionComponent<Props> = ({
   onConfirmAddContact,
   onPressCancel,
   onChangeContactName,
-  onNewContactAddressRead,
+  onNewContactPublicIdentityRead,
   visible,
-  address,
+  publicIdentity,
   isOkBtnDisabled,
 }): JSX.Element => (
   <Dialog.Container visible={visible} style={dialogContainer}>
@@ -36,11 +36,13 @@ const AddContactDialog: React.FunctionComponent<Props> = ({
     <View style={dialogSection}>
       <Text style={formFreeLabel}>New contact address:</Text>
       <View>
+        {publicIdentity ? (
           <Address address={publicIdentity.address} />
         ) : (
           <QrCodeScanner
             onBarCodeRead={barcode => {
-              onNewContactAddressRead(barcode.data)
+              console.log(barcode)
+              onNewContactPublicIdentityRead(barcode.data)
             }}
           />
         )}

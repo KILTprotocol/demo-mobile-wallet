@@ -27,6 +27,7 @@ import { AsyncStatus } from '../enums'
 import { callWithDelay } from '../utils/utils.async'
 import PublicIdentityQrCode from '../components/PublicIdentityQrCode'
 import Address from '../components/Address'
+import { encodePublicIdentity } from '../utils/utils.encoding'
 
 type Props = {
   publicIdentityFromStore: PublicIdentity | null
@@ -159,10 +160,12 @@ class Account extends Component<Props, State> {
           </View>
           <View style={sectionContainer}>
             <Text style={h2}>My identity</Text>
-            {address && (
+            {address && publicIdentityFromStore && (
               <View style={centered}>
                 <PublicIdentityQrCode
-                  publicIdentity={publicIdentityFromStore}
+                  publicIdentityEncoded={encodePublicIdentity(
+                    publicIdentityFromStore
+                  )}
                 />
                 <View style={paddedTopS}>
                   <Address address={address} />

@@ -21,7 +21,8 @@ import { addContact } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
 import { TMapDispatchToProps, TContact } from '../types'
 import ContactList from '../components/ContactList'
-import { IPublicIdentity } from '@kiltprotocol/sdk-js'
+import { IPublicIdentity, PublicIdentity } from '@kiltprotocol/sdk-js'
+import { decodePublicIdentity } from '../utils/utils.encoding'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -31,14 +32,14 @@ type Props = {
 
 type State = {
   isDialogVisible: boolean
-  newContactAddress: IPublicIdentity['address']
+  newContactPublicIdentity: IPublicIdentity | null
   newContactName: string
 }
 
 class Contacts extends React.Component<Props, State> {
   state = {
     isDialogVisible: false,
-    newContactAddress: '',
+    newContactPublicIdentity: null,
     newContactName: '',
   }
   // also: create vs save vs add vs new
@@ -51,14 +52,17 @@ class Contacts extends React.Component<Props, State> {
 
   addNewContact(): void {
     const { addContactInStore, contactsFromStore } = this.props
-    const { newContactAddress, newContactName } = this.state
+    const { newContactPublicIdentity, newContactName } = this.state
     if (
+      newContactPublicIdentity &&
       // check if the contact already exists
-      !contactsFromStore.some(c => c.address === newContactAddress)
+      !contactsFromStore.some(
+        c => c.publicIdentity.address === newContactPublicIdentity.address
+      )
     ) {
       addContactInStore({
         name: newContactName,
-        address: newContactAddress,
+        publicIdentity: newContactPublicIdentity,
       })
     }
   }
@@ -70,13 +74,13 @@ class Contacts extends React.Component<Props, State> {
   openDialog(): void {
     this.setState({
       isDialogVisible: true,
-      newContactAddress: '',
+      newContactPublicIdentity: null,
       newContactName: '',
     })
   }
 
   render(): JSX.Element {
-    const { isDialogVisible, newContactAddress } = this.state
+    const { isDialogVisible, newContactPublicIdentity } = this.state
     const { contactsFromStore } = this.props
     return (
       <WithDefaultBackground>
@@ -99,12 +103,20 @@ class Contacts extends React.Component<Props, State> {
           </View>
           <AddContactDialog
             visible={isDialogVisible}
-            address={newContactAddress}
+            publicIdentity={newContactPublicIdentity}
             onPressCancel={() => this.closeDialog()}
             onChangeContactName={name => this.setNewContactName(name)}
-            onNewContactAddressRead={address => {
+            onNewContactPublicIdentityRead={publicIdentityEncodedString => {
+              const publicIdentityEncoded = JSON.parse(
+                publicIdentityEncodedString
+              )
+              const publicIdentity = decodePublicIdentity(publicIdentityEncoded)
               this.setState({
-                newContactAddress: address,
+                newContactPublicIdentity: new PublicIdentity(
+                  publicIdentity.address,
+                  publicIdentity.boxPublicKeyAsHex,
+                  publicIdentity.serviceAddress
+                ),
               })
             }}
             onConfirmAddContact={() => {

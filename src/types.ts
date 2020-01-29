@@ -46,8 +46,18 @@ export type TClaimMapByHash = { [key: string]: TClaim }
 /* ---------------------------------- */
 
 export type TContact = {
-  address: IPublicIdentity['address']
+  publicIdentity: IPublicIdentity
   name: string
+}
+
+/* ---------------------------------- */
+/*              Identity              */
+/* ---------------------------------- */
+
+export type TPublicIdentityEncoded = {
+  a: string
+  b: string
+  s?: string
 }
 
 /* ---------------------------------- */

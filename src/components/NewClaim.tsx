@@ -46,7 +46,7 @@ import { fromStoredIdentity } from '../utils/utils.identity'
 import { CLR_TXT } from '../sharedStyles/styles.consts.colors'
 import { sPicker } from '../sharedStyles/styles.form'
 import { CONFIG_THEME, CONFIG_CLAIM } from '../config'
-import { decodePublicIdentity } from '../utils/utils.qrCode'
+import { decodePublicIdentity } from '../utils/utils.encoding'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>

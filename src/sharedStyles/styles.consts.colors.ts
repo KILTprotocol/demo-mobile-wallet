@@ -16,6 +16,11 @@ export const CLR_TXT_INVERTED_LIGHT = 'rgba(255, 255, 255, 0.7)'
 export const CLR_TXT_INVERTED_LIGHT_STANDOUT = '#868686'
 
 /* ---------------------------------- */
+/*            Border color            */
+/* ---------------------------------- */
+export const CLR_BORDER = CLR_TXT_X_LIGHT
+
+/* ---------------------------------- */
 /*           Semantic colors          */
 /* ---------------------------------- */
 // greenish
