@@ -27,8 +27,6 @@ export const input: ViewStyle = {
   fontSize: TXT_S_SIZE,
 }
 
-export const inputTxt = bodyTxt
-
 export const labelTxt: TextStyle = {
   textTransform: 'capitalize',
   color: CLR_TXT_MEDIUM,

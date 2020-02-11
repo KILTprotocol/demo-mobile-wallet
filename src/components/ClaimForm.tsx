@@ -1,12 +1,11 @@
 import React from 'react'
-import { Text, View, TextStyle, Picker, TextInput } from 'react-native'
+import { Text, View, TextStyle, Picker } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { CLR_TXT_MEDIUM } from '../sharedStyles/styles.consts.colors'
 import { sPicker, lPicker } from '../sharedStyles/styles.form'
 import { paddedBottomS } from '../sharedStyles/styles.layout'
 import { TXT_XS_SIZE } from '../sharedStyles/styles.consts.typography'
-import { CONFIG_THEME } from '../config'
-import { input } from '../sharedStyles/styles.form'
+import StyledTextInput from './StyledTextInput'
 
 type Props = {
   onChangeValue: (value: any, claimPropertyId: string) => void
@@ -25,11 +24,9 @@ const claimFormItemMap = {
   string: (propertyName: string, onChangeValue) => (
     <>
       <Text style={labelTxt}>{propertyName}:</Text>
-      <TextInput
+      <StyledTextInput
         returnKeyType="done"
         onChangeText={txt => onChangeValue(txt, propertyName)}
-        style={input}
-        selectionColor={CONFIG_THEME.CLR_PRIMARY}
       />
     </>
   ),
@@ -53,7 +50,8 @@ const claimFormItemMap = {
         itemStyle={sPicker}
         style={sPicker}
         selectedValue={value}
-        onValueChange={bool => onChangeValue(bool, propertyName)}>
+        onValueChange={bool => onChangeValue(bool, propertyName)}
+      >
         <Picker.Item label="yes" value={true} />
         <Picker.Item label="no" value={false} />
       </Picker>

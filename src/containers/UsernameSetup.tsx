@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TextInput, Text } from 'react-native'
+import { View, Text } from 'react-native'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import KiltButton from '../components/KiltButton'
@@ -20,12 +20,11 @@ import WithIntroBackground from '../components/WithIntroBackground'
 import {
   titleInvertedClrTxt,
   h2,
-  bodyInvertedClrTxt,
   bodyTxt,
 } from '../sharedStyles/styles.typography'
 import { MNEMONIC_CREATION } from '../routes'
-import { CONFIG_THEME } from '../config'
-import { labelTxt, input } from '../sharedStyles/styles.form'
+import { labelTxt } from '../sharedStyles/styles.form'
+import StyledTextInput from '../components/StyledTextInput'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -68,14 +67,13 @@ class UsernameSetup extends React.Component<Props, State> {
           </View>
           <View style={sectionContainer}>
             <Text style={[bodyTxt, labelTxt]}>Your first name (optional)</Text>
-            <TextInput
-              autoCorrect={false}
-              autoFocus
+            <StyledTextInput
               onChangeText={username => this.onChangeUsername(username)}
+              autoFocus
               returnKeyType="done"
-              selectionColor={CONFIG_THEME.CLR_PRIMARY}
               spellCheck={false}
-              style={[bodyTxt, bodyInvertedClrTxt, input]}
+              autoCorrect={false}
+              inverted
             />
           </View>
           <View style={sectionContainer}>
@@ -102,4 +100,7 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(null, mapDispatchToProps)(UsernameSetup)
+export default connect(
+  null,
+  mapDispatchToProps
+)(UsernameSetup)

@@ -228,12 +228,7 @@ class NewClaim extends React.Component<Props, State> {
                     Also add this attester to my contacts Contact name:
                   </Text>
                   <Text style={[bodyTxt, labelTxt]}>Contact name:</Text>
-                  <TextInput
-                    returnKeyType="done"
-                    onChangeText={txt => onChangeValue(txt, propertyName)}
-                    style={input}
-                    selectionColor={CONFIG_THEME.CLR_PRIMARY}
-                  />
+                  <StyledTextInput returnKeyType="done" />
                 </View>
               </>
             ) : (

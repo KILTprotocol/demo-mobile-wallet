@@ -15,8 +15,8 @@ import { disabledButton } from '../sharedStyles/styles.buttons'
 import Address from '../components/Address'
 import QrCodeScanner from '../components/QrCodeScanner'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
-import { CONFIG_THEME } from '../config'
-import { inputTxt } from '../sharedStyles/styles.form'
+import { labelTxt } from '../sharedStyles/styles.form'
+import StyledTextInput from './StyledTextInput'
 
 const contentContainer: ViewStyle = {
   height: 150,
@@ -58,13 +58,13 @@ class TokenTransferDialog extends React.Component<Props> {
 
     const form = (
       <>
-        <Dialog.Input
+        <Text style={[bodyTxt, labelTxt]}>
+          Amount to transfer in KILT tokens (transaction cost = 1 Token):
+        </Text>
+        <StyledTextInput
           autoFocus
           keyboardType="decimal-pad"
-          label="Amount to transfer in KILT tokens (transaction cost = 1 Token):"
           returnKeyType="done"
-          selectionColor={CONFIG_THEME.CLR_PRIMARY}
-          style={inputTxt}
           onChangeText={tokenAmountToTransfer =>
             onChangeTokenAmountToTransfer(
               this.processTokenAmountToTransfer(tokenAmountToTransfer)

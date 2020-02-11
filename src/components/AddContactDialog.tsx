@@ -9,8 +9,9 @@ import {
 } from '../sharedStyles/styles.dialog'
 import Address from './Address'
 import QrCodeScanner from './QrCodeScanner'
-import { inputTxt } from '../sharedStyles/styles.form'
-import { CONFIG_THEME } from '../config'
+import StyledTextInput from './StyledTextInput'
+import { bodyTxt } from '../sharedStyles/styles.typography'
+import { labelTxt } from '../sharedStyles/styles.form'
 
 type Props = {
   onPressCancel: () => void
@@ -48,16 +49,14 @@ const AddContactDialog: React.FunctionComponent<Props> = ({
         )}
       </View>
     </View>
-    <Dialog.Input
+    <Text style={[bodyTxt, labelTxt]}>Name:</Text>
+    <StyledTextInput
       autoFocus
       returnKeyType="done"
-      label="Name:"
       onChangeText={name => onChangeContactName(name)}
-      // don't spellcheck the name
+      // don't spellcheck/autocorrect the name
       spellCheck={false}
       autoCorrect={false}
-      style={inputTxt}
-      selectionColor={CONFIG_THEME.CLR_PRIMARY}
     />
     <Dialog.Button onPress={onPressCancel} label="Cancel" />
     <Dialog.Button
