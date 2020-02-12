@@ -1,58 +1,113 @@
 {
-  "env": {
-      "browser": true,
-      "es6": true,
-      "node": true
-  },
-  "extends": [
-      "prettier/@typescript-eslint",
-      "@react-native-community"
-  ],
-  "globals": {
-      "Atomics": "readonly",
-      "SharedArrayBuffer": "readonly"
-  },
-  "parserOptions": {
-      "ecmaVersion": 2018,
-      "sourceType": "module"
-  },
-  "plugins": [
-      "@typescript-eslint",
-      "prettier",
-      "@react-native-community"
-  ],
-  "rules": {
-      "prettier/prettier": "error",
-      "semi": ["error", "never"],
-      "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
-      "@typescript-eslint/explicit-function-return-type": ["warn", {
-          "allowExpressions": true
-      }],
-      "@typescript-eslint/interface-name-prefix": ["error", "always"],
-      "@typescript-eslint/prefer-interface": "off",
-      "@typescript-eslint/array-type": ["error", "array-simple"],
-      "react/no-did-mount-set-state": "off"
-  },
-  "overrides": [
-      {
-          "files": ["**/*.spec.ts"],
-          "env": {
-              "jest": true
-          },
-          "rules": {
-              "@typescript-eslint/no-object-literal-type-assertion": "off",
-              "@typescript-eslint/no-explicit-any": "off",
-              "no-underscore-dangle": "off",
-              "no-unused-vars": [2, {"args": "all", "argsIgnorePattern": "^_"}],
-              "global-require": "off"
-          }
-      }
-  ],
-  "settings": {
-      "import/resolver": {
-          "node": {
-              "extensions": [".js", ".ts"]
-          }
-      }
-  }
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "airbnb-typescript",
+        "prettier/react",
+        "prettier/@typescript-eslint",
+        "@react-native-community"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module",
+        "project": "tsconfig.json"
+    },
+    "plugins": [
+        "@typescript-eslint",
+        "prettier",
+        "@react-native-community"
+    ],
+    "rules": {
+        "prettier/prettier": [
+            "error",
+            {
+                "semi": false,
+                "singleQuote": true,
+                "trailingComma": "es5"
+            }
+        ],
+        "arrow-parens": [
+            "error",
+            "as-needed"
+        ],
+        "comma-dangle": [
+            "error",
+            {
+              "arrays": "only-multiline",
+              "exports": "only-multiline",
+              "functions": "never",
+              "imports": "only-multiline",
+              "objects": "always-multiline"
+            }
+          ],
+        "implicit-arrow-linebreak": ["error", "below"],
+        "lines-between-class-members": [
+            "error",
+            "always",
+            {
+                "exceptAfterSingleLine": true
+            }
+        ],
+        "object-curly-newline": ["error", {
+            "ImportDeclaration": { "multiline": true }
+        }],
+        "operator-linebreak": [
+            "error",
+            "after"
+        ],
+        "semi": [
+            "error",
+            "never"
+        ],
+        "@typescript-eslint/explicit-function-return-type": [
+            "warn",
+            {
+                "allowExpressions": true
+            }
+        ],
+        "@typescript-eslint/interface-name-prefix": [
+            "error",
+            "always"
+        ],
+        "@typescript-eslint/prefer-interface": "off",
+        "react/no-did-mount-set-state": "off"
+    },
+    "overrides": [
+        {
+            "files": [
+                "**/*.spec.ts"
+            ],
+            "rules": {
+                "@typescript-eslint/no-object-literal-type-assertion": "off",
+                "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/semi": "off",
+                "no-underscore-dangle": "off",
+                "no-unused-vars": [
+                    2,
+                    {
+                        "args": "all",
+                        "argsIgnorePattern": "^_"
+                    }
+                ],
+                "global-require": "off"
+            }
+        }
+    ],
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".ts"
+                ]
+            }
+        }
+    }
 }

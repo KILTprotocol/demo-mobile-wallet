@@ -1,14 +1,15 @@
 import React from 'react'
-import { View, Text } from 'react-native'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import KiltButton from '../components/KiltButton'
 import {
   NavigationScreenProp,
   NavigationState,
   NavigationParams,
   ScrollView,
 } from 'react-navigation'
+import { IPublicIdentity, PublicIdentity } from '@kiltprotocol/sdk-js'
+import { View, Text } from 'react-native'
+import KiltButton from '../components/KiltButton'
 import {
   mainViewContainer,
   sectionContainer,
@@ -21,7 +22,6 @@ import { addContact } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
 import { TMapDispatchToProps, TContact } from '../types'
 import ContactList from '../components/ContactList'
-import { IPublicIdentity, PublicIdentity } from '@kiltprotocol/sdk-js'
 import { decodePublicIdentity } from '../utils/utils.encoding'
 
 type Props = {
@@ -130,20 +130,19 @@ class Contacts extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: TAppState): TAppState => {
-  return {
-    contactsFromStore: state.contactsReducer.contacts,
-  }
-}
+const mapStateToProps = (state: TAppState): TAppState => ({
+  contactsFromStore: state.contactsReducer.contacts,
+})
 
 const mapDispatchToProps = (
   dispatch: Dispatch
-): Partial<TMapDispatchToProps> => {
-  return {
-    addContactInStore: (contact: TContact) => {
-      dispatch(addContact(contact))
-    },
-  }
-}
+): Partial<TMapDispatchToProps> => ({
+  addContactInStore: (contact: TContact) => {
+    dispatch(addContact(contact))
+  },
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Contacts)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Contacts)

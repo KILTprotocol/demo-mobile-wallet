@@ -68,11 +68,12 @@ class AppStartup extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => {
-  return {
-    publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
-    lastVisitedRouteFromStore: state.lastVisitedRouteReducer.lastVisitedRoute,
-  }
-}
+const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
+  publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
+  lastVisitedRouteFromStore: state.lastVisitedRouteReducer.lastVisitedRoute,
+})
 
-export default connect(mapStateToProps, null)(AppStartup)
+export default connect(
+  mapStateToProps,
+  null
+)(AppStartup)
