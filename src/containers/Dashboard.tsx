@@ -22,9 +22,13 @@ import {
   checkAttestationExistsOnChain,
 } from '../services/service.claim'
 import { updateClaimStatus } from '../redux/actions'
-import { THashAndClaimStatus, TClaimMapByHash } from '../types'
+import {
+  THashAndClaimStatus,
+  TClaimMapByHash,
+  TMapDispatchToProps,
+  TMapStateToProps,
+} from '../types'
 import ClaimList from '../components/ClaimList'
-import { TMapDispatchToProps, TMapStateToProps } from '../types'
 import { NEW_CLAIM } from '../routes'
 import { CONFIG_CONNECT } from '../config'
 
@@ -39,7 +43,7 @@ class Dashboard extends React.Component<Props> {
     header: null,
   }
 
-  static interval: NodeJS.Timeout
+  static interval: number
 
   async componentDidMount(): Promise<void> {
     // polling for new messages
@@ -49,11 +53,15 @@ class Dashboard extends React.Component<Props> {
     )
   }
 
+  componentWillUnmount(): void {
+    clearInterval(Dashboard.interval)
+  }
+
   queryChainAndUpdateClaimsInStore = async () => {
     const { claimsMapFromStore, updateClaimStatusInStore } = this.props
     const claimHashes = Object.keys(claimsMapFromStore)
+    // todo improve/refactor
     claimHashes.forEach(async h => {
-      console.info('[ATTESTATION] Querying hash...')
       const attestation = await queryAttestationByHash(h)
       if (attestation && checkAttestationExistsOnChain(attestation)) {
         console.info(
@@ -72,10 +80,6 @@ class Dashboard extends React.Component<Props> {
         )
       }
     })
-  }
-
-  componentWillUnmount(): void {
-    clearInterval(Dashboard.interval)
   }
 
   render(): JSX.Element {
@@ -109,12 +113,13 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
 
 const mapDispatchToProps = (
   dispatch: Dispatch
-): Partial<TMapDispatchToProps> => {
-  return {
-    updateClaimStatusInStore: (hashAndStatus: THashAndClaimStatus) => {
-      dispatch(updateClaimStatus(hashAndStatus))
-    },
-  }
-}
+): Partial<TMapDispatchToProps> => ({
+  updateClaimStatusInStore: (hashAndStatus: THashAndClaimStatus) => {
+    dispatch(updateClaimStatus(hashAndStatus))
+  },
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dashboard)

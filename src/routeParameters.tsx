@@ -1,1 +1,2 @@
-export const MNEMONIC = 'mnemonic'
+const MNEMONIC = 'mnemonic'
+export default MNEMONIC

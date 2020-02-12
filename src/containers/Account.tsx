@@ -80,20 +80,6 @@ class Account extends Component<Props, State> {
     }
   }
 
-  openDialog(): void {
-    this.setState({
-      isDialogVisible: true,
-      isDialogOkBtnDisabled: true,
-      tokenAmountToTransfer: 0,
-      tokenRecipientAddress: '',
-      transferAsyncStatus: AsyncStatus.NotStarted,
-    })
-  }
-
-  closeDialog(): void {
-    this.setState({ isDialogVisible: false })
-  }
-
   setTokenAmountToTransfer(tokenAmountToTransfer: number): void {
     this.setState({ tokenAmountToTransfer })
   }
@@ -102,6 +88,20 @@ class Account extends Component<Props, State> {
     tokenRecipientAddress: IPublicIdentity['address']
   ): void {
     this.setState({ tokenRecipientAddress })
+  }
+
+  closeDialog(): void {
+    this.setState({ isDialogVisible: false })
+  }
+
+  openDialog(): void {
+    this.setState({
+      isDialogVisible: true,
+      isDialogOkBtnDisabled: true,
+      tokenAmountToTransfer: 0,
+      tokenRecipientAddress: '',
+      transferAsyncStatus: AsyncStatus.NotStarted,
+    })
   }
 
   async transferTokens(): Promise<void> {
@@ -221,4 +221,7 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
   balanceFromStore: state.balanceReducer.balance,
 })
 
-export default connect(mapStateToProps, null)(Account)
+export default connect(
+  mapStateToProps,
+  null
+)(Account)

@@ -1,17 +1,17 @@
 import React from 'react'
-import { Text, View, Picker, Switch, TextInput } from 'react-native'
-import SegmentedControlIOS from '@react-native-community/segmented-control'
+import { Text, View, Picker, Switch } from 'react-native'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { Identity, PublicIdentity, IPublicIdentity } from '@kiltprotocol/sdk-js'
-import ClaimForm from './ClaimForm'
-import KiltButton from './KiltButton'
 import {
   NavigationScreenProp,
   NavigationState,
   NavigationParams,
   ScrollView,
 } from 'react-navigation'
+import ClaimForm from './ClaimForm'
+import StyledSegmentedControl from './StyledSegmentedControl'
+import KiltButton from './KiltButton'
 import {
   h2,
   bodyTxt,
@@ -22,7 +22,6 @@ import {
   sectionContainer,
   paddedVerticalM,
   paddedBottomM,
-  paddedBottomS,
 } from '../sharedStyles/styles.layout'
 import QrCodeScanner from './QrCodeScanner'
 import {
@@ -44,11 +43,11 @@ import {
 } from '../services/service.claim'
 import { ClaimStatus } from '../enums'
 import { fromStoredIdentity } from '../utils/utils.identity'
-import { CLR_TXT } from '../sharedStyles/styles.consts.colors'
-import { sPicker, labelTxt, input } from '../sharedStyles/styles.form'
-import { CONFIG_THEME, CONFIG_CLAIM } from '../config'
+import { sPicker, labelTxt } from '../sharedStyles/styles.form'
+import { CONFIG_CLAIM } from '../config'
 import { decodePublicIdentity } from '../utils/utils.encoding'
 import { truncateAddress } from '../utils/utils.formatting'
+import StyledTextInput from './StyledTextInput'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -73,11 +72,11 @@ const claimProperties = CONFIG_CLAIM.CTYPE.schema.properties
 const getDefaultClaimPropertyValue = (type: string, format: string): any => {
   if (type === 'boolean') {
     return false
-  } else if (type === 'string' && format === 'date') {
-    return Date.now()
-  } else {
-    return ''
   }
+  if (type === 'string' && format === 'date') {
+    return Date.now()
+  }
+  return ''
 }
 
 const claimContentsDefault = propertiesNames.reduce(
@@ -114,6 +113,18 @@ class NewClaim extends React.Component<Props, State> {
     selectedAttesterMethod: 0,
   }
 
+  onChangeClaimContentsInputs = (
+    inputValue: string,
+    claimPropertyId: string
+  ) => {
+    this.setState(state => ({
+      claimContents: {
+        ...state.claimContents,
+        [claimPropertyId]: inputValue,
+      },
+    }))
+  }
+
   async createClaimAndRequestAttestation(): Promise<void> {
     const { claimContents, attesterPublicIdentity } = this.state
     const formattedClaimContents = Object.keys(claimContents).reduce(
@@ -122,11 +133,13 @@ class NewClaim extends React.Component<Props, State> {
           claimProperties[propertyName].format === 'date'
             ? formatDateForClaim(claimContents[propertyName])
             : claimContents[propertyName]
-        return { ...acc, [propertyName]: propertyValue }
+        return {
+          ...acc,
+          [propertyName]: propertyValue,
+        }
       },
       {}
     )
-
     const { identityFromStore, addClaimInStore } = this.props
     try {
       if (identityFromStore && attesterPublicIdentity) {
@@ -165,15 +178,6 @@ class NewClaim extends React.Component<Props, State> {
     }
   }
 
-  onChangeClaimContentsInputs = (
-    inputValue: string,
-    claimPropertyId: string
-  ) => {
-    this.setState(state => ({
-      claimContents: { ...state.claimContents, [claimPropertyId]: inputValue },
-    }))
-  }
-
   render(): JSX.Element {
     const {
       claimContents,
@@ -198,18 +202,9 @@ class NewClaim extends React.Component<Props, State> {
           <Text style={h2}>Attester</Text>
 
           <Text style={bodyTxt}>Define the attester for your claim.</Text>
-          <SegmentedControlIOS
-            tintColor={CONFIG_THEME.CLR_PRIMARY}
-            textColor={CLR_TXT}
-            style={{
-              height: 44,
-              fontSize: 40,
-              marginTop: 24,
-              marginBottom: 12,
-              borderRadius: 2,
-            }}
+          <StyledSegmentedControl
             values={ATTESTER_METHODS}
-            selectedIndex={this.state.selectedAttesterMethod}
+            selectedIndex={selectedAttesterMethod}
             onChange={event => {
               this.setState({
                 attesterPublicIdentity: null,
@@ -252,7 +247,10 @@ class NewClaim extends React.Component<Props, State> {
             <View style={paddedVerticalM}>
               <Text style={[bodyTxt, labelTxt]}>Contacts:</Text>
               <Picker
-                itemStyle={{ ...sPicker, textAlign: 'left' }}
+                itemStyle={{
+                  ...sPicker,
+                  textAlign: 'left',
+                }}
                 style={sPicker}
                 selectedValue={
                   attesterPublicIdentity ? attesterPublicIdentity.address : null
@@ -261,11 +259,11 @@ class NewClaim extends React.Component<Props, State> {
                   // const publicIdentity = findPublicIdentityFromAddress()
 
                   const contact = contactsFromStore.find(
-                    contact => contact.publicIdentity.address === address
+                    c => c.publicIdentity.address === address
                   )
                   if (contact) {
                     this.setState({
-                      address: address,
+                      address,
                       attesterPublicIdentity: contact.publicIdentity,
                     })
                   } else {
@@ -274,8 +272,9 @@ class NewClaim extends React.Component<Props, State> {
                       attesterPublicIdentity: null,
                     })
                   }
-                }}>
-                <Picker.Item label={'(↓ Select a contact)'} value={null} />
+                }}
+              >
+                <Picker.Item label="(↓ Select a contact)" value={null} />
                 {contactsFromStore.map(contact => (
                   <Picker.Item
                     label={`${contact.name}  (${truncateAddress(
@@ -316,16 +315,14 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
 
 const mapDispatchToProps = (
   dispatch: Dispatch
-): Partial<TMapDispatchToProps> => {
-  return {
-    addClaimInStore: (claim: TClaim) => {
-      dispatch(addClaim(claim))
-    },
-    updateClaimStatusInStore: (hashAndStatus: THashAndClaimStatus) => {
-      dispatch(updateClaimStatus(hashAndStatus))
-    },
-  }
-}
+): Partial<TMapDispatchToProps> => ({
+  addClaimInStore: (claim: TClaim) => {
+    dispatch(addClaim(claim))
+  },
+  updateClaimStatusInStore: (hashAndStatus: THashAndClaimStatus) => {
+    dispatch(updateClaimStatus(hashAndStatus))
+  },
+})
 
 // areClaimContentsOk(claimContents: any): boolean {
 //   const areAllClaimPropertiesPresent =
@@ -387,4 +384,7 @@ const mapDispatchToProps = (
 //   },
 // ]
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewClaim)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewClaim)
