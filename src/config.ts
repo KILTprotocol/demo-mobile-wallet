@@ -1,5 +1,3 @@
-// todo export 1 json obj or js
-
 const cType = require('./data/ctype.json')
 
 const CONFIG = Object.freeze({
