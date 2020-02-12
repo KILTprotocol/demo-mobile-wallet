@@ -1,14 +1,14 @@
 {
   "schema": {
-    "$id": "membershipcard",
+    "$id": "membership",
     "$schema": "http://kilt-protocol.org/draft-01/ctype#",
     "properties": {
-      "name": {
-        "type": "string"
-      },
       "birthday": {
         "type": "string",
         "format": "date"
+      },
+      "name": {
+        "type": "string"
       },
       "premium": {
         "type": "boolean"
@@ -16,29 +16,6 @@
     },
     "type": "object"
   },
-  "metadata": {
-    "title": {
-      "default": "membershipcard"
-    },
-    "description": {},
-    "properties": {
-      "name": {
-        "title": {
-          "default": "name"
-        }
-      },
-      "birthday": {
-        "title": {
-          "default": "birthday"
-        }
-      },
-      "premium": {
-        "title": {
-          "default": "premium"
-        }
-      }
-    }
-  },
-  "owner": "5HSYJoFy49r4x71oF87BQXjv8LMPQxRuqaVztC7rEyj6FjxK",
-  "hash": "0xcddf06c5ae7589faffaa6a216c468d6601573dfac97fcfe4b9be66672c36a6fc"
+  "owner": "5GFs8gCumJcZDDWof5ETFqDFEsNwCsVJUj2bX7y4xBLxN5qT",
+  "hash": "0x9b8e00820791f3c8bd92c06ab1b5d3e512778bf83a2e24cd153e442c914c5b8c"
 }

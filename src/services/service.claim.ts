@@ -5,6 +5,7 @@ import {
   MessageBodyType,
   Attestation,
   PublicIdentity,
+  IClaim,
 } from '@kiltprotocol/sdk-js'
 import { TClaimContents } from '../types'
 import { fromStoredIdentity } from '../utils/utils.identity'
@@ -13,21 +14,31 @@ import { CONFIG_CLAIM } from '../config'
 
 function createClaim(
   claimContents: TClaimContents,
-  claimerIdentity: Identity | null
+  claimerAddress: Identity['address'] | null
 ): Claim | null {
-  if (claimerIdentity) {
-    return new Claim(CONFIG_CLAIM.CTYPE, claimContents, claimerIdentity)
+  const cTypeSchema = CONFIG_CLAIM.CTYPE
+  if (claimerAddress && cTypeSchema) {
+    return new Claim({
+      cTypeHash: cTypeSchema.hash,
+      contents: claimContents,
+      owner: claimerAddress,
+    })
   }
   return null
 }
 
 function createRequestForAttestation(
-  claim: Claim,
-  claimerIdentity: Identity | null
+  claim: IClaim,
+  storedClaimerIdentity: Identity | null
 ): RequestForAttestation | null {
-  if (claimerIdentity) {
-    const identity = fromStoredIdentity(claimerIdentity)
-    return new RequestForAttestation(claim, [], identity)
+  if (storedClaimerIdentity) {
+    const claimerIdentity = fromStoredIdentity(storedClaimerIdentity)
+    return RequestForAttestation.fromClaimAndIdentity(
+      claim,
+      claimerIdentity,
+      [],
+      null
+    )
   }
   return null
 }
@@ -71,9 +82,9 @@ async function queryAttestationByHash(
 function checkAttestationExistsOnChain(
   attestation: Attestation | null
 ): boolean {
+  // workaround
   return attestation
-    ? // workaround
-      attestation.cTypeHash !==
+    ? attestation.cTypeHash !==
         '0x0000000000000000000000000000000000000000000000000000000000000000'
     : false
 }

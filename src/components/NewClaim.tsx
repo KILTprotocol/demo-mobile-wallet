@@ -132,7 +132,7 @@ class NewClaim extends React.Component<Props, State> {
       if (identityFromStore && attesterPublicIdentity) {
         const claim = createClaim(
           formattedClaimContents as TClaimContents,
-          identityFromStore
+          identityFromStore.address
         )
         if (!claim || !identityFromStore) {
           return
@@ -144,8 +144,8 @@ class NewClaim extends React.Component<Props, State> {
         if (requestForAttestation && attesterPublicIdentity) {
           addClaimInStore({
             title: CONFIG_CLAIM.CLAIM_CARD_TITLE,
-            hash: requestForAttestation.hash,
-            cTypeHash: requestForAttestation.ctypeHash.hash,
+            hash: requestForAttestation.rootHash,
+            cTypeHash: claim.cTypeHash,
             status: ClaimStatus.AttestationPending,
             contents: requestForAttestation.claim.contents,
             requestTimestamp: Date.now(),
