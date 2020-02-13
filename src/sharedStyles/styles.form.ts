@@ -1,7 +1,6 @@
 import { ViewStyle, TextStyle } from 'react-native'
 import { CLR_TXT_MEDIUM, CLR_TXT_X_LIGHT } from './styles.consts.colors'
 import { TXT_XS_SIZE, TXT_S_SIZE } from './styles.consts.typography'
-import { bodyTxt } from './styles.typography'
 
 export const picker: ViewStyle = {
   transform: [{ translateY: -10 }],
@@ -17,7 +16,7 @@ export const lPicker: ViewStyle = {
   height: 200,
 }
 
-export const input: ViewStyle = {
+export const input = {
   width: '100%',
   height: 44,
   borderWidth: 1,
@@ -27,9 +26,13 @@ export const input: ViewStyle = {
   fontSize: TXT_S_SIZE,
 }
 
-export const labelTxt: TextStyle = {
-  textTransform: 'capitalize',
+export const labelTxtUncapitalized: TextStyle = {
   color: CLR_TXT_MEDIUM,
   fontSize: TXT_XS_SIZE,
   paddingBottom: 4,
+}
+
+export const labelTxt: TextStyle = {
+  ...labelTxtUncapitalized,
+  textTransform: 'capitalize',
 }
