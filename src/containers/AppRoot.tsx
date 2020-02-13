@@ -132,6 +132,22 @@ class AppRoot extends React.Component<Props> {
     }
   }
 
+  async disconnect(): Promise<void> {
+    console.info('[SOCKET] Try disconnecting...')
+    const blockchain = await BlockchainApiConnection.getCached(
+      CONFIG_CONNECT.BLOCKCHAIN_NODE
+    )
+    if (blockchain) {
+      try {
+        await blockchain.api.disconnect()
+        Kilt.BlockchainApiConnection.clearCache()
+        console.info('[SOCKET] OK disconnected')
+      } catch (error) {
+        console.info('[SOCKET] Error:', error)
+      }
+    }
+  }
+
   async promptAndSetDecryptedIdentity(): Promise<void> {
     console.info('[ENCRYPTION] Decrypting and setting identity in store')
     const { setIdentityInStore } = this.props

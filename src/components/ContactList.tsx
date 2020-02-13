@@ -3,8 +3,8 @@ import { FlatList, View, ViewStyle, Text } from 'react-native'
 import { TContact } from '../types'
 import Contact from './Contact'
 import { CLR_BORDER } from '../sharedStyles/styles.consts.colors'
-import { bodyTxt } from '../sharedStyles/styles.typography'
-import { paddedBottomM } from '../sharedStyles/styles.layout'
+import { bodyTxt, emptyStateBodyTxt } from '../sharedStyles/styles.typography'
+import { paddedBottomM, paddedVerticalM } from '../sharedStyles/styles.layout'
 
 type Props = {
   contacts: TContact[]
@@ -22,10 +22,11 @@ const contactContainer: ViewStyle = {
   borderBottomWidth: 1,
 }
 
-export default class ContactList extends React.Component<Props> {
-  render(): JSX.Element {
-    const { contacts } = this.props
-    return (
+const ContactList: React.FunctionComponent<Props> = ({
+  contacts,
+}): JSX.Element => (
+  <>
+    {contacts.length > 0 ? (
       <>
         <View style={paddedBottomM}>
           <Text style={bodyTxt}>
@@ -42,6 +43,11 @@ export default class ContactList extends React.Component<Props> {
           )}
         />
       </>
-    )
-  }
-}
+    ) : (
+      <View style={paddedVerticalM}>
+        <Text style={emptyStateBodyTxt}>No contacts yet.</Text>
+      </View>
+    )}
+  </>
+)
+export default ContactList
