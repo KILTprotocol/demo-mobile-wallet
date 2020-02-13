@@ -57,28 +57,35 @@ const claimFormItemMap = {
       </Picker>
     </>
   ),
+  integer: (propertyName: string, onChangeValue) => (
+    <>
+      <Text style={labelTxt}>{propertyName}:</Text>
+      <StyledTextInput
+        keyboardType="number-pad"
+        returnKeyType="done"
+        onChangeText={txt => onChangeValue(txt, propertyName)}
+      />
+    </>
+  ),
 }
 
 const ClaimForm: React.FunctionComponent<Props> = ({
   claimContents,
   claimProperties,
   onChangeValue,
-}): JSX.Element => {
-  return (
-    <>
-      {Object.keys(claimProperties).map(propertyName => {
-        const { format, type } = claimProperties[propertyName]
-        const componentFunction =
-          claimFormItemMap[`${type}${format ? format : ''}`]
-        const value = claimContents[propertyName]
-        return (
-          <View style={paddedBottomS} key={propertyName}>
-            {componentFunction(propertyName, onChangeValue, value)}
-          </View>
-        )
-      })}
-    </>
-  )
-}
+}): JSX.Element => (
+  <>
+    {Object.keys(claimProperties).map(propertyName => {
+      const { format, type } = claimProperties[propertyName]
+      const componentFunction = claimFormItemMap[`${type}${format || ''}`]
+      const value = claimContents[propertyName]
+      return (
+        <View style={paddedBottomS} key={propertyName}>
+          {componentFunction(propertyName, onChangeValue, value)}
+        </View>
+      )
+    })}
+  </>
+)
 
 export default ClaimForm

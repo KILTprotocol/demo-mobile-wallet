@@ -52,7 +52,7 @@ Check out how in the table below:
 | Branding: colors         | Change the theme colors in `src/config.ts`                                                                                                                                                                                                                                                                                                |
 | Branding: logo           | Replace the logos in the `src/assets/imgs/logos` folder with your logo and specify the logo dimensions in `src/config.ts`                                                                                                                                                                                                                 |
 | Endpoints and blockchain | Change these in `src/config.ts`. Note that when a request for attestation is sent, the destination (`serviceAddress`) is specified in the attester QR Code the user scans; otherwise a fallback destination is used (see `src/config.ts`).                                                                                                |
-| CTYPE                    | Create a CTYPE and replace `ctype.json` in `src/data` with your CTYPE as json. The form will update automatically in the UI! Right now the supported types for claim properties are strings, strings formatted as dates and booleans. Make sure the CTYPE hash is saved on the same chain instance as the chain specified in `config/ts`. |
+| CTYPE                    | Create a CTYPE and replace `ctype.json` in `src/data` with your CTYPE as json. The form will update automatically in the UI! Right now the supported types for claim properties are: **strings, strings formatted as dates, booleans and integers**. Make sure the CTYPE hash is saved on the same chain instance as the chain specified in `config/ts`. |
 
 export default CONFIG
 export const CONFIG_THEME = CONFIG.THEME
@@ -81,7 +81,8 @@ Note that we're also using [rn-nodeify](https://www.npmjs.com/package/rn-nodeify
 - Clone the project
 - `yarn install` or `yarn` (please do use yarn)
 - In the `iOS` folder, run `pod install`
-- You might need to adapt `src/_config.ts` if you're runnning some services or the chain locally
+- You might need to adapt `src/config.ts` if you're runnning some services or the chain locally
+- Run with `NODE_OPTIONS=--max_old_space_size=8192 npm start`
 
 ### Run on an iPhone (recommended dev setup)
 
