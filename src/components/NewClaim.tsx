@@ -1,8 +1,8 @@
 import React from 'react'
-import { Text, View, Picker, Switch } from 'react-native'
+import { Text, View } from 'react-native'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { Identity, PublicIdentity, IPublicIdentity } from '@kiltprotocol/sdk-js'
+import { Identity, IPublicIdentity, PublicIdentity } from '@kiltprotocol/sdk-js'
 import {
   NavigationScreenProp,
   NavigationState,
@@ -12,18 +12,13 @@ import {
 import ClaimForm from './ClaimForm'
 import StyledSegmentedControl from './StyledSegmentedControl'
 import KiltButton from './KiltButton'
-import {
-  h2,
-  bodyTxt,
-  emptyStateBodyTxt,
-} from '../sharedStyles/styles.typography'
+import { h2, bodyTxt } from '../sharedStyles/styles.typography'
 import {
   mainViewContainer,
   sectionContainer,
   paddedVerticalM,
   paddedBottomM,
 } from '../sharedStyles/styles.layout'
-import QrCodeScanner from './QrCodeScanner'
 import {
   TMapStateToProps,
   TMapDispatchToProps,
@@ -33,8 +28,7 @@ import {
   TContact,
 } from '../types'
 import { TAppState } from '../redux/reducers'
-import { addClaim, updateClaimStatus } from '../redux/actions'
-import Address from './Address'
+import { addClaim, updateClaimStatus, addContact } from '../redux/actions'
 import {
   formatDateForClaim,
   createClaim,
@@ -43,13 +37,17 @@ import {
 } from '../services/service.claim'
 import { ClaimStatus } from '../enums'
 import { fromStoredIdentity } from '../utils/utils.identity'
-import { sPicker, labelTxt } from '../sharedStyles/styles.form'
 import { CONFIG_CLAIM } from '../config'
-import { decodePublicIdentity } from '../utils/utils.encoding'
-import { truncateAddress } from '../utils/utils.formatting'
-import StyledTextInput from './StyledTextInput'
+import ContactSection from './ContactSection'
+import QrCodeSection from './QrCodeSection'
+import { getClaimContentsDefault } from '../utils/utils.claim'
+
+const claimProperties = CONFIG_CLAIM.CTYPE.schema.properties
+const claimContentsDefault = getClaimContentsDefault(claimProperties)
+const ATTESTER_METHODS = ['Scan QR Code', 'Select from Contacts']
 
 type Props = {
+  addContactInStore: typeof addContact
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   identityFromStore: Identity | null
   addClaimInStore: typeof addClaim
@@ -59,37 +57,12 @@ type Props = {
 }
 
 type State = {
+  shouldAddToContacts: boolean
   claimContents: object
   attesterPublicIdentity: IPublicIdentity | null
   selectedAttesterMethod: number
+  newContactName: string
 }
-
-const ATTESTER_METHODS = ['Scan QR Code', 'Select from Contacts']
-
-const propertiesNames = Object.keys(CONFIG_CLAIM.CTYPE.schema.properties)
-const claimProperties = CONFIG_CLAIM.CTYPE.schema.properties
-
-const getDefaultClaimPropertyValue = (type: string, format: string): any => {
-  if (type === 'boolean') {
-    return false
-  }
-  if (type === 'string' && format === 'date') {
-    return Date.now()
-  }
-  return ''
-}
-
-const claimContentsDefault = propertiesNames.reduce(
-  (acc, claimPropertyName) => ({
-    ...acc,
-    [claimPropertyName]: getDefaultClaimPropertyValue(
-      claimProperties[claimPropertyName].type,
-      claimProperties[claimPropertyName].format
-    ),
-  }),
-  {}
-)
-console.log(claimContentsDefault)
 
 class NewClaim extends React.Component<Props, State> {
   static navigationOptions = {
@@ -108,15 +81,17 @@ class NewClaim extends React.Component<Props, State> {
   }
 
   state = {
+    shouldAddToContacts: true,
     claimContents: claimContentsDefault,
     attesterPublicIdentity: null,
     selectedAttesterMethod: 0,
+    newContactName: '',
   }
 
   onChangeClaimContentsInputs = (
     inputValue: string,
     claimPropertyId: string
-  ) => {
+  ): void => {
     this.setState(state => ({
       claimContents: {
         ...state.claimContents,
@@ -126,6 +101,7 @@ class NewClaim extends React.Component<Props, State> {
   }
 
   async createClaimAndRequestAttestation(): Promise<void> {
+    const { identityFromStore, addClaimInStore } = this.props
     const { claimContents, attesterPublicIdentity } = this.state
     const formattedClaimContents = Object.keys(claimContents).reduce(
       (acc, propertyName) => {
@@ -140,7 +116,6 @@ class NewClaim extends React.Component<Props, State> {
       },
       {}
     )
-    const { identityFromStore, addClaimInStore } = this.props
     try {
       if (identityFromStore && attesterPublicIdentity) {
         const claim = createClaim(
@@ -158,7 +133,6 @@ class NewClaim extends React.Component<Props, State> {
           addClaimInStore({
             title: CONFIG_CLAIM.CLAIM_CARD_TITLE,
             hash: requestForAttestation.rootHash,
-            cTypeHash: claim.cTypeHash,
             status: ClaimStatus.AttestationPending,
             contents: requestForAttestation.claim.contents,
             requestTimestamp: Date.now(),
@@ -180,11 +154,19 @@ class NewClaim extends React.Component<Props, State> {
 
   render(): JSX.Element {
     const {
+      shouldAddToContacts,
       claimContents,
       attesterPublicIdentity,
       selectedAttesterMethod,
+      newContactName,
     } = this.state
+    const { addContactInStore, contactsFromStore, navigation } = this.props
     const { contactsFromStore, navigation } = this.props
+    const isAlreadyInContacts = attesterPublicIdentity
+      ? contactsFromStore.some(
+          c => c.publicIdentity.address === attesterPublicIdentity.address
+        )
+      : false
     return (
       <ScrollView style={mainViewContainer}>
         <Text style={h2}>Data</Text>
@@ -200,7 +182,6 @@ class NewClaim extends React.Component<Props, State> {
         />
         <View style={sectionContainer}>
           <Text style={h2}>Attester</Text>
-
           <Text style={bodyTxt}>Define the attester for your claim.</Text>
           <StyledSegmentedControl
             values={ATTESTER_METHODS}
@@ -212,83 +193,45 @@ class NewClaim extends React.Component<Props, State> {
               })
             }}
           />
-
           {selectedAttesterMethod === 0 ? (
-            attesterPublicIdentity ? (
-              <>
-                <Address address={attesterPublicIdentity.address} />
-                <View>
-                  <Switch onValueChange={v => console.log(v)} />
-                  <Text style={[bodyTxt, labelTxt]}>
-                    Also add this attester to my contacts Contact name:
-                  </Text>
-                  <Text style={[bodyTxt, labelTxt]}>Contact name:</Text>
-                  <StyledTextInput returnKeyType="done" />
-                </View>
-              </>
-            ) : (
-              <QrCodeScanner
-                onBarCodeRead={barcode => {
-                  const publicIdentityEncoded = JSON.parse(barcode.data)
-                  const publicIdentity = decodePublicIdentity(
-                    publicIdentityEncoded
-                  )
-                  this.setState({
-                    attesterPublicIdentity: new PublicIdentity(
-                      publicIdentity.address,
-                      publicIdentity.boxPublicKeyAsHex,
-                      publicIdentity.serviceAddress
-                    ),
-                  })
-                }}
-              />
-            )
-          ) : contactsFromStore.length > 0 ? (
+            <QrCodeSection
+              attesterPublicIdentity={attesterPublicIdentity}
+              isAlreadyInContacts={isAlreadyInContacts}
+              shouldAddToContacts={shouldAddToContacts}
+              onToggleShouldAddToContacts={shouldAdd => {
+                this.setState({
+                  shouldAddToContacts: shouldAdd,
+                })
+              }}
+              onChangeNewContactName={name => this.setState({ newContactName: name })
+              }
+              setPublicIdentity={publicIdentity => this.setState({
+                  attesterPublicIdentity: new PublicIdentity(
+                    publicIdentity.address,
+                    publicIdentity.boxPublicKeyAsHex,
+                    publicIdentity.serviceAddress
+                  ),
+                })
+              }
+            />
+          ) : (
             <View style={paddedVerticalM}>
-              <Text style={[bodyTxt, labelTxt]}>Contacts:</Text>
-              <Picker
-                itemStyle={{
-                  ...sPicker,
-                  textAlign: 'left',
-                }}
-                style={sPicker}
-                selectedValue={
+              <ContactSection
+                contacts={contactsFromStore}
+                selectedAddress={
                   attesterPublicIdentity ? attesterPublicIdentity.address : null
                 }
-                onValueChange={address => {
-                  // const publicIdentity = findPublicIdentityFromAddress()
-
+                onChangeAddress={address => {
                   const contact = contactsFromStore.find(
                     c => c.publicIdentity.address === address
                   )
-                  if (contact) {
-                    this.setState({
-                      address,
-                      attesterPublicIdentity: contact.publicIdentity,
-                    })
-                  } else {
-                    this.setState({
-                      // address: address,
-                      attesterPublicIdentity: null,
-                    })
-                  }
+                  this.setState({
+                    attesterPublicIdentity: contact
+                      ? contact.publicIdentity
+                      : null,
+                  })
                 }}
-              >
-                <Picker.Item label="(↓ Select a contact)" value={null} />
-                {contactsFromStore.map(contact => (
-                  <Picker.Item
-                    label={`${contact.name}  (${truncateAddress(
-                      contact.publicIdentity.address,
-                      2
-                    )})${contact.publicIdentity.serviceAddress ? '📭' : ''}`}
-                    value={contact.publicIdentity.address}
-                  />
-                ))}
-              </Picker>
-            </View>
-          ) : (
-            <View style={paddedVerticalM}>
-              <Text style={emptyStateBodyTxt}>No contacts yet.</Text>
+              />
             </View>
           )}
           <View style={paddedVerticalM}>
@@ -296,6 +239,12 @@ class NewClaim extends React.Component<Props, State> {
               disabled={!attesterPublicIdentity}
               onPress={async () => {
                 await this.createClaimAndRequestAttestation()
+                if (shouldAddToContacts) {
+                  addContactInStore({
+                    publicIdentity: attesterPublicIdentity,
+                    name: newContactName,
+                  })
+                }
                 navigation.goBack()
               }}
               title="✓ OK, send Claim to Attester"
@@ -319,70 +268,13 @@ const mapDispatchToProps = (
   addClaimInStore: (claim: TClaim) => {
     dispatch(addClaim(claim))
   },
+  addContactInStore: (contact: TContact) => {
+    dispatch(addContact(contact))
+  },
   updateClaimStatusInStore: (hashAndStatus: THashAndClaimStatus) => {
     dispatch(updateClaimStatus(hashAndStatus))
   },
 })
-
-// areClaimContentsOk(claimContents: any): boolean {
-//   const areAllClaimPropertiesPresent =
-//     Object.keys(claimContents).length === claimProperties.length
-//   const areAllClaimPropertiesTruthy = !Object.values(claimContents).some(
-//     claimPropertyValue => !claimPropertyValue
-//   )
-//   return areAllClaimPropertiesPresent && areAllClaimPropertiesTruthy
-// }
-
-// onChangeClaimContentsInputs = (
-//   inputValue: string,
-//   claimPropertyId: string
-// ) => {
-//   this.setState(state => ({
-//     claimContents: { ...state.claimContents, [claimPropertyId]: inputValue },
-//   }))
-// }
-// const ctype = require('../data/ctypeMembership.json')
-
-// const propertiesNames = Object.keys(ctype.schema.properties)
-
-// const claimProperties = propertiesNames.reduce(
-//   (acc, c) => [
-//     ...acc,
-//     {
-//       id: c,
-//       ...ctype.schema.properties[c],
-//     },
-//   ],
-//   []
-// )
-
-// const start = {
-//   name: {
-//     type: 'string',
-//   },
-//   birthday: {
-//     type: 'string',
-//     format: 'date',
-//   },
-//   premium: {
-//     type: 'boolean',
-//   },
-// }
-// const end = [
-//   {
-//     id: 'name',
-//     type: 'string',
-//   },
-//   {
-//     id: 'birthday',
-//     type: 'string',
-//     format: 'date',
-//   },
-//   {
-//     id: 'premium',
-//     type: 'boolean',
-//   },
-// ]
 
 export default connect(
   mapStateToProps,
