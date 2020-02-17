@@ -1,6 +1,7 @@
 import React from 'react'
 import { Picker } from 'react-native'
 import { PublicIdentity } from '@kiltprotocol/sdk-js'
+import { CONFIG_THEME } from '../config'
 import { TContact } from '../types'
 import { sPicker } from '../sharedStyles/styles.form'
 import { truncateAddress } from '../utils/utils.formatting'
@@ -33,7 +34,11 @@ const ContactPicker: React.FunctionComponent<Props> = ({
         label={`${contact.name}  (${truncateAddress(
           contact.publicIdentity.address,
           2
-        )})${contact.publicIdentity.serviceAddress ? '📭' : ''}`}
+        )})${
+          contact.publicIdentity.serviceAddress
+            ? CONFIG_THEME.SYMBOL_SERVICE_ADDRESS
+            : ''
+        }`}
         value={contact.publicIdentity.address}
       />
     ))}

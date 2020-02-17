@@ -22,6 +22,7 @@ const CONFIG = Object.freeze({
     // logo
     LOGO_HORIZONTAL_WIDTH: 320,
     LOGO_HORIZONTAL_HEIGHT: 148,
+    SYMBOL_SERVICE_ADDRESS: '📭',
   },
 })
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import { FlatList, View, ViewStyle, Text } from 'react-native'
+import { CONFIG_THEME } from '../config'
 import { TContact } from '../types'
 import Contact from './Contact'
 import { CLR_BORDER } from '../sharedStyles/styles.consts.colors'
@@ -30,7 +31,8 @@ const ContactList: React.FunctionComponent<Props> = ({
       <>
         <View style={paddedBottomM}>
           <Text style={bodyTxt}>
-            Contacts marked with "📭" embed a service address
+            Contacts marked with {CONFIG_THEME.SYMBOL_SERVICE_ADDRESS} embed a
+            service address
           </Text>
         </View>
         <FlatList
