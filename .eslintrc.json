@@ -91,6 +91,7 @@
             "always"
         ],
         "@typescript-eslint/prefer-interface": "off",
+        "react/state-in-constructor": "off",
         "react/no-did-mount-set-state": "off",
         "react/jsx-props-no-spreading": [
             "error",
