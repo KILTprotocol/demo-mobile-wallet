@@ -1,5 +1,6 @@
 import React from 'react'
 import { ViewStyle, View, Text, TextStyle } from 'react-native'
+import { CONFIG_THEME } from '../config'
 import {
   generateConstantColorFromStr,
   getFirstCharacter,
@@ -50,7 +51,8 @@ const Contact: React.FunctionComponent<Props> = ({ contact }): JSX.Element => (
               contact.publicIdentity.address
             ),
           },
-        ]}>
+        ]}
+      >
         <Text style={[bodyTxt, badgeTxt]}>
           {getFirstCharacter(contact.name)}
         </Text>
@@ -59,7 +61,7 @@ const Contact: React.FunctionComponent<Props> = ({ contact }): JSX.Element => (
         <Text style={[bodyTxt, name]}>{contact.name}</Text>
         <View style={check}>
           {contact.publicIdentity.serviceAddress && (
-            <Text style={bodyTxt}>📭</Text>
+            <Text style={bodyTxt}>{CONFIG_THEME.SYMBOL_SERVICE_ADDRESS}</Text>
           )}
         </View>
       </View>
