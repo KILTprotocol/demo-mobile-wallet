@@ -161,7 +161,6 @@ class NewClaim extends React.Component<Props, State> {
       newContactName,
     } = this.state
     const { addContactInStore, contactsFromStore, navigation } = this.props
-    const { contactsFromStore, navigation } = this.props
     const isAlreadyInContacts = attesterPublicIdentity
       ? contactsFromStore.some(
           c => c.publicIdentity.address === attesterPublicIdentity.address
@@ -203,9 +202,11 @@ class NewClaim extends React.Component<Props, State> {
                   shouldAddToContacts: shouldAdd,
                 })
               }}
-              onChangeNewContactName={name => this.setState({ newContactName: name })
+              onChangeNewContactName={name =>
+                this.setState({ newContactName: name })
               }
-              setPublicIdentity={publicIdentity => this.setState({
+              setPublicIdentity={publicIdentity =>
+                this.setState({
                   attesterPublicIdentity: new PublicIdentity(
                     publicIdentity.address,
                     publicIdentity.boxPublicKeyAsHex,
