@@ -1,27 +1,28 @@
 import React from 'react'
-import { View, Text } from 'react-native'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import KiltButton from '../components/KiltButton'
 import {
   NavigationScreenProp,
   NavigationState,
   NavigationParams,
   ScrollView,
 } from 'react-navigation'
+import { IPublicIdentity, PublicIdentity } from '@kiltprotocol/sdk-js'
+import { View, Text } from 'react-native'
+import KiltButton from '../components/KiltButton'
 import {
   mainViewContainer,
   sectionContainer,
   flexRowCenter,
 } from '../sharedStyles/styles.layout'
-import { mainTitleTxt } from '../sharedStyles/styles.typography'
+import { h1 } from '../sharedStyles/styles.typography'
 import WithDefaultBackground from '../components/WithDefaultBackground'
 import AddContactDialog from '../components/AddContactDialog'
 import { addContact } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
-import { TMapDispatchToProps, TContact } from '../_types'
+import { TMapDispatchToProps, TContact } from '../types'
 import ContactList from '../components/ContactList'
-import { IPublicIdentity } from '@kiltprotocol/sdk-js'
+import { decodePublicIdentity } from '../utils/utils.encoding'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -31,14 +32,14 @@ type Props = {
 
 type State = {
   isDialogVisible: boolean
-  newContactAddress: IPublicIdentity['address']
+  newContactPublicIdentity: IPublicIdentity | null
   newContactName: string
 }
 
 class Contacts extends React.Component<Props, State> {
   state = {
     isDialogVisible: false,
-    newContactAddress: '',
+    newContactPublicIdentity: null,
     newContactName: '',
   }
   // also: create vs save vs add vs new
@@ -51,14 +52,17 @@ class Contacts extends React.Component<Props, State> {
 
   addNewContact(): void {
     const { addContactInStore, contactsFromStore } = this.props
-    const { newContactAddress, newContactName } = this.state
+    const { newContactPublicIdentity, newContactName } = this.state
     if (
-      // the contact doesn't already exists
-      !contactsFromStore.some(c => c.address === newContactAddress)
+      newContactPublicIdentity &&
+      // check if the contact already exists
+      !contactsFromStore.some(
+        c => c.publicIdentity.address === newContactPublicIdentity.address
+      )
     ) {
       addContactInStore({
         name: newContactName,
-        address: newContactAddress,
+        publicIdentity: newContactPublicIdentity,
       })
     }
   }
@@ -70,19 +74,19 @@ class Contacts extends React.Component<Props, State> {
   openDialog(): void {
     this.setState({
       isDialogVisible: true,
-      newContactAddress: '',
+      newContactPublicIdentity: null,
       newContactName: '',
     })
   }
 
   render(): JSX.Element {
-    const { isDialogVisible, newContactAddress } = this.state
+    const { isDialogVisible, newContactPublicIdentity } = this.state
     const { contactsFromStore } = this.props
     return (
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>
           <View style={sectionContainer}>
-            <Text style={mainTitleTxt}>Contacts</Text>
+            <Text style={h1}>Contacts</Text>
           </View>
           <View style={sectionContainer}>
             <View style={flexRowCenter}>
@@ -99,12 +103,20 @@ class Contacts extends React.Component<Props, State> {
           </View>
           <AddContactDialog
             visible={isDialogVisible}
-            address={newContactAddress}
+            publicIdentity={newContactPublicIdentity}
             onPressCancel={() => this.closeDialog()}
             onChangeContactName={name => this.setNewContactName(name)}
-            onNewContactAddressRead={address => {
+            onNewContactPublicIdentityRead={publicIdentityEncodedString => {
+              const publicIdentityEncoded = JSON.parse(
+                publicIdentityEncodedString
+              )
+              const publicIdentity = decodePublicIdentity(publicIdentityEncoded)
               this.setState({
-                newContactAddress: address,
+                newContactPublicIdentity: new PublicIdentity(
+                  publicIdentity.address,
+                  publicIdentity.boxPublicKeyAsHex,
+                  publicIdentity.serviceAddress
+                ),
               })
             }}
             onConfirmAddContact={() => {
@@ -118,20 +130,19 @@ class Contacts extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: TAppState): TAppState => {
-  return {
-    contactsFromStore: state.contactsReducer.contacts,
-  }
-}
+const mapStateToProps = (state: TAppState): TAppState => ({
+  contactsFromStore: state.contactsReducer.contacts,
+})
 
 const mapDispatchToProps = (
   dispatch: Dispatch
-): Partial<TMapDispatchToProps> => {
-  return {
-    addContactInStore: (contact: TContact) => {
-      dispatch(addContact(contact))
-    },
-  }
-}
+): Partial<TMapDispatchToProps> => ({
+  addContactInStore: (contact: TContact) => {
+    dispatch(addContact(contact))
+  },
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Contacts)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Contacts)

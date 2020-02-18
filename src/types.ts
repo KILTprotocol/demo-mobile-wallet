@@ -16,7 +16,7 @@ import {
   RESET_LAST_VISITED_ROUTE,
   UPDATE_LAST_VISITED_ROUTE,
 } from './redux/actionTypes'
-import { ClaimStatus } from './_enums'
+import { ClaimStatus } from './enums'
 
 /* ---------------------------------- */
 /*               Claims               */
@@ -37,11 +37,7 @@ export type THashAndClaimStatus = {
   hash: string
 }
 
-export type TClaimContents = {
-  name: string
-  birthday: number
-  type: string
-}
+export type TClaimContents = object
 
 export type TClaimMapByHash = { [key: string]: TClaim }
 
@@ -50,7 +46,7 @@ export type TClaimMapByHash = { [key: string]: TClaim }
 /* ---------------------------------- */
 
 export type TContact = {
-  address: IPublicIdentity['address']
+  publicIdentity: IPublicIdentity
   name: string
 }
 
@@ -167,6 +163,7 @@ export type TMapDispatchToProps = {
 
 export type TMapStateToProps = {
   balanceFromStore: number
+  contactsFromStore: TContact[]
   identityFromStore: Identity
   publicIdentityFromStore: PublicIdentity
   claimsMapFromStore: TClaimMapByHash

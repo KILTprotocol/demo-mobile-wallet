@@ -1,5 +1,5 @@
 import { ADD_CONTACT, DELETE_ALL_CONTACTS } from './actionTypes'
-import { TAppAction, TContact } from '../_types'
+import { TAppAction, TContact } from '../types'
 import { TAppState } from './reducers'
 
 const contactsDefault: TContact[] = []

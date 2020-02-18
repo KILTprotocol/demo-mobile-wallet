@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TextInput, Text, ViewStyle, TextStyle } from 'react-native'
+import { View, Text } from 'react-native'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import KiltButton from '../components/KiltButton'
@@ -15,20 +15,16 @@ import {
   flexRowEnd,
 } from '../sharedStyles/styles.layout'
 import { setUsername } from '../redux/actions'
-import { TMapDispatchToProps } from '../_types'
+import { TMapDispatchToProps } from '../types'
 import WithIntroBackground from '../components/WithIntroBackground'
 import {
   titleInvertedClrTxt,
-  sectionTitleTxt,
-  bodyInvertedClrTxt,
+  h2,
   bodyTxt,
 } from '../sharedStyles/styles.typography'
-import {
-  CLR_TXT_INVERTED,
-  CLR_KILT_0,
-  CLR_TXT_LIGHT,
-} from '../sharedStyles/styles.consts.colors'
-import { MNEMONIC_CREATION } from '../_routes'
+import { MNEMONIC_CREATION } from '../routes'
+import { labelTxt } from '../sharedStyles/styles.form'
+import StyledTextInput from '../components/StyledTextInput'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -37,19 +33,6 @@ type Props = {
 
 type State = {
   username: string
-}
-
-const input: ViewStyle = {
-  borderWidth: 1,
-  borderColor: CLR_TXT_INVERTED,
-  borderRadius: 8,
-  paddingVertical: 18,
-  paddingHorizontal: 12,
-}
-
-const labelTxt: TextStyle = {
-  color: CLR_TXT_LIGHT,
-  marginBottom: 6,
 }
 
 class UsernameSetup extends React.Component<Props, State> {
@@ -80,20 +63,17 @@ class UsernameSetup extends React.Component<Props, State> {
       <WithIntroBackground>
         <ScrollView style={mainViewContainer}>
           <View style={sectionContainer}>
-            <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>
-              Step 1 (optional)
-            </Text>
+            <Text style={[h2, titleInvertedClrTxt]}>Step 1 (optional)</Text>
           </View>
           <View style={sectionContainer}>
             <Text style={[bodyTxt, labelTxt]}>Your first name (optional)</Text>
-            <TextInput
-              autoCorrect={false}
-              autoFocus
+            <StyledTextInput
               onChangeText={username => this.onChangeUsername(username)}
+              autoFocus
               returnKeyType="done"
-              selectionColor={CLR_KILT_0}
               spellCheck={false}
-              style={[bodyTxt, bodyInvertedClrTxt, input]}
+              autoCorrect={false}
+              inverted
             />
           </View>
           <View style={sectionContainer}>
@@ -120,4 +100,7 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(null, mapDispatchToProps)(UsernameSetup)
+export default connect(
+  null,
+  mapDispatchToProps
+)(UsernameSetup)

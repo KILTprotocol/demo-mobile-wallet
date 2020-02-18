@@ -8,30 +8,27 @@ import {
   NavigationState,
   NavigationParams,
 } from 'react-navigation'
-import { AsyncStatus } from '../_enums'
-import { DASHBOARD } from '../_routes'
+import { AsyncStatus } from '../enums'
+import { DASHBOARD } from '../routes'
 import KiltButton from '../components/KiltButton'
 import {
   mainViewContainer,
   sectionContainer,
   flexRowEnd,
 } from '../sharedStyles/styles.layout'
-import {
-  sectionTitleTxt,
-  titleInvertedClrTxt,
-} from '../sharedStyles/styles.typography'
+import { h2, titleInvertedClrTxt } from '../sharedStyles/styles.typography'
 import IdentitySetupSubstep from '../components/IdentitySetupSubstep'
 import { setPublicIdentity, setIdentity } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
 import WithIntroBackground from '../components/WithIntroBackground'
-import { TMapDispatchToProps, TMapStateToProps } from '../_types'
+import { TMapDispatchToProps, TMapStateToProps } from '../types'
 import { saveIdentityAsContactInDemoServices } from '../services/service.demo'
 import {
   setIdentityEncrypted,
   promptUserAndGetIdentityDecrypted,
 } from '../services/service.keychain'
 import { createIdentity } from '../utils/utils.identity'
-import { MNEMONIC } from '../_routeParameters'
+import MNEMONIC from '../routeParameters'
 import { delay } from '../utils/utils.async'
 
 type Props = {
@@ -70,11 +67,8 @@ const getStateForIdx = (idx: number, stepIdx: number): AsyncStatus => {
 const getStateForStepIdx = (stepIdx: number): AsyncStatus[] =>
   [...Array(3).keys()].map(k => getStateForIdx(k, stepIdx))
 
-const delayAndCall = (idx, cb): Promise<void> => {
-  return delay(BUFFER_MS * (idx < 0 ? 1 : 0) + STEP_DURATION_MS).then(() =>
-    cb()
-  )
-}
+const delayAndCall = (idx: number, cb): Promise<void> =>
+  delay(BUFFER_MS * (idx < 0 ? 1 : 0) + STEP_DURATION_MS).then(() => cb())
 
 class IdentitySetup extends React.Component<Props, State> {
   static navigationOptions = {
@@ -84,20 +78,6 @@ class IdentitySetup extends React.Component<Props, State> {
   state = {
     isNextBtnDisabled: true,
     stepStatuses: getStateForStepIdx(-1),
-  }
-
-  componentDidUpdate(prevProps: Props): void {
-    const { publicIdentityFromStore } = this.props
-    if (
-      prevProps.publicIdentityFromStore !== publicIdentityFromStore &&
-      publicIdentityFromStore !== null
-    ) {
-      this.setState({
-        stepStatuses: getStateForStepIdx(3),
-        // the button is enabled only if all steps were successful
-        isNextBtnDisabled: false,
-      })
-    }
   }
 
   async componentDidMount(): Promise<void> {
@@ -146,6 +126,20 @@ class IdentitySetup extends React.Component<Props, State> {
     }
   }
 
+  componentDidUpdate(prevProps: Props): void {
+    const { publicIdentityFromStore } = this.props
+    if (
+      prevProps.publicIdentityFromStore !== publicIdentityFromStore &&
+      publicIdentityFromStore !== null
+    ) {
+      this.setState({
+        stepStatuses: getStateForStepIdx(3),
+        // the button is enabled only if all steps were successful
+        isNextBtnDisabled: false,
+      })
+    }
+  }
+
   render(): React.ReactNode {
     const { navigation } = this.props
     const { isNextBtnDisabled, stepStatuses } = this.state
@@ -153,8 +147,8 @@ class IdentitySetup extends React.Component<Props, State> {
       <WithIntroBackground>
         <View style={mainViewContainer}>
           <View style={sectionContainer}>
-            <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>
-              Step 3: Knitting your KILT account together
+            <Text style={[h2, titleInvertedClrTxt]}>
+              Step 3: Knitting your account together
             </Text>
           </View>
           <View style={sectionContainer}>
@@ -182,25 +176,24 @@ class IdentitySetup extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => {
-  return {
-    identityFromStore: state.identityReducer.identity,
-    publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
-    usernameFromStore: state.usernameReducer.username,
-  }
-}
+const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
+  identityFromStore: state.identityReducer.identity,
+  publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
+  usernameFromStore: state.usernameReducer.username,
+})
 
 const mapDispatchToProps = (
   dispatch: Dispatch
-): Partial<TMapDispatchToProps> => {
-  return {
-    setPublicIdentityInStore: (publicIdentity: PublicIdentity) => {
-      dispatch(setPublicIdentity(publicIdentity))
-    },
-    setIdentityInStore: (identity: Identity) => {
-      dispatch(setIdentity(identity))
-    },
-  }
-}
+): Partial<TMapDispatchToProps> => ({
+  setPublicIdentityInStore: (publicIdentity: PublicIdentity) => {
+    dispatch(setPublicIdentity(publicIdentity))
+  },
+  setIdentityInStore: (identity: Identity) => {
+    dispatch(setIdentity(identity))
+  },
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(IdentitySetup)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IdentitySetup)

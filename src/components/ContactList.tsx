@@ -1,78 +1,55 @@
 import React from 'react'
-import { View, Text, TextStyle, ViewStyle } from 'react-native'
-import {
-  flexRow,
-  flexRowSpaceBetween,
-  card,
-  flexRowCenter,
-} from '../sharedStyles/styles.layout'
-import { TContact } from '../_types'
-import { bodyTxt } from '../sharedStyles/styles.typography'
-import { CLR_TXT_INVERTED } from '../sharedStyles/styles.consts.colors'
-import { MIN_SIZE_TOUCHABLE } from '../sharedStyles/styles.consts.touchable'
-import {
-  generateConstantColorFromStr,
-  getFirstCharacter,
-} from '../utils/utils.formatting'
-import AddressDisplay from './AddressDisplay'
+import { FlatList, View, ViewStyle, Text } from 'react-native'
+import { CONFIG_THEME } from '../config'
+import { TContact } from '../types'
+import Contact from './Contact'
+import { CLR_BORDER } from '../sharedStyles/styles.consts.colors'
+import { bodyTxt, emptyStateBodyTxt } from '../sharedStyles/styles.typography'
+import { paddedBottomM, paddedVerticalM } from '../sharedStyles/styles.layout'
 
 type Props = {
   contacts: TContact[]
 }
 
-const name: TextStyle = {
-  marginRight: 12,
+const list: ViewStyle = {
+  borderTopColor: CLR_BORDER,
+  borderTopWidth: 1,
 }
 
-const badgeTxt: TextStyle = {
-  color: CLR_TXT_INVERTED,
-}
-
-const contactCard: ViewStyle = {
-  ...card,
-  paddingHorizontal: 16,
+const contactContainer: ViewStyle = {
+  backgroundColor: 'white',
   paddingVertical: 12,
-  shadowOpacity: 0.1,
-  marginBottom: 8,
+  borderBottomColor: CLR_BORDER,
+  borderBottomWidth: 1,
 }
 
-const contactBadge: ViewStyle = {
-  ...flexRowCenter,
-  width: MIN_SIZE_TOUCHABLE,
-  height: MIN_SIZE_TOUCHABLE,
-  borderRadius: 200,
-  marginRight: 12,
-}
-
-export default class ContactList extends React.Component<Props> {
-  render(): JSX.Element {
-    const { contacts } = this.props
-    return (
+const ContactList: React.FunctionComponent<Props> = ({
+  contacts,
+}): JSX.Element => (
+  <>
+    {contacts.length > 0 ? (
       <>
-        {contacts.map((contact: TContact) => (
-          <View style={contactCard} key={contact.address}>
-            <View style={flexRowSpaceBetween}>
-              <View style={flexRow}>
-                <View
-                  style={[
-                    contactBadge,
-                    {
-                      backgroundColor: generateConstantColorFromStr(
-                        contact.address
-                      ),
-                    },
-                  ]}>
-                  <Text style={[bodyTxt, badgeTxt]}>
-                    {getFirstCharacter(contact.name)}
-                  </Text>
-                </View>
-                <Text style={[bodyTxt, name]}>{contact.name}</Text>
-              </View>
-              <AddressDisplay address={contact.address} />
+        <View style={paddedBottomM}>
+          <Text style={bodyTxt}>
+            Contacts marked with {CONFIG_THEME.SYMBOL_SERVICE_ADDRESS} embed a
+            service address
+          </Text>
+        </View>
+        <FlatList
+          style={list}
+          data={contacts}
+          renderItem={({ item }) => (
+            <View style={contactContainer}>
+              <Contact contact={item} />
             </View>
-          </View>
-        ))}
+          )}
+        />
       </>
-    )
-  }
-}
+    ) : (
+      <View style={paddedVerticalM}>
+        <Text style={emptyStateBodyTxt}>No contacts yet.</Text>
+      </View>
+    )}
+  </>
+)
+export default ContactList

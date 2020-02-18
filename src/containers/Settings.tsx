@@ -16,8 +16,8 @@ import {
   sectionContainer,
   flexRowCenter,
 } from '../sharedStyles/styles.layout'
-import { mainTitleTxt } from '../sharedStyles/styles.typography'
-import { APP_STARTUP } from '../_routes'
+import { h1 } from '../sharedStyles/styles.typography'
+import { APP_STARTUP } from '../routes'
 import {
   resetBalance,
   resetIdentity,
@@ -25,9 +25,9 @@ import {
   resetPublicIdentity,
   deleteAllContacts,
 } from '../redux/actions'
-import { TMapDispatchToProps, TMapStateToProps } from '../_types'
+import { TMapDispatchToProps, TMapStateToProps } from '../types'
 import { TAppState } from '../redux/reducers'
-import { ButtonType } from '../_enums'
+import { ButtonType } from '../enums'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -74,7 +74,7 @@ class Settings extends React.Component<Props, null> {
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>
           <View style={sectionContainer}>
-            <Text style={mainTitleTxt}>Settings</Text>
+            <Text style={h1}>Settings</Text>
           </View>
           <View style={sectionContainer}>
             <View style={flexRowCenter}>
@@ -82,7 +82,7 @@ class Settings extends React.Component<Props, null> {
                 onPress={() => {
                   deleteAllClaimsInStore()
                 }}
-                title="✕ Delete all credentials from this wallet"
+                title="✕ Delete all claims from this wallet"
                 type={ButtonType.Danger}
               />
             </View>
@@ -100,7 +100,7 @@ class Settings extends React.Component<Props, null> {
                 onPress={() => {
                   this.resetApp()
                 }}
-                title="✕✕ Reset app (delete credentials + reset identity and balance)"
+                title="✕✕ Reset app (delete claims + reset identity and balance)"
                 type={ButtonType.Danger}
               />
             </View>

@@ -2,25 +2,23 @@
 /*             Main colors            */
 /* ---------------------------------- */
 export const CLR_BCKGRD_DARK = 'rgba(0, 0, 0, 0.5)'
-// primary: orange
-export const CLR_KILT_0 = '#f05a28'
-export const CLR_KILT_0_LIGHT = 'rgba(240,90,40,0.09)'
-// secondary: purple
-export const CLR_KILT_1 = '#280021'
-export const CLR_KILT_1_DARK = '#751869'
-// turquoise
-export const CLR_KILT_2 = '#22c5aa'
-export const CLR_KILT_2_DARK = '#007360'
 
 /* ---------------------------------- */
 /*             Txt colors             */
 /* ---------------------------------- */
 export const CLR_TXT = 'rgba(0, 0, 0, 0.8)'
 export const CLR_TXT_STANDOUT = '#282c34'
+export const CLR_TXT_MEDIUM = '#7b7b7b'
 export const CLR_TXT_LIGHT = '#A9A9A9'
+export const CLR_TXT_X_LIGHT = '#E0E0E0'
 export const CLR_TXT_INVERTED = 'white'
 export const CLR_TXT_INVERTED_LIGHT = 'rgba(255, 255, 255, 0.7)'
 export const CLR_TXT_INVERTED_LIGHT_STANDOUT = '#868686'
+
+/* ---------------------------------- */
+/*            Border color            */
+/* ---------------------------------- */
+export const CLR_BORDER = CLR_TXT_X_LIGHT
 
 /* ---------------------------------- */
 /*           Semantic colors          */

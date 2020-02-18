@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { AppState, ImageBackground } from 'react-native'
+import { AppState } from 'react-native'
 import { createAppContainer } from 'react-navigation'
 import * as Kilt from '@kiltprotocol/sdk-js'
 import {
@@ -10,29 +10,27 @@ import {
   Balance,
   PublicIdentity,
 } from '@kiltprotocol/sdk-js'
-import { fill } from '../sharedStyles/styles.layout'
 import {
   setIdentity,
   resetIdentity,
   updateBalance,
   updateLastVisitedRoute,
 } from '../redux/actions'
-import { TMapDispatchToProps } from '../_types'
+import { TMapDispatchToProps } from '../types'
 import { TAppState } from '../redux/reducers'
-import { BLOCKCHAIN_NODE } from '../_config'
+import { CONFIG_CONNECT } from '../config'
 import {
   balanceListener,
   getBalanceInKiltCoins,
 } from '../services/service.balance'
-import { AppLockStatus } from '../_enums'
+import { AppLockStatus } from '../enums'
 import {
   getCurrentRoute,
   setTopLevelNavigator,
 } from '../services/service.navigation'
 import RootSwitch from '../components/navigation/RootSwitch'
 import { promptUserAndGetIdentityDecrypted } from '../services/service.keychain'
-
-const obscuratorSrc = require('../assets/imgs/obscurator.jpg')
+import LockScreen from '../components/LockScreen'
 
 const Navigation = createAppContainer(RootSwitch)
 
@@ -48,19 +46,6 @@ type Props = {
 class AppRoot extends React.Component<Props> {
   state = {
     appUiState: AppState.currentState,
-  }
-
-  getAppLockStatus(): AppLockStatus {
-    const { identityFromStore, publicIdentityFromStore } = this.props
-    if (identityFromStore) {
-      return AppLockStatus.SetUpAndUnlocked
-    } else if (!identityFromStore && publicIdentityFromStore) {
-      return AppLockStatus.SetUpAndLocked
-    } else if (!identityFromStore && !publicIdentityFromStore) {
-      return AppLockStatus.NotSetUp
-    } else {
-      return AppLockStatus.Unknown
-    }
   }
 
   async componentDidMount(): Promise<void> {
@@ -97,39 +82,18 @@ class AppRoot extends React.Component<Props> {
     AppState.removeEventListener('change', this.handleAppStateChange)
   }
 
-  async disconnect(): Promise<void> {
-    console.info('[SOCKET] Try disconnecting...')
-    const blockchain = await BlockchainApiConnection.getCached(BLOCKCHAIN_NODE)
-    if (blockchain) {
-      try {
-        await blockchain.api.disconnect()
-        Kilt.BlockchainApiConnection.clearCache()
-        console.info('[SOCKET] OK disconnected')
-      } catch (error) {
-        console.info('[SOCKET] Error:', error)
-      }
+  getAppLockStatus(): AppLockStatus {
+    const { identityFromStore, publicIdentityFromStore } = this.props
+    if (identityFromStore) {
+      return AppLockStatus.SetUpAndUnlocked
     }
-  }
-
-  async connectAndListen(): Promise<void> {
-    const { publicIdentityFromStore } = this.props
-    if (publicIdentityFromStore) {
-      console.info('[SOCKET] Connecting and listening...')
-      await Kilt.default.connect(BLOCKCHAIN_NODE)
-      await Balance.listenToBalanceChanges(
-        publicIdentityFromStore.address,
-        balanceListener
-      )
-      console.info('[SOCKET] OK connected')
+    if (!identityFromStore && publicIdentityFromStore) {
+      return AppLockStatus.SetUpAndLocked
     }
-  }
-
-  async promptAndSetDecryptedIdentity(): Promise<void> {
-    console.info('[ENCRYPTION] Decrypting and setting identity in store')
-    const { setIdentityInStore } = this.props
-    const identityDecrypted = await promptUserAndGetIdentityDecrypted()
-    // add decrypted identity to Redux store for use anywhere in the app, until user leaves the app again OR screen locks
-    setIdentityInStore(identityDecrypted)
+    if (!identityFromStore && !publicIdentityFromStore) {
+      return AppLockStatus.NotSetUp
+    }
+    return AppLockStatus.Unknown
   }
 
   handleAppStateChange = async nextAppUiState => {
@@ -155,9 +119,46 @@ class AppRoot extends React.Component<Props> {
     this.setState({ appUiState: nextAppUiState })
   }
 
+  async connectAndListen(): Promise<void> {
+    const { publicIdentityFromStore } = this.props
+    if (publicIdentityFromStore) {
+      console.info('[SOCKET] Connecting and listening...')
+      await Kilt.default.connect(CONFIG_CONNECT.BLOCKCHAIN_NODE)
+      await Balance.listenToBalanceChanges(
+        publicIdentityFromStore.address,
+        balanceListener
+      )
+      console.info('[SOCKET] OK connected')
+    }
+  }
+
+  async disconnect(): Promise<void> {
+    console.info('[SOCKET] Try disconnecting...')
+    const blockchain = await BlockchainApiConnection.getCached(
+      CONFIG_CONNECT.BLOCKCHAIN_NODE
+    )
+    if (blockchain) {
+      try {
+        await blockchain.api.disconnect()
+        Kilt.BlockchainApiConnection.clearCache()
+        console.info('[SOCKET] OK disconnected')
+      } catch (error) {
+        console.info('[SOCKET] Error:', error)
+      }
+    }
+  }
+
+  async promptAndSetDecryptedIdentity(): Promise<void> {
+    console.info('[ENCRYPTION] Decrypting and setting identity in store')
+    const { setIdentityInStore } = this.props
+    const identityDecrypted = await promptUserAndGetIdentityDecrypted()
+    // add decrypted identity to Redux store for use anywhere in the app, until user leaves the app again OR screen locks
+    setIdentityInStore(identityDecrypted)
+  }
+
   render(): JSX.Element {
     const { updateLastVisitedRouteInStore } = this.props
-    /* if the app goes in the background (= another app is used) or becomes inactive (= user scrolls through apps, iOS only): 
+    /* if the app goes in the background (= another app is used) or becomes inactive (= user scrolls through apps, iOS only):
     hide its contents, like in a banking app */
     const showAppContents =
       this.getAppLockStatus() === AppLockStatus.NotSetUp ||
@@ -178,37 +179,36 @@ class AppRoot extends React.Component<Props> {
             }}
           />
         ) : (
-          <ImageBackground source={obscuratorSrc} style={fill} />
+          <LockScreen />
         )}
       </>
     )
   }
 }
 
-const mapStateToProps = (state: TAppState): TAppState => {
-  return {
-    identityFromStore: state.identityReducer.identity,
-    publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
-  }
-}
+const mapStateToProps = (state: TAppState): TAppState => ({
+  identityFromStore: state.identityReducer.identity,
+  publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
+})
 
 const mapDispatchToProps = (
   dispatch: Dispatch
-): Partial<TMapDispatchToProps> => {
-  return {
-    setIdentityInStore: (identity: Identity) => {
-      dispatch(setIdentity(identity))
-    },
-    resetIdentityInStore: () => {
-      dispatch(resetIdentity())
-    },
-    updateBalanceInStore: (balance: number) => {
-      dispatch(updateBalance(balance))
-    },
-    updateLastVisitedRouteInStore: (route: string) => {
-      dispatch(updateLastVisitedRoute(route))
-    },
-  }
-}
+): Partial<TMapDispatchToProps> => ({
+  setIdentityInStore: (identity: Identity) => {
+    dispatch(setIdentity(identity))
+  },
+  resetIdentityInStore: () => {
+    dispatch(resetIdentity())
+  },
+  updateBalanceInStore: (balance: number) => {
+    dispatch(updateBalance(balance))
+  },
+  updateLastVisitedRouteInStore: (route: string) => {
+    dispatch(updateLastVisitedRoute(route))
+  },
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppRoot)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppRoot)

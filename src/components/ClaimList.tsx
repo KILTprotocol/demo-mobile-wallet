@@ -2,32 +2,31 @@ import React from 'react'
 import { View } from 'react-native'
 import { sectionContainer } from '../sharedStyles/styles.layout'
 import ClaimCard from './ClaimCard'
-import { TClaim } from '../_types'
+import { TClaim } from '../types'
 
 type Props = {
   claims: TClaim[]
 }
 
-export default class ClaimList extends React.Component<Props> {
-  render(): JSX.Element {
-    const { claims } = this.props
-    return (
-      <View>
-        {/* sort claims by creation date, newest on top */}
-        {[
-          ...claims.sort((claimA, claimB) =>
-            claimA.requestTimestamp > claimB.requestTimestamp ? -1 : 1
-          ),
-        ].map((cred: TClaim) => (
-          <View style={sectionContainer} key={cred.hash}>
-            <ClaimCard
-              title={cred.title}
-              status={cred.status}
-              contents={cred.contents}
-            />
-          </View>
-        ))}
-      </View>
-    )
-  }
+const ClaimList: React.FunctionComponent<Props> = (props): JSX.Element => {
+  const { claims } = props
+  // sort claims by creation date, newest on top
+  const sortedClaims = [
+    ...claims.sort((claimA, claimB) => claimA.requestTimestamp > claimB.requestTimestamp ? -1 : 1),
+  ]
+  return (
+    <>
+      {sortedClaims.map((claim: TClaim) => (
+        <View style={sectionContainer} key={claim.hash}>
+          <ClaimCard
+            title={claim.title}
+            status={claim.status}
+            contents={claim.contents}
+          />
+        </View>
+      ))}
+    </>
+  )
 }
+
+export default ClaimList

@@ -10,24 +10,24 @@ import { connect } from 'react-redux'
 import {
   mainViewContainer,
   sectionContainer,
+  centered,
+  paddedTopS,
 } from '../sharedStyles/styles.layout'
 import WithDefaultBackground from '../components/WithDefaultBackground'
-import {
-  mainTitleTxt,
-  sectionTitleTxt,
-} from '../sharedStyles/styles.typography'
-import IdentityDisplay from '../components/IdentityDisplay'
-import AddressQrCode from '../components/AddressQrCode'
+import { h1, h2 } from '../sharedStyles/styles.typography'
 import RequestTokensButton from '../components/RequestTokensButton'
 import { TAppState } from '../redux/reducers'
-import { TMapStateToProps } from '../_types'
+import { TMapStateToProps } from '../types'
 import TokenTransferDialog from '../components/TokenTransferDialog'
 import KiltButton from '../components/KiltButton'
 import BalanceComp from '../components/Balance'
 import { asMicroKiltCoins } from '../services/service.balance'
 import { fromStoredIdentity } from '../utils/utils.identity'
-import { AsyncStatus } from '../_enums'
+import { AsyncStatus } from '../enums'
 import { callWithDelay } from '../utils/utils.async'
+import PublicIdentityQrCode from '../components/PublicIdentityQrCode'
+import Address from '../components/Address'
+import { encodePublicIdentity } from '../utils/utils.encoding'
 
 type Props = {
   publicIdentityFromStore: PublicIdentity | null
@@ -80,20 +80,6 @@ class Account extends Component<Props, State> {
     }
   }
 
-  openDialog(): void {
-    this.setState({
-      isDialogVisible: true,
-      isDialogOkBtnDisabled: true,
-      tokenAmountToTransfer: 0,
-      tokenRecipientAddress: '',
-      transferAsyncStatus: AsyncStatus.NotStarted,
-    })
-  }
-
-  closeDialog(): void {
-    this.setState({ isDialogVisible: false })
-  }
-
   setTokenAmountToTransfer(tokenAmountToTransfer: number): void {
     this.setState({ tokenAmountToTransfer })
   }
@@ -102,6 +88,20 @@ class Account extends Component<Props, State> {
     tokenRecipientAddress: IPublicIdentity['address']
   ): void {
     this.setState({ tokenRecipientAddress })
+  }
+
+  closeDialog(): void {
+    this.setState({ isDialogVisible: false })
+  }
+
+  openDialog(): void {
+    this.setState({
+      isDialogVisible: true,
+      isDialogOkBtnDisabled: true,
+      tokenAmountToTransfer: 0,
+      tokenRecipientAddress: '',
+      transferAsyncStatus: AsyncStatus.NotStarted,
+    })
   }
 
   async transferTokens(): Promise<void> {
@@ -156,23 +156,29 @@ class Account extends Component<Props, State> {
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>
           <View style={sectionContainer}>
-            <Text style={mainTitleTxt}>Account</Text>
+            <Text style={h1}>Account</Text>
           </View>
           <View style={sectionContainer}>
-            <Text style={sectionTitleTxt}>My address</Text>
-            {address && (
-              <>
-                <AddressQrCode address={address} />
-                <IdentityDisplay address={address} />
-              </>
+            <Text style={h2}>My identity</Text>
+            {address && publicIdentityFromStore && (
+              <View style={centered}>
+                <PublicIdentityQrCode
+                  publicIdentityEncoded={encodePublicIdentity(
+                    publicIdentityFromStore
+                  )}
+                />
+                <View style={paddedTopS}>
+                  <Address address={address} />
+                </View>
+              </View>
             )}
           </View>
           <View style={sectionContainer}>
-            <Text style={sectionTitleTxt}>My KILT account balance</Text>
+            <Text style={h2}>My KILT account balance</Text>
             <BalanceComp balance={balanceFromStore} />
           </View>
           <View style={sectionContainer}>
-            <Text style={sectionTitleTxt}>Actions</Text>
+            <Text style={h2}>Actions</Text>
             {address && <RequestTokensButton address={address} />}
             <KiltButton
               disabled={!balanceFromStore}
@@ -215,4 +221,7 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
   balanceFromStore: state.balanceReducer.balance,
 })
 
-export default connect(mapStateToProps, null)(Account)
+export default connect(
+  mapStateToProps,
+  null
+)(Account)

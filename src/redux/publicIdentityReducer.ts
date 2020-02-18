@@ -1,5 +1,5 @@
 import { SET_PUBLIC_IDENTITY, RESET_PUBLIC_IDENTITY } from './actionTypes'
-import { TAppAction } from '../_types'
+import { TAppAction } from '../types'
 import { TAppState } from './reducers'
 
 const publicIdentityDefault = null

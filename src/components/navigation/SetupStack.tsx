@@ -8,7 +8,7 @@ import {
   MNEMONIC_CREATION,
   IDENTITY_SETUP,
   USERNAME_SETUP,
-} from '../../_routes'
+} from '../../routes'
 
 const SetupStack = createStackNavigator({
   [INTRODUCTION]: Introduction,

@@ -6,11 +6,11 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start",
-    "postinstall": "rn-nodeify --install --yarn && cd node_modules/jsonabc && mkdir dist && npm run build",
-    "test": "jest",
+    "start": "node --max_old_space_size=8192 node_modules/react-native/local-cli/cli.js start",
+    "bundle-ios": "node --max_old_space_size=8192 node_modules/react-native/local-cli/cli.js bundle --entry-file index.js  --platform ios --dev false --bundle-output ./ios/bundle/index.ios.jsbundle --assets-dest release_ios/",
+    "postinstall": "sh postinstall.sh",
     "lint": "eslint src/*.tsx",
-    "style": "prettier -l src/**/*.ts"
+    "style": "eslint src/*.tsx"
   },
   "husky": {
     "hooks": {
@@ -19,10 +19,10 @@
     }
   },
   "dependencies": {
-    "@kiltprotocol/sdk-js": "^0.15.0",
-    "@polkadot/api": "^0.51.1",
+    "@kiltprotocol/sdk-js": "^0.17.0",
     "@react-native-community/async-storage": "^1.6.2",
     "@react-native-community/datetimepicker": "^2.1.0",
+    "@react-native-community/segmented-control": "^1.1.1",
     "@tradle/react-native-http": "^2.0.0",
     "@types/react-native-dialog": "^5.6.0",
     "@types/react-native-indicators": "^0.13.3",
@@ -37,6 +37,7 @@
     "events": "^1.0.0",
     "https-browserify": "~0.0.0",
     "i": "^0.3.6",
+    "invariant": "^2.2.4",
     "npm": "^6.13.0",
     "path-browserify": "0.0.0",
     "polkadot-identicon-react-native": "^0.0.5",
@@ -80,7 +81,7 @@
     "vm-browserify": "0.0.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.4",
+    "@babel/core": "7.1.2",
     "@babel/runtime": "^7.6.3",
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
@@ -88,9 +89,15 @@
     "@react-native-community/eslint-plugin": "^1.0.0",
     "@types/react": "^16.9.11",
     "@types/react-native": "^0.60.19",
+    "@typescript-eslint/eslint-plugin": "^2.19.2",
     "babel-jest": "^24.9.0",
     "eslint": "^6.7.2",
+    "eslint-config-airbnb-typescript": "^7.0.0",
     "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "husky": "^3.0.9",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.56.0",

@@ -1,81 +1,91 @@
 import React from 'react'
-import { Text, View, TextStyle, Picker, ViewStyle } from 'react-native'
-import Dialog from 'react-native-dialog'
+import { Text, View, TextStyle, Picker } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { dialogSection } from '../sharedStyles/styles.dialog'
-import { CLR_KILT_0 } from '../sharedStyles/styles.consts.colors'
-import { bodyTxt, disabledTxt } from '../sharedStyles/styles.typography'
-import { BIRTHDAY, NAME, PREMIUM } from '../data/claimProperties'
+import { CLR_TXT_MEDIUM } from '../sharedStyles/styles.consts.colors'
+import { sPicker, lPicker } from '../sharedStyles/styles.form'
+import { paddedBottomS } from '../sharedStyles/styles.layout'
+import { TXT_XS_SIZE } from '../sharedStyles/styles.consts.typography'
+import StyledTextInput from './StyledTextInput'
 
 type Props = {
-  nameDefaultValue: string
-  birthdayValueAsNumber: number
-  premiumValue: boolean
   onChangeValue: (value: any, claimPropertyId: string) => void
+  claimContents: object
+  claimProperties: object
 }
 
 const labelTxt: TextStyle = {
-  paddingLeft: 10,
+  textTransform: 'capitalize',
+  color: CLR_TXT_MEDIUM,
+  fontSize: TXT_XS_SIZE,
+  paddingBottom: 4,
 }
 
-const picker: ViewStyle = {
-  transform: [{ translateY: -10 }],
-}
-
-const sPicker = {
-  ...picker,
-  height: 100,
-}
-
-const lPicker = {
-  ...picker,
-  height: 200,
+const claimFormItemMap = {
+  string: (propertyName: string, onChangeValue) => (
+    <>
+      <Text style={labelTxt}>{propertyName}:</Text>
+      <StyledTextInput
+        returnKeyType="done"
+        onChangeText={txt => onChangeValue(txt, propertyName)}
+      />
+    </>
+  ),
+  stringdate: (propertyName: string, onChangeValue, value) => (
+    <>
+      <Text style={labelTxt}>{propertyName}:</Text>
+      <DateTimePicker
+        mode="date"
+        value={new Date(value)}
+        onChange={(event, date) => {
+          onChangeValue(date, propertyName)
+        }}
+        style={lPicker}
+      />
+    </>
+  ),
+  boolean: (propertyName: string, onChangeValue, value) => (
+    <>
+      <Text style={labelTxt}>{propertyName}:</Text>
+      <Picker
+        itemStyle={sPicker}
+        style={sPicker}
+        selectedValue={value}
+        onValueChange={bool => onChangeValue(bool, propertyName)}
+      >
+        <Picker.Item label="yes" value={true} />
+        <Picker.Item label="no" value={false} />
+      </Picker>
+    </>
+  ),
+  integer: (propertyName: string, onChangeValue) => (
+    <>
+      <Text style={labelTxt}>{propertyName}:</Text>
+      <StyledTextInput
+        keyboardType="number-pad"
+        returnKeyType="done"
+        onChangeText={txt => onChangeValue(txt, propertyName)}
+      />
+    </>
+  ),
 }
 
 const ClaimForm: React.FunctionComponent<Props> = ({
-  nameDefaultValue,
-  birthdayValueAsNumber,
-  premiumValue,
+  claimContents,
+  claimProperties,
   onChangeValue,
-}): JSX.Element => {
-  return (
-    <>
-      <View style={dialogSection}>
-        <Dialog.Input
-          returnKeyType="done"
-          label="Name"
-          // editable only if no default value
-          editable={!nameDefaultValue}
-          onChangeText={name => onChangeValue(name, NAME)}
-          style={nameDefaultValue ? [bodyTxt, disabledTxt] : bodyTxt}
-          defaultValue={nameDefaultValue}
-          selectionColor={CLR_KILT_0}
-        />
-      </View>
-      <View style={dialogSection}>
-        <Text style={labelTxt}>Birthday:</Text>
-        <DateTimePicker
-          mode="date"
-          value={new Date(birthdayValueAsNumber)}
-          onChange={(event, date) => {
-            onChangeValue(date, BIRTHDAY)
-          }}
-          style={lPicker}
-        />
-      </View>
-      <View style={dialogSection}>
-        <Text style={labelTxt}>Premium:</Text>
-        <Picker
-          itemStyle={sPicker}
-          style={sPicker}
-          selectedValue={premiumValue}
-          onValueChange={isPremium => onChangeValue(isPremium, PREMIUM)}>
-          <Picker.Item label="yes" value={true} />
-          <Picker.Item label="no" value={false} />
-        </Picker>
-      </View>
-    </>
-  )
-}
+}): JSX.Element => (
+  <>
+    {Object.keys(claimProperties).map(propertyName => {
+      const { format, type } = claimProperties[propertyName]
+      const componentFunction = claimFormItemMap[`${type}${format || ''}`]
+      const value = claimContents[propertyName]
+      return (
+        <View style={paddedBottomS} key={propertyName}>
+          {componentFunction(propertyName, onChangeValue, value)}
+        </View>
+      )
+    })}
+  </>
+)
 
 export default ClaimForm

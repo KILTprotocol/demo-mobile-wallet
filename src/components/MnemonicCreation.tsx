@@ -1,9 +1,14 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TextInput } from 'react-native'
 import { Identity } from '@kiltprotocol/sdk-js'
 import {
+  NavigationScreenProp,
+  NavigationState,
+  NavigationParams,
+} from 'react-navigation'
+import {
   bodyTxt,
-  sectionTitleTxt,
+  h2,
   titleInvertedClrTxt,
   bodyInvertedClrTxt,
 } from '../sharedStyles/styles.typography'
@@ -11,18 +16,16 @@ import {
   flexRowEnd,
   mainViewContainer,
   sectionContainer,
+  paddedBottomS,
 } from '../sharedStyles/styles.layout'
-import { IDENTITY_SETUP } from '../_routes'
-import MnemonicDialog from '../components/MnemonicDialog'
-import MnemonicDisplay from '../components/MnemonicDisplay'
-import {
-  NavigationScreenProp,
-  NavigationState,
-  NavigationParams,
-} from 'react-navigation'
-import KiltButton from '../components/KiltButton'
-import WithIntroBackground from '../components/WithIntroBackground'
-import { MNEMONIC } from '../_routeParameters'
+import { IDENTITY_SETUP } from '../routes'
+import MnemonicDialog from './MnemonicDialog'
+import Mnemonic from './Mnemonic'
+import KiltButton from './KiltButton'
+import WithIntroBackground from './WithIntroBackground'
+import MNEMONIC from '../routeParameters'
+import StyledSegmentedControl from './StyledSegmentedControl'
+import StyledTextInput from './StyledTextInput'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -31,55 +34,98 @@ type Props = {
 type State = {
   mnemonic: string
   isDialogVisible: boolean
+  useNew: boolean
 }
 
+const MNEMONIC_METHODS = ['Create new identity', 'Use existing identity']
+
 class MnemonicCreation extends React.Component<Props, State> {
+  static newMnemonic = Identity.generateMnemonic()
+
   static navigationOptions = {
     header: null,
   }
 
   state = {
-    mnemonic: Identity.generateMnemonic(),
     isDialogVisible: false,
+    mnemonic: MnemonicCreation.newMnemonic,
+    useNew: true,
   }
 
   componentWillUnmount(): void {
     this.closeDialog()
   }
 
-  closeDialog(): void {
-    this.setState({ isDialogVisible: false })
+  onInputMnemonic(txt: string): void {
+    this.setState({ mnemonic: txt })
   }
 
   openDialog(): void {
     this.setState({ isDialogVisible: true })
   }
 
+  closeDialog(): void {
+    this.setState({ isDialogVisible: false })
+  }
+
   render(): JSX.Element {
     const { navigation } = this.props
-    const { mnemonic, isDialogVisible } = this.state
+    const { mnemonic, isDialogVisible, useNew } = this.state
     return (
       <WithIntroBackground>
         <View style={mainViewContainer}>
           <View style={sectionContainer}>
-            <Text style={[sectionTitleTxt, titleInvertedClrTxt]}>
+            <Text style={[h2, titleInvertedClrTxt]}>
               Step 2: Your identity phrase (= seed)
             </Text>
-            <MnemonicDisplay mnemonic={mnemonic} />
-          </View>
-          <View style={sectionContainer}>
-            <Text style={[bodyTxt, bodyInvertedClrTxt]}>
-              This is your KILT identity phrase. Write it down (the order is
-              important) and keep it safe and secret. Do not upload it online
-              nor share it with anyone.
-            </Text>
+            <StyledSegmentedControl
+              values={MNEMONIC_METHODS}
+              selectedIndex={useNew ? 0 : 1}
+              onChange={event => {
+                this.setState({
+                  useNew: event.nativeEvent.selectedSegmentIndex === 0,
+                  mnemonic: useNew ? '' : MnemonicCreation.newMnemonic,
+                })
+              }}
+            />
+            <View style={sectionContainer} />
+            {useNew ? (
+              <>
+                <View style={paddedBottomS}>
+                  <Mnemonic mnemonic={MnemonicCreation.newMnemonic} />
+                </View>
+                <Text style={[bodyTxt, bodyInvertedClrTxt]}>
+                  This is your KILT identity phrase. Write it down (the order is
+                  important) and keep it safe and secret. Do not upload it
+                  online nor share it with anyone.
+                </Text>
+              </>
+            ) : (
+              <StyledTextInput
+                autoFocus
+                returnKeyType="done"
+                multiline={true}
+                numberOfLines={3}
+                maxLength={80}
+                inverted
+                extraStyle={{ height: 80 }}
+                onChangeText={txt => this.onInputMnemonic(txt)}
+              />
+            )}
           </View>
           <View style={sectionContainer}>
             <View style={flexRowEnd}>
               <KiltButton
-                title="OK, I wrote it down >"
+                disabled={mnemonic.trim().length <= 0}
+                title="Next >"
                 onPress={() => {
-                  this.openDialog()
+                  if (useNew) {
+                    this.openDialog()
+                  } else {
+                    navigation.navigate(IDENTITY_SETUP, {
+                      [MNEMONIC]: mnemonic,
+                    })
+                  }
                 }}
               />
             </View>

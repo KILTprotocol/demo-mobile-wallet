@@ -17,10 +17,10 @@ import {
   MNEMONIC_CREATION,
   INTRODUCTION,
   USERNAME_SETUP,
-} from '../_routes'
+} from '../routes'
 import { mainViewContainer, fillCenter } from '../sharedStyles/styles.layout'
 import { TAppState } from '../redux/reducers'
-import { TMapStateToProps } from '../_types'
+import { TMapStateToProps } from '../types'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -68,11 +68,12 @@ class AppStartup extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => {
-  return {
-    publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
-    lastVisitedRouteFromStore: state.lastVisitedRouteReducer.lastVisitedRoute,
-  }
-}
+const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
+  publicIdentityFromStore: state.publicIdentityReducer.publicIdentity,
+  lastVisitedRouteFromStore: state.lastVisitedRouteReducer.lastVisitedRoute,
+})
 
-export default connect(mapStateToProps, null)(AppStartup)
+export default connect(
+  mapStateToProps,
+  null
+)(AppStartup)

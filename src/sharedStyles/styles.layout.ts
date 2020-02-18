@@ -1,18 +1,46 @@
 import { ViewStyle } from 'react-native'
 
 /* ---------------------------------- */
-/*             Containers             */
+/*              Spacing               */
 /* ---------------------------------- */
 
 export const mainViewContainer: ViewStyle = {
   paddingHorizontal: 18,
-  marginTop: 44,
+  paddingTop: 32,
 }
 
 export const sectionContainer: ViewStyle = {
-  marginBottom: 32,
   paddingHorizontal: 12,
+  marginBottom: 32,
 }
+
+export const paddedBottomS: ViewStyle = {
+  paddingBottom: 14,
+}
+
+export const paddedBottomM: ViewStyle = {
+  paddingBottom: 28,
+}
+
+export const paddedVerticalM: ViewStyle = {
+  paddingVertical: 28,
+}
+
+export const paddedTopS: ViewStyle = {
+  paddingTop: 14,
+}
+
+export const paddedRightXS: ViewStyle = {
+  paddingRight: 10,
+}
+
+export const paddedVerticalS: ViewStyle = {
+  paddingVertical: 14,
+}
+
+/* ---------------------------------- */
+/*          Height and layout         */
+/* ---------------------------------- */
 
 export const fixedHeight: ViewStyle = {
   height: 24,
@@ -21,6 +49,10 @@ export const fixedHeight: ViewStyle = {
 export const fill = {
   height: '100%',
   width: '100%',
+}
+
+export const centered: ViewStyle = {
+  alignSelf: 'center',
 }
 
 /* ---------------------------------- */

@@ -2,8 +2,8 @@ import {
   RESET_LAST_VISITED_ROUTE,
   UPDATE_LAST_VISITED_ROUTE,
 } from './actionTypes'
-import { TAppAction } from '../_types'
-import { DASHBOARD } from '../_routes'
+import { TAppAction } from '../types'
+import { DASHBOARD } from '../routes'
 import { TAppState } from './reducers'
 
 const routeDefault = DASHBOARD

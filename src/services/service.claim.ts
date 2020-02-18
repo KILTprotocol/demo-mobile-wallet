@@ -4,42 +4,52 @@ import {
   RequestForAttestation,
   MessageBodyType,
   Attestation,
+  PublicIdentity,
+  IClaim,
 } from '@kiltprotocol/sdk-js'
-import { ATTESTER_MNEMONIC } from '../_config'
-import { TClaimContents } from '../_types'
+import { TClaimContents } from '../types'
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { singleSend } from './service.messaging'
+import { CONFIG_CLAIM } from '../config'
 
-const ATTESTER_IDENTITY = Identity.buildFromMnemonic(ATTESTER_MNEMONIC)
-
-function createMembershipClaim(
+function createClaim(
   claimContents: TClaimContents,
-  claimerIdentity: Identity | null
+  claimerAddress: Identity['address'] | null
 ): Claim | null {
-  if (claimerIdentity) {
-    const ctype = require('../data/ctypeMembership.json')
-    return new Claim(ctype, claimContents, claimerIdentity)
+  const cTypeSchema = CONFIG_CLAIM.CTYPE
+  if (claimerAddress && cTypeSchema) {
+    return new Claim({
+      cTypeHash: cTypeSchema.hash,
+      contents: claimContents,
+      owner: claimerAddress,
+    })
   }
   return null
 }
 
 function createRequestForAttestation(
-  claim: Claim,
-  claimerIdentity: Identity | null
+  claim: IClaim,
+  storedClaimerIdentity: Identity | null
 ): RequestForAttestation | null {
-  if (claimerIdentity) {
-    const identity = fromStoredIdentity(claimerIdentity)
-    return new RequestForAttestation(claim, [], identity)
+  if (storedClaimerIdentity) {
+    const claimerIdentity = fromStoredIdentity(storedClaimerIdentity)
+    return RequestForAttestation.fromClaimAndIdentity(
+      claim,
+      claimerIdentity,
+      [],
+      null
+    )
   }
   return null
 }
 
 async function sendRequestForAttestation(
   requestForAttestation: RequestForAttestation,
-  identity: Identity
+  claimerIdentity: Identity,
+  attesterPublicIdentity: PublicIdentity
 ): Promise<void> {
   const sender = {
-    identity,
+    identity: claimerIdentity,
     metaData: {
       name: '',
     },
@@ -49,7 +59,7 @@ async function sendRequestForAttestation(
     metaData: {
       name: '',
     },
-    publicIdentity: ATTESTER_IDENTITY,
+    publicIdentity: attesterPublicIdentity,
   }
   await singleSend(
     {
@@ -57,7 +67,8 @@ async function sendRequestForAttestation(
       type: MessageBodyType.REQUEST_ATTESTATION_FOR_CLAIM,
     },
     sender,
-    receiver
+    receiver,
+    attesterPublicIdentity.serviceAddress
   )
 }
 
@@ -71,9 +82,9 @@ async function queryAttestationByHash(
 function checkAttestationExistsOnChain(
   attestation: Attestation | null
 ): boolean {
+  // workaround
   return attestation
-    ? // workaround
-      attestation.cTypeHash !==
+    ? attestation.cTypeHash !==
         '0x0000000000000000000000000000000000000000000000000000000000000000'
     : false
 }
@@ -89,7 +100,7 @@ function formatDateForClaim(inputDate: number): string {
 }
 
 export {
-  createMembershipClaim,
+  createClaim,
   createRequestForAttestation,
   formatDateForClaim,
   sendRequestForAttestation,

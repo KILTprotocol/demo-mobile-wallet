@@ -1,24 +1,25 @@
 import React from 'react'
 import Dialog from 'react-native-dialog'
 import { View, Text } from 'react-native'
+import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 import {
   dialogContainer,
   dialogSection,
   formFreeLabel,
 } from '../sharedStyles/styles.dialog'
-import AddressDisplay from './AddressDisplay'
+import Address from './Address'
 import QrCodeScanner from './QrCodeScanner'
-import { inputTxt } from '../sharedStyles/styles.typography'
-import { CLR_KILT_0 } from '../sharedStyles/styles.consts.colors'
-import { IPublicIdentity } from '@kiltprotocol/sdk-js'
+import StyledTextInput from './StyledTextInput'
+import { bodyTxt } from '../sharedStyles/styles.typography'
+import { labelTxt } from '../sharedStyles/styles.form'
 
 type Props = {
   onPressCancel: () => void
   onConfirmAddContact: () => void
   onChangeContactName: (name: string) => void
-  onNewContactAddressRead: (address: IPublicIdentity['address']) => void
+  onNewContactPublicIdentityRead: (address: IPublicIdentity['address']) => void
   visible: boolean
-  address: IPublicIdentity['address']
+  publicIdentity: IPublicIdentity
   isOkBtnDisabled: boolean
 }
 
@@ -26,9 +27,9 @@ const AddContactDialog: React.FunctionComponent<Props> = ({
   onConfirmAddContact,
   onPressCancel,
   onChangeContactName,
-  onNewContactAddressRead,
+  onNewContactPublicIdentityRead,
   visible,
-  address,
+  publicIdentity,
   isOkBtnDisabled,
 }): JSX.Element => (
   <Dialog.Container visible={visible} style={dialogContainer}>
@@ -36,27 +37,26 @@ const AddContactDialog: React.FunctionComponent<Props> = ({
     <View style={dialogSection}>
       <Text style={formFreeLabel}>New contact address:</Text>
       <View>
-        {address ? (
-          <AddressDisplay address={address} />
+        {publicIdentity ? (
+          <Address address={publicIdentity.address} />
         ) : (
           <QrCodeScanner
             onBarCodeRead={barcode => {
-              onNewContactAddressRead(barcode.data)
+              console.log(barcode)
+              onNewContactPublicIdentityRead(barcode.data)
             }}
           />
         )}
       </View>
     </View>
-    <Dialog.Input
+    <Text style={[bodyTxt, labelTxt]}>Name:</Text>
+    <StyledTextInput
       autoFocus
       returnKeyType="done"
-      label="Name:"
       onChangeText={name => onChangeContactName(name)}
-      // a name shouldn't be spellchecked
+      // don't spellcheck/autocorrect the name
       spellCheck={false}
       autoCorrect={false}
-      style={inputTxt}
-      selectionColor={CLR_KILT_0}
     />
     <Dialog.Button onPress={onPressCancel} label="Cancel" />
     <Dialog.Button

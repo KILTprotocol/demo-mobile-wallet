@@ -3,20 +3,20 @@ import Dialog from 'react-native-dialog'
 import { Text, View, ViewStyle } from 'react-native'
 import { dialogContainer, dialogSection } from '../sharedStyles/styles.dialog'
 import LoadingIndicator from '../components/LoadingIndicator'
-import { AsyncStatus } from '../_enums'
+import { AsyncStatus } from '../enums'
 import TxtCentered from '../components/TxtCentered'
 import {
   txtSuccess,
   bodyTxt,
   txtError,
-  inputTxt,
 } from '../sharedStyles/styles.typography'
 import { flexRowCenter } from '../sharedStyles/styles.layout'
 import { disabledButton } from '../sharedStyles/styles.buttons'
-import AddressDisplay from '../components/AddressDisplay'
+import Address from '../components/Address'
 import QrCodeScanner from '../components/QrCodeScanner'
-import { CLR_KILT_0 } from '../sharedStyles/styles.consts.colors'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
+import { labelTxt } from '../sharedStyles/styles.form'
+import StyledTextInput from './StyledTextInput'
 
 const contentContainer: ViewStyle = {
   height: 150,
@@ -58,13 +58,13 @@ class TokenTransferDialog extends React.Component<Props> {
 
     const form = (
       <>
-        <Dialog.Input
+        <Text style={[bodyTxt, labelTxt]}>
+          Amount to transfer in KILT tokens (transaction cost = 1 Token):
+        </Text>
+        <StyledTextInput
           autoFocus
           keyboardType="decimal-pad"
-          label="Amount to transfer in KILT tokens (transaction cost = 1 Token):"
           returnKeyType="done"
-          selectionColor={CLR_KILT_0}
-          style={inputTxt}
           onChangeText={tokenAmountToTransfer =>
             onChangeTokenAmountToTransfer(
               this.processTokenAmountToTransfer(tokenAmountToTransfer)
@@ -75,7 +75,7 @@ class TokenTransferDialog extends React.Component<Props> {
           <Text style={recipientLabel}>Recipient:</Text>
           <View>
             {tokenRecipientAddress ? (
-              <AddressDisplay address={tokenRecipientAddress} />
+              <Address address={tokenRecipientAddress} />
             ) : (
               <QrCodeScanner
                 onBarCodeRead={barcode => {

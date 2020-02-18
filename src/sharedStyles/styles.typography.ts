@@ -1,18 +1,22 @@
 import {
   CLR_TXT,
-  CLR_KILT_0,
-  CLR_KILT_0_LIGHT,
   CLR_TXT_STANDOUT,
   CLR_TXT_INVERTED,
   CLR_TXT_INVERTED_LIGHT_STANDOUT,
   CLR_TXT_INVERTED_LIGHT,
   CLR_SUCCESS,
   CLR_ERROR,
+  CLR_TXT_LIGHT,
 } from './styles.consts.colors'
 import { TextStyle } from 'react-native'
 import { TXT_S_SIZE, TXT_M_SIZE, TXT_L_SIZE } from './styles.consts.typography'
+import { CONFIG_THEME } from '../config'
 
-export const mainTitleTxt: TextStyle = {
+/* ---------------------------------- */
+/*           Titles + Body            */
+/* ---------------------------------- */
+
+export const h1: TextStyle = {
   fontFamily: 'Montserrat-Bold',
   fontSize: TXT_L_SIZE,
   fontWeight: '600',
@@ -22,7 +26,7 @@ export const mainTitleTxt: TextStyle = {
   textTransform: 'uppercase',
 }
 
-export const sectionTitleTxt: TextStyle = {
+export const h2: TextStyle = {
   fontFamily: 'Montserrat-Bold',
   fontSize: TXT_M_SIZE,
   fontWeight: '600',
@@ -36,7 +40,9 @@ export const bodyTxt: TextStyle = {
   color: CLR_TXT,
 }
 
-export const inputTxt = bodyTxt
+/* ---------------------------------- */
+/*             Text sizes             */
+/* ---------------------------------- */
 
 export const mTxt: TextStyle = {
   fontSize: TXT_M_SIZE,
@@ -46,6 +52,22 @@ export const lTxt: TextStyle = {
   fontSize: TXT_L_SIZE,
 }
 
+/* ---------------------------------- */
+/*              Layout                */
+/* ---------------------------------- */
+
+export const txtCentered: TextStyle = {
+  textAlign: 'center',
+}
+
+export const txtRight: TextStyle = {
+  textAlign: 'right',
+}
+
+/* ---------------------------------- */
+/*       Color and special text       */
+/* ---------------------------------- */
+
 export const boldTxt: TextStyle = {
   fontWeight: '900',
 }
@@ -54,11 +76,17 @@ export const disabledTxt: TextStyle = {
   color: 'grey',
 }
 
+export const emptyStateBodyTxt: TextStyle = {
+  ...bodyTxt,
+  ...txtCentered,
+  color: CLR_TXT_LIGHT,
+}
+
 export const bodyEmphasizedTxt: TextStyle = {
   fontSize: TXT_M_SIZE,
   fontWeight: '400',
-  color: CLR_KILT_0,
-  backgroundColor: CLR_KILT_0_LIGHT,
+  color: CONFIG_THEME.CLR_PRIMARY,
+  backgroundColor: CONFIG_THEME.CLR_PRIMARY_LIGHT,
   paddingVertical: 2,
   paddingHorizontal: 3,
 }
@@ -72,11 +100,7 @@ export const bodyInvertedClrTxt: TextStyle = {
 }
 
 export const emphasizedClrTxt: TextStyle = {
-  color: CLR_KILT_0,
-}
-
-export const txtCentered: TextStyle = {
-  textAlign: 'center',
+  color: CONFIG_THEME.CLR_PRIMARY,
 }
 
 /* ---------------------------------- */
@@ -96,5 +120,5 @@ export const txtError: TextStyle = {
 }
 
 export const txtPending: TextStyle = {
-  color: CLR_KILT_0,
+  color: CONFIG_THEME.CLR_PRIMARY,
 }
