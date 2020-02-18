@@ -14,7 +14,8 @@
 * 📱 in the mobile app = as the Claimer
   * Account: Request tokens
   * Contacts: Add a contact, e.g. by scanning a KILT address QR Code
-  * Dashboard: Create a claim. It should first have the status “Pending” (gray).
+  * Dashboard: 
+   * Create a claim by filling the content. It should first have the status “Pending” (gray).
 * 💻 in the demo-client = as the Attester
   * Check messages, the claim just requested by the attester should be there
   * Attest it
