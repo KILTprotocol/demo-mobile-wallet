@@ -55,23 +55,22 @@ You'll need to:
 #### Claimer
 
 **Request tokens:**
-<img width="400" alt="tokens-before" src="https://user-images.githubusercontent.com/9762897/74751232-3d34ba00-526d-11ea-8d11-3a653ae5f314.PNG">
-<img width="400" alt="faucet-request-tokens" src="https://user-images.githubusercontent.com/9762897/74751246-41f96e00-526d-11ea-91fe-9ad377910b06.PNG">
-<img width="400" alt="faucet-request-tokens-success" src="https://user-images.githubusercontent.com/9762897/74751247-42920480-526d-11ea-8480-0d88839746d8.PNG">
-<img width="400" alt="tokens-success" src="https://user-images.githubusercontent.com/9762897/74751250-432a9b00-526d-11ea-8ef2-54a208968990.PNG">
+<img width="200" alt="tokens-before" src="https://user-images.githubusercontent.com/9762897/74751232-3d34ba00-526d-11ea-8d11-3a653ae5f314.PNG">
+<img width="200" alt="faucet-request-tokens" src="https://user-images.githubusercontent.com/9762897/74751246-41f96e00-526d-11ea-91fe-9ad377910b06.PNG">
+<img width="200" alt="faucet-request-tokens-success" src="https://user-images.githubusercontent.com/9762897/74751247-42920480-526d-11ea-8480-0d88839746d8.PNG">
+<img width="200" alt="tokens-success" src="https://user-images.githubusercontent.com/9762897/74751250-432a9b00-526d-11ea-8ef2-54a208968990.PNG">
 
-**Create and claim for attestation:**
-<img width="400" alt="claim-create" src="https://user-images.githubusercontent.com/9762897/74751151-24c49f80-526d-11ea-8129-da4b3701bf3a.PNG">
-<img width="400" alt="claim-contents" src="https://user-images.githubusercontent.com/9762897/74751156-25f5cc80-526d-11ea-96f7-444df88be20c.PNG">
-<img width="400" alt="claim-contact" src="https://user-images.githubusercontent.com/9762897/74751160-2726f980-526d-11ea-86fb-4dc2f6cdd00d.PNG">
-<img width="400" alt="claim-qr-code" src="https://user-images.githubusercontent.com/9762897/74751169-29895380-526d-11ea-9c59-51dcfda00aeb.PNG">
-<img width="400" alt="claim-qr-code-name" src="https://user-images.githubusercontent.com/9762897/74751173-2b531700-526d-11ea-953a-676730ff237a.PNG">
-<img width="400" alt="claim-created" src="https://user-images.githubusercontent.com/9762897/74751175-2bebad80-526d-11ea-825f-80df5ae05aa7.PNG">
+**Create claim and request attestation:**
+<img width="200" alt="claim-create" src="https://user-images.githubusercontent.com/9762897/74751151-24c49f80-526d-11ea-8129-da4b3701bf3a.PNG">
+<img width="200" alt="claim-contents" src="https://user-images.githubusercontent.com/9762897/74751156-25f5cc80-526d-11ea-96f7-444df88be20c.PNG">
+<img width="200" alt="claim-contact" src="https://user-images.githubusercontent.com/9762897/74751160-2726f980-526d-11ea-86fb-4dc2f6cdd00d.PNG">
+<img width="200" alt="claim-qr-code" src="https://user-images.githubusercontent.com/9762897/74751169-29895380-526d-11ea-9c59-51dcfda00aeb.PNG">
+<img width="200" alt="claim-qr-code-name" src="https://user-images.githubusercontent.com/9762897/74751173-2b531700-526d-11ea-953a-676730ff237a.PNG">
+<img width="200" alt="claim-created" src="https://user-images.githubusercontent.com/9762897/74751175-2bebad80-526d-11ea-825f-80df5ae05aa7.PNG">
 
 **See claim status updates:**
-<img width="400" alt="claim-valid" src="https://user-images.githubusercontent.com/9762897/74751179-2c844400-526d-11ea-95e2-1512544bdd57.PNG">
-<img width="400" alt="claim-revoked" src="https://user-images.githubusercontent.com/9762897/74751180-2d1cda80-526d-11ea-9047-5a650927ddf3.PNG">
-
+<img width="200" alt="claim-valid" src="https://user-images.githubusercontent.com/9762897/74751179-2c844400-526d-11ea-95e2-1512544bdd57.PNG">
+<img width="200" alt="claim-revoked" src="https://user-images.githubusercontent.com/9762897/74751180-2d1cda80-526d-11ea-9047-5a650927ddf3.PNG">
 
 #### Attester
 
