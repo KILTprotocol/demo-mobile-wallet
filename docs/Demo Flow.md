@@ -8,15 +8,9 @@ You'll need to:
 
 * 📱 in the mobile app: make sure you're connected to WLAN / data network
 * 💻 in the demo-client: 
-  * Create a new identity, which will be used as the Attester Idenitity
+  * Create a new identity (any new identity!); it will be used as the **Attester** Identity
   * Request tokens for it
 * 📱 in the mobile app: follow the onboarding steps.
-
-<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750553-2d68a600-526c-11ea-80d9-28ca4ee22a78.PNG">
-<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750563-3194c380-526c-11ea-92d5-706fff8226a9.PNG">
-<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750573-33f71d80-526c-11ea-87ce-53774ba6861c.PNG">
-<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750575-35284a80-526c-11ea-9069-ce66aa41e7f2.PNG">
-<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750580-36f20e00-526c-11ea-98ef-106374e66078.jpg">
 
 
 ## Demo steps
@@ -39,9 +33,48 @@ You'll need to:
   * 📱 in the mobile app = as the **Claimer**
   * Check that your claim now has the status “Revoked” (red)
   
-## Demo steps: screenshots
-  
+## Screenshots
+
+### Preparation steps
+
+#### Claimer
+
+<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750832-a8ca5780-526c-11ea-9ddf-dbd892da1978.PNG">
+<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750553-2d68a600-526c-11ea-80d9-28ca4ee22a78.PNG">
+<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750563-3194c380-526c-11ea-92d5-706fff8226a9.PNG">
+<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750573-33f71d80-526c-11ea-87ce-53774ba6861c.PNG">
+<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750575-35284a80-526c-11ea-9069-ce66aa41e7f2.PNG">
+<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750580-36f20e00-526c-11ea-98ef-106374e66078.jpg">
+
+#### Attester
+
 <img width="400" alt="" src="https://user-images.githubusercontent.com/9762897/74750173-9c91ca80-526b-11ea-9f80-64deb1408a16.png">
+
+### Demo
+
+#### Claimer
+
+**Request tokens:**
+<img width="400" alt="tokens-before" src="https://user-images.githubusercontent.com/9762897/74751232-3d34ba00-526d-11ea-8d11-3a653ae5f314.PNG">
+<img width="400" alt="faucet-request-tokens" src="https://user-images.githubusercontent.com/9762897/74751246-41f96e00-526d-11ea-91fe-9ad377910b06.PNG">
+<img width="400" alt="faucet-request-tokens-success" src="https://user-images.githubusercontent.com/9762897/74751247-42920480-526d-11ea-8480-0d88839746d8.PNG">
+<img width="400" alt="tokens-success" src="https://user-images.githubusercontent.com/9762897/74751250-432a9b00-526d-11ea-8ef2-54a208968990.PNG">
+
+**Create and claim for attestation:**
+<img width="400" alt="claim-create" src="https://user-images.githubusercontent.com/9762897/74751151-24c49f80-526d-11ea-8129-da4b3701bf3a.PNG">
+<img width="400" alt="claim-contents" src="https://user-images.githubusercontent.com/9762897/74751156-25f5cc80-526d-11ea-96f7-444df88be20c.PNG">
+<img width="400" alt="claim-contact" src="https://user-images.githubusercontent.com/9762897/74751160-2726f980-526d-11ea-86fb-4dc2f6cdd00d.PNG">
+<img width="400" alt="claim-qr-code" src="https://user-images.githubusercontent.com/9762897/74751169-29895380-526d-11ea-9c59-51dcfda00aeb.PNG">
+<img width="400" alt="claim-qr-code-name" src="https://user-images.githubusercontent.com/9762897/74751173-2b531700-526d-11ea-953a-676730ff237a.PNG">
+<img width="400" alt="claim-created" src="https://user-images.githubusercontent.com/9762897/74751175-2bebad80-526d-11ea-825f-80df5ae05aa7.PNG">
+
+**See claim status updates:**
+<img width="400" alt="claim-valid" src="https://user-images.githubusercontent.com/9762897/74751179-2c844400-526d-11ea-95e2-1512544bdd57.PNG">
+<img width="400" alt="claim-revoked" src="https://user-images.githubusercontent.com/9762897/74751180-2d1cda80-526d-11ea-9047-5a650927ddf3.PNG">
+
+
+#### Attester
+
 <img width="400" alt="" src="https://user-images.githubusercontent.com/9762897/74750175-9dc2f780-526b-11ea-85bd-dc1f539d2ce2.png">
 <img width="400" alt="" src="https://user-images.githubusercontent.com/9762897/74750176-9dc2f780-526b-11ea-8da3-6aebdeeab95f.png">
 <img width="400" alt="" src="https://user-images.githubusercontent.com/9762897/74750180-9e5b8e00-526b-11ea-915a-d144e47fbd79.png">
