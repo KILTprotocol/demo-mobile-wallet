@@ -1,8 +1,8 @@
 # Demo flow v2.0
 
 You'll need to:
-* have the demo-mobile-wallet (Sporran) installed on an iPhone (see [README](https://github.com/KILTprotocol/demo-mobile-wallet/blob/master/README.md) for device support details);
-* access the [demo-client](https://demo.kilt.io/dashboard) from your laptop.
+* Have the demo-mobile-wallet (Sporran) installed on an iPhone (see [README](https://github.com/KILTprotocol/demo-mobile-wallet/blob/master/README.md) for device support details);
+* Access the [demo-client](https://demo.kilt.io/dashboard) from your laptop.
 
 ## Preparation steps
 
