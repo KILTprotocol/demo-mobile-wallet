@@ -19,8 +19,8 @@ You'll need to:
   * Under `Account`: Request tokens
   * Under `Contacts`: Add a contact by scanning a KILT Public Identity QR Code displayed in the demo-client
   * Under `Dashboard`: 
-    * Create a claim by filling its contents. 
-    * Select an Attester, either by selecting a contact or by scanning a KILT Public Identity QR Code displayed in the demo-client. If you scan a QR Code, you can also add this attester to your contacts.
+    * Tap "Create a claim" and fill its contents. 
+    * Select an Attester. You can do so either by selecting an existing contact or by scanning a KILT Public Identity QR Code (displayed in the demo-client). If you go for the QR Code option, you can also add this attester to your contacts on-the-fly.
     * Once created, the claim should first have the status “Pending” (gray).
 * 💻 in the demo-client = as the **Attester**
   * Check messages, the claim just requested by the attester should be there
