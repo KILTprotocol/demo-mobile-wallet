@@ -78,9 +78,14 @@ You'll need to:
  <img width="200" alt="claim-revoked" src="https://user-images.githubusercontent.com/9762897/74751180-2d1cda80-526d-11ea-9047-5a650927ddf3.PNG">
 </p>
 
-#### Attester: Attest, then revoke:
+#### Attester: Attest:
 <p align="center">
  <img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750175-9dc2f780-526b-11ea-85bd-dc1f539d2ce2.png">
  <img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750176-9dc2f780-526b-11ea-8da3-6aebdeeab95f.png">
+</p>
+
+#### Attester: Revoke:
+<p align="center">
  <img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750180-9e5b8e00-526b-11ea-915a-d144e47fbd79.png">
 </p>
+
