@@ -1,12 +1,16 @@
 # Demo flow
 
+You'll need:
+* to have the demo-mobile-wallet (Sporran) installed on an iPhone (see README for device support);
+* to access the [demo-client](https://demo.kilt.io/dashboard) from your laptop.
+
 ## Preparation steps
 
-* 📱 In the mobile app: make sure you're connected to WLAN / data network
-* 💻 on the [deployed demo-client](https://demo.kilt.io/dashboard): 
+* 📱 in the mobile app: make sure you're connected to WLAN / data network
+* 💻 in the demo-client: 
   * Create a new identity, which will be used as the Attester Idenitity
   * Request tokens for it
-* 📱 In the mobile app: follow the onboarding steps.
+* 📱 in the mobile app: follow the onboarding steps.
 
 ## Demo steps
 
