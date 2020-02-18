@@ -39,27 +39,30 @@ You'll need to:
 
 #### Claimer
 
-<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750832-a8ca5780-526c-11ea-9ddf-dbd892da1978.PNG">
-<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750553-2d68a600-526c-11ea-80d9-28ca4ee22a78.PNG">
-<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750563-3194c380-526c-11ea-92d5-706fff8226a9.PNG">
-<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750573-33f71d80-526c-11ea-87ce-53774ba6861c.PNG">
-<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750575-35284a80-526c-11ea-9069-ce66aa41e7f2.PNG">
-<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750580-36f20e00-526c-11ea-98ef-106374e66078.jpg">
+<p align="center">
+ <img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750832-a8ca5780-526c-11ea-9ddf-dbd892da1978.PNG">
+ <img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750553-2d68a600-526c-11ea-80d9-28ca4ee22a78.PNG">
+ <img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750563-3194c380-526c-11ea-92d5-706fff8226a9.PNG">
+ <img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750573-33f71d80-526c-11ea-87ce-53774ba6861c.PNG">
+ <img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750575-35284a80-526c-11ea-9069-ce66aa41e7f2.PNG">
+ <img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750580-36f20e00-526c-11ea-98ef-106374e66078.jpg">
+ </p>
 
 #### Attester
 
-<img width="400" alt="" src="https://user-images.githubusercontent.com/9762897/74750173-9c91ca80-526b-11ea-9f80-64deb1408a16.png">
+<img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750173-9c91ca80-526b-11ea-9f80-64deb1408a16.png">
 
 ### Demo
 
 #### Claimer
 
 **Request tokens:**
-
-<img width="200" alt="tokens-before" src="https://user-images.githubusercontent.com/9762897/74751232-3d34ba00-526d-11ea-8d11-3a653ae5f314.PNG">
-<img width="200" alt="faucet-request-tokens" src="https://user-images.githubusercontent.com/9762897/74751246-41f96e00-526d-11ea-91fe-9ad377910b06.PNG">
-<img width="200" alt="faucet-request-tokens-success" src="https://user-images.githubusercontent.com/9762897/74751247-42920480-526d-11ea-8480-0d88839746d8.PNG">
-<img width="200" alt="tokens-success" src="https://user-images.githubusercontent.com/9762897/74751250-432a9b00-526d-11ea-8ef2-54a208968990.PNG">
+<p align="center">
+ <img width="200" alt="tokens-before" src="https://user-images.githubusercontent.com/9762897/74751232-3d34ba00-526d-11ea-8d11-3a653ae5f314.PNG">
+ <img width="200" alt="faucet-request-tokens" src="https://user-images.githubusercontent.com/9762897/74751246-41f96e00-526d-11ea-91fe-9ad377910b06.PNG">
+ <img width="200" alt="faucet-request-tokens-success" src="https://user-images.githubusercontent.com/9762897/74751247-42920480-526d-11ea-8480-0d88839746d8.PNG">
+ <img width="200" alt="tokens-success" src="https://user-images.githubusercontent.com/9762897/74751250-432a9b00-526d-11ea-8ef2-54a208968990.PNG">
+</p>
 
 **Create claim and request attestation:**
 
@@ -77,6 +80,6 @@ You'll need to:
 
 #### Attester
 
-<img width="400" alt="" src="https://user-images.githubusercontent.com/9762897/74750175-9dc2f780-526b-11ea-85bd-dc1f539d2ce2.png">
-<img width="400" alt="" src="https://user-images.githubusercontent.com/9762897/74750176-9dc2f780-526b-11ea-8da3-6aebdeeab95f.png">
-<img width="400" alt="" src="https://user-images.githubusercontent.com/9762897/74750180-9e5b8e00-526b-11ea-915a-d144e47fbd79.png">
+<img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750175-9dc2f780-526b-11ea-85bd-dc1f539d2ce2.png">
+<img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750176-9dc2f780-526b-11ea-8da3-6aebdeeab95f.png">
+<img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750180-9e5b8e00-526b-11ea-915a-d144e47fbd79.png">
