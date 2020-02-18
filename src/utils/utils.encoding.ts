@@ -1,21 +1,20 @@
-import { PublicIdentity, IPublicIdentity } from '@kiltprotocol/sdk-js'
-import { TPublicIdentityEncoded } from '../types'
-
-const decodePublicIdentity = (
-  publicIdentityEncoded: TPublicIdentityEncoded
-): PublicIdentity => ({
-  address: publicIdentityEncoded.a,
-  boxPublicKeyAsHex: publicIdentityEncoded.b,
-  serviceAddress: publicIdentityEncoded.s,
-})
+import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 
 const encodePublicIdentity = (
   publicIdentity: IPublicIdentity
-): TPublicIdentityEncoded => ({
-  a: publicIdentity.address,
-  b: publicIdentity.boxPublicKeyAsHex,
-  ...(publicIdentity.serviceAddress
-    ? { s: publicIdentity.serviceAddress }
+): Array<string> => [
+  publicIdentity.address,
+  publicIdentity.boxPublicKeyAsHex,
+  ...(publicIdentity.serviceAddress ? [publicIdentity.serviceAddress] : []),
+]
+
+const decodePublicIdentity = (
+  publicIdentityEncoded: Array<string>
+): IPublicIdentity => ({
+  address: publicIdentityEncoded[0],
+  boxPublicKeyAsHex: publicIdentityEncoded[1],
+  ...(publicIdentityEncoded[2]
+    ? { serviceAddress: publicIdentityEncoded[2] }
     : {}),
 })
 

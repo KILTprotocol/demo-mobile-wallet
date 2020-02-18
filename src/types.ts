@@ -51,16 +51,6 @@ export type TContact = {
 }
 
 /* ---------------------------------- */
-/*              Identity              */
-/* ---------------------------------- */
-
-export type TPublicIdentityEncoded = {
-  a: string
-  b: string
-  s?: string
-}
-
-/* ---------------------------------- */
 /*           Redux: Actions           */
 /* ---------------------------------- */
 
