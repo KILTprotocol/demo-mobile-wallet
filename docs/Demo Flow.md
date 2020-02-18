@@ -1,4 +1,4 @@
-# Demo flow
+# Demo flow v2.0
 
 You'll need to:
 * have the demo-mobile-wallet (Sporran) installed on an iPhone (see [README](https://github.com/KILTprotocol/demo-mobile-wallet/blob/master/README.md) for device support details);
