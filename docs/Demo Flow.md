@@ -37,27 +37,24 @@ You'll need to:
 
 ### Preparation steps
 
-#### Claimer
+#### Claimer:
 
 <p align="center">
  <img width="200" alt="intro" src="https://user-images.githubusercontent.com/9762897/74750832-a8ca5780-526c-11ea-9ddf-dbd892da1978.PNG">
  <img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750553-2d68a600-526c-11ea-80d9-28ca4ee22a78.PNG">
  <img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750563-3194c380-526c-11ea-92d5-706fff8226a9.PNG">
- <img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750573-33f71d80-526c-11ea-87ce-53774ba6861c.PNG">
  <img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750575-35284a80-526c-11ea-9069-ce66aa41e7f2.PNG">
  <img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750580-36f20e00-526c-11ea-98ef-106374e66078.jpg">
  </p>
 
-#### Attester
+#### Attester:
 <p align="center">
  <img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750173-9c91ca80-526b-11ea-9f80-64deb1408a16.png">
 </p>
 
 ### Demo
 
-#### Claimer
-
-**Request tokens:**
+#### Claimer: Request tokens:
 <p align="center">
  <img width="200" alt="tokens-before" src="https://user-images.githubusercontent.com/9762897/74751232-3d34ba00-526d-11ea-8d11-3a653ae5f314.PNG">
  <img width="200" alt="faucet-request-tokens" src="https://user-images.githubusercontent.com/9762897/74751246-41f96e00-526d-11ea-91fe-9ad377910b06.PNG">
@@ -65,7 +62,7 @@ You'll need to:
  <img width="200" alt="tokens-success" src="https://user-images.githubusercontent.com/9762897/74751250-432a9b00-526d-11ea-8ef2-54a208968990.PNG">
 </p>
 
-**Create claim and request attestation:**
+#### Claimer: Create claim and request attestation:
 <p align="center">
  <img width="200" alt="claim-create" src="https://user-images.githubusercontent.com/9762897/74751151-24c49f80-526d-11ea-8129-da4b3701bf3a.PNG">
  <img width="200" alt="claim-contents" src="https://user-images.githubusercontent.com/9762897/74751156-25f5cc80-526d-11ea-96f7-444df88be20c.PNG">
@@ -75,13 +72,13 @@ You'll need to:
  <img width="200" alt="claim-created" src="https://user-images.githubusercontent.com/9762897/74751175-2bebad80-526d-11ea-825f-80df5ae05aa7.PNG">
  </p>
 
-**See claim status updates:**
+#### Claimer: See claim status updates:
 <p align="center">
  <img width="200" alt="claim-valid" src="https://user-images.githubusercontent.com/9762897/74751179-2c844400-526d-11ea-95e2-1512544bdd57.PNG">
  <img width="200" alt="claim-revoked" src="https://user-images.githubusercontent.com/9762897/74751180-2d1cda80-526d-11ea-9047-5a650927ddf3.PNG">
 </p>
 
-#### Attester
+#### Attester: Attest, then revoke:
 <p align="center">
  <img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750175-9dc2f780-526b-11ea-85bd-dc1f539d2ce2.png">
  <img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750176-9dc2f780-526b-11ea-8da3-6aebdeeab95f.png">
