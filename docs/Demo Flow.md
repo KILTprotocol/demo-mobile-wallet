@@ -1,8 +1,8 @@
 # Demo flow
 
-You'll need:
-* to have the demo-mobile-wallet (Sporran) installed on an iPhone (see README for device support);
-* to access the [demo-client](https://demo.kilt.io/dashboard) from your laptop.
+You'll need to:
+* have the demo-mobile-wallet (Sporran) installed on an iPhone (see [README](https://github.com/KILTprotocol/demo-mobile-wallet/blob/master/README.md) for device support details);
+* access the [demo-client](https://demo.kilt.io/dashboard) from your laptop.
 
 ## Preparation steps
 
@@ -11,6 +11,13 @@ You'll need:
   * Create a new identity, which will be used as the Attester Idenitity
   * Request tokens for it
 * 📱 in the mobile app: follow the onboarding steps.
+
+<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750553-2d68a600-526c-11ea-80d9-28ca4ee22a78.PNG">
+<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750563-3194c380-526c-11ea-92d5-706fff8226a9.PNG">
+<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750573-33f71d80-526c-11ea-87ce-53774ba6861c.PNG">
+<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750575-35284a80-526c-11ea-9069-ce66aa41e7f2.PNG">
+<img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750580-36f20e00-526c-11ea-98ef-106374e66078.jpg">
+
 
 ## Demo steps
 
@@ -31,3 +38,10 @@ You'll need:
 * Revoke it
   * 📱 in the mobile app = as the **Claimer**
   * Check that your claim now has the status “Revoked” (red)
+  
+## Demo steps: screenshots
+  
+<img width="400" alt="" src="https://user-images.githubusercontent.com/9762897/74750173-9c91ca80-526b-11ea-9f80-64deb1408a16.png">
+<img width="400" alt="" src="https://user-images.githubusercontent.com/9762897/74750175-9dc2f780-526b-11ea-85bd-dc1f539d2ce2.png">
+<img width="400" alt="" src="https://user-images.githubusercontent.com/9762897/74750176-9dc2f780-526b-11ea-8da3-6aebdeeab95f.png">
+<img width="400" alt="" src="https://user-images.githubusercontent.com/9762897/74750180-9e5b8e00-526b-11ea-915a-d144e47fbd79.png">
