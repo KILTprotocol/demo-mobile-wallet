@@ -40,7 +40,7 @@ You'll need to:
 #### Claimer
 
 <p align="center">
- <img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750832-a8ca5780-526c-11ea-9ddf-dbd892da1978.PNG">
+ <img width="200" alt="intro" src="https://user-images.githubusercontent.com/9762897/74750832-a8ca5780-526c-11ea-9ddf-dbd892da1978.PNG">
  <img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750553-2d68a600-526c-11ea-80d9-28ca4ee22a78.PNG">
  <img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750563-3194c380-526c-11ea-92d5-706fff8226a9.PNG">
  <img width="200" alt="" src="https://user-images.githubusercontent.com/9762897/74750573-33f71d80-526c-11ea-87ce-53774ba6861c.PNG">
@@ -49,8 +49,9 @@ You'll need to:
  </p>
 
 #### Attester
-
-<img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750173-9c91ca80-526b-11ea-9f80-64deb1408a16.png">
+<p align="center">
+ <img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750173-9c91ca80-526b-11ea-9f80-64deb1408a16.png">
+</p>
 
 ### Demo
 
@@ -65,21 +66,24 @@ You'll need to:
 </p>
 
 **Create claim and request attestation:**
-
-<img width="200" alt="claim-create" src="https://user-images.githubusercontent.com/9762897/74751151-24c49f80-526d-11ea-8129-da4b3701bf3a.PNG">
-<img width="200" alt="claim-contents" src="https://user-images.githubusercontent.com/9762897/74751156-25f5cc80-526d-11ea-96f7-444df88be20c.PNG">
-<img width="200" alt="claim-contact" src="https://user-images.githubusercontent.com/9762897/74751160-2726f980-526d-11ea-86fb-4dc2f6cdd00d.PNG">
-<img width="200" alt="claim-qr-code" src="https://user-images.githubusercontent.com/9762897/74751169-29895380-526d-11ea-9c59-51dcfda00aeb.PNG">
-<img width="200" alt="claim-qr-code-name" src="https://user-images.githubusercontent.com/9762897/74751173-2b531700-526d-11ea-953a-676730ff237a.PNG">
-<img width="200" alt="claim-created" src="https://user-images.githubusercontent.com/9762897/74751175-2bebad80-526d-11ea-825f-80df5ae05aa7.PNG">
+<p align="center">
+ <img width="200" alt="claim-create" src="https://user-images.githubusercontent.com/9762897/74751151-24c49f80-526d-11ea-8129-da4b3701bf3a.PNG">
+ <img width="200" alt="claim-contents" src="https://user-images.githubusercontent.com/9762897/74751156-25f5cc80-526d-11ea-96f7-444df88be20c.PNG">
+ <img width="200" alt="claim-contact" src="https://user-images.githubusercontent.com/9762897/74751160-2726f980-526d-11ea-86fb-4dc2f6cdd00d.PNG">
+ <img width="200" alt="claim-qr-code" src="https://user-images.githubusercontent.com/9762897/74751169-29895380-526d-11ea-9c59-51dcfda00aeb.PNG">
+ <img width="200" alt="claim-qr-code-name" src="https://user-images.githubusercontent.com/9762897/74751173-2b531700-526d-11ea-953a-676730ff237a.PNG">
+ <img width="200" alt="claim-created" src="https://user-images.githubusercontent.com/9762897/74751175-2bebad80-526d-11ea-825f-80df5ae05aa7.PNG">
+ </p>
 
 **See claim status updates:**
-
-<img width="200" alt="claim-valid" src="https://user-images.githubusercontent.com/9762897/74751179-2c844400-526d-11ea-95e2-1512544bdd57.PNG">
-<img width="200" alt="claim-revoked" src="https://user-images.githubusercontent.com/9762897/74751180-2d1cda80-526d-11ea-9047-5a650927ddf3.PNG">
+<p align="center">
+ <img width="200" alt="claim-valid" src="https://user-images.githubusercontent.com/9762897/74751179-2c844400-526d-11ea-95e2-1512544bdd57.PNG">
+ <img width="200" alt="claim-revoked" src="https://user-images.githubusercontent.com/9762897/74751180-2d1cda80-526d-11ea-9047-5a650927ddf3.PNG">
+</p>
 
 #### Attester
-
-<img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750175-9dc2f780-526b-11ea-85bd-dc1f539d2ce2.png">
-<img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750176-9dc2f780-526b-11ea-8da3-6aebdeeab95f.png">
-<img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750180-9e5b8e00-526b-11ea-915a-d144e47fbd79.png">
+<p align="center">
+ <img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750175-9dc2f780-526b-11ea-85bd-dc1f539d2ce2.png">
+ <img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750176-9dc2f780-526b-11ea-8da3-6aebdeeab95f.png">
+ <img width="600" alt="" src="https://user-images.githubusercontent.com/9762897/74750180-9e5b8e00-526b-11ea-915a-d144e47fbd79.png">
+</p>
