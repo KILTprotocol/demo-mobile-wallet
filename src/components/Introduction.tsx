@@ -1,11 +1,11 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import KiltButton from '../components/KiltButton'
 import {
   NavigationScreenProp,
   NavigationState,
   NavigationParams,
 } from 'react-navigation'
+import KiltButton from './KiltButton'
 import {
   mainViewContainer,
   sectionContainer,
@@ -31,7 +31,7 @@ const Introduction = ({ navigation }: IProps): JSX.Element => (
     <View style={mainViewContainer}>
       <View style={sectionContainer}>
         <Text style={[h1, emphasizedClrTxt]}>
-          KILT - Your credentials for web3.
+          KILT - Your credentials for the web3.
         </Text>
       </View>
       <View style={sectionContainer}>
