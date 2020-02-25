@@ -1,10 +1,11 @@
 import React from 'react'
 import Dialog from 'react-native-dialog'
 import { Text, View, ViewStyle } from 'react-native'
+import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 import { dialogContainer, dialogSection } from '../sharedStyles/styles.dialog'
-import LoadingIndicator from '../components/LoadingIndicator'
+import LoadingIndicator from './LoadingIndicator'
 import { AsyncStatus } from '../enums'
-import TxtCentered from '../components/TxtCentered'
+import TxtCentered from './TxtCentered'
 import {
   txtSuccess,
   bodyTxt,
@@ -12,9 +13,8 @@ import {
 } from '../sharedStyles/styles.typography'
 import { flexRowCenter } from '../sharedStyles/styles.layout'
 import { disabledButton } from '../sharedStyles/styles.buttons'
-import Address from '../components/Address'
-import QrCodeScanner from '../components/QrCodeScanner'
-import { IPublicIdentity } from '@kiltprotocol/sdk-js'
+import Address from './Address'
+import QrCodeScanner from './QrCodeScanner'
 import { labelTxt } from '../sharedStyles/styles.form'
 import StyledTextInput from './StyledTextInput'
 
