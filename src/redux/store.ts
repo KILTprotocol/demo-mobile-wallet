@@ -1,9 +1,8 @@
 import { createStore, applyMiddleware } from 'redux'
-// import KeyChain from
 import AsyncStorage from '@react-native-community/async-storage'
 import { persistStore, persistReducer } from 'redux-persist'
-import rootReducer from './reducers'
 import thunk from 'redux-thunk'
+import rootReducer from './reducers'
 
 const middleware = [thunk]
 
@@ -25,6 +24,6 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 const store = createStore(persistedReducer, applyMiddleware(...middleware))
-let persistor = persistStore(store)
+const persistor = persistStore(store)
 
 export { store, persistor }
