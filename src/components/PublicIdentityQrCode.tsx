@@ -3,11 +3,11 @@ import { View } from 'react-native'
 import { QRCode } from 'react-native-custom-qr-codes'
 import { flexRowCenter } from '../sharedStyles/styles.layout'
 import { CONFIG_THEME } from '../config'
-import { TPublicIdentityEncoded } from '../types'
+
 const logo = require('../assets/imgs/logo/logo_square.jpg')
 
 type Props = {
-  publicIdentityEncoded: TPublicIdentityEncoded | null
+  publicIdentityEncoded: Array<string> | null
 }
 
 const PublicIdentityQrCode: React.FunctionComponent<Props> = ({
