@@ -1,8 +1,7 @@
 const getDefaultClaimPropertyValue = (type: string, format: string): any => {
   if (type === 'boolean') {
     return false
-  }
-  if (type === 'string' && format === 'date') {
+  } else if (type === 'string' && format === 'date') {
     return Date.now()
   }
   return ''
