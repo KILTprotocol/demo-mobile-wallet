@@ -16,15 +16,15 @@ const ADDRESS_DISPLAY_END_LENGTH = 4
 const truncateAddress = (
   address: IPublicIdentity['address'],
   startLength = ADDRESS_DISPLAY_START_LENGTH
-): string => `${address.substr(0, startLength)}...${address.substr(
+): string =>
+  `${address.substr(0, startLength)}...${address.substr(
     address.length - ADDRESS_DISPLAY_END_LENGTH,
     ADDRESS_DISPLAY_END_LENGTH
   )}`
 
-/* generates a color from a string that will be different for different strings
-but always the same for a given string
-useful e.g. to generate a color for an address, that will be the same for 2
-different users adding the same contact (better for UX), but likely different for 2 different addresses */
+/* Generates a color from a string that will be different for different strings
+but always the same for a given string. Useful to generate a color for an address, that will be the same for 2
+different users adding the same contact (better UX), but likely different for 2 different addresses. */
 const generateConstantColorFromStr = (str: string): string => {
   const lastCharCode = str.charCodeAt(str.length - 1)
   return COLORS[lastCharCode % COLORS.length]
