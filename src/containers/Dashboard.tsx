@@ -100,7 +100,7 @@ class Dashboard extends React.Component<Props> {
               }}
             />
           </View>
-          <ClaimList claims={claims || []} />
+          <ClaimList claims={claims} navigation={navigation} />
         </ScrollView>
       </WithDefaultBackground>
     )

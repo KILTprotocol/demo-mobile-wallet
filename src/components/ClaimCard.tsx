@@ -104,18 +104,20 @@ const ClaimCard: React.FunctionComponent<Props> = ({
         imageStyle={bordered}
       >
         <View style={[cardContent, fill]}>
-          <View style={[flexRowSpaceBetween, paddedBottomS]}>
-            <Text style={titleTxt}>{title}</Text>
-            <ClaimStatusBadge status={status} />
-          </View>
-          <View style={claimContents}>
-            {sortedClaimContents.map(([propertyName, propertyValue]) => (
-              <ClaimProperty
-                propertyName={propertyName}
-                propertyValue={propertyValue}
-                key={propertyName}
-              />
-            ))}
+          <View>
+            <View style={[flexRowSpaceBetween, paddedBottomS]}>
+              <Text style={titleTxt}>{title}</Text>
+              <ClaimStatusBadge status={status} />
+            </View>
+            <View style={claimContents}>
+              {sortedClaimContents.map(([propertyName, propertyValue]) => (
+                <ClaimProperty
+                  propertyName={propertyName}
+                  propertyValue={propertyValue}
+                  key={propertyName}
+                />
+              ))}
+            </View>
           </View>
           {isVerifiable && (
             <View style={flexRowEnd}>
