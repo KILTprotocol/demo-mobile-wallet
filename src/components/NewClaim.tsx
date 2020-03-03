@@ -9,8 +9,8 @@ import {
   NavigationParams,
   ScrollView,
 } from 'react-navigation'
+import { sendRequestForAttestation } from '../services/service.messaging'
 import ClaimForm from './ClaimForm'
-import StyledSegmentedControl from './StyledSegmentedControl'
 import KiltButton from './KiltButton'
 import { h2, bodyTxt } from '../sharedStyles/styles.typography'
 import {
@@ -32,18 +32,15 @@ import {
   formatDateForClaim,
   createClaim,
   createRequestForAttestation,
-  sendRequestForAttestation,
 } from '../services/service.claim'
 import { ClaimStatus } from '../enums'
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { CONFIG_CLAIM } from '../config'
-import ContactSection from './ContactSection'
-import QrCodeSection from './QrCodeSection'
 import { getClaimContentsDefault } from '../utils/utils.claim'
+import RecipientSelector from './RecipientSelector'
 
 const claimProperties = CONFIG_CLAIM.CTYPE.schema.properties
 const claimContentsDefault = getClaimContentsDefault(claimProperties)
-const ATTESTER_SELECTION_METHODS = ['Scan QR Code', 'Select from Contacts']
 
 type Props = {
   addContactInStore: typeof addContact
@@ -60,15 +57,17 @@ type State = {
   attesterPublicIdentity: IPublicIdentity | null
   attesterSelectionMethod: number
   newContactName: string
+  isSending: boolean
 }
 
 class NewClaim extends React.Component<Props, State> {
   state = {
-    shouldAddToContacts: true,
+    shouldAddToContacts: false,
     claimContents: claimContentsDefault,
     attesterPublicIdentity: null,
     attesterSelectionMethod: 0,
     newContactName: '',
+    isSending: false,
   }
 
   onChangeClaimContentsInputs = (
@@ -88,15 +87,6 @@ class NewClaim extends React.Component<Props, State> {
     headerRightContainerStyle: {
       paddingRight: 10,
     },
-    tabBarVisible: false,
-    // headerRight: (
-    //   <KiltButton
-    //     onPress={() => {
-    //       // createClaimAndRequestAttestation()
-    //     }}
-    //     title="✓ Send"
-    //   />
-    // ),
   }
 
   async createClaimAndRequestAttestation(): Promise<void> {
@@ -161,14 +151,9 @@ class NewClaim extends React.Component<Props, State> {
       attesterPublicIdentity,
       attesterSelectionMethod,
       newContactName,
+      isSending,
     } = this.state
     const { addContactInStore, contactsFromStore, navigation } = this.props
-    // todo make it a selector
-    const isAlreadyInContacts = attesterPublicIdentity
-      ? contactsFromStore.some(
-          c => c.publicIdentity.address === attesterPublicIdentity.address
-        )
-      : false
     return (
       <ScrollView style={mainViewContainer}>
         <Text style={h2}>Data</Text>
@@ -184,65 +169,48 @@ class NewClaim extends React.Component<Props, State> {
         />
         <View style={sectionContainer}>
           <Text style={h2}>Attester</Text>
-          <Text style={bodyTxt}>Define the attester for your claim.</Text>
-          <StyledSegmentedControl
-            values={ATTESTER_SELECTION_METHODS}
-            selectedIndex={attesterSelectionMethod}
-            onChange={event => {
+          <Text style={bodyTxt}>Select the attester for your claim.</Text>
+          <RecipientSelector
+            publicIdentity={attesterPublicIdentity}
+            recipientSelectionMethod={attesterSelectionMethod}
+            contacts={contactsFromStore}
+            shouldAddToContacts={shouldAddToContacts}
+            onToggleShouldAddToContacts={(shouldAdd: boolean) =>
+              this.setState({
+                shouldAddToContacts: shouldAdd,
+              })
+            }
+            onChangeNewContactName={(name: string) =>
+              this.setState({ newContactName: name })
+            }
+            setPublicIdentity={(publicIdentity: IPublicIdentity) =>
+              this.setState({
+                attesterPublicIdentity: new PublicIdentity(
+                  publicIdentity.address,
+                  publicIdentity.boxPublicKeyAsHex,
+                  publicIdentity.serviceAddress
+                ),
+              })
+            }
+            setPublicIdentityFromContact={contact =>
+              this.setState({
+                attesterPublicIdentity: contact ? contact.publicIdentity : null,
+              })
+            }
+            onChangeSelectionMethod={event => {
               this.setState({
                 attesterPublicIdentity: null,
                 attesterSelectionMethod: event.nativeEvent.selectedSegmentIndex,
               })
             }}
           />
-          {attesterSelectionMethod === 0 ? (
-            <QrCodeSection
-              publicIdentity={attesterPublicIdentity}
-              isAlreadyInContacts={isAlreadyInContacts}
-              shouldAddToContacts={shouldAddToContacts}
-              onToggleShouldAddToContacts={shouldAdd => {
-                this.setState({
-                  shouldAddToContacts: shouldAdd,
-                })
-              }}
-              onChangeNewContactName={name =>
-                this.setState({ newContactName: name })
-              }
-              setPublicIdentity={publicIdentity =>
-                this.setState({
-                  attesterPublicIdentity: new PublicIdentity(
-                    publicIdentity.address,
-                    publicIdentity.boxPublicKeyAsHex,
-                    publicIdentity.serviceAddress
-                  ),
-                })
-              }
-            />
-          ) : (
-            <View style={paddedVerticalM}>
-              <ContactSection
-                contacts={contactsFromStore}
-                selectedAddress={
-                  attesterPublicIdentity ? attesterPublicIdentity.address : null
-                }
-                onChangeAddress={address => {
-                  const contact = contactsFromStore.find(
-                    c => c.publicIdentity.address === address
-                  )
-                  this.setState({
-                    attesterPublicIdentity: contact
-                      ? contact.publicIdentity
-                      : null,
-                  })
-                }}
-              />
-            </View>
-          )}
-          {/* todo unify empty state approach */}
           <View style={paddedVerticalM}>
             <KiltButton
-              disabled={!attesterPublicIdentity}
+              disabled={!attesterPublicIdentity || isSending}
               onPress={async () => {
+                this.setState({
+                  isSending: true,
+                })
                 await this.createClaimAndRequestAttestation()
                 if (shouldAddToContacts) {
                   addContactInStore({
@@ -251,8 +219,11 @@ class NewClaim extends React.Component<Props, State> {
                   })
                 }
                 navigation.goBack()
+                this.setState({
+                  isSending: false,
+                })
               }}
-              title="✓ OK, send Claim to Attester"
+              title="✓ OK, send claim to Attester"
             />
           </View>
         </View>
