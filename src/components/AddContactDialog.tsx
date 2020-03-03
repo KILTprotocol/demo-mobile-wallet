@@ -42,7 +42,6 @@ const AddContactDialog: React.FunctionComponent<Props> = ({
         ) : (
           <QrCodeScanner
             onBarCodeRead={barcode => {
-              console.log(barcode)
               onNewContactPublicIdentityRead(barcode.data)
             }}
           />

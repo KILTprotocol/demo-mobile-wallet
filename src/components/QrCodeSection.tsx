@@ -10,7 +10,7 @@ import Address from './Address'
 import ContactForm from './ContactForm'
 
 type Props = {
-  attesterPublicIdentity: PublicIdentity | null
+  publicIdentity: PublicIdentity | null
   isAlreadyInContacts: boolean
   onChangeNewContactName: (name: string) => void
   onToggleShouldAddToContacts: (shouldAddToContacts: boolean) => void
@@ -19,19 +19,19 @@ type Props = {
 }
 
 const QrCodeSection: React.FunctionComponent<Props> = ({
-  attesterPublicIdentity,
+  publicIdentity,
   isAlreadyInContacts,
   onChangeNewContactName,
   onToggleShouldAddToContacts,
   setPublicIdentity,
   shouldAddToContacts,
 }): JSX.Element => {
-  if (attesterPublicIdentity) {
+  if (publicIdentity) {
     return (
       <>
         <View style={[paddedVerticalS]}>
           <Text style={[bodyTxt, labelTxt]}>Address:</Text>
-          <Address address={attesterPublicIdentity.address} />
+          <Address address={publicIdentity.address} />
         </View>
         {!isAlreadyInContacts && (
           <ContactForm
@@ -47,8 +47,10 @@ const QrCodeSection: React.FunctionComponent<Props> = ({
       <QrCodeScanner
         onBarCodeRead={barcode => {
           const publicIdentityEncoded = JSON.parse(barcode.data)
-          const publicIdentity = decodePublicIdentity(publicIdentityEncoded)
-          setPublicIdentity(publicIdentity)
+          const publicIdentityDecoded = decodePublicIdentity(
+            publicIdentityEncoded
+          )
+          setPublicIdentity(publicIdentityDecoded)
         }}
       />
     )

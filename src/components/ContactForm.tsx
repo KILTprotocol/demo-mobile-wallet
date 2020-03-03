@@ -24,7 +24,7 @@ const ContactForm: React.FunctionComponent<Props> = ({
   <>
     <View style={[flexRowSpaceBetween, paddedBottomS]}>
       <Text style={[bodyTxt, labelTxtUncapitalized, paddedRightXS]}>
-        Add this attester to my contacts
+        Add to my contacts
       </Text>
       <View>
         <Switch

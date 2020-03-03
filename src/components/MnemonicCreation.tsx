@@ -23,7 +23,7 @@ import MnemonicDialog from './MnemonicDialog'
 import Mnemonic from './Mnemonic'
 import KiltButton from './KiltButton'
 import WithIntroBackground from './WithIntroBackground'
-import MNEMONIC from '../routeParameters'
+import { MNEMONIC } from '../navigationParameters'
 import StyledSegmentedControl from './StyledSegmentedControl'
 import StyledTextInput from './StyledTextInput'
 

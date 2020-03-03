@@ -22,11 +22,13 @@ import {
 import { USERNAME_SETUP } from '../routes'
 import WithIntroBackground from './WithIntroBackground'
 
-interface IProps {
+type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
 }
 
-const Introduction = ({ navigation }: IProps): JSX.Element => (
+const Introduction: React.FunctionComponent<Props> = ({
+  navigation,
+}): JSX.Element => (
   <WithIntroBackground>
     <View style={mainViewContainer}>
       <View style={sectionContainer}>
