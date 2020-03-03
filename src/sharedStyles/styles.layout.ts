@@ -105,6 +105,12 @@ export const flexRowEnd: ViewStyle = {
   justifyContent: 'flex-end',
 }
 
+export const flexColumnSpaceBetween: ViewStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+}
+
 /* ---------------------------------- */
 /*                Card                */
 /* ---------------------------------- */
