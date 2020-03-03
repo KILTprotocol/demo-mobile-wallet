@@ -3,16 +3,16 @@ import {
   NavigationContainerComponent,
 } from 'react-navigation'
 
-let _navigator: NavigationContainerComponent
+let navigator: NavigationContainerComponent
 
 function setTopLevelNavigator(
   navigatorRef: NavigationContainerComponent
 ): void {
-  _navigator = navigatorRef
+  navigator = navigatorRef
 }
 
 function navigate(routeName: string, params): void {
-  _navigator.dispatch(
+  navigator.dispatch(
     NavigationActions.navigate({
       routeName,
       params,
@@ -21,8 +21,8 @@ function navigate(routeName: string, params): void {
 }
 
 function getCurrentRoute(): object | null {
-  if (_navigator) {
-    let route = _navigator.state.nav
+  if (navigator) {
+    let route = navigator.state.nav
     while (route.routes) {
       route = route.routes[route.index]
     }
