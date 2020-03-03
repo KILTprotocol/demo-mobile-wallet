@@ -66,6 +66,14 @@ export type TContact = {
 }
 
 /* ---------------------------------- */
+/*              Messages              */
+/* ---------------------------------- */
+
+export interface IProcessedMessageMap {
+  [messageId: string]: boolean
+}
+
+/* ---------------------------------- */
 /*           Redux: Actions           */
 /* ---------------------------------- */
 
@@ -197,5 +205,5 @@ export type TMapStateToProps = {
   claimsMapFromStore: TClaimMapByHash
   usernameFromStore: string
   lastVisitedRouteFromStore: string
-  processedMessagesFromStore: Set<Message['messageId']>
+  processedMessagesFromStore: IProcessedMessageMap
 }

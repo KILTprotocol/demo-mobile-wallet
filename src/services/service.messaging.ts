@@ -6,8 +6,13 @@ import {
   IDid,
   PublicIdentity,
   MessageBody,
+  MessageBodyType,
+  RequestForAttestation,
+  IAttestedClaim,
 } from '@kiltprotocol/sdk-js'
+import { IProcessedMessageMap } from '../types'
 import { CONFIG_CONNECT } from '../config'
+import { fromStoredIdentity } from '../utils/utils.identity'
 
 export const BaseFetchParams: Partial<RequestInit> = {
   cache: 'no-cache',
@@ -71,10 +76,6 @@ export async function singleSend(
       sender.identity,
       receiver.publicIdentity
     )
-    console.log(
-      'sending to',
-      serviceAddress || CONFIG_CONNECT.MESSAGING_SERVICE_URL_FALLBACK
-    )
     return fetch(
       `${serviceAddress || CONFIG_CONNECT.MESSAGING_SERVICE_URL_FALLBACK}`,
       {
@@ -99,6 +100,55 @@ export async function singleSend(
     console.info('[MESSAGE] Error:', error)
     return Promise.reject()
   }
+}
+
+function isMessageNew(
+  oldMessages: IProcessedMessageMap,
+  messageId: Message['messageId']
+): boolean {
+  return !oldMessages[messageId]
+}
+
+export async function fetchAndDecryptNewMessages(
+  identity: Identity,
+  oldMessages: IProcessedMessageMap
+): Promise<IMessage[]> {
+  console.info('[MESSAGES] Fetching messages...')
+  return fetch(
+    `${CONFIG_CONNECT.MESSAGING_SERVICE_URL_FALLBACK}/inbox/${identity.address}`
+  )
+    .then(response => response.json())
+    .then((encryptedMessages: IEncryptedMessage[]) => {
+      const newDecryptedMessages = encryptedMessages
+        .filter(message => isMessageNew(oldMessages, message.messageId))
+        .map(message =>
+          Message.createFromEncryptedMessage(
+            message,
+            fromStoredIdentity(identity)
+          )
+        )
+      newDecryptedMessages.forEach(message => {
+        try {
+          Message.ensureOwnerIsSender(message)
+        } catch (error) {
+          console.error(error)
+        }
+      })
+      return newDecryptedMessages
+    })
+}
+
+export async function fetchAndDecryptNewAttestationMessages(
+  identity: Identity,
+  oldMessages: IProcessedMessageMap
+): Promise<IMessage[]> {
+  const messages = await fetchAndDecryptNewMessages(identity, oldMessages)
+  return messages.filter(
+    message =>
+      message.body.type ===
+      (MessageBodyType.SUBMIT_ATTESTATION_FOR_CLAIM ||
+        MessageBodyType.REJECT_ATTESTATION_FOR_CLAIM)
+  )
 }
 
 export async function sendRequestForAttestation(
@@ -127,5 +177,34 @@ export async function sendRequestForAttestation(
     sender,
     receiver,
     attesterPublicIdentity.serviceAddress
+  )
+}
+
+export async function sendAttestedClaim(
+  attestedClaim: IAttestedClaim,
+  claimerIdentity: Identity,
+  verifierPublicIdentity: PublicIdentity
+): Promise<void> {
+  const sender = {
+    identity: claimerIdentity,
+    metaData: {
+      name: '',
+    },
+    phrase: '',
+  }
+  const receiver = {
+    metaData: {
+      name: '',
+    },
+    publicIdentity: verifierPublicIdentity,
+  }
+  await singleSend(
+    {
+      content: [attestedClaim],
+      type: MessageBodyType.SUBMIT_CLAIMS_FOR_CTYPES,
+    },
+    sender,
+    receiver,
+    verifierPublicIdentity.serviceAddress
   )
 }
