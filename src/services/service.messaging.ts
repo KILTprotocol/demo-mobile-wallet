@@ -100,3 +100,32 @@ export async function singleSend(
     return Promise.reject()
   }
 }
+
+export async function sendRequestForAttestation(
+  requestForAttestation: RequestForAttestation,
+  claimerIdentity: Identity,
+  attesterPublicIdentity: PublicIdentity
+): Promise<void> {
+  const sender = {
+    identity: claimerIdentity,
+    metaData: {
+      name: '',
+    },
+    phrase: '',
+  }
+  const receiver = {
+    metaData: {
+      name: '',
+    },
+    publicIdentity: attesterPublicIdentity,
+  }
+  await singleSend(
+    {
+      content: requestForAttestation,
+      type: MessageBodyType.REQUEST_ATTESTATION_FOR_CLAIM,
+    },
+    sender,
+    receiver,
+    attesterPublicIdentity.serviceAddress
+  )
+}

@@ -2,14 +2,11 @@ import {
   Claim,
   Identity,
   RequestForAttestation,
-  MessageBodyType,
   Attestation,
-  PublicIdentity,
   IClaim,
 } from '@kiltprotocol/sdk-js'
 import { TClaimContents } from '../types'
 import { fromStoredIdentity } from '../utils/utils.identity'
-import { singleSend } from './service.messaging'
 import { CONFIG_CLAIM } from '../config'
 
 function createClaim(
@@ -43,35 +40,6 @@ function createRequestForAttestation(
   return null
 }
 
-async function sendRequestForAttestation(
-  requestForAttestation: RequestForAttestation,
-  claimerIdentity: Identity,
-  attesterPublicIdentity: PublicIdentity
-): Promise<void> {
-  const sender = {
-    identity: claimerIdentity,
-    metaData: {
-      name: '',
-    },
-    phrase: '',
-  }
-  const receiver = {
-    metaData: {
-      name: '',
-    },
-    publicIdentity: attesterPublicIdentity,
-  }
-  await singleSend(
-    {
-      content: requestForAttestation,
-      type: MessageBodyType.REQUEST_ATTESTATION_FOR_CLAIM,
-    },
-    sender,
-    receiver,
-    attesterPublicIdentity.serviceAddress
-  )
-}
-
 async function queryAttestationByHash(
   hash: string
 ): Promise<Attestation | null> {
@@ -103,7 +71,6 @@ export {
   createClaim,
   createRequestForAttestation,
   formatDateForClaim,
-  sendRequestForAttestation,
   queryAttestationByHash,
   checkAttestationExistsOnChain,
 }

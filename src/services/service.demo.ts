@@ -1,5 +1,5 @@
-import { BasePostParams } from '../services/service.messaging'
 import { PublicIdentity } from '@kiltprotocol/sdk-js'
+import { BasePostParams } from './service.messaging'
 import { CONFIG_CONNECT } from '../config'
 
 /* Not strictly needed for the demo wallet but it makes demo setup easier.
