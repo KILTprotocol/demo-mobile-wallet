@@ -1,4 +1,11 @@
-import { Identity, PublicIdentity, IPublicIdentity } from '@kiltprotocol/sdk-js'
+import {
+  Identity,
+  PublicIdentity,
+  IPublicIdentity,
+  RequestForAttestation,
+  AttestedClaim,
+  Message,
+} from '@kiltprotocol/sdk-js'
 import {
   SET_IDENTITY,
   RESET_IDENTITY,
@@ -15,6 +22,8 @@ import {
   RESET_USERNAME,
   RESET_LAST_VISITED_ROUTE,
   UPDATE_LAST_VISITED_ROUTE,
+  UPDATE_CLAIM,
+  ADD_PROCESSED_MESSAGE,
 } from './redux/actionTypes'
 import { ClaimStatus } from './enums'
 
@@ -25,16 +34,23 @@ import { ClaimStatus } from './enums'
 // This is NOT an SDK-like Claim type. TClaim is a hybrid of Claim and AttestedClaim; it's a claim that has a status.
 export type TClaim = {
   title: string
+  // todo remove
   contents: object
   hash: string
-  cTypeHash: string
   status: ClaimStatus
   requestTimestamp: number
+  data: RequestForAttestation | AttestedClaim
 }
 
 export type THashAndClaimStatus = {
   status: ClaimStatus
   hash: string
+}
+
+export type THashAndClaimStatusAndData = {
+  status: ClaimStatus
+  hash: string
+  data: any
 }
 
 export type TClaimContents = object
@@ -83,8 +99,12 @@ type TDeleteAllClaimsAction = {
 
 type TUpdateClaimStatusAction = {
   type: typeof UPDATE_CLAIM_STATUS
-  // payload = status and hash
   payload: THashAndClaimStatus
+}
+
+type TUpdateClaimAction = {
+  type: typeof UPDATE_CLAIM
+  payload: THashAndClaimStatusAndData
 }
 
 type TAddContactAction = {
@@ -123,6 +143,11 @@ type TResetLastVisitedRouteAction = {
   type: typeof RESET_LAST_VISITED_ROUTE
 }
 
+type TAddprocessedMessageAction = {
+  type: typeof ADD_PROCESSED_MESSAGE
+  payload: Message['messageId']
+}
+
 export type TAppAction =
   | TSetIdentityAction
   | TResetIdentityAction
@@ -131,6 +156,7 @@ export type TAppAction =
   | TAddClaimAction
   | TDeleteAllClaimsAction
   | TUpdateClaimStatusAction
+  | TUpdateClaimAction
   | TAddContactAction
   | TDeleteAllContactsAction
   | TUpdateBalanceAction
@@ -140,6 +166,7 @@ export type TAppAction =
   | TResetUsernameAction
   | TUpdateLastVisitedRouteAction
   | TResetLastVisitedRouteAction
+  | TAddprocessedMessageAction
 
 /* ---------------------------------- */
 /*      Redux: State and Dispatch     */
@@ -148,6 +175,7 @@ export type TAppAction =
 export type TMapDispatchToProps = {
   addClaimInStore: (claim: TClaim) => void
   updateClaimStatusInStore: (hashAndStatus: THashAndClaimStatus) => void
+  updateClaimInStore: (hashAndStatusAndData: THashAndClaimStatusAndData) => void
   resetIdentityInStore: () => void
   setIdentityInStore: (identity: Identity) => void
   setPublicIdentityInStore: (publicIdentity: PublicIdentity) => void
@@ -159,6 +187,7 @@ export type TMapDispatchToProps = {
   resetBalanceInStore: () => void
   setUsernameInStore: (username: string) => void
   updateLastVisitedRouteInStore: (route: string) => void
+  addProcessedMessageInStore: (messageId: Message['messageId']) => void
 }
 
 export type TMapStateToProps = {
@@ -169,4 +198,5 @@ export type TMapStateToProps = {
   claimsMapFromStore: TClaimMapByHash
   usernameFromStore: string
   lastVisitedRouteFromStore: string
+  processedMessagesFromStore: Set<Message['messageId']>
 }

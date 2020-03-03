@@ -18,6 +18,7 @@ const persistConfig = {
     'balanceReducer',
     'usernameReducer',
     'lastVisitedRouteReducer',
+    'processedMessagesReducer',
   ],
   blacklist: ['identityReducer'],
 }

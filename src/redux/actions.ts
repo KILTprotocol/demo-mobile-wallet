@@ -1,4 +1,4 @@
-import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
+import { Identity, PublicIdentity, Message } from '@kiltprotocol/sdk-js'
 import {
   RESET_IDENTITY,
   SET_IDENTITY,
@@ -15,12 +15,21 @@ import {
   RESET_USERNAME,
   RESET_LAST_VISITED_ROUTE,
   UPDATE_LAST_VISITED_ROUTE,
+  UPDATE_CLAIM,
+  ADD_PROCESSED_MESSAGE,
 } from './actionTypes'
-import { TAppAction, TClaim, THashAndClaimStatus, TContact } from '../types'
+import {
+  TAppAction,
+  TClaim,
+  THashAndClaimStatus,
+  TContact,
+  THashAndClaimStatusAndData,
+} from '../types'
 
 /* ---------------------------------- */
 /*              Identity              */
 /* ---------------------------------- */
+
 export const setIdentity = (identity: Identity | null): TAppAction => ({
   type: SET_IDENTITY,
   payload: identity,
@@ -42,7 +51,7 @@ export const resetPublicIdentity = (): TAppAction => ({
 })
 
 /* ---------------------------------- */
-/*             Claims            */
+/*             Claims                 */
 /* ---------------------------------- */
 
 export const addClaim = (claim: TClaim): TAppAction => ({
@@ -51,10 +60,17 @@ export const addClaim = (claim: TClaim): TAppAction => ({
 })
 
 export const updateClaimStatus = (
-  statusAndHash: THashAndClaimStatus
+  hashAndStatus: THashAndClaimStatus
 ): TAppAction => ({
   type: UPDATE_CLAIM_STATUS,
-  payload: statusAndHash,
+  payload: hashAndStatus,
+})
+
+export const updateClaim = (
+  hashAndStatusAndData: THashAndClaimStatusAndData
+): TAppAction => ({
+  type: UPDATE_CLAIM,
+  payload: hashAndStatusAndData,
 })
 
 export const deleteAllClaims = (): TAppAction => ({
@@ -103,6 +119,7 @@ export const resetUsername = (): TAppAction => ({
 /* ---------------------------------- */
 /*              Route/Nav             */
 /* ---------------------------------- */
+
 export const updateLastVisitedRoute = (
   lastVisitedRoute: string
 ): TAppAction => ({
@@ -112,4 +129,15 @@ export const updateLastVisitedRoute = (
 
 export const resetLastVisitedRoute = (): TAppAction => ({
   type: RESET_LAST_VISITED_ROUTE,
+})
+
+/* ---------------------------------- */
+/*         Processed messages         */
+/* ---------------------------------- */
+
+export const addProcessedMessage = (
+  messageId: Message['messageId']
+): TAppAction => ({
+  type: ADD_PROCESSED_MESSAGE,
+  payload: messageId,
 })
