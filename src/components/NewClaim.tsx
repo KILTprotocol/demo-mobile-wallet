@@ -23,12 +23,11 @@ import {
   TMapStateToProps,
   TMapDispatchToProps,
   TClaim,
-  THashAndClaimStatus,
   TClaimContents,
   TContact,
 } from '../types'
 import { TAppState } from '../redux/reducers'
-import { addClaim, updateClaimStatus, addContact } from '../redux/actions'
+import { addClaim, addContact } from '../redux/actions'
 import {
   formatDateForClaim,
   createClaim,
@@ -44,14 +43,13 @@ import { getClaimContentsDefault } from '../utils/utils.claim'
 
 const claimProperties = CONFIG_CLAIM.CTYPE.schema.properties
 const claimContentsDefault = getClaimContentsDefault(claimProperties)
-const ATTESTER_METHODS = ['Scan QR Code', 'Select from Contacts']
+const ATTESTER_SELECTION_METHODS = ['Scan QR Code', 'Select from Contacts']
 
 type Props = {
   addContactInStore: typeof addContact
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   identityFromStore: Identity | null
   addClaimInStore: typeof addClaim
-  updateClaimStatusInStore: typeof updateClaimStatus
   usernameFromStore: string
   contactsFromStore: TContact[]
 }
@@ -60,31 +58,16 @@ type State = {
   shouldAddToContacts: boolean
   claimContents: object
   attesterPublicIdentity: IPublicIdentity | null
-  selectedAttesterMethod: number
+  attesterSelectionMethod: number
   newContactName: string
 }
 
 class NewClaim extends React.Component<Props, State> {
-  static navigationOptions = {
-    title: 'New Claim',
-    headerRightContainerStyle: {
-      paddingRight: 10,
-    },
-    // headerRight: (
-    //   <KiltButton
-    //     onPress={() => {
-    //       // createClaimAndRequestAttestation()
-    //     }}
-    //     title="✓ Send"
-    //   />
-    // ),
-  }
-
   state = {
     shouldAddToContacts: true,
     claimContents: claimContentsDefault,
     attesterPublicIdentity: null,
-    selectedAttesterMethod: 0,
+    attesterSelectionMethod: 0,
     newContactName: '',
   }
 
@@ -98,6 +81,22 @@ class NewClaim extends React.Component<Props, State> {
         [claimPropertyId]: inputValue,
       },
     }))
+  }
+
+  static navigationOptions = {
+    title: 'New Claim',
+    headerRightContainerStyle: {
+      paddingRight: 10,
+    },
+    tabBarVisible: false,
+    // headerRight: (
+    //   <KiltButton
+    //     onPress={() => {
+    //       // createClaimAndRequestAttestation()
+    //     }}
+    //     title="✓ Send"
+    //   />
+    // ),
   }
 
   async createClaimAndRequestAttestation(): Promise<void> {
@@ -132,10 +131,13 @@ class NewClaim extends React.Component<Props, State> {
         if (requestForAttestation && attesterPublicIdentity) {
           addClaimInStore({
             title: CONFIG_CLAIM.CLAIM_CARD_TITLE,
+            // needed
             hash: requestForAttestation.rootHash,
             status: ClaimStatus.AttestationPending,
+            // todo remove???
             contents: requestForAttestation.claim.contents,
             requestTimestamp: Date.now(),
+            data: requestForAttestation,
           })
           const claimerIdentity = fromStoredIdentity(identityFromStore)
           await sendRequestForAttestation(
@@ -157,10 +159,11 @@ class NewClaim extends React.Component<Props, State> {
       shouldAddToContacts,
       claimContents,
       attesterPublicIdentity,
-      selectedAttesterMethod,
+      attesterSelectionMethod,
       newContactName,
     } = this.state
     const { addContactInStore, contactsFromStore, navigation } = this.props
+    // todo make it a selector
     const isAlreadyInContacts = attesterPublicIdentity
       ? contactsFromStore.some(
           c => c.publicIdentity.address === attesterPublicIdentity.address
@@ -170,7 +173,7 @@ class NewClaim extends React.Component<Props, State> {
       <ScrollView style={mainViewContainer}>
         <Text style={h2}>Data</Text>
         <View style={paddedBottomM}>
-          <Text style={bodyTxt}>Fill in data for your claim.</Text>
+          <Text style={bodyTxt}>Fill in data for your claim</Text>
         </View>
         <ClaimForm
           claimContents={claimContents}
@@ -183,18 +186,18 @@ class NewClaim extends React.Component<Props, State> {
           <Text style={h2}>Attester</Text>
           <Text style={bodyTxt}>Define the attester for your claim.</Text>
           <StyledSegmentedControl
-            values={ATTESTER_METHODS}
-            selectedIndex={selectedAttesterMethod}
+            values={ATTESTER_SELECTION_METHODS}
+            selectedIndex={attesterSelectionMethod}
             onChange={event => {
               this.setState({
                 attesterPublicIdentity: null,
-                selectedAttesterMethod: event.nativeEvent.selectedSegmentIndex,
+                attesterSelectionMethod: event.nativeEvent.selectedSegmentIndex,
               })
             }}
           />
-          {selectedAttesterMethod === 0 ? (
+          {attesterSelectionMethod === 0 ? (
             <QrCodeSection
-              attesterPublicIdentity={attesterPublicIdentity}
+              publicIdentity={attesterPublicIdentity}
               isAlreadyInContacts={isAlreadyInContacts}
               shouldAddToContacts={shouldAddToContacts}
               onToggleShouldAddToContacts={shouldAdd => {
@@ -235,6 +238,7 @@ class NewClaim extends React.Component<Props, State> {
               />
             </View>
           )}
+          {/* todo unify empty state approach */}
           <View style={paddedVerticalM}>
             <KiltButton
               disabled={!attesterPublicIdentity}
@@ -271,9 +275,6 @@ const mapDispatchToProps = (
   },
   addContactInStore: (contact: TContact) => {
     dispatch(addContact(contact))
-  },
-  updateClaimStatusInStore: (hashAndStatus: THashAndClaimStatus) => {
-    dispatch(updateClaimStatus(hashAndStatus))
   },
 })
 

@@ -40,12 +40,6 @@ type State = {
 const MNEMONIC_METHODS = ['Create new identity', 'Use existing identity']
 
 class MnemonicCreation extends React.Component<Props, State> {
-  static newMnemonic = Identity.generateMnemonic()
-
-  static navigationOptions = {
-    header: null,
-  }
-
   state = {
     isDialogVisible: false,
     mnemonic: MnemonicCreation.newMnemonic,
@@ -59,6 +53,12 @@ class MnemonicCreation extends React.Component<Props, State> {
   onInputMnemonic(txt: string): void {
     this.setState({ mnemonic: txt })
   }
+
+  static navigationOptions = {
+    header: null,
+  }
+
+  static newMnemonic = Identity.generateMnemonic()
 
   openDialog(): void {
     this.setState({ isDialogVisible: true })
