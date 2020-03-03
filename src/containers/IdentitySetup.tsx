@@ -28,7 +28,7 @@ import {
   promptUserAndGetIdentityDecrypted,
 } from '../services/service.keychain'
 import { createIdentity } from '../utils/utils.identity'
-import MNEMONIC from '../routeParameters'
+import { MNEMONIC } from '../navigationParameters'
 import { delay } from '../utils/utils.async'
 
 type Props = {

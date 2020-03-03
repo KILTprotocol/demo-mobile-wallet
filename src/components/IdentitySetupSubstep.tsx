@@ -10,7 +10,7 @@ import {
 } from '../sharedStyles/styles.typography'
 import { flexRow } from '../sharedStyles/styles.layout'
 import { AsyncStatus } from '../enums'
-import LoadingIndicator from '../components/LoadingIndicator'
+import LoadingIndicator from './LoadingIndicator'
 import TxtCentered from './TxtCentered'
 
 type Props = {
@@ -50,11 +50,8 @@ const IdentitySetupSubstep: React.FunctionComponent<Props> = ({
   <View style={flexRow}>
     <View style={iconContainer}>{statusToUiMapping[status].component}</View>
     <Text
-      style={[
-        bodyTxt,
-        bodyInvertedClrTxt,
-        statusToUiMapping[status].statusTxt,
-      ]}>
+      style={[bodyTxt, bodyInvertedClrTxt, statusToUiMapping[status].statusTxt]}
+    >
       {description}
     </Text>
   </View>
