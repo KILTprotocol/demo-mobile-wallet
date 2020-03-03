@@ -124,7 +124,6 @@ class NewClaim extends React.Component<Props, State> {
             // needed
             hash: requestForAttestation.rootHash,
             status: ClaimStatus.AttestationPending,
-            // todo remove???
             contents: requestForAttestation.claim.contents,
             requestTimestamp: Date.now(),
             data: requestForAttestation,
