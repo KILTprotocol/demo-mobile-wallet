@@ -2,13 +2,13 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import KiltButton from '../components/KiltButton'
 import {
   NavigationScreenProp,
   NavigationState,
   NavigationParams,
   ScrollView,
 } from 'react-navigation'
+import KiltButton from '../components/KiltButton'
 import {
   mainViewContainer,
   sectionContainer,
