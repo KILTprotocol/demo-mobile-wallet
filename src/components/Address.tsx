@@ -32,7 +32,7 @@ const Address: React.FunctionComponent<Props> = ({ address }): JSX.Element => (
       <Text style={[bodyTxt, addressTxt]}>{truncateAddress(address)}</Text>
     </View>
     {/* small hack to make the address selectable by the user
-    we don't use ellipsis=middle because we want to see especially the last 4 chars as checksum */}
+    we don't use ellipsis=middle because we want to see specifically the last 4 chars as checksum */}
     <View style={shiftedUp}>
       <Text style={invisibleTxt} selectable={true}>
         {address}

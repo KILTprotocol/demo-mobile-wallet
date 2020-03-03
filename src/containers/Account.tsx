@@ -7,6 +7,8 @@ import {
   IPublicIdentity,
 } from '@kiltprotocol/sdk-js'
 import { connect } from 'react-redux'
+import { truncateAddress } from '../utils/utils.formatting'
+import AccountProperty from '../components/AccountProperty'
 import {
   mainViewContainer,
   sectionContainer,
@@ -26,7 +28,6 @@ import { fromStoredIdentity } from '../utils/utils.identity'
 import { AsyncStatus } from '../enums'
 import { callWithDelay } from '../utils/utils.async'
 import PublicIdentityQrCode from '../components/PublicIdentityQrCode'
-import Address from '../components/Address'
 import { encodePublicIdentity } from '../utils/utils.encoding'
 
 type Props = {
@@ -149,9 +150,7 @@ class Account extends Component<Props, State> {
       transferAsyncStatus,
       isDialogOkBtnDisabled,
     } = this.state
-    const address = publicIdentityFromStore
-      ? publicIdentityFromStore.address
-      : null
+    const { address, serviceAddress } = publicIdentityFromStore
     return (
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>
@@ -161,14 +160,27 @@ class Account extends Component<Props, State> {
           <View style={sectionContainer}>
             <Text style={h2}>My identity</Text>
             {address && publicIdentityFromStore && (
-              <View style={centered}>
-                <PublicIdentityQrCode
-                  publicIdentityEncoded={encodePublicIdentity(
-                    publicIdentityFromStore
-                  )}
-                />
-                <View style={paddedTopS}>
-                  <Address address={address} />
+              <View>
+                <View style={centered}>
+                  <PublicIdentityQrCode
+                    publicIdentityEncoded={encodePublicIdentity(
+                      publicIdentityFromStore
+                    )}
+                  />
+                </View>
+                <View>
+                  <View style={paddedTopS}>
+                    <AccountProperty
+                      propertyName="KILT address"
+                      propertyValue={truncateAddress(address)}
+                    />
+                  </View>
+                  <View style={paddedTopS}>
+                    <AccountProperty
+                      propertyName="Service address"
+                      propertyValue={serviceAddress}
+                    />
+                  </View>
                 </View>
               </View>
             )}

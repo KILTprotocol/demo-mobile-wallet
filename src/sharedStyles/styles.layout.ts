@@ -79,6 +79,12 @@ export const flexRow: ViewStyle = {
   alignItems: 'center',
 }
 
+export const flexRowStart: ViewStyle = {
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'flex-start',
+}
+
 export const flexRowBaseline: ViewStyle = {
   display: 'flex',
   flexDirection: 'row',

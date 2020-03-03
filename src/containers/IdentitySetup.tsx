@@ -8,6 +8,7 @@ import {
   NavigationState,
   NavigationParams,
 } from 'react-navigation'
+import { CONFIG_CONNECT } from '../config'
 import { AsyncStatus } from '../enums'
 import { DASHBOARD } from '../routes'
 import KiltButton from '../components/KiltButton'
@@ -91,7 +92,8 @@ class IdentitySetup extends React.Component<Props, State> {
     const identity = createIdentity(mnemonic)
     const publicIdentity = new PublicIdentity(
       identity.address,
-      identity.boxPublicKeyAsHex
+      identity.boxPublicKeyAsHex,
+      CONFIG_CONNECT.CLAIMER_SERVICE_ADDRESS_DEFAULT
     )
 
     if (identity && publicIdentity) {
