@@ -16,7 +16,12 @@ import {
   paddedTopS,
 } from '../sharedStyles/styles.layout'
 import WithDefaultBackground from '../components/WithDefaultBackground'
-import { h1, h2 } from '../sharedStyles/styles.typography'
+import {
+  h1,
+  h2,
+  bodyTxt,
+  monospaceTxt,
+} from '../sharedStyles/styles.typography'
 import RequestTokensButton from '../components/RequestTokensButton'
 import { TAppState } from '../redux/reducers'
 import { TMapStateToProps } from '../types'
@@ -175,10 +180,11 @@ class Account extends Component<Props, State> {
                     </AccountProperty>
                   </View>
                   <View style={paddedTopS}>
-                    <AccountProperty
-                      propertyName="Messaging address"
-                      propertyValue={serviceAddress}
-                    />
+                    <AccountProperty propertyName="Messaging address">
+                      <Text style={[bodyTxt, monospaceTxt]}>
+                        {serviceAddress}
+                      </Text>
+                    </AccountProperty>
                   </View>
                 </View>
               </View>

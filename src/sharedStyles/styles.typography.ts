@@ -103,6 +103,11 @@ export const emphasizedClrTxt: TextStyle = {
   color: CONFIG_THEME.CLR_PRIMARY,
 }
 
+export const monospaceTxt: TextStyle = {
+  // use a monospace font to ensure consistent length of the address display
+  fontFamily: 'Courier',
+}
+
 /* ---------------------------------- */
 /*          Async status text         */
 /* ---------------------------------- */

@@ -6,12 +6,10 @@ import { bodyTxt } from '../sharedStyles/styles.typography'
 
 type Props = {
   propertyName: string
-  propertyValue: any
 }
 
 const label: TextStyle = {
   marginRight: 12,
-  width: 88,
   color: CLR_TXT_LIGHT,
   textTransform: 'capitalize',
 }
@@ -21,26 +19,19 @@ const key: ViewStyle = {
 }
 
 const value: ViewStyle = {
-  flex: 5,
-}
-
-const valueTxt: TextStyle = {
-  // use a monospace font to ensure consistent length of the address display
-  fontFamily: 'Courier',
+  flex: 3,
 }
 
 const AccountProperty: React.FunctionComponent<Props> = ({
   propertyName,
-  propertyValue,
+  children,
 }): JSX.Element => {
   return (
     <View key={propertyName} style={flexRowStart}>
       <View style={key}>
         <Text style={[bodyTxt, label]}>{propertyName}</Text>
       </View>
-      <View style={value}>
-        <Text style={[bodyTxt, valueTxt]}>{propertyValue}</Text>
-      </View>
+      <View style={value}>{children}</View>
     </View>
   )
 }
