@@ -13,10 +13,10 @@ function createClaim(
   claimContents: TClaimContents,
   claimerAddress: Identity['address'] | null
 ): Claim | null {
-  const cTypeSchema = CONFIG_CLAIM.CTYPE
-  if (claimerAddress && cTypeSchema) {
+  const cType = CONFIG_CLAIM.CTYPE
+  if (claimerAddress && cType) {
     return new Claim({
-      cTypeHash: cTypeSchema.hash,
+      cTypeHash: cType.hash,
       contents: claimContents,
       owner: claimerAddress,
     })
