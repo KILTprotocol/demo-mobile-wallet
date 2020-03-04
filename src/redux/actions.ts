@@ -16,7 +16,7 @@ import {
   RESET_LAST_VISITED_ROUTE,
   UPDATE_LAST_VISITED_ROUTE,
   UPDATE_CLAIM,
-  ADD_PROCESSED_MESSAGE,
+  ADD_OLD_MESSAGE,
 } from './actionTypes'
 import {
   TAppAction,
@@ -132,12 +132,10 @@ export const resetLastVisitedRoute = (): TAppAction => ({
 })
 
 /* ---------------------------------- */
-/*         Processed messages         */
+/*            Old messages            */
 /* ---------------------------------- */
 
-export const addProcessedMessage = (
-  messageId: Message['messageId']
-): TAppAction => ({
-  type: ADD_PROCESSED_MESSAGE,
+export const addOldMessage = (messageId: Message['messageId']): TAppAction => ({
+  type: ADD_OLD_MESSAGE,
   payload: messageId,
 })

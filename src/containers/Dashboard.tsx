@@ -22,18 +22,14 @@ import {
   sectionContainer,
 } from '../sharedStyles/styles.layout'
 import WithDefaultBackground from '../components/WithDefaultBackground'
-import {
-  updateClaimStatus,
-  updateClaim,
-  addProcessedMessage,
-} from '../redux/actions'
+import { updateClaimStatus, updateClaim, addOldMessage } from '../redux/actions'
 import {
   THashAndClaimStatus,
   TClaimMapByHash,
   TMapDispatchToProps,
   TMapStateToProps,
   THashAndClaimStatusAndData,
-  IProcessedMessageMap,
+  IMessageMapById,
 } from '../types'
 import ClaimList from '../components/ClaimList'
 import { NEW_CLAIM } from '../routes'
@@ -50,9 +46,9 @@ type Props = {
   claimsMapFromStore: TClaimMapByHash
   updateClaimStatusInStore: typeof updateClaimStatus
   updateClaimInStore: typeof updateClaim
-  addProcessedMessageInStore: typeof addProcessedMessage
+  addOldMessageInStore: typeof addOldMessage
   identityFromStore: Identity | null
-  processedMessagesFromStore: IProcessedMessageMap
+  oldMessagesFromStore: IMessageMapById
 }
 
 class Dashboard extends React.Component<Props> {
@@ -102,12 +98,12 @@ class Dashboard extends React.Component<Props> {
     const {
       identityFromStore,
       updateClaimInStore,
-      addProcessedMessageInStore,
-      processedMessagesFromStore,
+      addOldMessageInStore,
+      oldMessagesFromStore,
     } = this.props
     const newAttestationMessages = await fetchAndDecryptNewAttestationMessages(
       identityFromStore,
-      processedMessagesFromStore
+      oldMessagesFromStore
     )
     newAttestationMessages.forEach(async (message: IMessage) => {
       if (message.body.type === MessageBodyType.SUBMIT_ATTESTATION_FOR_CLAIM) {
@@ -134,7 +130,7 @@ class Dashboard extends React.Component<Props> {
       ) {
         // not needed yet with the current version of the demo-client
       }
-      addProcessedMessageInStore(message.messageId)
+      addOldMessageInStore(message.messageId)
     })
   }
 
@@ -166,7 +162,7 @@ class Dashboard extends React.Component<Props> {
 const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
   identityFromStore: state.identityReducer.identity,
   claimsMapFromStore: state.claimsReducer.claimsMap,
-  processedMessagesFromStore: state.processedMessagesReducer.processedMessages,
+  oldMessagesFromStore: state.oldMessagesReducer.oldMessages,
 })
 
 const mapDispatchToProps = (
@@ -175,8 +171,8 @@ const mapDispatchToProps = (
   updateClaimInStore: (hashAndStatusAndData: THashAndClaimStatusAndData) => {
     dispatch(updateClaim(hashAndStatusAndData))
   },
-  addProcessedMessageInStore: (messageId: Message['messageId']) => {
-    dispatch(addProcessedMessage(messageId))
+  addOldMessageInStore: (messageId: Message['messageId']) => {
+    dispatch(addOldMessage(messageId))
   },
   updateClaimStatusInStore: (hashAndStatus: THashAndClaimStatus) => {
     dispatch(updateClaimStatus(hashAndStatus))

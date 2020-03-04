@@ -10,7 +10,7 @@ import {
   RequestForAttestation,
   IAttestedClaim,
 } from '@kiltprotocol/sdk-js'
-import { IProcessedMessageMap } from '../types'
+import { IMessageMapById } from '../types'
 import { CONFIG_CONNECT } from '../config'
 import { fromStoredIdentity } from '../utils/utils.identity'
 
@@ -103,7 +103,7 @@ export async function singleSend(
 }
 
 function isMessageNew(
-  oldMessages: IProcessedMessageMap,
+  oldMessages: IMessageMapById,
   messageId: Message['messageId']
 ): boolean {
   return !oldMessages[messageId]
@@ -111,7 +111,7 @@ function isMessageNew(
 
 export async function fetchAndDecryptNewMessages(
   identity: Identity,
-  oldMessages: IProcessedMessageMap
+  oldMessages: IMessageMapById
 ): Promise<IMessage[]> {
   console.info('[MESSAGES] Fetching messages...')
   return fetch(
@@ -120,6 +120,7 @@ export async function fetchAndDecryptNewMessages(
     .then(response => response.json())
     .then((encryptedMessages: IEncryptedMessage[]) => {
       const newDecryptedMessages = encryptedMessages
+        // for performance reasons, we wouldn't want to decrypt and process all messages this user has ever received; we onbly care about new messages. So we keep in this app track of the old messages (= that have already been processed) by the app
         .filter(message => isMessageNew(oldMessages, message.messageId))
         .map(message =>
           Message.createFromEncryptedMessage(
@@ -127,6 +128,7 @@ export async function fetchAndDecryptNewMessages(
             fromStoredIdentity(identity)
           )
         )
+      console.info('[MESSAGES] New messages: ', newDecryptedMessages.length)
       newDecryptedMessages.forEach(message => {
         try {
           Message.ensureOwnerIsSender(message)
@@ -140,7 +142,7 @@ export async function fetchAndDecryptNewMessages(
 
 export async function fetchAndDecryptNewAttestationMessages(
   identity: Identity,
-  oldMessages: IProcessedMessageMap
+  oldMessages: IMessageMapById
 ): Promise<IMessage[]> {
   const messages = await fetchAndDecryptNewMessages(identity, oldMessages)
   return messages.filter(

@@ -41,4 +41,4 @@ export const RESET_LAST_VISITED_ROUTE = 'RESET_LAST_VISITED_ROUTE'
 /* ---------------------------------- */
 /*              Messages              */
 /* ---------------------------------- */
-export const ADD_PROCESSED_MESSAGE = 'ADD_PROCESSED_MESSAGE'
+export const ADD_OLD_MESSAGE = 'ADD_OLD_MESSAGE'

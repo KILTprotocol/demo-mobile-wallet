@@ -23,7 +23,7 @@ import {
   RESET_LAST_VISITED_ROUTE,
   UPDATE_LAST_VISITED_ROUTE,
   UPDATE_CLAIM,
-  ADD_PROCESSED_MESSAGE,
+  ADD_OLD_MESSAGE,
 } from './redux/actionTypes'
 import { ClaimStatus } from './enums'
 
@@ -69,7 +69,7 @@ export type TContact = {
 /*              Messages              */
 /* ---------------------------------- */
 
-export interface IProcessedMessageMap {
+export interface IMessageMapById {
   [messageId: string]: boolean
 }
 
@@ -150,8 +150,8 @@ type TResetLastVisitedRouteAction = {
   type: typeof RESET_LAST_VISITED_ROUTE
 }
 
-type TAddprocessedMessageAction = {
-  type: typeof ADD_PROCESSED_MESSAGE
+type TaddOldMessageAction = {
+  type: typeof ADD_OLD_MESSAGE
   payload: Message['messageId']
 }
 
@@ -173,7 +173,7 @@ export type TAppAction =
   | TResetUsernameAction
   | TUpdateLastVisitedRouteAction
   | TResetLastVisitedRouteAction
-  | TAddprocessedMessageAction
+  | TaddOldMessageAction
 
 /* ---------------------------------- */
 /*      Redux: State and Dispatch     */
@@ -194,7 +194,7 @@ export type TMapDispatchToProps = {
   resetBalanceInStore: () => void
   setUsernameInStore: (username: string) => void
   updateLastVisitedRouteInStore: (route: string) => void
-  addProcessedMessageInStore: (messageId: Message['messageId']) => void
+  addOldMessageInStore: (messageId: Message['messageId']) => void
 }
 
 export type TMapStateToProps = {
@@ -205,5 +205,5 @@ export type TMapStateToProps = {
   claimsMapFromStore: TClaimMapByHash
   usernameFromStore: string
   lastVisitedRouteFromStore: string
-  processedMessagesFromStore: IProcessedMessageMap
+  oldMessagesFromStore: IMessageMapById
 }
