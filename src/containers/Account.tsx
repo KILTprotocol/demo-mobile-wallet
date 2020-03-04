@@ -7,7 +7,7 @@ import {
   IPublicIdentity,
 } from '@kiltprotocol/sdk-js'
 import { connect } from 'react-redux'
-import { truncateAddress } from '../utils/utils.formatting'
+import Address from '../components/Address'
 import AccountProperty from '../components/AccountProperty'
 import {
   mainViewContainer,
@@ -170,14 +170,13 @@ class Account extends Component<Props, State> {
                 </View>
                 <View>
                   <View style={paddedTopS}>
-                    <AccountProperty
-                      propertyName="KILT address"
-                      propertyValue={truncateAddress(address)}
-                    />
+                    <AccountProperty propertyName="Address">
+                      <Address address={address} />
+                    </AccountProperty>
                   </View>
                   <View style={paddedTopS}>
                     <AccountProperty
-                      propertyName="Service address"
+                      propertyName="Messaging address"
                       propertyValue={serviceAddress}
                     />
                   </View>

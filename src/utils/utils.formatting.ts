@@ -6,7 +6,7 @@ const COLORS = Object.freeze([
   CONFIG_THEME.CLR_SECONDARY,
   CONFIG_THEME.CLR_SECONDARY_DARK,
 ])
-const ADDRESS_DISPLAY_START_LENGTH = 8
+const ADDRESS_DISPLAY_START_LENGTH = 4
 const ADDRESS_DISPLAY_END_LENGTH = 4
 
 /* ---------------------------------- */
