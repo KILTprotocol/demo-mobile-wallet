@@ -157,7 +157,7 @@ class NewClaim extends React.Component<Props, State> {
       <ScrollView style={mainViewContainer}>
         <Text style={h2}>Data</Text>
         <View style={paddedBottomM}>
-          <Text style={bodyTxt}>Fill in data for your claim</Text>
+          <Text style={bodyTxt}>Fill in data for your claim.</Text>
         </View>
         <ClaimForm
           claimContents={claimContents}
@@ -168,7 +168,7 @@ class NewClaim extends React.Component<Props, State> {
         />
         <View style={sectionContainer}>
           <Text style={h2}>Attester</Text>
-          <Text style={bodyTxt}>Select the attester for your claim.</Text>
+          <Text style={bodyTxt}>Select the Attester for your claim.</Text>
           <RecipientSelector
             publicIdentity={attesterPublicIdentity}
             recipientSelectionMethod={attesterSelectionMethod}
@@ -222,7 +222,7 @@ class NewClaim extends React.Component<Props, State> {
                   isSending: false,
                 })
               }}
-              title="✓ OK, send claim to Attester"
+              title="Send claim to Attester"
             />
           </View>
         </View>

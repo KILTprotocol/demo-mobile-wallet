@@ -88,7 +88,7 @@ class SendForVerification extends React.Component<Props, State> {
       <ScrollView style={mainViewContainer}>
         <Text style={h2}>Verifier</Text>
         <Text style={bodyTxt}>
-          Select a verifier to send your attested claim to.
+          Select a Verifier to send your attested claim to.
         </Text>
         <RecipientSelector
           publicIdentity={verifierPublicIdentity}
@@ -149,7 +149,7 @@ class SendForVerification extends React.Component<Props, State> {
                 isSending: false,
               })
             }}
-            title="✓ OK, send attested claim to Verifier"
+            title="Send attested claim to Verifier"
           />
         </View>
       </ScrollView>
