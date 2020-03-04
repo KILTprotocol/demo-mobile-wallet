@@ -21,7 +21,7 @@ import {
 import { IDENTITY_SETUP } from '../routes'
 import MnemonicDialog from './MnemonicDialog'
 import Mnemonic from './Mnemonic'
-import KiltButton from './KiltButton'
+import StyledButton from './StyledButton'
 import WithIntroBackground from './WithIntroBackground'
 import { MNEMONIC } from '../navigationParameters'
 import StyledSegmentedControl from './StyledSegmentedControl'
@@ -115,7 +115,7 @@ class MnemonicCreation extends React.Component<Props, State> {
           </View>
           <View style={sectionContainer}>
             <View style={flexRowEnd}>
-              <KiltButton
+              <StyledButton
                 disabled={mnemonic.trim().length <= 0}
                 title="Next >"
                 onPress={() => {

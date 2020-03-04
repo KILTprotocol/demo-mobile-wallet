@@ -16,7 +16,7 @@ import {
 } from '@kiltprotocol/sdk-js'
 import { ClaimStatus } from '../enums'
 import { TAppState } from '../redux/reducers'
-import KiltButton from '../components/KiltButton'
+import StyledButton from '../components/StyledButton'
 import {
   mainViewContainer,
   sectionContainer,
@@ -149,7 +149,7 @@ class Dashboard extends React.Component<Props> {
           </View>
           <View style={sectionContainer}>
             <Text style={h2}>My claims ({claims.length})</Text>
-            <KiltButton
+            <StyledButton
               title="＋ Create claim & request attestation"
               onPress={() => {
                 navigation.navigate(NEW_CLAIM)

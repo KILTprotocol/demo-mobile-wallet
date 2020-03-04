@@ -11,7 +11,7 @@ type Props = {
   type?: ButtonType
 }
 
-const KiltButton: React.FunctionComponent<Props> = (props): JSX.Element => {
+const StyledButton: React.FunctionComponent<Props> = (props): JSX.Element => {
   const { type } = props
   return (
     <Button
@@ -21,4 +21,4 @@ const KiltButton: React.FunctionComponent<Props> = (props): JSX.Element => {
   )
 }
 
-export default KiltButton
+export default StyledButton

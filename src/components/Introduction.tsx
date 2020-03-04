@@ -5,7 +5,7 @@ import {
   NavigationState,
   NavigationParams,
 } from 'react-navigation'
-import KiltButton from './KiltButton'
+import StyledButton from './StyledButton'
 import {
   mainViewContainer,
   sectionContainer,
@@ -47,7 +47,7 @@ const Introduction: React.FunctionComponent<Props> = ({
       </View>
       <View style={sectionContainer}>
         <View style={flexRowEnd}>
-          <KiltButton
+          <StyledButton
             title="Get started >"
             onPress={() => navigation.navigate(USERNAME_SETUP)}
           />

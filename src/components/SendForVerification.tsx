@@ -17,7 +17,7 @@ import {
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { sendAttestedClaim } from '../services/service.messaging'
 import { CLAIM_HASH } from '../navigationParameters'
-import KiltButton from './KiltButton'
+import StyledButton from './StyledButton'
 import { h2, bodyTxt } from '../sharedStyles/styles.typography'
 import {
   mainViewContainer,
@@ -125,7 +125,7 @@ class SendForVerification extends React.Component<Props, State> {
           }}
         />
         <View style={paddedVerticalM}>
-          <KiltButton
+          <StyledButton
             disabled={!verifierPublicIdentity || isSending}
             onPress={async () => {
               this.setState({

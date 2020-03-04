@@ -11,7 +11,7 @@ import {
 } from 'react-navigation'
 import { sendRequestForAttestation } from '../services/service.messaging'
 import ClaimForm from './ClaimForm'
-import KiltButton from './KiltButton'
+import StyledButton from './StyledButton'
 import { h2, bodyTxt } from '../sharedStyles/styles.typography'
 import {
   mainViewContainer,
@@ -204,7 +204,7 @@ class NewClaim extends React.Component<Props, State> {
             }}
           />
           <View style={paddedVerticalM}>
-            <KiltButton
+            <StyledButton
               disabled={!attesterPublicIdentity || isSending}
               onPress={async () => {
                 this.setState({

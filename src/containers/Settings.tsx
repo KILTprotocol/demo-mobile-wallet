@@ -9,7 +9,7 @@ import {
 } from 'react-navigation'
 import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
 import { Dispatch } from 'redux'
-import KiltButton from '../components/KiltButton'
+import StyledButton from '../components/StyledButton'
 import WithDefaultBackground from '../components/WithDefaultBackground'
 import {
   mainViewContainer,
@@ -78,7 +78,7 @@ class Settings extends React.Component<Props, null> {
           </View>
           <View style={sectionContainer}>
             <View style={flexRowCenter}>
-              <KiltButton
+              <StyledButton
                 onPress={() => {
                   deleteAllClaimsInStore()
                 }}
@@ -87,7 +87,7 @@ class Settings extends React.Component<Props, null> {
               />
             </View>
             <View style={flexRowCenter}>
-              <KiltButton
+              <StyledButton
                 title="✕ Delete all contacts"
                 onPress={() => {
                   deleteAllContactsInStore()
@@ -96,7 +96,7 @@ class Settings extends React.Component<Props, null> {
               />
             </View>
             <View style={flexRowCenter}>
-              <KiltButton
+              <StyledButton
                 onPress={() => {
                   this.resetApp()
                 }}

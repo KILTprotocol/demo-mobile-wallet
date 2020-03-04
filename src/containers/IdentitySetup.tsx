@@ -11,7 +11,7 @@ import {
 import { CONFIG_CONNECT } from '../config'
 import { AsyncStatus } from '../enums'
 import { DASHBOARD } from '../routes'
-import KiltButton from '../components/KiltButton'
+import StyledButton from '../components/StyledButton'
 import {
   mainViewContainer,
   sectionContainer,
@@ -165,7 +165,7 @@ class IdentitySetup extends React.Component<Props, State> {
           </View>
           <View style={sectionContainer}>
             <View style={flexRowEnd}>
-              <KiltButton
+              <StyledButton
                 disabled={isNextBtnDisabled}
                 title="Next >"
                 onPress={() => navigation.navigate(DASHBOARD)}

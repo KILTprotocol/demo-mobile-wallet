@@ -9,7 +9,7 @@ import {
 } from 'react-navigation'
 import { IPublicIdentity, PublicIdentity } from '@kiltprotocol/sdk-js'
 import { View, Text } from 'react-native'
-import KiltButton from '../components/KiltButton'
+import StyledButton from '../components/StyledButton'
 import {
   mainViewContainer,
   sectionContainer,
@@ -90,7 +90,7 @@ class Contacts extends React.Component<Props, State> {
           </View>
           <View style={sectionContainer}>
             <View style={flexRowCenter}>
-              <KiltButton
+              <StyledButton
                 title="＋ Add new contact"
                 onPress={() => {
                   this.openDialog()

@@ -8,7 +8,7 @@ import {
   NavigationParams,
   ScrollView,
 } from 'react-navigation'
-import KiltButton from '../components/KiltButton'
+import StyledButton from '../components/StyledButton'
 import {
   mainViewContainer,
   sectionContainer,
@@ -78,7 +78,7 @@ class UsernameSetup extends React.Component<Props, State> {
           </View>
           <View style={sectionContainer}>
             <View style={flexRowEnd}>
-              <KiltButton
+              <StyledButton
                 title="Next >"
                 onPress={() => this.saveUsernameAndNavigateNext()}
               />

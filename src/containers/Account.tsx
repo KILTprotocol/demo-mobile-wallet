@@ -26,7 +26,7 @@ import RequestTokensButton from '../components/RequestTokensButton'
 import { TAppState } from '../redux/reducers'
 import { TMapStateToProps } from '../types'
 import TokenTransferDialog from '../components/TokenTransferDialog'
-import KiltButton from '../components/KiltButton'
+import StyledButton from '../components/StyledButton'
 import BalanceComp from '../components/Balance'
 import { asMicroKiltCoins } from '../services/service.balance'
 import { fromStoredIdentity } from '../utils/utils.identity'
@@ -197,7 +197,7 @@ class Account extends Component<Props, State> {
           <View style={sectionContainer}>
             <Text style={h2}>Actions</Text>
             {address && <RequestTokensButton address={address} />}
-            <KiltButton
+            <StyledButton
               disabled={!balanceFromStore}
               title="↔ Transfer tokens"
               onPress={() => {

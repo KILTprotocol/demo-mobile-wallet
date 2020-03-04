@@ -26,7 +26,7 @@ import {
 } from '../sharedStyles/styles.layout'
 import { ClaimStatus } from '../enums'
 import ClaimStatusBadge from './ClaimStatusBadge'
-import KiltButton from './KiltButton'
+import StyledButton from './StyledButton'
 import ClaimProperty from './ClaimProperty'
 
 const claimBckgrdPending = require('../assets/imgs/claimBckgrdPending.jpg')
@@ -121,7 +121,7 @@ const ClaimCard: React.FunctionComponent<Props> = ({
           </View>
           {isVerifiable && (
             <View style={flexRowEnd}>
-              <KiltButton
+              <StyledButton
                 title="→ Send to Verifier"
                 onPress={() => {
                   navigation.navigate(SEND_FOR_VERIFICATION, {
