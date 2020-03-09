@@ -32,111 +32,101 @@ type Props = {
   onPressCancel: () => void
   onConfirmTransfer: () => void
   onChangeTokenAmountToTransfer: (tokenAmountToTransfer: number) => void
-  onTokenRecipientAddressRead: (address: IPublicIdentity['address']) => void
+  onRecipientPublicIdentityRead: (address: IPublicIdentity['address']) => void
   tokenRecipientAddress: IPublicIdentity['address']
   visible: boolean
   isOkBtnDisabled: boolean
   transferAsyncStatus: AsyncStatus
 }
 
-class TokenTransferDialog extends React.Component<Props> {
-  processTokenAmountToTransfer(tokenAmountToTransfer: string): number {
-    return Number(tokenAmountToTransfer)
-  }
-
-  render(): JSX.Element {
-    const {
-      onChangeTokenAmountToTransfer,
-      onTokenRecipientAddressRead,
-      tokenRecipientAddress,
-      onConfirmTransfer,
-      onPressCancel,
-      visible,
-      transferAsyncStatus,
-      isOkBtnDisabled,
-    } = this.props
-
-    const form = (
-      <>
-        <Text style={[bodyTxt, labelTxt]}>
-          Amount to transfer in KILT tokens (transaction cost = 1 Token):
-        </Text>
-        <StyledTextInput
-          autoFocus
-          keyboardType="decimal-pad"
-          returnKeyType="done"
-          onChangeText={tokenAmountToTransfer =>
-            onChangeTokenAmountToTransfer(
-              this.processTokenAmountToTransfer(tokenAmountToTransfer)
-            )
-          }
-        />
-        <View style={dialogSection}>
-          <Text style={recipientLabel}>Recipient:</Text>
-          <View>
-            {tokenRecipientAddress ? (
-              <Address address={tokenRecipientAddress} />
-            ) : (
-              <QrCodeScanner
-                onBarCodeRead={barcode => {
-                  onTokenRecipientAddressRead(barcode.data)
-                }}
-              />
-            )}
-          </View>
+const TokenTransferDialog: React.FunctionComponent<Props> = ({
+  onChangeTokenAmountToTransfer,
+  onRecipientPublicIdentityRead,
+  tokenRecipientAddress,
+  onConfirmTransfer,
+  onPressCancel,
+  visible,
+  transferAsyncStatus,
+  isOkBtnDisabled,
+}): JSX.Element => {
+  const form = (
+    <>
+      <Text style={[bodyTxt, labelTxt]}>
+        Amount to transfer (+ transaction cost = 1 Token):
+      </Text>
+      <StyledTextInput
+        autoFocus
+        keyboardType="decimal-pad"
+        returnKeyType="done"
+        onChangeText={tokenAmountToTransfer =>
+          onChangeTokenAmountToTransfer(Number(tokenAmountToTransfer))
+        }
+      />
+      <View style={dialogSection}>
+        <Text style={recipientLabel}>Recipient:</Text>
+        <View>
+          {tokenRecipientAddress ? (
+            <Address address={tokenRecipientAddress} />
+          ) : (
+            <QrCodeScanner
+              onBarCodeRead={barcode => {
+                onRecipientPublicIdentityRead(barcode.data)
+              }}
+            />
+          )}
         </View>
-      </>
-    )
+      </View>
+    </>
+  )
 
-    const statusToUiMapping = {
-      [AsyncStatus.NotStarted]: {
-        component: form,
-      },
-      [AsyncStatus.Pending]: {
-        component: (
-          <View style={contentContainer}>
-            <LoadingIndicator />
-          </View>
-        ),
-      },
-      [AsyncStatus.Success]: {
-        component: (
-          <View style={contentContainer}>
-            <TxtCentered style={[bodyTxt, txtSuccess]}>
-              ✓ Transfer successful
-            </TxtCentered>
-          </View>
-        ),
-      },
-      [AsyncStatus.Error]: {
-        component: (
-          <View style={contentContainer}>
-            <TxtCentered style={[bodyTxt, txtError]}>
-              ❌ Transfer failed
-            </TxtCentered>
-          </View>
-        ),
-      },
-    }
-
-    return (
-      <Dialog.Container visible={visible} style={dialogContainer}>
-        <Dialog.Title>Transfer KILT tokens</Dialog.Title>
-        {statusToUiMapping[transferAsyncStatus].component}
-        {transferAsyncStatus === AsyncStatus.NotStarted && (
-          <Dialog.Button onPress={onPressCancel} label="Cancel" />
-        )}
-        {transferAsyncStatus === AsyncStatus.NotStarted && (
-          <Dialog.Button
-            onPress={onConfirmTransfer}
-            label="Transfer tokens"
-            style={isOkBtnDisabled ? disabledButton : {}}
-            disabled={isOkBtnDisabled}
-          />
-        )}
-      </Dialog.Container>
-    )
+  const statusToUiMapping = {
+    [AsyncStatus.NotStarted]: {
+      component: form,
+    },
+    [AsyncStatus.Pending]: {
+      component: (
+        <View style={contentContainer}>
+          <LoadingIndicator />
+        </View>
+      ),
+    },
+    [AsyncStatus.Success]: {
+      component: (
+        <View style={contentContainer}>
+          <TxtCentered style={[bodyTxt, txtSuccess]}>
+            ✓ Transfer successful
+          </TxtCentered>
+        </View>
+      ),
+    },
+    [AsyncStatus.Error]: {
+      component: (
+        <View style={contentContainer}>
+          <TxtCentered style={[bodyTxt, txtError]}>
+            ❌ Transfer failed
+          </TxtCentered>
+        </View>
+      ),
+    },
   }
+
+  return (
+    <Dialog.Container visible={visible} style={dialogContainer}>
+      <Dialog.Title>Transfer KILT tokens</Dialog.Title>
+      {statusToUiMapping[transferAsyncStatus].component}
+      {transferAsyncStatus === AsyncStatus.NotStarted && (
+        <Dialog.Button onPress={onPressCancel} label="Cancel" />
+      )}
+      {transferAsyncStatus === AsyncStatus.NotStarted && (
+        <Dialog.Button
+          onPress={onConfirmTransfer}
+          label="Transfer tokens"
+          style={isOkBtnDisabled ? disabledButton : {}}
+          disabled={isOkBtnDisabled}
+        />
+      )}
+    </Dialog.Container>
+  )
 }
 
 export default TokenTransferDialog

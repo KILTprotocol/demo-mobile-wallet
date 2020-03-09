@@ -7,33 +7,24 @@ import {
   IPublicIdentity,
 } from '@kiltprotocol/sdk-js'
 import { connect } from 'react-redux'
-import Address from '../components/Address'
-import AccountProperty from '../components/AccountProperty'
+import PublicIdentityDisplay from '../components/PublicIdentityDisplay'
 import {
   mainViewContainer,
   sectionContainer,
-  centered,
-  paddedTopS,
 } from '../sharedStyles/styles.layout'
 import WithDefaultBackground from '../components/WithDefaultBackground'
-import {
-  h1,
-  h2,
-  bodyTxt,
-  monospaceTxt,
-} from '../sharedStyles/styles.typography'
+import { h1, h2 } from '../sharedStyles/styles.typography'
 import RequestTokensButton from '../components/RequestTokensButton'
 import { TAppState } from '../redux/reducers'
 import { TMapStateToProps } from '../types'
 import TokenTransferDialog from '../components/TokenTransferDialog'
 import StyledButton from '../components/StyledButton'
-import BalanceComp from '../components/Balance'
+import BalanceDisplay from '../components/Balance'
 import { asMicroKiltCoins } from '../services/service.balance'
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { AsyncStatus } from '../enums'
 import { callWithDelay } from '../utils/utils.async'
-import PublicIdentityQrCode from '../components/PublicIdentityQrCode'
-import { encodePublicIdentity } from '../utils/utils.encoding'
+import { decodePublicIdentity } from '../utils/utils.encoding'
 
 type Props = {
   publicIdentityFromStore: PublicIdentity | null
@@ -155,7 +146,10 @@ class Account extends Component<Props, State> {
       transferAsyncStatus,
       isDialogOkBtnDisabled,
     } = this.state
-    const { address, serviceAddress } = publicIdentityFromStore
+    const address = publicIdentityFromStore
+      ? publicIdentityFromStore.address
+      : null
+
     return (
       <WithDefaultBackground>
         <ScrollView style={mainViewContainer}>
@@ -164,35 +158,13 @@ class Account extends Component<Props, State> {
           </View>
           <View style={sectionContainer}>
             <Text style={h2}>My identity</Text>
-            {address && publicIdentityFromStore && (
-              <View>
-                <View style={centered}>
-                  <PublicIdentityQrCode
-                    publicIdentityEncoded={encodePublicIdentity(
-                      publicIdentityFromStore
-                    )}
-                  />
-                </View>
-                <View>
-                  <View style={paddedTopS}>
-                    <AccountProperty propertyName="Address">
-                      <Address address={address} />
-                    </AccountProperty>
-                  </View>
-                  <View style={paddedTopS}>
-                    <AccountProperty propertyName="Messaging address">
-                      <Text style={[bodyTxt, monospaceTxt]}>
-                        {serviceAddress}
-                      </Text>
-                    </AccountProperty>
-                  </View>
-                </View>
-              </View>
+            {publicIdentityFromStore && (
+              <PublicIdentityDisplay publicIdentity={publicIdentityFromStore} />
             )}
           </View>
           <View style={sectionContainer}>
             <Text style={h2}>My KILT account balance</Text>
-            <BalanceComp balance={balanceFromStore} />
+            <BalanceDisplay balance={balanceFromStore} />
           </View>
           <View style={sectionContainer}>
             <Text style={h2}>Actions</Text>
@@ -216,10 +188,12 @@ class Account extends Component<Props, State> {
             onChangeTokenAmountToTransfer={amount =>
               this.setTokenAmountToTransfer(amount)
             }
-            onTokenRecipientAddressRead={(
-              recipientAddress: IPublicIdentity['address']
-            ) => {
-              this.setTokenRecipientAddress(recipientAddress)
+            onRecipientPublicIdentityRead={publicIdentityEncodedString => {
+              const publicIdentityEncoded = JSON.parse(
+                publicIdentityEncodedString
+              )
+              const publicIdentity = decodePublicIdentity(publicIdentityEncoded)
+              this.setTokenRecipientAddress(publicIdentity.address)
             }}
             onConfirmTransfer={async () => {
               this.transferTokens()
