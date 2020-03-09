@@ -4,7 +4,7 @@ import { QRCode } from 'react-native-custom-qr-codes'
 import { flexRowCenter } from '../sharedStyles/styles.layout'
 import { CONFIG_THEME } from '../config'
 
-const logo = require('../assets/imgs/logo/logo_square.jpg')
+const logo = require('../assets/imgs/logo/logo_square.png')
 
 type Props = {
   publicIdentityEncoded: Array<string> | null
