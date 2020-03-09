@@ -33,14 +33,14 @@ import {
   createClaim,
   createRequestForAttestation,
 } from '../services/service.claim'
-import { ClaimStatus } from '../enums'
+import { ClaimStatus, ClaimPropertyFormat } from '../enums'
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { CONFIG_CLAIM } from '../config'
 import { getClaimContentsDefault } from '../utils/utils.claim'
 import RecipientSelector from './RecipientSelector'
 
-const claimProperties = CONFIG_CLAIM.CTYPE.schema.properties
-const claimContentsDefault = getClaimContentsDefault(claimProperties)
+const CLAIM_PROPERTIES = CONFIG_CLAIM.CTYPE.schema.properties
+const claimContentsDefault = getClaimContentsDefault(CLAIM_PROPERTIES)
 
 type Props = {
   addContactInStore: typeof addContact
@@ -70,6 +70,13 @@ class NewClaim extends React.Component<Props, State> {
     isSending: false,
   }
 
+  static navigationOptions = {
+    title: 'New Claim',
+    headerRightContainerStyle: {
+      paddingRight: 10,
+    },
+  }
+
   onChangeClaimContentsInputs = (
     inputValue: string,
     claimPropertyId: string
@@ -82,20 +89,13 @@ class NewClaim extends React.Component<Props, State> {
     }))
   }
 
-  static navigationOptions = {
-    title: 'New Claim',
-    headerRightContainerStyle: {
-      paddingRight: 10,
-    },
-  }
-
   async createClaimAndRequestAttestation(): Promise<void> {
     const { identityFromStore, addClaimInStore } = this.props
     const { claimContents, attesterPublicIdentity } = this.state
     const formattedClaimContents = Object.keys(claimContents).reduce(
       (acc, propertyName) => {
         const propertyValue =
-          claimProperties[propertyName].format === 'date'
+          CLAIM_PROPERTIES[propertyName].format === ClaimPropertyFormat.Date
             ? formatDateForClaim(claimContents[propertyName])
             : claimContents[propertyName]
         return {
@@ -161,7 +161,7 @@ class NewClaim extends React.Component<Props, State> {
         </View>
         <ClaimForm
           claimContents={claimContents}
-          claimProperties={claimProperties}
+          claimProperties={CLAIM_PROPERTIES}
           onChangeValue={(value, claimPropertyId) => {
             this.onChangeClaimContentsInputs(value, claimPropertyId)
           }}

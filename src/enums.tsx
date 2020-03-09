@@ -1,5 +1,29 @@
 /* ---------------------------------- */
-/*              Statuses              */
+/*                Claim               */
+/* ---------------------------------- */
+
+export enum ClaimStatus {
+  Valid,
+  Revoked,
+  AttestationPending,
+}
+
+/* ---------------------------------- */
+/*          Claim Properties          */
+/* ---------------------------------- */
+
+export enum ClaimPropertyType {
+  Boolean = 'boolean',
+  String = 'string',
+  Integer = 'integer',
+}
+
+export enum ClaimPropertyFormat {
+  Date = 'date',
+}
+
+/* ---------------------------------- */
+/*              UI Statuses           */
 /* ---------------------------------- */
 
 export enum AsyncStatus {
@@ -7,12 +31,6 @@ export enum AsyncStatus {
   Pending,
   Success,
   Error,
-}
-
-export enum ClaimStatus {
-  Valid,
-  Revoked,
-  AttestationPending,
 }
 
 export enum AppLockStatus {
