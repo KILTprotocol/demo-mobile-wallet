@@ -89,6 +89,12 @@ class NewClaim extends React.Component<Props, State> {
     }))
   }
 
+  componentWillUnmount(): void {
+    this.setState({
+      attesterPublicIdentity: null,
+    })
+  }
+
   async createClaimAndRequestAttestation(): Promise<void> {
     const { identityFromStore, addClaimInStore } = this.props
     const { claimContents, attesterPublicIdentity } = this.state
