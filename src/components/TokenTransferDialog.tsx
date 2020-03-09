@@ -24,10 +24,6 @@ const contentContainer: ViewStyle = {
   paddingBottom: 12,
 }
 
-const recipientLabel: ViewStyle = {
-  paddingBottom: 6,
-}
-
 type Props = {
   onPressCancel: () => void
   onConfirmTransfer: () => void
