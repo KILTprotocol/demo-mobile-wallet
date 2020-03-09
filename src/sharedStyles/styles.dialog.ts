@@ -1,9 +1,4 @@
-import { ViewStyle, TextStyle } from 'react-native'
-import { TXT_S_SIZE } from './styles.consts.typography'
-
-/* ---------------------------------- */
-/*               Dialog               */
-/* ---------------------------------- */
+import { ViewStyle } from 'react-native'
 
 export const dialogContainer: ViewStyle = {
   paddingBottom: 18,
