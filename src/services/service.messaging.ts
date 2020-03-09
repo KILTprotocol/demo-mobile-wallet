@@ -166,10 +166,10 @@ export async function sendRequestForAttestation(
     phrase: '',
   }
   const receiver = {
+    publicIdentity: attesterPublicIdentity,
     metaData: {
       name: '',
     },
-    publicIdentity: attesterPublicIdentity,
   }
   await singleSend(
     {
@@ -195,10 +195,10 @@ export async function sendAttestedClaim(
     phrase: '',
   }
   const receiver = {
+    publicIdentity: verifierPublicIdentity,
     metaData: {
       name: '',
     },
-    publicIdentity: verifierPublicIdentity,
   }
   await singleSend(
     {
