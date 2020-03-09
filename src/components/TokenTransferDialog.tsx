@@ -51,19 +51,21 @@ const TokenTransferDialog: React.FunctionComponent<Props> = ({
 }): JSX.Element => {
   const form = (
     <>
-      <Text style={[bodyTxt, labelTxt]}>
-        Amount to transfer (+ transaction cost = 1 Token):
-      </Text>
-      <StyledTextInput
-        autoFocus
-        keyboardType="decimal-pad"
-        returnKeyType="done"
-        onChangeText={tokenAmountToTransfer =>
-          onChangeTokenAmountToTransfer(Number(tokenAmountToTransfer))
-        }
-      />
       <View style={dialogSection}>
-        <Text style={recipientLabel}>Recipient:</Text>
+        <Text style={[bodyTxt, labelTxt]}>
+          Amount to transfer (+ transaction cost = 1 Token):
+        </Text>
+        <StyledTextInput
+          autoFocus
+          keyboardType="decimal-pad"
+          returnKeyType="done"
+          onChangeText={tokenAmountToTransfer =>
+            onChangeTokenAmountToTransfer(Number(tokenAmountToTransfer))
+          }
+        />
+      </View>
+      <View style={dialogSection}>
+        <Text style={[bodyTxt, labelTxt]}>Recipient:</Text>
         <View>
           {tokenRecipientAddress ? (
             <Address address={tokenRecipientAddress} />

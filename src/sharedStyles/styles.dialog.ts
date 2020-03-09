@@ -10,15 +10,7 @@ export const dialogContainer: ViewStyle = {
   paddingHorizontal: 10,
 }
 
-export const dialogTxt: TextStyle = {
-  fontSize: TXT_S_SIZE,
-}
-
 export const dialogSection: ViewStyle = {
   paddingHorizontal: 18,
   paddingBottom: 10,
-}
-
-export const formFreeLabel: ViewStyle = {
-  paddingBottom: 6,
 }
