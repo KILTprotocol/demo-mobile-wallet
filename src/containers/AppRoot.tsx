@@ -4,12 +4,7 @@ import { Dispatch } from 'redux'
 import { AppState } from 'react-native'
 import { createAppContainer } from 'react-navigation'
 import * as Kilt from '@kiltprotocol/sdk-js'
-import {
-  Identity,
-  BlockchainApiConnection,
-  Balance,
-  PublicIdentity,
-} from '@kiltprotocol/sdk-js'
+import { Identity, Balance, PublicIdentity } from '@kiltprotocol/sdk-js'
 import {
   setIdentity,
   resetIdentity,
@@ -133,19 +128,8 @@ class AppRoot extends React.Component<Props> {
   }
 
   async disconnect(): Promise<void> {
-    console.info('[SOCKET] Try disconnecting...')
-    const blockchain = await BlockchainApiConnection.getCached(
-      CONFIG_CONNECT.BLOCKCHAIN_NODE
-    )
-    if (blockchain) {
-      try {
-        await blockchain.api.disconnect()
-        Kilt.BlockchainApiConnection.clearCache()
-        console.info('[SOCKET] OK disconnected')
-      } catch (error) {
-        console.info('[SOCKET] Error:', error)
-      }
-    }
+    await Kilt.default.disconnect(CONFIG_CONNECT.BLOCKCHAIN_NODE)
+    console.info('[SOCKET] Disconnected')
   }
 
   async promptAndSetDecryptedIdentity(): Promise<void> {
