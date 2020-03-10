@@ -14,7 +14,6 @@ const getDefaultClaimPropertyValue = (type: string, format: string): any => {
   return ''
 }
 
-// todo simplify
 const getClaimContentsDefault = (claimProperties: object): object => {
   const propertiesNames = Object.keys(claimProperties)
   return propertiesNames.reduce(

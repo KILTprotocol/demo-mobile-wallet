@@ -50,27 +50,16 @@ async function queryAttestationByHash(
 function checkAttestationExistsOnChain(
   attestation: Attestation | null
 ): boolean {
-  // workaround
+  // workaround, TODO fix once the SDK includes a fix for this!
   return attestation
     ? attestation.cTypeHash !==
         '0x0000000000000000000000000000000000000000000000000000000000000000'
     : false
 }
 
-// date --> "2019-02-13" (YYYY-MM-DD)
-function formatDateForClaim(inputDate: number): string {
-  const date = new Date(inputDate)
-  const yy = date.getFullYear()
-  const mm = `${`${date.getMonth() + 1}`.length < 2 ? 0 : ''}${date.getMonth() +
-    1}`
-  const dd = `${`${date.getDate() + 1}`.length < 2 ? 0 : ''}${date.getDate()}`
-  return `${yy}-${mm}-${dd}`
-}
-
 export {
   createClaim,
   createRequestForAttestation,
-  formatDateForClaim,
   queryAttestationByHash,
   checkAttestationExistsOnChain,
 }

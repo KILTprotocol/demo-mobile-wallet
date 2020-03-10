@@ -9,6 +9,7 @@ import {
   NavigationParams,
   ScrollView,
 } from 'react-navigation'
+import { formatDateForClaim } from '../utils/utils.formatting'
 import { sendRequestForAttestation } from '../services/service.messaging'
 import ClaimForm from './ClaimForm'
 import StyledButton from './StyledButton'
@@ -29,7 +30,6 @@ import {
 import { TAppState } from '../redux/reducers'
 import { addClaim, addContact } from '../redux/actions'
 import {
-  formatDateForClaim,
   createClaim,
   createRequestForAttestation,
 } from '../services/service.claim'

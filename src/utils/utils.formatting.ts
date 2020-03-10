@@ -31,9 +31,28 @@ const generateConstantColorFromStr = (str: string): string => {
 }
 
 /* ---------------------------------- */
-/*            Shared utils            */
+/*                Date                */
+/* ---------------------------------- */
+
+// date as number --> "2019-02-13" (YYYY-MM-DD)
+function formatDateForClaim(inputDate: number): string {
+  const date = new Date(inputDate)
+  const yy = date.getFullYear()
+  const mm = `${`${date.getMonth() + 1}`.length < 2 ? 0 : ''}${date.getMonth() +
+    1}`
+  const dd = `${`${date.getDate() + 1}`.length < 2 ? 0 : ''}${date.getDate()}`
+  return `${yy}-${mm}-${dd}`
+}
+
+/* ---------------------------------- */
+/*                Misc                */
 /* ---------------------------------- */
 
 const getFirstCharacter = (str: string): string => `${str.substring(0, 1)}`
 
-export { generateConstantColorFromStr, getFirstCharacter, truncateAddress }
+export {
+  formatDateForClaim,
+  generateConstantColorFromStr,
+  getFirstCharacter,
+  truncateAddress,
+}
