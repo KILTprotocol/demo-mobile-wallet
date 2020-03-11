@@ -2,6 +2,7 @@ import {
   ADD_CLAIM,
   DELETE_ALL_CLAIMS,
   UPDATE_CLAIM_STATUS,
+  UPDATE_CLAIM,
 } from './actionTypes'
 import { TAppAction, TClaimMapByHash } from '../types'
 import { TAppState } from './reducers'
@@ -28,7 +29,25 @@ export default function claimsReducer(
         ...state,
         claimsMap: {},
       }
-    case UPDATE_CLAIM_STATUS:
+    case UPDATE_CLAIM: {
+      console.info('[CLAIM REDUCER] Updating claim:', action.payload.hash)
+      const { hash: claimHash, status: claimStatus, data } = action.payload
+      const claimToUpdate = state.claimsMap[claimHash]
+      return {
+        ...state,
+        claimsMap: {
+          ...state.claimsMap,
+          ...(claimToUpdate && {
+            [claimHash]: {
+              ...claimToUpdate,
+              status: claimStatus,
+              data,
+            },
+          }),
+        },
+      }
+    }
+    case UPDATE_CLAIM_STATUS: {
       console.info(
         '[CLAIM REDUCER] Updating claim status:',
         action.payload.hash
@@ -48,6 +67,8 @@ export default function claimsReducer(
           }),
         },
       }
+    }
+
     default:
       return state
   }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Linking } from 'react-native'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
-import KiltButton from './KiltButton'
+import StyledButton from './StyledButton'
 import { getRequestTokensUrl } from '../utils/utils.faucet'
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 const RequestTokensButton: React.FunctionComponent<Props> = ({
   address,
 }): JSX.Element => (
-  <KiltButton
+  <StyledButton
     title="⤵ Request tokens"
     onPress={() => {
       Linking.openURL(getRequestTokensUrl(address))

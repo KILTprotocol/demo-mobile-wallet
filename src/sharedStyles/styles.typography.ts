@@ -1,3 +1,4 @@
+import { TextStyle } from 'react-native'
 import {
   CLR_TXT,
   CLR_TXT_STANDOUT,
@@ -8,7 +9,6 @@ import {
   CLR_ERROR,
   CLR_TXT_LIGHT,
 } from './styles.consts.colors'
-import { TextStyle } from 'react-native'
 import { TXT_S_SIZE, TXT_M_SIZE, TXT_L_SIZE } from './styles.consts.typography'
 import { CONFIG_THEME } from '../config'
 
@@ -101,6 +101,11 @@ export const bodyInvertedClrTxt: TextStyle = {
 
 export const emphasizedClrTxt: TextStyle = {
   color: CONFIG_THEME.CLR_PRIMARY,
+}
+
+export const monospaceTxt: TextStyle = {
+  // use a monospace font to ensure consistent length of the address display
+  fontFamily: 'Courier',
 }
 
 /* ---------------------------------- */

@@ -79,6 +79,12 @@ export const flexRow: ViewStyle = {
   alignItems: 'center',
 }
 
+export const flexRowStart: ViewStyle = {
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'flex-start',
+}
+
 export const flexRowBaseline: ViewStyle = {
   display: 'flex',
   flexDirection: 'row',
@@ -103,6 +109,12 @@ export const flexRowEnd: ViewStyle = {
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'flex-end',
+}
+
+export const flexColumnSpaceBetween: ViewStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
 }
 
 /* ---------------------------------- */

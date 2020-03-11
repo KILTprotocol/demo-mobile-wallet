@@ -1,9 +1,8 @@
-import { BasePostParams } from '../services/service.messaging'
 import { PublicIdentity } from '@kiltprotocol/sdk-js'
+import { BasePostParams } from './service.messaging'
 import { CONFIG_CONNECT } from '../config'
 
-/* Not strictly needed for the demo wallet but it makes demo setup easier.
-We're using the demo client app to attest and revoke, so the claimer needs to be known in the contact services (according to the logics in the demo client) */
+/* the demo-wallet demo flow relies on the demo-client to attest and revoke. Unfortunately the demo-client crashes when trying to attest a claim from an 'unknown' claimer; so we need here to save the claimer in the demo-client's contact services */
 async function saveIdentityAsContactInDemoServices(
   publicIdentity: PublicIdentity,
   username: string
@@ -11,8 +10,8 @@ async function saveIdentityAsContactInDemoServices(
   fetch(`${CONFIG_CONNECT.CONTACTS_SERVICE_URL}`, {
     ...BasePostParams,
     body: JSON.stringify({
-      metaData: { name: username },
       publicIdentity,
+      metaData: { name: username },
     }),
   }).then(response => {
     console.info(
@@ -25,4 +24,4 @@ async function saveIdentityAsContactInDemoServices(
   })
 }
 
-export { saveIdentityAsContactInDemoServices }
+export default saveIdentityAsContactInDemoServices

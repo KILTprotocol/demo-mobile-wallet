@@ -7,12 +7,28 @@ import {
   ViewStyle,
   ImageStyle,
 } from 'react-native'
+import {
+  NavigationScreenProp,
+  NavigationState,
+  NavigationParams,
+} from 'react-navigation'
+import { CLAIM_HASH } from '../navigationParameters'
+import { SEND_FOR_VERIFICATION } from '../routes'
 import { TXT_S_SIZE } from '../sharedStyles/styles.consts.typography'
-import { CLR_TXT, CLR_TXT_LIGHT } from '../sharedStyles/styles.consts.colors'
-import { fill, flexRow, card } from '../sharedStyles/styles.layout'
+import { CLR_TXT } from '../sharedStyles/styles.consts.colors'
+import {
+  fill,
+  card,
+  flexRowEnd,
+  flexRowSpaceBetween,
+  paddedBottomS,
+  flexColumnSpaceBetween,
+} from '../sharedStyles/styles.layout'
 import { ClaimStatus } from '../enums'
 import ClaimStatusBadge from './ClaimStatusBadge'
-import { bodyTxt } from '../sharedStyles/styles.typography'
+import StyledButton from './StyledButton'
+import ClaimProperty from './ClaimProperty'
+
 const claimBckgrdPending = require('../assets/imgs/claimBckgrdPending.jpg')
 const claimBckgrdValid = require('../assets/imgs/claimBckgrdValid.jpg')
 const claimBckgrdRevoked = require('../assets/imgs/claimBckgrdRevoked.jpg')
@@ -21,22 +37,23 @@ type Props = {
   title: string
   status: ClaimStatus
   contents: object
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>
+  claimHash: string
 }
 
 const titleTxt: TextStyle = {
   fontFamily: 'Montserrat-Bold',
   fontSize: TXT_S_SIZE,
   fontWeight: '600',
-  marginBottom: 12,
   letterSpacing: 2,
   textTransform: 'uppercase',
   color: CLR_TXT,
 }
 
 const claimCard: ViewStyle = {
+  ...card,
   height: 200,
   borderRadius: 10,
-  ...card,
   shadowOpacity: 0.3,
 }
 
@@ -46,16 +63,11 @@ const bordered: ImageStyle = {
 
 const cardContent: ViewStyle = {
   padding: 12,
+  ...flexColumnSpaceBetween,
 }
 
-const claimProperties: ViewStyle = {
+const claimContents: ViewStyle = {
   marginTop: 12,
-}
-
-const label: TextStyle = {
-  marginRight: 12,
-  color: CLR_TXT_LIGHT,
-  textTransform: 'capitalize',
 }
 
 const statusToUiMapping = {
@@ -74,36 +86,55 @@ const ClaimCard: React.FunctionComponent<Props> = ({
   title,
   status,
   contents,
-}): JSX.Element => (
-  <View style={claimCard}>
-    <ImageBackground
-      source={statusToUiMapping[status].imgSrc}
-      style={fill}
-      imageStyle={bordered}>
-      <View style={[cardContent, fill]}>
-        <Text style={titleTxt}>{title}</Text>
-        <ClaimStatusBadge status={status} />
-        <View style={claimProperties}>
-          {[...Object.entries(contents)]
-            // sort by property name alphanumerically
-            .sort(
-              (entryA, entryB) =>
-                entryA[0].charCodeAt(0) - entryB[0].charCodeAt(0)
-            )
-            .map(([propertyName, propertyValue]) => (
-              <View key={propertyName} style={flexRow}>
-                <Text style={[bodyTxt, label]}>{propertyName}</Text>
-                {typeof propertyValue === 'boolean' ? (
-                  <Text style={bodyTxt}>{propertyValue ? 'yes' : 'no'}</Text>
-                ) : (
-                  <Text style={bodyTxt}>{propertyValue}</Text>
-                )}
-              </View>
-            ))}
+  navigation,
+  claimHash,
+}): JSX.Element => {
+  // sort claim contents by name, alphanumerically
+  const sortedClaimContents = [...Object.entries(contents)].sort(
+    (entryA, entryB) => entryA[0].charCodeAt(0) - entryB[0].charCodeAt(0)
+  )
+  // a pending claim (= not yet been checked by attesters) is not verifiable so its "Send to Verifier" button should be hidden
+  const isVerifiable =
+    status === ClaimStatus.Revoked || status === ClaimStatus.Valid
+  return (
+    <View style={claimCard}>
+      <ImageBackground
+        source={statusToUiMapping[status].imgSrc}
+        style={fill}
+        imageStyle={bordered}
+      >
+        <View style={[cardContent, fill]}>
+          <View>
+            <View style={[flexRowSpaceBetween, paddedBottomS]}>
+              <Text style={titleTxt}>{title}</Text>
+              <ClaimStatusBadge status={status} />
+            </View>
+            <View style={claimContents}>
+              {sortedClaimContents.map(([propertyName, propertyValue]) => (
+                <ClaimProperty
+                  propertyName={propertyName}
+                  propertyValue={propertyValue}
+                  key={propertyName}
+                />
+              ))}
+            </View>
+          </View>
+          {isVerifiable && (
+            <View style={flexRowEnd}>
+              <StyledButton
+                title="→ Send to Verifier"
+                onPress={() => {
+                  navigation.navigate(SEND_FOR_VERIFICATION, {
+                    [CLAIM_HASH]: claimHash,
+                  })
+                }}
+              />
+            </View>
+          )}
         </View>
-      </View>
-    </ImageBackground>
-  </View>
-)
+      </ImageBackground>
+    </View>
+  )
+}
 
 export default ClaimCard

@@ -32,7 +32,7 @@ const ContactList: React.FunctionComponent<Props> = ({
         <View style={paddedBottomM}>
           <Text style={bodyTxt}>
             Contacts marked with {CONFIG_THEME.SYMBOL_SERVICE_ADDRESS} embed a
-            service address
+            messaging address
           </Text>
         </View>
         <FlatList

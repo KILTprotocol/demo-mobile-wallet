@@ -2,11 +2,7 @@ import React from 'react'
 import Dialog from 'react-native-dialog'
 import { View, Text } from 'react-native'
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
-import {
-  dialogContainer,
-  dialogSection,
-  formFreeLabel,
-} from '../sharedStyles/styles.dialog'
+import { dialogContainer, dialogSection } from '../sharedStyles/styles.dialog'
 import Address from './Address'
 import QrCodeScanner from './QrCodeScanner'
 import StyledTextInput from './StyledTextInput'
@@ -35,29 +31,30 @@ const AddContactDialog: React.FunctionComponent<Props> = ({
   <Dialog.Container visible={visible} style={dialogContainer}>
     <Dialog.Title>Add new contact</Dialog.Title>
     <View style={dialogSection}>
-      <Text style={formFreeLabel}>New contact address:</Text>
+      <Text style={[bodyTxt, labelTxt]}>Name:</Text>
+      <StyledTextInput
+        autoFocus
+        returnKeyType="done"
+        onChangeText={name => onChangeContactName(name)}
+        // don't spellcheck/autocorrect the name
+        spellCheck={false}
+        autoCorrect={false}
+      />
+    </View>
+    <View style={dialogSection}>
+      <Text style={[bodyTxt, labelTxt]}>Public identity:</Text>
       <View>
         {publicIdentity ? (
           <Address address={publicIdentity.address} />
         ) : (
           <QrCodeScanner
             onBarCodeRead={barcode => {
-              console.log(barcode)
               onNewContactPublicIdentityRead(barcode.data)
             }}
           />
         )}
       </View>
     </View>
-    <Text style={[bodyTxt, labelTxt]}>Name:</Text>
-    <StyledTextInput
-      autoFocus
-      returnKeyType="done"
-      onChangeText={name => onChangeContactName(name)}
-      // don't spellcheck/autocorrect the name
-      spellCheck={false}
-      autoCorrect={false}
-    />
     <Dialog.Button onPress={onPressCancel} label="Cancel" />
     <Dialog.Button
       onPress={onConfirmAddContact}

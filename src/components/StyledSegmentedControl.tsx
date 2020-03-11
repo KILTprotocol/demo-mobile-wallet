@@ -22,10 +22,11 @@ const style: ViewStyle = {
   borderRadius: 2,
 }
 
-const StyledSegmentedControl: React.FunctionComponent<Props> = (
-  props
-): JSX.Element => {
-  const { values, selectedIndex, onChange } = props
+const StyledSegmentedControl: React.FunctionComponent<Props> = ({
+  values,
+  selectedIndex,
+  onChange,
+}): JSX.Element => {
   return (
     <SegmentedControlIOS
       tintColor={CONFIG_THEME.CLR_PRIMARY}

@@ -8,7 +8,8 @@
         "airbnb-typescript",
         "prettier/react",
         "prettier/@typescript-eslint",
-        "@react-native-community"
+        "@react-native-community",
+        "eslint-config-prettier"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -48,8 +49,7 @@
             }
         ],
         "implicit-arrow-linebreak": [
-            "error",
-            "beside"
+            "off"
         ],
         "lines-between-class-members": [
             "error",
@@ -97,7 +97,8 @@
             "error",
             {
                 "exceptions": [
-                    "TextInput"
+                    "TextInput",
+                    "Button"
                 ]
             }
         ]

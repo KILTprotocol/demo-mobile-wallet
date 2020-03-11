@@ -21,9 +21,9 @@ import {
 import { IDENTITY_SETUP } from '../routes'
 import MnemonicDialog from './MnemonicDialog'
 import Mnemonic from './Mnemonic'
-import KiltButton from './KiltButton'
+import StyledButton from './StyledButton'
 import WithIntroBackground from './WithIntroBackground'
-import MNEMONIC from '../routeParameters'
+import { MNEMONIC } from '../navigationParameters'
 import StyledSegmentedControl from './StyledSegmentedControl'
 import StyledTextInput from './StyledTextInput'
 
@@ -40,12 +40,6 @@ type State = {
 const MNEMONIC_METHODS = ['Create new identity', 'Use existing identity']
 
 class MnemonicCreation extends React.Component<Props, State> {
-  static newMnemonic = Identity.generateMnemonic()
-
-  static navigationOptions = {
-    header: null,
-  }
-
   state = {
     isDialogVisible: false,
     mnemonic: MnemonicCreation.newMnemonic,
@@ -59,6 +53,12 @@ class MnemonicCreation extends React.Component<Props, State> {
   onInputMnemonic(txt: string): void {
     this.setState({ mnemonic: txt })
   }
+
+  static navigationOptions = {
+    header: null,
+  }
+
+  static newMnemonic = Identity.generateMnemonic()
 
   openDialog(): void {
     this.setState({ isDialogVisible: true })
@@ -115,7 +115,7 @@ class MnemonicCreation extends React.Component<Props, State> {
           </View>
           <View style={sectionContainer}>
             <View style={flexRowEnd}>
-              <KiltButton
+              <StyledButton
                 disabled={mnemonic.trim().length <= 0}
                 title="Next >"
                 onPress={() => {

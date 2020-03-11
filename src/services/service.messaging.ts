@@ -6,8 +6,13 @@ import {
   IDid,
   PublicIdentity,
   MessageBody,
+  MessageBodyType,
+  RequestForAttestation,
+  IAttestedClaim,
 } from '@kiltprotocol/sdk-js'
+import { IMessageMapById } from '../types'
 import { CONFIG_CONNECT } from '../config'
+import { fromStoredIdentity } from '../utils/utils.identity'
 
 export const BaseFetchParams: Partial<RequestInit> = {
   cache: 'no-cache',
@@ -32,8 +37,7 @@ export interface IMessageOutput extends IMessage {
   sender?: IContact
 }
 
-// As in prototype/services
-
+// like in prototype/services
 export interface IContact {
   metaData: {
     name: string
@@ -71,10 +75,6 @@ export async function singleSend(
       sender.identity,
       receiver.publicIdentity
     )
-    console.log(
-      'sending to',
-      serviceAddress || CONFIG_CONNECT.MESSAGING_SERVICE_URL_FALLBACK
-    )
     return fetch(
       `${serviceAddress || CONFIG_CONNECT.MESSAGING_SERVICE_URL_FALLBACK}`,
       {
@@ -99,4 +99,113 @@ export async function singleSend(
     console.info('[MESSAGE] Error:', error)
     return Promise.reject()
   }
+}
+
+function isMessageNew(
+  oldMessages: IMessageMapById,
+  messageId: Message['messageId']
+): boolean {
+  return !oldMessages[messageId]
+}
+
+export async function fetchAndDecryptNewMessages(
+  identity: Identity,
+  oldMessages: IMessageMapById
+): Promise<IMessage[]> {
+  console.info('[MESSAGES] Fetching messages...')
+  return fetch(
+    `${CONFIG_CONNECT.MESSAGING_SERVICE_URL_FALLBACK}/inbox/${identity.address}`
+  )
+    .then(response => response.json())
+    .then((encryptedMessages: IEncryptedMessage[]) => {
+      const newDecryptedMessages = encryptedMessages
+        // for performance reasons, we wouldn't want to decrypt and process all messages this user has ever received; we onbly care about new messages. So we keep in this app track of the old messages (= that have already been processed) by the app
+        .filter(message => isMessageNew(oldMessages, message.messageId))
+        .map(message =>
+          Message.createFromEncryptedMessage(
+            message,
+            fromStoredIdentity(identity)
+          )
+        )
+      console.info('[MESSAGES] New messages: ', newDecryptedMessages.length)
+      newDecryptedMessages.forEach(message => {
+        try {
+          Message.ensureOwnerIsSender(message)
+        } catch (error) {
+          console.error(error)
+        }
+      })
+      return newDecryptedMessages
+    })
+}
+
+export async function fetchAndDecryptNewAttestationMessages(
+  identity: Identity,
+  oldMessages: IMessageMapById
+): Promise<IMessage[]> {
+  const messages = await fetchAndDecryptNewMessages(identity, oldMessages)
+  return messages.filter(
+    message =>
+      message.body.type ===
+      (MessageBodyType.SUBMIT_ATTESTATION_FOR_CLAIM ||
+        MessageBodyType.REJECT_ATTESTATION_FOR_CLAIM)
+  )
+}
+
+export async function sendRequestForAttestation(
+  requestForAttestation: RequestForAttestation,
+  claimerIdentity: Identity,
+  attesterPublicIdentity: PublicIdentity
+): Promise<void> {
+  const sender = {
+    identity: claimerIdentity,
+    metaData: {
+      name: '',
+    },
+    phrase: '',
+  }
+  const receiver = {
+    publicIdentity: attesterPublicIdentity,
+    metaData: {
+      name: '',
+    },
+  }
+  await singleSend(
+    {
+      content: requestForAttestation,
+      type: MessageBodyType.REQUEST_ATTESTATION_FOR_CLAIM,
+    },
+    sender,
+    receiver,
+    attesterPublicIdentity.serviceAddress
+  )
+}
+
+export async function sendAttestedClaim(
+  attestedClaim: IAttestedClaim,
+  claimerIdentity: Identity,
+  verifierPublicIdentity: PublicIdentity
+): Promise<void> {
+  const sender = {
+    identity: claimerIdentity,
+    metaData: {
+      name: '',
+    },
+    phrase: '',
+  }
+  const receiver = {
+    publicIdentity: verifierPublicIdentity,
+    metaData: {
+      name: '',
+    },
+  }
+  await singleSend(
+    {
+      content: [attestedClaim],
+      type: MessageBodyType.SUBMIT_CLAIMS_FOR_CTYPES,
+    },
+    sender,
+    receiver,
+    verifierPublicIdentity.serviceAddress
+  )
 }

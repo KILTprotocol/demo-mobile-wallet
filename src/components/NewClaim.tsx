@@ -9,9 +9,10 @@ import {
   NavigationParams,
   ScrollView,
 } from 'react-navigation'
+import { formatDateForClaim } from '../utils/utils.formatting'
+import { sendRequestForAttestation } from '../services/service.messaging'
 import ClaimForm from './ClaimForm'
-import StyledSegmentedControl from './StyledSegmentedControl'
-import KiltButton from './KiltButton'
+import StyledButton from './StyledButton'
 import { h2, bodyTxt } from '../sharedStyles/styles.typography'
 import {
   mainViewContainer,
@@ -23,35 +24,29 @@ import {
   TMapStateToProps,
   TMapDispatchToProps,
   TClaim,
-  THashAndClaimStatus,
   TClaimContents,
   TContact,
 } from '../types'
 import { TAppState } from '../redux/reducers'
-import { addClaim, updateClaimStatus, addContact } from '../redux/actions'
+import { addClaim, addContact } from '../redux/actions'
 import {
-  formatDateForClaim,
   createClaim,
   createRequestForAttestation,
-  sendRequestForAttestation,
 } from '../services/service.claim'
-import { ClaimStatus } from '../enums'
+import { ClaimStatus, ClaimPropertyFormat } from '../enums'
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { CONFIG_CLAIM } from '../config'
-import ContactSection from './ContactSection'
-import QrCodeSection from './QrCodeSection'
 import { getClaimContentsDefault } from '../utils/utils.claim'
+import RecipientSelector from './RecipientSelector'
 
-const claimProperties = CONFIG_CLAIM.CTYPE.schema.properties
-const claimContentsDefault = getClaimContentsDefault(claimProperties)
-const ATTESTER_METHODS = ['Scan QR Code', 'Select from Contacts']
+const CLAIM_PROPERTIES = CONFIG_CLAIM.CTYPE.schema.properties
+const claimContentsDefault = getClaimContentsDefault(CLAIM_PROPERTIES)
 
 type Props = {
   addContactInStore: typeof addContact
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   identityFromStore: Identity | null
   addClaimInStore: typeof addClaim
-  updateClaimStatusInStore: typeof updateClaimStatus
   usernameFromStore: string
   contactsFromStore: TContact[]
 }
@@ -60,32 +55,26 @@ type State = {
   shouldAddToContacts: boolean
   claimContents: object
   attesterPublicIdentity: IPublicIdentity | null
-  selectedAttesterMethod: number
+  attesterSelectionMethod: number
   newContactName: string
+  isSending: boolean
 }
 
 class NewClaim extends React.Component<Props, State> {
+  state = {
+    shouldAddToContacts: false,
+    claimContents: claimContentsDefault,
+    attesterPublicIdentity: null,
+    attesterSelectionMethod: 0,
+    newContactName: '',
+    isSending: false,
+  }
+
   static navigationOptions = {
     title: 'New Claim',
     headerRightContainerStyle: {
       paddingRight: 10,
     },
-    // headerRight: (
-    //   <KiltButton
-    //     onPress={() => {
-    //       // createClaimAndRequestAttestation()
-    //     }}
-    //     title="✓ Send"
-    //   />
-    // ),
-  }
-
-  state = {
-    shouldAddToContacts: true,
-    claimContents: claimContentsDefault,
-    attesterPublicIdentity: null,
-    selectedAttesterMethod: 0,
-    newContactName: '',
   }
 
   onChangeClaimContentsInputs = (
@@ -100,13 +89,19 @@ class NewClaim extends React.Component<Props, State> {
     }))
   }
 
+  componentWillUnmount(): void {
+    this.setState({
+      attesterPublicIdentity: null,
+    })
+  }
+
   async createClaimAndRequestAttestation(): Promise<void> {
     const { identityFromStore, addClaimInStore } = this.props
     const { claimContents, attesterPublicIdentity } = this.state
     const formattedClaimContents = Object.keys(claimContents).reduce(
       (acc, propertyName) => {
         const propertyValue =
-          claimProperties[propertyName].format === 'date'
+          CLAIM_PROPERTIES[propertyName].format === ClaimPropertyFormat.Date
             ? formatDateForClaim(claimContents[propertyName])
             : claimContents[propertyName]
         return {
@@ -132,10 +127,12 @@ class NewClaim extends React.Component<Props, State> {
         if (requestForAttestation && attesterPublicIdentity) {
           addClaimInStore({
             title: CONFIG_CLAIM.CLAIM_CARD_TITLE,
+            // needed
             hash: requestForAttestation.rootHash,
             status: ClaimStatus.AttestationPending,
             contents: requestForAttestation.claim.contents,
             requestTimestamp: Date.now(),
+            data: requestForAttestation,
           })
           const claimerIdentity = fromStoredIdentity(identityFromStore)
           await sendRequestForAttestation(
@@ -157,15 +154,11 @@ class NewClaim extends React.Component<Props, State> {
       shouldAddToContacts,
       claimContents,
       attesterPublicIdentity,
-      selectedAttesterMethod,
+      attesterSelectionMethod,
       newContactName,
+      isSending,
     } = this.state
     const { addContactInStore, contactsFromStore, navigation } = this.props
-    const isAlreadyInContacts = attesterPublicIdentity
-      ? contactsFromStore.some(
-          c => c.publicIdentity.address === attesterPublicIdentity.address
-        )
-      : false
     return (
       <ScrollView style={mainViewContainer}>
         <Text style={h2}>Data</Text>
@@ -174,71 +167,55 @@ class NewClaim extends React.Component<Props, State> {
         </View>
         <ClaimForm
           claimContents={claimContents}
-          claimProperties={claimProperties}
+          claimProperties={CLAIM_PROPERTIES}
           onChangeValue={(value, claimPropertyId) => {
             this.onChangeClaimContentsInputs(value, claimPropertyId)
           }}
         />
         <View style={sectionContainer}>
           <Text style={h2}>Attester</Text>
-          <Text style={bodyTxt}>Define the attester for your claim.</Text>
-          <StyledSegmentedControl
-            values={ATTESTER_METHODS}
-            selectedIndex={selectedAttesterMethod}
-            onChange={event => {
+          <Text style={bodyTxt}>Select the Attester for your claim.</Text>
+          <RecipientSelector
+            publicIdentity={attesterPublicIdentity}
+            recipientSelectionMethod={attesterSelectionMethod}
+            contacts={contactsFromStore}
+            shouldAddToContacts={shouldAddToContacts}
+            onToggleShouldAddToContacts={(shouldAdd: boolean) =>
+              this.setState({
+                shouldAddToContacts: shouldAdd,
+              })
+            }
+            onChangeNewContactName={(name: string) =>
+              this.setState({ newContactName: name })
+            }
+            setPublicIdentity={(publicIdentity: IPublicIdentity) =>
+              this.setState({
+                attesterPublicIdentity: new PublicIdentity(
+                  publicIdentity.address,
+                  publicIdentity.boxPublicKeyAsHex,
+                  publicIdentity.serviceAddress
+                ),
+              })
+            }
+            setPublicIdentityFromContact={contact =>
+              this.setState({
+                attesterPublicIdentity: contact ? contact.publicIdentity : null,
+              })
+            }
+            onChangeSelectionMethod={event => {
               this.setState({
                 attesterPublicIdentity: null,
-                selectedAttesterMethod: event.nativeEvent.selectedSegmentIndex,
+                attesterSelectionMethod: event.nativeEvent.selectedSegmentIndex,
               })
             }}
           />
-          {selectedAttesterMethod === 0 ? (
-            <QrCodeSection
-              attesterPublicIdentity={attesterPublicIdentity}
-              isAlreadyInContacts={isAlreadyInContacts}
-              shouldAddToContacts={shouldAddToContacts}
-              onToggleShouldAddToContacts={shouldAdd => {
-                this.setState({
-                  shouldAddToContacts: shouldAdd,
-                })
-              }}
-              onChangeNewContactName={name =>
-                this.setState({ newContactName: name })
-              }
-              setPublicIdentity={publicIdentity =>
-                this.setState({
-                  attesterPublicIdentity: new PublicIdentity(
-                    publicIdentity.address,
-                    publicIdentity.boxPublicKeyAsHex,
-                    publicIdentity.serviceAddress
-                  ),
-                })
-              }
-            />
-          ) : (
-            <View style={paddedVerticalM}>
-              <ContactSection
-                contacts={contactsFromStore}
-                selectedAddress={
-                  attesterPublicIdentity ? attesterPublicIdentity.address : null
-                }
-                onChangeAddress={address => {
-                  const contact = contactsFromStore.find(
-                    c => c.publicIdentity.address === address
-                  )
-                  this.setState({
-                    attesterPublicIdentity: contact
-                      ? contact.publicIdentity
-                      : null,
-                  })
-                }}
-              />
-            </View>
-          )}
           <View style={paddedVerticalM}>
-            <KiltButton
-              disabled={!attesterPublicIdentity}
+            <StyledButton
+              disabled={!attesterPublicIdentity || isSending}
               onPress={async () => {
+                this.setState({
+                  isSending: true,
+                })
                 await this.createClaimAndRequestAttestation()
                 if (shouldAddToContacts) {
                   addContactInStore({
@@ -247,8 +224,11 @@ class NewClaim extends React.Component<Props, State> {
                   })
                 }
                 navigation.goBack()
+                this.setState({
+                  isSending: false,
+                })
               }}
-              title="✓ OK, send Claim to Attester"
+              title="Send claim to Attester"
             />
           </View>
         </View>
@@ -271,9 +251,6 @@ const mapDispatchToProps = (
   },
   addContactInStore: (contact: TContact) => {
     dispatch(addContact(contact))
-  },
-  updateClaimStatusInStore: (hashAndStatus: THashAndClaimStatus) => {
-    dispatch(updateClaimStatus(hashAndStatus))
   },
 })
 

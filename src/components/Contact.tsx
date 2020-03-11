@@ -27,11 +27,11 @@ const contactBadge: ViewStyle = {
   marginRight: 8,
 }
 
-const name: TextStyle = {
+const withMarginRight: TextStyle = {
   marginRight: 4,
 }
 
-const check: ViewStyle = {
+const symbol: ViewStyle = {
   width: 24,
   marginRight: 12,
 }
@@ -40,37 +40,37 @@ const badgeTxt: TextStyle = {
   color: CLR_TXT_INVERTED,
 }
 
-const Contact: React.FunctionComponent<Props> = ({ contact }): JSX.Element => (
-  <View style={flexRowSpaceBetween}>
+const Contact: React.FunctionComponent<Props> = ({ contact }): JSX.Element => {
+  const { name, publicIdentity } = contact
+  const { address, serviceAddress } = publicIdentity
+  return (
     <View style={flexRowSpaceBetween}>
-      <View
-        style={[
-          contactBadge,
-          {
-            backgroundColor: generateConstantColorFromStr(
-              contact.publicIdentity.address
-            ),
-          },
-        ]}
-      >
-        <Text style={[bodyTxt, badgeTxt]}>
-          {getFirstCharacter(contact.name)}
-        </Text>
-      </View>
       <View style={flexRowSpaceBetween}>
-        <Text style={[bodyTxt, name]}>{contact.name}</Text>
-        <View style={check}>
-          {contact.publicIdentity.serviceAddress && (
-            <Text style={bodyTxt}>{CONFIG_THEME.SYMBOL_SERVICE_ADDRESS}</Text>
-          )}
+        <View
+          style={[
+            contactBadge,
+            {
+              backgroundColor: generateConstantColorFromStr(address),
+            },
+          ]}
+        >
+          <Text style={[bodyTxt, badgeTxt]}>{getFirstCharacter(name)}</Text>
+        </View>
+        <View style={flexRowSpaceBetween}>
+          <Text style={[bodyTxt, withMarginRight]}>{name}</Text>
+          <View style={symbol}>
+            {serviceAddress && (
+              <Text style={bodyTxt}>{CONFIG_THEME.SYMBOL_SERVICE_ADDRESS}</Text>
+            )}
+          </View>
         </View>
       </View>
-    </View>
 
-    <View>
-      <Address address={contact.publicIdentity.address} />
+      <View>
+        <Address address={address} />
+      </View>
     </View>
-  </View>
-)
+  )
+}
 
 export default Contact

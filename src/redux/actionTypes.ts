@@ -7,11 +7,12 @@ export const SET_PUBLIC_IDENTITY = 'SET_PUBLIC_IDENTITY'
 export const RESET_PUBLIC_IDENTITY = 'RESET_PUBLIC_IDENTITY'
 
 /* ---------------------------------- */
-/*             Claims            */
+/*             Claims                 */
 /* ---------------------------------- */
 export const ADD_CLAIM = 'ADD_CLAIM'
 export const DELETE_ALL_CLAIMS = 'DELETE_ALL_CLAIMS'
 export const UPDATE_CLAIM_STATUS = 'UPDATE_CLAIM_STATUS'
+export const UPDATE_CLAIM = 'UPDATE_CLAIM'
 
 /* ---------------------------------- */
 /*              Contacts              */
@@ -36,3 +37,8 @@ export const RESET_USERNAME = 'RESET_USERNAME'
 /* ---------------------------------- */
 export const UPDATE_LAST_VISITED_ROUTE = 'UPDATE_LAST_VISITED_ROUTE'
 export const RESET_LAST_VISITED_ROUTE = 'RESET_LAST_VISITED_ROUTE'
+
+/* ---------------------------------- */
+/*              Messages              */
+/* ---------------------------------- */
+export const ADD_OLD_MESSAGE = 'ADD_OLD_MESSAGE'

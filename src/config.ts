@@ -4,8 +4,10 @@ const CONFIG = Object.freeze({
   CONNECT: {
     BLOCKCHAIN_NODE: 'wss://full-nodes.kilt.io:9944',
     MESSAGING_SERVICE_URL_FALLBACK: 'https://services.kilt.io:443/messaging',
+    CLAIMER_SERVICE_ADDRESS_DEFAULT: 'https://services.kilt.io:443/messaging',
     CONTACTS_SERVICE_URL: 'https://services.kilt.io:443/contacts',
-    POLLING_PERIOD_MS: 3000,
+    POLLING_PERIOD_MESSAGES_MS: 3000,
+    POLLING_PERIOD_CHAIN_MS: 8000,
   },
   CLAIM: {
     CTYPE: cType,
@@ -19,7 +21,7 @@ const CONFIG = Object.freeze({
     // secondary: used for tab navigation, QR code and contacts
     CLR_SECONDARY: '#280021',
     CLR_SECONDARY_DARK: '#751869',
-    // logo
+    // logo and more
     LOGO_HORIZONTAL_WIDTH: 320,
     LOGO_HORIZONTAL_HEIGHT: 148,
     SYMBOL_SERVICE_ADDRESS: '📭',

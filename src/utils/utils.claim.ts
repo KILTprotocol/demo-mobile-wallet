@@ -1,8 +1,14 @@
+import { ClaimPropertyType, ClaimPropertyFormat } from '../enums'
+
 const getDefaultClaimPropertyValue = (type: string, format: string): any => {
-  if (type === 'boolean') {
+  if (type === ClaimPropertyType.Integer) {
+    return 0
+  } else if (type === ClaimPropertyType.Boolean) {
     return false
-  }
-  if (type === 'string' && format === 'date') {
+  } else if (
+    type === ClaimPropertyType.String &&
+    format === ClaimPropertyFormat.Date
+  ) {
     return Date.now()
   }
   return ''

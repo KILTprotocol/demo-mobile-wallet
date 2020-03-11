@@ -2,13 +2,13 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import KiltButton from '../components/KiltButton'
 import {
   NavigationScreenProp,
   NavigationState,
   NavigationParams,
   ScrollView,
 } from 'react-navigation'
+import StyledButton from '../components/StyledButton'
 import {
   mainViewContainer,
   sectionContainer,
@@ -78,7 +78,7 @@ class UsernameSetup extends React.Component<Props, State> {
           </View>
           <View style={sectionContainer}>
             <View style={flexRowEnd}>
-              <KiltButton
+              <StyledButton
                 title="Next >"
                 onPress={() => this.saveUsernameAndNavigateNext()}
               />

@@ -45,7 +45,7 @@ const QrCodeScanner: React.FunctionComponent<Props> = ({
         captureAudio={false}
       />
       <View style={[hintContainer, flexRowWrap]}>
-        <Text style={hint}>Scan QR Code of a KILT public identity</Text>
+        <Text style={hint}>Scan a KILT public identity QR Code</Text>
       </View>
     </View>
   </View>

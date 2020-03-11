@@ -6,6 +6,7 @@ import identityReducer from './identityReducer'
 import publicIdentityReducer from './publicIdentityReducer'
 import usernameReducer from './usernameReducer'
 import lastVisitedRouteReducer from './lastVisitedRouteReducer'
+import oldMessagesReducer from './oldMessagesReducer'
 
 const rootReducer = combineReducers({
   identityReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   balanceReducer,
   usernameReducer,
   lastVisitedRouteReducer,
+  oldMessagesReducer,
 })
 
 export type TAppState = any

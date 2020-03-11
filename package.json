@@ -19,7 +19,7 @@
     }
   },
   "dependencies": {
-    "@kiltprotocol/sdk-js": "^0.17.0",
+    "@kiltprotocol/sdk-js": "^0.18.0",
     "@react-native-community/async-storage": "^1.6.2",
     "@react-native-community/datetimepicker": "^2.1.0",
     "@react-native-community/segmented-control": "^1.1.1",

@@ -19,8 +19,8 @@ const WithFadeInAnimation: React.FunctionComponent<Props> = ({
   React.useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      delay: delay,
-      duration: duration,
+      delay,
+      duration,
     }).start()
   })
   return (
@@ -28,7 +28,8 @@ const WithFadeInAnimation: React.FunctionComponent<Props> = ({
       style={{
         ...style,
         opacity: fadeAnim,
-      }}>
+      }}
+    >
       {children}
     </Animated.View>
   )

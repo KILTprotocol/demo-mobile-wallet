@@ -1,4 +1,4 @@
-# Demo flow v2.0
+# Demo flow
 
 You'll need to:
 * Have the demo-mobile-wallet (Sporran) installed on an iPhone (see [README](https://github.com/KILTprotocol/demo-mobile-wallet/blob/master/README.md) for device support details);
@@ -22,17 +22,21 @@ You'll need to:
     * Tap "Create a claim" and fill its contents. 
     * Select an Attester. You can do so either by selecting an existing contact or by scanning a KILT Public Identity QR Code (displayed in the demo-client). If you go for the QR Code option, you can also add this attester to your contacts on-the-fly.
     * Once created, the claim should first have the status “Pending” (gray).
-* 💻 in the demo-client = as the **Attester**
-  * Check messages, the claim just requested by the attester should be there
+* 💻 in the demo-client, as the **Attester**
+  * Check messages, the claim just requested by the attester should be listed
   * Attest it
 * 📱 in the mobile app = as the **Claimer** 
   * Check that your claim now has the status “Valid” (green)
-* 💻 in the demo-client = as the **Attester**
-  * Check Attestations, the claim that has just been attested should be listed
-* Revoke it
-  * 📱 in the mobile app = as the **Claimer**
+  * Send your claim to the Verifier, by scanning their QR Code from the demo-client or selecting them in your existing contacts.
+* 💻 in the demo-client, as the **Verifier**
+  * Check your messages, you should see a message from the Claimer: it's their attested claim
+  * Open it to check the contents
+* 💻 in the demo-client, as the **Attester**
+  * Check Attestations, the claim that has you've attested should be listed
+  * Revoke it
+* 📱 in the mobile app = as the **Claimer**
   * Check that your claim now has the status “Revoked” (red)
-  
+
 ## Screenshots
 
 ### Preparation steps

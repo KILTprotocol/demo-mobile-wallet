@@ -6,6 +6,7 @@ import { sPicker, lPicker } from '../sharedStyles/styles.form'
 import { paddedBottomS } from '../sharedStyles/styles.layout'
 import { TXT_XS_SIZE } from '../sharedStyles/styles.consts.typography'
 import StyledTextInput from './StyledTextInput'
+import { ClaimPropertyType, ClaimPropertyFormat } from '../enums'
 
 type Props = {
   onChangeValue: (value: any, claimPropertyId: string) => void
@@ -21,7 +22,7 @@ const labelTxt: TextStyle = {
 }
 
 const claimFormItemMap = {
-  string: (propertyName: string, onChangeValue) => (
+  [ClaimPropertyType.String]: (propertyName: string, onChangeValue) => (
     <>
       <Text style={labelTxt}>{propertyName}:</Text>
       <StyledTextInput
@@ -30,7 +31,11 @@ const claimFormItemMap = {
       />
     </>
   ),
-  stringdate: (propertyName: string, onChangeValue, value) => (
+  [`${ClaimPropertyType.String}${ClaimPropertyFormat.Date}`]: (
+    propertyName: string,
+    onChangeValue,
+    value
+  ) => (
     <>
       <Text style={labelTxt}>{propertyName}:</Text>
       <DateTimePicker
@@ -43,7 +48,7 @@ const claimFormItemMap = {
       />
     </>
   ),
-  boolean: (propertyName: string, onChangeValue, value) => (
+  [ClaimPropertyType.Boolean]: (propertyName: string, onChangeValue, value) => (
     <>
       <Text style={labelTxt}>{propertyName}:</Text>
       <Picker
@@ -57,7 +62,7 @@ const claimFormItemMap = {
       </Picker>
     </>
   ),
-  integer: (propertyName: string, onChangeValue) => (
+  [ClaimPropertyType.Integer]: (propertyName: string, onChangeValue) => (
     <>
       <Text style={labelTxt}>{propertyName}:</Text>
       <StyledTextInput

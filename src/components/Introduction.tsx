@@ -1,11 +1,11 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import KiltButton from '../components/KiltButton'
 import {
   NavigationScreenProp,
   NavigationState,
   NavigationParams,
 } from 'react-navigation'
+import StyledButton from './StyledButton'
 import {
   mainViewContainer,
   sectionContainer,
@@ -22,16 +22,18 @@ import {
 import { USERNAME_SETUP } from '../routes'
 import WithIntroBackground from './WithIntroBackground'
 
-interface IProps {
+type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
 }
 
-const Introduction = ({ navigation }: IProps): JSX.Element => (
+const Introduction: React.FunctionComponent<Props> = ({
+  navigation,
+}): JSX.Element => (
   <WithIntroBackground>
     <View style={mainViewContainer}>
       <View style={sectionContainer}>
         <Text style={[h1, emphasizedClrTxt]}>
-          KILT - Your credentials for web3.
+          KILT - Your credentials for the web3.
         </Text>
       </View>
       <View style={sectionContainer}>
@@ -45,7 +47,7 @@ const Introduction = ({ navigation }: IProps): JSX.Element => (
       </View>
       <View style={sectionContainer}>
         <View style={flexRowEnd}>
-          <KiltButton
+          <StyledButton
             title="Get started >"
             onPress={() => navigation.navigate(USERNAME_SETUP)}
           />
