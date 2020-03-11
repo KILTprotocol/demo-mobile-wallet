@@ -23,13 +23,13 @@ You'll need to:
     * Select an Attester. You can do so either by selecting an existing contact or by scanning a KILT Public Identity QR Code (displayed in the demo-client). If you go for the QR Code option, you can also add this attester to your contacts on-the-fly.
     * Once created, the claim should first have the status “Pending” (gray).
 * 💻 in the demo-client, as the **Attester**
-  * Check messages, the claim just requested by the attester should be there
+  * Check messages, the claim just requested by the attester should be listed
   * Attest it
 * 📱 in the mobile app = as the **Claimer** 
   * Check that your claim now has the status “Valid” (green)
-  * Send your claim to the Verifier, by scanning their QR Code on the demo-client or selecting them in your existing contacts.
+  * Send your claim to the Verifier, by scanning their QR Code from the demo-client or selecting them in your existing contacts.
 * 💻 in the demo-client, as the **Verifier**
-  * Check your messages, you should see a message from the Claimer
+  * Check your messages, you should see a message from the Claimer: it's their attested claim
   * Open it to check the contents
 * 💻 in the demo-client, as the **Attester**
   * Check Attestations, the claim that has you've attested should be listed
