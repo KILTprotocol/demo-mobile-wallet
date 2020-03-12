@@ -22,7 +22,7 @@ You'll need to:
   * Under `Contacts`: Add a contact by scanning a KILT Public Identity QR Code displayed in the demo-client. A little mailbox icon should be displayed next to their name.
   * Under `Dashboard`: 
     * Tap "Create a claim" and fill its contents. 
-    * Select an Attester. You can do so either by selecting an existing contact (the contact you've added right above should be displayed) or by scanning a KILT Public Identity QR Code (displayed in the demo-client). If you go for the QR Code option, you can also add this attester to your contacts on-the-fly.
+    * Select an Attester. You can do so either by selecting an existing contact (the contact you've added right above should be displayed) or by scanning a KILT Public Identity QR Code (displayed in the demo-client). If you go for the QR Code option, you can also add this Attester to your contacts on-the-fly.
     * Once created, the claim should be displayed in your Dashboard ("My claims (1)") with the content you've added, sorted alphabetically by property name. It should have the status “Pending” (gray).
 * 💻 in the demo-client, as the **Attester**
   * Check messages, the claim just requested by the attester should be listed
