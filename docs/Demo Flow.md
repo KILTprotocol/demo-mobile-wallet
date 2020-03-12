@@ -18,8 +18,8 @@ You'll need to:
 
 * 📱 in the mobile app = as the **Claimer**
   * Under `Account`: Request tokens
-  * Under `Account`: Transfer tokens by scanning a KILT Public Identity QR Code displayed in the demo-client
-  * Under `Contacts`: Add a contact by scanning a KILT Public Identity QR Code displayed in the demo-client
+  * Under `Account`: Transfer tokens by scanning a KILT Public Identity QR Code displayed in the demo-client.
+  * Under `Contacts`: Add a contact by scanning a KILT Public Identity QR Code displayed in the demo-client. A little mailbox icon should be displayed next to their name.
   * Under `Dashboard`: 
     * Tap "Create a claim" and fill its contents. 
     * Select an Attester. You can do so either by selecting an existing contact (the contact you've added right above should be displayed) or by scanning a KILT Public Identity QR Code (displayed in the demo-client). If you go for the QR Code option, you can also add this attester to your contacts on-the-fly.
