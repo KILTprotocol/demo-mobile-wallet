@@ -10,6 +10,7 @@ You'll need to:
 * 💻 in the demo-client: 
   * Create a new identity (any new identity!); it will be used as the **Attester** Identity
   * Request tokens for it
+  * Create another new identity; it will be used as the **Verifier** Identity
 * 📱 in the mobile app: follow the onboarding steps.
 
 
