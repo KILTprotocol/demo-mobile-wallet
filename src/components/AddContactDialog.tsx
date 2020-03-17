@@ -36,7 +36,7 @@ const AddContactDialog: React.FunctionComponent<Props> = ({
         autoFocus
         returnKeyType="done"
         onChangeText={name => onChangeContactName(name)}
-        // don't spellcheck/autocorrect the name
+        // don't spellcheck/autocorrect since it's a name
         spellCheck={false}
         autoCorrect={false}
       />
