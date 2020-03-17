@@ -11,7 +11,7 @@ function setTopLevelNavigator(
   navigator = navigatorRef
 }
 
-function navigate(routeName: string, params): void {
+function navigate(routeName: string, params: any): void {
   navigator.dispatch(
     NavigationActions.navigate({
       routeName,
