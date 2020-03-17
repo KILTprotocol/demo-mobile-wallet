@@ -101,7 +101,8 @@ class AppRoot extends React.Component<Props> {
     if (
       appEncryptionStatus === AppEncryptionStatus.SetUpAndDecrypted &&
       appUiState === AppUiState.Active &&
-      nextAppUiState === (AppUiState.Inactive || AppUiState.Background)
+      (nextAppUiState === AppUiState.Inactive ||
+        nextAppUiState === AppUiState.Background)
     ) {
       console.info(
         '[ENCRYPTION] App became inactive|background => reset identity'
@@ -128,9 +129,10 @@ class AppRoot extends React.Component<Props> {
   }
 
   shouldShowAppContents(): boolean {
+    const appEncryptionStatus = this.getAppEncryptionStatus()
     return (
-      this.getAppEncryptionStatus() ===
-      (AppEncryptionStatus.NotSetUp || AppEncryptionStatus.SetUpAndDecrypted)
+      appEncryptionStatus === AppEncryptionStatus.NotSetUp ||
+      appEncryptionStatus === AppEncryptionStatus.SetUpAndDecrypted
     )
   }
 
