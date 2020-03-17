@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { AppState } from 'react-native'
 import { createAppContainer } from 'react-navigation'
-import * as Kilt from '@kiltprotocol/sdk-js'
-import { Identity, Balance, PublicIdentity } from '@kiltprotocol/sdk-js'
+import { Identity, PublicIdentity } from '@kiltprotocol/sdk-js'
+import LockScreen from '../components/LockScreen'
 import {
   setIdentity,
   resetIdentity,
@@ -13,21 +13,18 @@ import {
 } from '../redux/actions'
 import { TMapDispatchToProps } from '../types'
 import { TAppState } from '../redux/reducers'
-import { CONFIG_CONNECT } from '../config'
-import {
-  balanceListener,
-  getBalanceInKiltCoins,
-} from '../services/service.balance'
-import { AppLockStatus } from '../enums'
+import { getBalanceInKiltCoins } from '../services/service.balance'
+import { AppEncryptionStatus, AppUiState } from '../enums'
 import {
   getCurrentRoute,
   setTopLevelNavigator,
 } from '../services/service.navigation'
 import RootSwitch from '../components/navigation/RootSwitch'
 import { promptUserAndGetIdentityDecrypted } from '../services/service.keychain'
-import LockScreen from '../components/LockScreen'
+import { disconnect, connectAndListen } from '../services/service.socket'
 
 const Navigation = createAppContainer(RootSwitch)
+const APP_STATE_CHANGE_EVENT = 'change'
 
 type Props = {
   setIdentityInStore: typeof setIdentity
@@ -44,10 +41,12 @@ class AppRoot extends React.Component<Props> {
   }
 
   async componentDidMount(): Promise<void> {
-    if (this.getAppLockStatus() === AppLockStatus.SetUpAndLocked) {
+    if (
+      this.getAppEncryptionStatus() === AppEncryptionStatus.SetUpAndEncrypted
+    ) {
       await this.promptAndSetDecryptedIdentity()
     }
-    AppState.addEventListener('change', this.handleAppStateChange)
+    AppState.addEventListener(APP_STATE_CHANGE_EVENT, this.handleAppStateChange)
   }
 
   async componentDidUpdate(prevProps: Props): Promise<void> {
@@ -58,114 +57,102 @@ class AppRoot extends React.Component<Props> {
       updateBalanceInStore,
     } = this.props
     if (prevIdentityFromStore !== identityFromStore) {
-      // the identity has been decrypted
+      // the identity has just been decrypted
       if (identityFromStore && publicIdentityFromStore) {
-        await this.connectAndListen()
+        await connectAndListen(publicIdentityFromStore.address)
+        // eagerly get the balance
         const balance = await getBalanceInKiltCoins(
           publicIdentityFromStore.address
         )
         updateBalanceInStore(balance)
       } else {
-        await this.disconnect()
+        await disconnect()
       }
     }
   }
 
   async componentWillUnmount(): Promise<void> {
-    // disconnect from socket
-    await this.disconnect()
-    AppState.removeEventListener('change', this.handleAppStateChange)
+    await disconnect()
+    AppState.removeEventListener(
+      APP_STATE_CHANGE_EVENT,
+      this.handleAppStateChange
+    )
   }
 
-  getAppLockStatus(): AppLockStatus {
+  getAppEncryptionStatus(): AppEncryptionStatus {
     const { identityFromStore, publicIdentityFromStore } = this.props
     if (identityFromStore) {
-      return AppLockStatus.SetUpAndUnlocked
+      return AppEncryptionStatus.SetUpAndDecrypted
     }
-    if (!identityFromStore && publicIdentityFromStore) {
-      return AppLockStatus.SetUpAndLocked
+    if (publicIdentityFromStore && !identityFromStore) {
+      return AppEncryptionStatus.SetUpAndEncrypted
     }
-    if (!identityFromStore && !publicIdentityFromStore) {
-      return AppLockStatus.NotSetUp
+    if (!publicIdentityFromStore && !identityFromStore) {
+      return AppEncryptionStatus.NotSetUp
     }
-    return AppLockStatus.Unknown
+    return AppEncryptionStatus.Unknown
   }
 
-  handleAppStateChange = async nextAppUiState => {
+  handleAppStateChange = async (nextAppUiState: string): Promise<void> => {
+    // if the app goes in the background (= another app is used) or becomes inactive (= user scrolls through apps, iOS-only): we re-encrypt the identity. Re-encrypting the identity means for us that we delete the decrypted identity in the redux store, meaning that no decrypted identity is available anymore. As soon as the decrypted identity is needed again (= as soon as the user needs to use anything in the app, since the identity is used everywhere for messaging, token transfer etc = as soon as the user opens the app or puts it back in focus): the user will be prompted for their touchID or passcode or other. If successful input, this gives us access to the decrypted identity that we add to the redux store again.
     const { resetIdentityInStore } = this.props
     const { appUiState } = this.state
+    const appEncryptionStatus = this.getAppEncryptionStatus()
     if (
-      this.getAppLockStatus() === AppLockStatus.SetUpAndUnlocked &&
-      appUiState === 'active' &&
-      nextAppUiState.match(/inactive|background/)
-    ) {
-      console.info('[ENCRYPTION] UI = inactive|background => reset identity')
-      resetIdentityInStore()
-    } else if (
-      this.getAppLockStatus() === AppLockStatus.SetUpAndLocked &&
-      nextAppUiState === 'active'
+      appEncryptionStatus === AppEncryptionStatus.SetUpAndDecrypted &&
+      appUiState === AppUiState.Active &&
+      nextAppUiState === (AppUiState.Inactive || AppUiState.Background)
     ) {
       console.info(
-        '[ENCRYPTION] UI = active, no identity in store => prompt user'
+        '[ENCRYPTION] App became inactive|background => reset identity'
       )
-      // prompt user for secret to make identity available
+      resetIdentityInStore()
+    } else if (
+      appEncryptionStatus === AppEncryptionStatus.SetUpAndEncrypted &&
+      nextAppUiState === AppUiState.Active
+    ) {
+      console.info(
+        '[ENCRYPTION] App became active BUT no identity in store => prompt user and decrypt identity'
+      )
       await this.promptAndSetDecryptedIdentity()
     }
     this.setState({ appUiState: nextAppUiState })
-  }
-
-  async connectAndListen(): Promise<void> {
-    const { publicIdentityFromStore } = this.props
-    if (publicIdentityFromStore) {
-      console.info('[SOCKET] Connecting and listening...')
-      await Kilt.default.connect(CONFIG_CONNECT.BLOCKCHAIN_NODE)
-      await Balance.listenToBalanceChanges(
-        publicIdentityFromStore.address,
-        balanceListener
-      )
-      console.info('[SOCKET] OK connected')
-    }
-  }
-
-  async disconnect(): Promise<void> {
-    await Kilt.default.disconnect(CONFIG_CONNECT.BLOCKCHAIN_NODE)
-    console.info('[SOCKET] Disconnected')
   }
 
   async promptAndSetDecryptedIdentity(): Promise<void> {
     console.info('[ENCRYPTION] Decrypting and setting identity in store')
     const { setIdentityInStore } = this.props
     const identityDecrypted = await promptUserAndGetIdentityDecrypted()
-    // add decrypted identity to Redux store for use anywhere in the app, until user leaves the app again OR screen locks
     setIdentityInStore(identityDecrypted)
+    console.info('[ENCRYPTION] OK identity set in store')
+  }
+
+  shouldShowAppContents(): boolean {
+    return (
+      this.getAppEncryptionStatus() ===
+      (AppEncryptionStatus.NotSetUp || AppEncryptionStatus.SetUpAndDecrypted)
+    )
   }
 
   render(): JSX.Element {
+    const showAppContents = this.shouldShowAppContents()
     const { updateLastVisitedRouteInStore } = this.props
-    /* if the app goes in the background (= another app is used) or becomes inactive (= user scrolls through apps, iOS only):
-    hide its contents, like in a banking app */
-    const showAppContents =
-      this.getAppLockStatus() === AppLockStatus.NotSetUp ||
-      this.getAppLockStatus() === AppLockStatus.SetUpAndUnlocked
-
+    if (!showAppContents) {
+      // hide the app's contents when the identity is encrypted
+      return <LockScreen />
+    }
     return (
-      <>
-        {showAppContents ? (
-          <Navigation
-            onNavigationStateChange={() => {
-              const currentRoute = getCurrentRoute()
-              updateLastVisitedRouteInStore(
-                currentRoute ? currentRoute.routeName : ''
-              )
-            }}
-            ref={navigatorRef => {
-              setTopLevelNavigator(navigatorRef)
-            }}
-          />
-        ) : (
-          <LockScreen />
-        )}
-      </>
+      <Navigation
+        onNavigationStateChange={() => {
+          const currentRoute = getCurrentRoute()
+          updateLastVisitedRouteInStore(
+            currentRoute ? currentRoute.routeName : ''
+          )
+        }}
+        ref={navigatorRef => {
+          setTopLevelNavigator(navigatorRef)
+        }}
+      />
     )
   }
 }
