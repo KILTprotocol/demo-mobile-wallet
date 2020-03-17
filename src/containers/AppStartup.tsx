@@ -17,6 +17,8 @@ import {
   MNEMONIC_CREATION,
   INTRODUCTION,
   USERNAME_SETUP,
+  NEW_CLAIM,
+  SEND_FOR_VERIFICATION,
 } from '../routes'
 import { mainViewContainer, fillCenter } from '../sharedStyles/styles.layout'
 import { TAppState } from '../redux/reducers'
@@ -41,11 +43,17 @@ class AppStartup extends React.Component<Props> {
     } = this.props
     // if an identity is already set up, navigate to the regular app
     // if not, navigate to the identity setup screen
+
     if (
       (publicIdentityFromStore &&
-        [DASHBOARD, ACCOUNT, CONTACTS, SETTINGS].includes(
-          lastVisitedRouteFromStore
-        )) ||
+        [
+          DASHBOARD,
+          ACCOUNT,
+          CONTACTS,
+          SETTINGS,
+          NEW_CLAIM,
+          SEND_FOR_VERIFICATION,
+        ].includes(lastVisitedRouteFromStore)) ||
       (publicIdentityFromStore &&
         [MNEMONIC_CREATION, INTRODUCTION, USERNAME_SETUP].includes(
           lastVisitedRouteFromStore
