@@ -9,10 +9,9 @@ import {
   NavigationParams,
   ScrollView,
 } from 'react-navigation'
-import { formatDateForClaim } from '../utils/utils.formatting'
-import { sendRequestForAttestation } from '../services/service.messaging'
-import ClaimForm from './ClaimForm'
-import StyledButton from './StyledButton'
+import RecipientSelector from '../components/RecipientSelector'
+import ClaimForm from '../components/ClaimForm'
+import StyledButton from '../components/StyledButton'
 import { h2, bodyTxt } from '../sharedStyles/styles.typography'
 import {
   mainViewContainer,
@@ -27,17 +26,18 @@ import {
   TClaimContents,
   TContact,
 } from '../types'
+import { ClaimStatus, ClaimPropertyFormat } from '../enums'
 import { TAppState } from '../redux/reducers'
 import { addClaim, addContact } from '../redux/actions'
 import {
   createClaim,
   createRequestForAttestation,
 } from '../services/service.claim'
-import { ClaimStatus, ClaimPropertyFormat } from '../enums'
 import { fromStoredIdentity } from '../utils/utils.identity'
-import { CONFIG_CLAIM } from '../config'
 import { getClaimContentsDefault } from '../utils/utils.claim'
-import RecipientSelector from './RecipientSelector'
+import { formatDateForClaim } from '../utils/utils.formatting'
+import { sendRequestForAttestation } from '../services/service.messaging'
+import { CONFIG_CLAIM } from '../config'
 
 const CLAIM_PROPERTIES = CONFIG_CLAIM.CTYPE.schema.properties
 const claimContentsDefault = getClaimContentsDefault(CLAIM_PROPERTIES)
