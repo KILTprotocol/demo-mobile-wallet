@@ -87,7 +87,7 @@ Note that we're also using [rn-nodeify](https://www.npmjs.com/package/rn-nodeify
 ### Run on an iPhone (recommended dev setup)
 
 - Prerequisites: follow https://facebook.github.io/react-native/docs/running-on-device#running-your-app-on-ios-devices. Most importantly, you should have a developer account.
-- Open XCode and `KILTDemoMobileWallet.xcworkspace` (not the project file but the workspace one, this is important!)
+- Open XCode, then open your `KILTDemoMobileWallet.xcworkspace` which is located in your `demo-mobile-wallet/ios` folder (make sur to open the `.xcworkspace` file and not the project file, this is important!)
 - Connect your phone to your laptop, you should see your device displayed as a target in XCode
 - Hit "launch" in XCode
 
