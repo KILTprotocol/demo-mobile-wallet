@@ -79,10 +79,12 @@ Note that we're also using [rn-nodeify](https://www.npmjs.com/package/rn-nodeify
 - IMPORTANT: Follow the "Installing dependencies" step at https://facebook.github.io/react-native/docs/getting-started > tab **react-native-cli quickstart**.
 - `brew install cocoapods`
 - Clone the project
-- `yarn install` or `yarn` (please do use yarn)
+- In the root, `yarn install` or `yarn` (please do use yarn)
+- (`npm install -g browserify`)
 - In the `iOS` folder, run `pod install`
-- You might need to adapt `src/config.ts` if you're runnning some services or the chain locally
 - Run with `NODE_OPTIONS=--max_old_space_size=8192 npm start`
+
+Note: you might need to adapt `src/config.ts` if you're runnning some services or the chain locally
 
 ### Run on an iPhone (recommended dev setup)
 
@@ -93,11 +95,7 @@ Note that we're also using [rn-nodeify](https://www.npmjs.com/package/rn-nodeify
 
 ### Run on a simulator
 
-- Open two terminal windows:
-  - In one terminal run `yarn start`
-  - You should see `Loading dependency graph, done.` at some point
-  - In the second terminal, run `react-native run-ios`
-  - The iPhone simulator should open automatically and your app should run
+Not recommended, since the app makes use of the camera and other native capabilities such as Keychain that won't be available on a simulator.
 
 ### Debug
 
