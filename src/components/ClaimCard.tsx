@@ -23,6 +23,7 @@ import {
   flexRowSpaceBetween,
   paddedBottomS,
   flexColumnSpaceBetween,
+  marginTopS,
 } from '../sharedStyles/styles.layout'
 import { ClaimStatus } from '../enums'
 import ClaimStatusBadge from './ClaimStatusBadge'
@@ -66,10 +67,6 @@ const cardContent: ViewStyle = {
   ...flexColumnSpaceBetween,
 }
 
-const claimContents: ViewStyle = {
-  marginTop: 12,
-}
-
 const statusToUiMapping = {
   [ClaimStatus.AttestationPending]: {
     imgSrc: claimBckgrdPending,
@@ -82,6 +79,12 @@ const statusToUiMapping = {
   },
 }
 
+function sortAlphanumericallyByPropertyName(claimContents: object[]): object[] {
+  return [...claimContents].sort(
+    (entryA, entryB) => entryA[0].charCodeAt(0) - entryB[0].charCodeAt(0)
+  )
+}
+
 const ClaimCard: React.FunctionComponent<Props> = ({
   title,
   status,
@@ -89,10 +92,8 @@ const ClaimCard: React.FunctionComponent<Props> = ({
   navigation,
   claimHash,
 }): JSX.Element => {
-  // sort claim contents by name, alphanumerically
-  const sortedClaimContents = [...Object.entries(contents)].sort(
-    (entryA, entryB) => entryA[0].charCodeAt(0) - entryB[0].charCodeAt(0)
-  )
+  const claimContents = Object.entries(contents)
+  const sortedClaimContents = sortAlphanumericallyByPropertyName(claimContents)
   // a pending claim (= not yet checked by attesters) is not verifiable so its "Send to Verifier" button should be hidden
   const isVerifiable =
     status === ClaimStatus.Revoked || status === ClaimStatus.Valid
@@ -109,7 +110,7 @@ const ClaimCard: React.FunctionComponent<Props> = ({
               <Text style={titleTxt}>{title}</Text>
               <ClaimStatusBadge status={status} />
             </View>
-            <View style={claimContents}>
+            <View style={marginTopS}>
               {sortedClaimContents.map(([propertyName, propertyValue]) => (
                 <ClaimProperty
                   propertyName={propertyName}
