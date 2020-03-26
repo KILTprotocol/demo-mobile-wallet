@@ -58,7 +58,7 @@ export default function claimsReducer(
         ...state,
         claimsMap: {
           ...state.claimsMap,
-          // only update the claim if a relevant update msg is sent
+          // only update the claim if a relevant update message is sent
           ...(claimToUpdate && {
             [claimHash]: {
               ...claimToUpdate,

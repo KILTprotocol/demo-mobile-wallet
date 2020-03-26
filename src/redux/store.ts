@@ -6,7 +6,7 @@ import rootReducer from './reducers'
 
 const middleware = [thunk]
 
-// config for redux-persist, that syncs redux state with AsyncStorage data
+// config for redux-persist; redux-persists syncs redux state with the device's AsyncStorage data
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,

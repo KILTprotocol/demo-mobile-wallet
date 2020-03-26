@@ -6,7 +6,6 @@ import { store } from '../redux/store'
 const KILT_MICRO_COIN = 1000000
 
 async function getBalanceRaw(address: IPublicIdentity['address']): Promise<BN> {
-  // only OK if connection open
   const balance = await Balance.getBalance(address)
   return balance
 }

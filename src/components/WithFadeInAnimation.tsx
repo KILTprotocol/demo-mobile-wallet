@@ -14,8 +14,8 @@ const WithFadeInAnimation: React.FunctionComponent<Props> = ({
   duration,
   children,
 }): JSX.Element => {
-  // initial value for opacity: 0
-  const [fadeAnim] = useState(new Animated.Value(0))
+  const initialOpacity = 0
+  const [fadeAnim] = useState(new Animated.Value(initialOpacity))
   React.useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,

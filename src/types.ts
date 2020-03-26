@@ -31,7 +31,7 @@ import { ClaimStatus } from './enums'
 /*               Claims               */
 /* ---------------------------------- */
 
-// This is NOT an SDK-like Claim type. TClaim is a hybrid of Claim and AttestedClaim: it's a claim that has a status.
+// ⚠️ This is NOT an SDK-like Claim type. TClaim is a hybrid of Claim and AttestedClaim: it's a claim that has a status.
 export type TClaim = {
   title: string
   contents: object

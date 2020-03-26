@@ -23,11 +23,11 @@ export const CLR_BORDER = CLR_TXT_X_LIGHT
 /* ---------------------------------- */
 /*           Semantic colors          */
 /* ---------------------------------- */
-// greenish
+// green
 export const CLR_SUCCESS = '#009c84'
-// redish
+// red
 export const CLR_ERROR = '#b30000'
-// semantic colors derived from these
+// semantic colors
 export const CLR_BALANCE_POSITIVE = CLR_SUCCESS
 export const CLR_BALANCE_ZERO = CLR_ERROR
 export const CLR_CLAIM_VALID = CLR_SUCCESS

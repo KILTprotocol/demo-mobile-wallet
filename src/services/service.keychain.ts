@@ -8,7 +8,7 @@ import {
 import { Identity } from '@kiltprotocol/sdk-js'
 
 async function setIdentityEncrypted(identity: Identity): Promise<boolean> {
-  // react-native-keychain's API namings are misleading, this is not a password but just an encrypted value
+  // ⚠️ react-native-keychain's API namings are misleading, this is not a password but just an encrypted value
   return setGenericPassword('identity', JSON.stringify(identity), {
     accessControl: ACCESS_CONTROL.USER_PRESENCE,
     accessible: ACCESSIBLE.WHEN_PASSCODE_SET_THIS_DEVICE_ONLY,

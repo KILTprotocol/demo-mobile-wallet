@@ -50,7 +50,7 @@ async function queryAttestationByHash(
 function checkAttestationExistsOnChain(
   attestation: Attestation | null
 ): boolean {
-  // workaround, TODO fix once the SDK includes a fix for this!
+  // ⚠️ workaround, TODO fix once the SDK includes a fix for this!
   return attestation
     ? attestation.cTypeHash !==
         '0x0000000000000000000000000000000000000000000000000000000000000000'
