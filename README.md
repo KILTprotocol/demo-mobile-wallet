@@ -76,10 +76,10 @@ Note that we're also using [rn-nodeify](https://www.npmjs.com/package/rn-nodeify
 
 ### Prerequisites
 
-- IMPORTANT: Follow the "Installing dependencies" step at https://facebook.github.io/react-native/docs/getting-started > tab **react-native-cli quickstart**.
-- `brew install cocoapods`
-- Clone the project
-- In the root, `yarn install` or `yarn` (please do use yarn)
+- 🔺IMPORTANT: Follow the "Installing dependencies" step at https://facebook.github.io/react-native/docs/getting-started > tab **react-native-cli quickstart**.
+- `brew install cocoapods` (and maybe `brew reinstall cocoapods` if any issue there with your rb path)
+- Clone this repo
+- In the root folder, run `yarn install` or `yarn` (please do use **yarn**)
 - (`npm install -g browserify`)
 - In the `iOS` folder, run `pod install`
 - Run with `NODE_OPTIONS=--max_old_space_size=8192 npm start`
@@ -88,14 +88,17 @@ Note: you might need to adapt `src/config.ts` if you're runnning some services o
 
 ### Run on an iPhone (recommended dev setup)
 
-- Prerequisites: follow https://facebook.github.io/react-native/docs/running-on-device#running-your-app-on-ios-devices. Most importantly, you should have a developer account.
-- In XCode, open your `KILTDemoMobileWallet.xcworkspace` which is located in your `demo-mobile-wallet/ios` folder (make sur to open the `.xcworkspace` file and not the project file, this is important!)
-- Connect your phone to your laptop, you should see your device displayed as a target in XCode
-- Hit "launch" in XCode
+- Prerequisites: follow [React Native's doc setup steps](https://facebook.github.io/react-native/docs/running-on-device#running-your-app-on-ios-devices). Most importantly, you should have a developer account.
+- In XCode, open your `KILTDemoMobileWallet.xcworkspace` which is located in your `demo-mobile-wallet/ios` folder. 🔺IMPORTANT: make sure to open the `.xcworkspace` file and not the `.xcodeproj` file);
+- Connect your phone to your laptop, you should see your device displayed as a target in XCode (on the top left);
+- In XCode, change the dev team if you haven't already;
+- In XCode, hit "launch" (= "▶️" button).
+
+🔺IMPORTANT: your phone and laptop should be connected to the same network, otherwise you might encounter issues.
 
 ### Run on a simulator
 
-Not recommended, since the app makes use of the camera and other native capabilities such as Keychain that won't be available on a simulator.
+Not recommended, since the app makes use of native capabilities such as the Camera and Keychain, that **won't** be available on a simulator.
 
 ### Debug
 
