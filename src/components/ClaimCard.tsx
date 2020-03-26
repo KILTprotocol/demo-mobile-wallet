@@ -93,7 +93,7 @@ const ClaimCard: React.FunctionComponent<Props> = ({
   const sortedClaimContents = [...Object.entries(contents)].sort(
     (entryA, entryB) => entryA[0].charCodeAt(0) - entryB[0].charCodeAt(0)
   )
-  // a pending claim (= not yet been checked by attesters) is not verifiable so its "Send to Verifier" button should be hidden
+  // a pending claim (= not yet checked by attesters) is not verifiable so its "Send to Verifier" button should be hidden
   const isVerifiable =
     status === ClaimStatus.Revoked || status === ClaimStatus.Valid
   return (

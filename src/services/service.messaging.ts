@@ -37,7 +37,7 @@ export interface IMessageOutput extends IMessage {
   sender?: IContact
 }
 
-// like in prototype/services
+// like in the prototype-services
 export interface IContact {
   metaData: {
     name: string

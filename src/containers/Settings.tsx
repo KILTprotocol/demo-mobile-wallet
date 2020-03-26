@@ -59,8 +59,7 @@ class Settings extends React.Component<Props, null> {
       deleteAllContactsInStore,
       resetBalanceInStore,
     } = this.props
-    // the app is mono-identity so `resetIdentity` means deleting the claims as well
-    // reset all
+    // the app is mono-identity so on resetIdentity we should the claims as well
     resetPublicIdentityInStore()
     resetIdentityInStore()
     resetBalanceInStore()

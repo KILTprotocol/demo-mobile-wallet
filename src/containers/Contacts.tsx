@@ -42,7 +42,6 @@ class Contacts extends React.Component<Props, State> {
     newContactPublicIdentity: null,
     newContactName: '',
   }
-  // also: create vs save vs add vs new
 
   setNewContactName(newContactName: string): void {
     this.setState({

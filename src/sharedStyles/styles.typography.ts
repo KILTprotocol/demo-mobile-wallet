@@ -104,7 +104,7 @@ export const emphasizedClrTxt: TextStyle = {
 }
 
 export const monospaceTxt: TextStyle = {
-  // use a monospace font to ensure consistent length of the address display
+  // monospace font to ensure consistent length of the address display
   fontFamily: 'Courier',
 }
 

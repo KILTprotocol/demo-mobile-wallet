@@ -127,7 +127,6 @@ class NewClaim extends React.Component<Props, State> {
         if (requestForAttestation && attesterPublicIdentity) {
           addClaimInStore({
             title: CONFIG_CLAIM.CLAIM_CARD_TITLE,
-            // needed
             hash: requestForAttestation.rootHash,
             status: ClaimStatus.AttestationPending,
             contents: requestForAttestation.claim.contents,
