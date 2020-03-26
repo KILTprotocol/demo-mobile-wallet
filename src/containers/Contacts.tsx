@@ -49,15 +49,18 @@ class Contacts extends React.Component<Props, State> {
     })
   }
 
+  checkContactAlreadyExists(address: PublicIdentity['address']): boolean {
+    const { contactsFromStore } = this.props
+    return contactsFromStore.some(c => c.publicIdentity.address === address)
+  }
+
   addNewContact(): void {
-    const { addContactInStore, contactsFromStore } = this.props
+    const { addContactInStore } = this.props
     const { newContactPublicIdentity, newContactName } = this.state
     if (
       newContactPublicIdentity &&
       // check if the contact already exists
-      !contactsFromStore.some(
-        c => c.publicIdentity.address === newContactPublicIdentity.address
-      )
+      !this.checkContactAlreadyExists(newContactPublicIdentity.address)
     ) {
       addContactInStore({
         name: newContactName,

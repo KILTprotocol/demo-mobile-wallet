@@ -38,6 +38,10 @@ export const paddedVerticalS: ViewStyle = {
   paddingVertical: 14,
 }
 
+export const marginTopS: ViewStyle = {
+  marginTop: 14,
+}
+
 /* ---------------------------------- */
 /*          Height and layout         */
 /* ---------------------------------- */
