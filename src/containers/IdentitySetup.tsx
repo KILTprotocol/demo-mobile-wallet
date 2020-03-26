@@ -30,6 +30,7 @@ import {
 import { createIdentity } from '../utils/utils.identity'
 import { delay } from '../utils/utils.async'
 import { MNEMONIC } from '../navigationParameters'
+import { CONFIG_CONNECT } from '../config'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -91,7 +92,8 @@ class IdentitySetup extends React.Component<Props, State> {
     const identity = createIdentity(mnemonic)
     const publicIdentity = new PublicIdentity(
       identity.address,
-      identity.boxPublicKeyAsHex
+      identity.boxPublicKeyAsHex,
+      CONFIG_CONNECT.CLAIMER_SERVICE_ADDRESS_DEFAULT
     )
 
     if (identity && publicIdentity) {
