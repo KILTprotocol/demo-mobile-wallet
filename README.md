@@ -95,6 +95,7 @@ Note: you might need to adapt `src/config.ts` if you're runnning some services o
 - In XCode, hit "launch" (= "▶️" button).
 
 🔺IMPORTANT: your phone and laptop should be connected to the same network, otherwise you might encounter issues.
+🔺IMPORTANT: Make sure that you've shut down any other metro bundler that might be already running (e.g. if you were working on another React Native app).
 
 ### Run on a simulator
 
