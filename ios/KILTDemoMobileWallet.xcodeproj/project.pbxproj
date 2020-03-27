@@ -705,7 +705,6 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = Y5H5WSVL45;
 				INFOPLIST_FILE = KILTDemoMobileWalletTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -748,10 +747,6 @@
 			baseConfigurationReference = DB7FBDDAF2F79CC0AD2EE3A8 /* Pods-KILTDemoMobileWallet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Y5H5WSVL45;
 				INFOPLIST_FILE = KILTDemoMobileWallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -763,7 +758,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.botlabs.KILTDemoMobileWallet;
 				PRODUCT_NAME = "Sporran - KILT Demo Mobile Wallet";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
