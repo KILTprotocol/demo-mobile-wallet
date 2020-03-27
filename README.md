@@ -76,7 +76,7 @@ Note that we're also using [rn-nodeify](https://www.npmjs.com/package/rn-nodeify
 
 ### Prerequisites
 
-- 🔺IMPORTANT: Follow the "Installing dependencies" step at https://facebook.github.io/react-native/docs/getting-started > tab **react-native-cli quickstart**.
+- 🔺IMPORTANT: follow the "Installing dependencies" step at https://facebook.github.io/react-native/docs/getting-started > tab **react-native-cli quickstart**.
 - `brew install cocoapods` (and maybe `brew reinstall cocoapods` if any issue there with your rb path)
 - Clone this repo
 - In the root folder, run `yarn install` or `yarn` (please do use **yarn**)
@@ -95,7 +95,7 @@ Note: you might need to adapt `src/config.ts` if you're runnning some services o
 - In XCode, hit "launch" (= "▶️" button).
 
 🔺IMPORTANT: your phone and laptop should be connected to the same network, otherwise you might encounter issues.
-🔺IMPORTANT: Make sure that you've shut down any other metro bundler that might be already running (e.g. if you were working on another React Native app).
+🔺IMPORTANT: make sure that you've shut down any other metro bundler that might be already running (e.g. if you were working on another React Native app).
 
 ### Run on a simulator
 
