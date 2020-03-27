@@ -34,7 +34,8 @@ However, feel free to open issues if you note that something is off.
 ## Demo flow
 
 You can demo the mobile wallet as a claimer, and use the demo-client to demo the attester.
-[Here's an example of a demo flow.](https://github.com/KILTprotocol/demo-mobile-wallet/blob/master/docs/Demo%20Flow.md)
+
+[>> Demo flow](https://github.com/KILTprotocol/demo-mobile-wallet/blob/master/docs/Demo%20Flow.md)
 
 ## Make it yours!
 
