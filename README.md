@@ -36,9 +36,6 @@ However, feel free to open issues if you note that something is off.
 You can demo the mobile wallet as a claimer, and use the demo-client to demo the attester.
 [Here's an example of a demo flow.](https://github.com/KILTprotocol/demo-mobile-wallet/blob/master/docs/Demo%20Flow.md)
 
-Alternatively, if you don't want to use the demo-client and if you do have access to the [KILT CLI](https://github.com/KILTprotocol/kilt-cli) (internal use only), you can run the automatic attestation service:
-`npx ts-node kilt-cli.ts --ctype "0x4edaa5b8eea2e071dfe48724f6789d6741c1ce0e0f4466079a1d78ef0c02aea2" --seed <mnemonic> --timeout 1`
-
 ## Make it yours!
 
 You can configure Sporran to fit your needs and branding in a few minutes!
@@ -76,7 +73,7 @@ Note that we're also using [rn-nodeify](https://www.npmjs.com/package/rn-nodeify
 
 ### Prerequisites
 
-- 🔺IMPORTANT: follow the "Installing dependencies" step at https://facebook.github.io/react-native/docs/getting-started > tab **react-native-cli quickstart**.
+- 🔺IMPORTANT: follow the "Installing dependencies" step at [React Native's getting started](https://facebook.github.io/react-native/docs/getting-started) > tab **react-native-cli quickstart**. The wallet is NOT using Expo, it was ejected.
 - `brew install cocoapods` (and maybe `brew reinstall cocoapods` if any issue there with your rb path)
 - Clone this repo
 - In the root folder, run `yarn install` or `yarn` (please do use **yarn**)
@@ -118,7 +115,7 @@ Not recommended, since the app makes use of native capabilities such as the Came
 
 You can release your own version of the wallet by setting up an Apple Developer account an making a TestFlight release.
 
-Doc for KILT internals: https://github.com/KILTprotocol/organizational/wiki/Demo-Mobile-Wallet:-TestFlight-release
+[>> Doc for KILT internals](https://github.com/KILTprotocol/organizational/wiki/Demo-Mobile-Wallet:-TestFlight-release)
 
 ### Troubleshooting
 
