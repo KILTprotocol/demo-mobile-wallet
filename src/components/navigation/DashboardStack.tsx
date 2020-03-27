@@ -2,7 +2,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 import { DASHBOARD, NEW_CLAIM, SEND_FOR_VERIFICATION } from '../../routes'
 import Dashboard from '../../containers/Dashboard'
 import NewClaim from '../../containers/NewClaim'
-import SendForVerification from '../SendForVerification'
+import SendForVerification from '../../containers/SendForVerification'
 
 const DashboardStack = createStackNavigator({
   [DASHBOARD]: Dashboard,

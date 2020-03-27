@@ -150,7 +150,7 @@ type TResetLastVisitedRouteAction = {
   type: typeof RESET_LAST_VISITED_ROUTE
 }
 
-type TaddOldMessageAction = {
+type TAddOldMessageAction = {
   type: typeof ADD_OLD_MESSAGE
   payload: Message['messageId']
 }
@@ -173,7 +173,7 @@ export type TAppAction =
   | TResetUsernameAction
   | TUpdateLastVisitedRouteAction
   | TResetLastVisitedRouteAction
-  | TaddOldMessageAction
+  | TAddOldMessageAction
 
 /* ---------------------------------- */
 /*      Redux: State and Dispatch     */
