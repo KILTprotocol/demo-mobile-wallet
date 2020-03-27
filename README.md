@@ -113,6 +113,12 @@ Not recommended, since the app makes use of native capabilities such as the Came
 
   - Menu > Hardware > Shake gesture
   - Select Toggle inspector
+  
+## Release on TestFlight
+
+You can release your own version of the wallet by setting up an Apple Developer account an making a TestFlight release.
+
+Doc for KILT internals: https://github.com/KILTprotocol/organizational/wiki/Demo-Mobile-Wallet:-TestFlight-release
 
 ### Troubleshooting
 
