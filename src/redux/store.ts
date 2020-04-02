@@ -12,13 +12,13 @@ const persistConfig = {
   storage: AsyncStorage,
   // whitelist = reducers for which we want to persist the state in AsyncStorage
   whitelist: [
-    'publicIdentityReducer',
+    'balanceReducer',
     'claimsReducer',
     'contactsReducer',
-    'balanceReducer',
-    'usernameReducer',
     'lastVisitedRouteReducer',
     'oldMessagesReducer',
+    'publicIdentityReducer',
+    'usernameReducer',
   ],
   blacklist: ['identityReducer'],
 }

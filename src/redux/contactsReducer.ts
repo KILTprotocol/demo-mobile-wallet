@@ -1,4 +1,4 @@
-import { ADD_CONTACT, DELETE_ALL_CONTACTS } from './actionTypes'
+import { ADD_CONTACT, DELETE_CONTACT, DELETE_ALL_CONTACTS } from './actionTypes'
 import { TAppAction, TContact } from '../types'
 import { TAppState } from './reducers'
 
@@ -18,6 +18,17 @@ export default function contactsReducer(
         ...state,
         contacts: [...state.contacts, action.payload],
       }
+    case DELETE_CONTACT: {
+      const currentContacts = [...state.contacts]
+      const contactToDelete = action.payload
+      const updatedContacts = currentContacts.filter(
+        contact => contact.publicIdentity.address !== contactToDelete
+      )
+      return {
+        ...state,
+        contacts: updatedContacts,
+      }
+    }
     case DELETE_ALL_CONTACTS:
       return {
         ...state,

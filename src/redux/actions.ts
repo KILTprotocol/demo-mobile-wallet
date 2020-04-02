@@ -8,6 +8,7 @@ import {
   SET_PUBLIC_IDENTITY,
   RESET_PUBLIC_IDENTITY,
   ADD_CONTACT,
+  DELETE_CONTACT,
   DELETE_ALL_CONTACTS,
   UPDATE_BALANCE,
   RESET_BALANCE,
@@ -84,6 +85,13 @@ export const deleteAllClaims = (): TAppAction => ({
 export const addContact = (contact: TContact): TAppAction => ({
   type: ADD_CONTACT,
   payload: contact,
+})
+
+export const deleteContact = (
+  address: PublicIdentity['address']
+): TAppAction => ({
+  type: DELETE_CONTACT,
+  payload: address,
 })
 
 export const deleteAllContacts = (): TAppAction => ({

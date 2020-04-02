@@ -2,6 +2,7 @@ import React from 'react'
 import { FlatList, View, ViewStyle, Text } from 'react-native'
 import { CONFIG_THEME } from '../config'
 import { TContact } from '../types'
+import { deleteContact } from '../redux/actions'
 import Contact from './Contact'
 import { CLR_BORDER } from '../sharedStyles/styles.consts.colors'
 import { bodyTxt, emptyStateBodyTxt } from '../sharedStyles/styles.typography'
@@ -9,6 +10,7 @@ import { paddedBottomM, paddedVerticalM } from '../sharedStyles/styles.layout'
 
 type Props = {
   contacts: TContact[]
+  deleteContactOnClick: typeof deleteContact
 }
 
 const list: ViewStyle = {
@@ -25,6 +27,7 @@ const contactContainer: ViewStyle = {
 
 const ContactList: React.FunctionComponent<Props> = ({
   contacts,
+  deleteContactOnClick,
 }): JSX.Element => (
   <>
     {contacts.length > 0 ? (
@@ -40,7 +43,10 @@ const ContactList: React.FunctionComponent<Props> = ({
           data={contacts}
           renderItem={({ item }) => (
             <View style={contactContainer}>
-              <Contact contact={item} />
+              <Contact
+                contact={item}
+                deleteContactOnClick={deleteContactOnClick}
+              />
             </View>
           )}
         />

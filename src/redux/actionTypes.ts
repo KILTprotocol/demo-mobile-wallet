@@ -18,6 +18,7 @@ export const UPDATE_CLAIM = 'UPDATE_CLAIM'
 /*              Contacts              */
 /* ---------------------------------- */
 export const ADD_CONTACT = 'ADD_CONTACT'
+export const DELETE_CONTACT = 'DELETE_CONTACT'
 export const DELETE_ALL_CONTACTS = 'DELETE_ALL_CONTACTS'
 
 /* ---------------------------------- */

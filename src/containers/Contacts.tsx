@@ -18,7 +18,7 @@ import {
 import { h1 } from '../sharedStyles/styles.typography'
 import WithDefaultBackground from '../components/WithDefaultBackground'
 import AddContactDialog from '../components/AddContactDialog'
-import { addContact } from '../redux/actions'
+import { addContact, deleteContact } from '../redux/actions'
 import { TAppState } from '../redux/reducers'
 import { TMapDispatchToProps, TContact } from '../types'
 import ContactList from '../components/ContactList'
@@ -27,6 +27,7 @@ import { decodePublicIdentity } from '../utils/utils.encoding'
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
   addContactInStore: typeof addContact
+  deleteContactInStore: typeof deleteContact
   contactsFromStore: TContact[]
 }
 
@@ -69,6 +70,11 @@ class Contacts extends React.Component<Props, State> {
     }
   }
 
+  deleteExistingContact(address: IPublicIdentity['address']): any {
+    const { deleteContactInStore } = this.props
+    deleteContactInStore(address)
+  }
+
   closeDialog(): void {
     this.setState({ isDialogVisible: false })
   }
@@ -101,7 +107,12 @@ class Contacts extends React.Component<Props, State> {
             </View>
           </View>
           <View>
-            <ContactList contacts={contactsFromStore} />
+            <ContactList
+              contacts={contactsFromStore}
+              deleteContactOnClick={address =>
+                this.deleteExistingContact(address)
+              }
+            />
           </View>
           <AddContactDialog
             visible={isDialogVisible}
@@ -141,6 +152,9 @@ const mapDispatchToProps = (
 ): Partial<TMapDispatchToProps> => ({
   addContactInStore: (contact: TContact) => {
     dispatch(addContact(contact))
+  },
+  deleteContactInStore: (address: IPublicIdentity['address']) => {
+    dispatch(deleteContact(address))
   },
 })
 
