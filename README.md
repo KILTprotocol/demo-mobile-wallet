@@ -74,7 +74,7 @@ Note that we're also using [rn-nodeify](https://www.npmjs.com/package/rn-nodeify
 
 ### Prerequisites
 
-- 🔺IMPORTANT: follow the "Installing dependencies" step at [React Native's getting started](https://facebook.github.io/react-native/docs/getting-started) > tab **react-native-cli quickstart**. The wallet is NOT using Expo, it was ejected.
+- 🔺IMPORTANT: follow the "Installing dependencies" step at [React Native's getting started](https://reactnative.dev/docs/environment-setup) > tab **react-native-cli quickstart**. The wallet is NOT using Expo, it was ejected.
 - `brew install cocoapods` (and maybe `brew reinstall cocoapods` if any issue there with your rb path)
 - Clone this repo
 - In the root folder, run `yarn install` or `yarn` (please do use **yarn**)
