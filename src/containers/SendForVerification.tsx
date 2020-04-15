@@ -17,7 +17,7 @@ import {
 import { fromStoredIdentity } from '../utils/utils.identity'
 import { sendAttestedClaim } from '../services/service.messaging'
 import { CLAIM_HASH } from '../navigationParameters'
-import StyledButton from './StyledButton'
+import StyledButton from '../components/StyledButton'
 import { h2, bodyTxt } from '../sharedStyles/styles.typography'
 import {
   mainViewContainer,
@@ -31,7 +31,7 @@ import {
 } from '../types'
 import { TAppState } from '../redux/reducers'
 import { addClaim, addContact } from '../redux/actions'
-import RecipientSelector from './RecipientSelector'
+import RecipientSelector from '../components/RecipientSelector'
 
 type Props = {
   addContactInStore: typeof addContact

@@ -15,6 +15,7 @@ import {
   RESET_PUBLIC_IDENTITY,
   SET_PUBLIC_IDENTITY,
   ADD_CONTACT,
+  DELETE_CONTACT,
   DELETE_ALL_CONTACTS,
   UPDATE_BALANCE,
   RESET_BALANCE,
@@ -119,6 +120,11 @@ type TAddContactAction = {
   payload: TContact
 }
 
+type TDeleteContactAction = {
+  type: typeof DELETE_CONTACT
+  payload: PublicIdentity['address']
+}
+
 type TUpdateBalanceAction = {
   type: typeof UPDATE_BALANCE
   payload: number
@@ -165,6 +171,7 @@ export type TAppAction =
   | TUpdateClaimStatusAction
   | TUpdateClaimAction
   | TAddContactAction
+  | TDeleteContactAction
   | TDeleteAllContactsAction
   | TUpdateBalanceAction
   | TResetBalanceAction
@@ -189,6 +196,7 @@ export type TMapDispatchToProps = {
   resetPublicIdentityInStore: () => void
   deleteAllClaimsInStore: () => void
   addContactInStore: (contact: TContact) => void
+  deleteContactInStore: (address: PublicIdentity['address']) => void
   deleteAllContactsInStore: () => void
   updateBalanceInStore: (balance: number) => void
   resetBalanceInStore: () => void

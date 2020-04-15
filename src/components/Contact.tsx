@@ -1,12 +1,14 @@
 import React from 'react'
 import { ViewStyle, View, Text, TextStyle } from 'react-native'
 import { CONFIG_THEME } from '../config'
+import StyledButton from './StyledButton'
 import {
   generateConstantColorFromStr,
   getFirstCharacter,
 } from '../utils/utils.formatting'
 import Address from './Address'
 import { TContact } from '../types'
+import { deleteContact } from '../redux/actions'
 import {
   flexRowCenter,
   flexRowSpaceBetween,
@@ -17,6 +19,7 @@ import { CLR_TXT_INVERTED } from '../sharedStyles/styles.consts.colors'
 
 type Props = {
   contact: TContact
+  deleteContactOnClick: typeof deleteContact
 }
 
 const contactBadge: ViewStyle = {
@@ -40,9 +43,13 @@ const badgeTxt: TextStyle = {
   color: CLR_TXT_INVERTED,
 }
 
-const Contact: React.FunctionComponent<Props> = ({ contact }): JSX.Element => {
+const Contact: React.FunctionComponent<Props> = ({
+  contact,
+  deleteContactOnClick,
+}): JSX.Element => {
   const { name, publicIdentity } = contact
   const { address, serviceAddress } = publicIdentity
+
   return (
     <View style={flexRowSpaceBetween}>
       <View style={flexRowSpaceBetween}>
@@ -68,6 +75,10 @@ const Contact: React.FunctionComponent<Props> = ({ contact }): JSX.Element => {
 
       <View>
         <Address address={address} />
+      </View>
+
+      <View style={symbol}>
+        <StyledButton onPress={() => deleteContactOnClick(address)} title="X" />
       </View>
     </View>
   )
