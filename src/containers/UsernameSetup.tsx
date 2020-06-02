@@ -22,7 +22,7 @@ import {
   h2,
   bodyTxt,
 } from '../sharedStyles/styles.typography'
-import { MNEMONIC_CREATION } from '../routes'
+import { MNEMONIC_CREATION, DEVICE } from '../routes'
 import { labelTxt } from '../sharedStyles/styles.form'
 import StyledTextInput from '../components/StyledTextInput'
 
@@ -36,10 +36,6 @@ type State = {
 }
 
 class UsernameSetup extends React.Component<Props, State> {
-  static navigationOptions = {
-    header: null,
-  }
-
   state = {
     username: '',
   }
@@ -49,6 +45,15 @@ class UsernameSetup extends React.Component<Props, State> {
     this.setState({
       username: formattedUsername,
     })
+  }
+
+  getEthernomDevice(): void {
+    const { navigation } = this.props
+    navigation.navigate(DEVICE)
+  }
+
+  static navigationOptions = {
+    header: null,
   }
 
   saveUsernameAndNavigateNext(): void {
@@ -81,6 +86,14 @@ class UsernameSetup extends React.Component<Props, State> {
               <StyledButton
                 title="Next >"
                 onPress={() => this.saveUsernameAndNavigateNext()}
+              />
+            </View>
+          </View>
+          <View style={sectionContainer}>
+            <View style={flexRowEnd}>
+              <StyledButton
+                title="Use Ethernom Card instead"
+                onPress={() => this.getEthernomDevice()}
               />
             </View>
           </View>
