@@ -172,7 +172,7 @@ export async function sendRequestForAttestation(
   }
   await singleSend(
     {
-      content: requestForAttestation,
+      content: {requestForAttestation},
       type: MessageBodyType.REQUEST_ATTESTATION_FOR_CLAIM,
     },
     sender,
