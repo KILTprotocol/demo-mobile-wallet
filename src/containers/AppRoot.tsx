@@ -36,6 +36,9 @@ type Props = {
 }
 
 class AppRoot extends React.Component<Props> {
+
+  private promptOpened: boolean = false;
+
   state = {
     appUiState: AppState.currentState,
   }
@@ -121,11 +124,20 @@ class AppRoot extends React.Component<Props> {
   }
 
   async promptAndSetDecryptedIdentity(): Promise<void> {
-    console.info('[ENCRYPTION] Decrypting and setting identity in store')
-    const { setIdentityInStore } = this.props
-    const identityDecrypted = await promptUserAndGetIdentityDecrypted()
-    setIdentityInStore(identityDecrypted)
-    console.info('[ENCRYPTION] OK identity set in store')
+    if (this.promptOpened) {
+      console.info('[ENCRYPTION] User prompt is open, skipping additional call')
+      return
+    }
+    this.promptOpened = true
+    try {
+      console.info('[ENCRYPTION] Decrypting and setting identity in store')
+      const { setIdentityInStore } = this.props
+      const identityDecrypted = await promptUserAndGetIdentityDecrypted()
+      setIdentityInStore(identityDecrypted)
+      console.info('[ENCRYPTION] OK identity set in store')
+    } finally {
+      this.promptOpened = false
+    }
   }
 
   shouldShowAppContents(): boolean {
