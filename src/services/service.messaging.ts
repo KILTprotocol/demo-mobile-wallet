@@ -105,7 +105,7 @@ function isMessageNew(
   oldMessages: IMessageMapById,
   messageId: Message['messageId']
 ): boolean {
-  return !oldMessages[messageId]
+  return !!messageId && !oldMessages[messageId]
 }
 
 export async function fetchAndDecryptNewMessages(

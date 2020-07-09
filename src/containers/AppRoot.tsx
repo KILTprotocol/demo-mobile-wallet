@@ -164,7 +164,7 @@ class AppRoot extends React.Component<Props> {
           )
         }}
         ref={navigatorRef => {
-          setTopLevelNavigator(navigatorRef)
+          navigatorRef && setTopLevelNavigator(navigatorRef)
         }}
       />
     )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TextInput } from 'react-native'
+import { View, Text } from 'react-native'
 import { Identity } from '@kiltprotocol/sdk-js'
 import {
   NavigationScreenProp,
