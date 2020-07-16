@@ -1,5 +1,6 @@
 # code injection
-sed -i -e $'s/var randomBytes = require(\'randombytes\')*/var randomBytes = require(\'crypto\').randomBytes/g' ./node_modules/bip39/index.js
+sed -i -e $'s/var randomBytes = require(\'randombytes\')*/var randomBytes = require(\'crypto\').randomBytes/g' ./node_modules/bip39/src/index.js
 
 # hack
-./node_modules/.bin/rn-nodeify --hack --install --yarn && cd node_modules/jsonabc && mkdir -p dist && npm run build
+# ./node_modules/.bin/rn-nodeify --hack --install --yarn
+cd node_modules/jsonabc && mkdir -p dist && npm run build
