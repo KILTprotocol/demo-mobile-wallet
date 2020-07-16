@@ -33,7 +33,6 @@ import {
   createClaim,
   createRequestForAttestation,
 } from '../services/service.claim'
-import { fromStoredIdentity } from '../utils/utils.identity'
 import { getClaimContentsDefault } from '../utils/utils.claim'
 import { formatDateForClaim } from '../utils/utils.formatting'
 import { sendRequestForAttestation } from '../services/service.messaging'
@@ -115,12 +114,12 @@ class NewClaim extends React.Component<Props, State> {
       if (identityFromStore && attesterPublicIdentity) {
         const claim = createClaim(
           formattedClaimContents as TClaimContents,
-          identityFromStore.address
+          identityFromStore.getAddress()
         )
         if (!claim || !identityFromStore) {
           return
         }
-        const requestForAttestation = createRequestForAttestation(
+        const requestForAttestation = await createRequestForAttestation(
           claim,
           identityFromStore
         )
@@ -133,11 +132,10 @@ class NewClaim extends React.Component<Props, State> {
             requestTimestamp: Date.now(),
             data: requestForAttestation,
           })
-          const claimerIdentity = fromStoredIdentity(identityFromStore)
           await sendRequestForAttestation(
             requestForAttestation,
-            claimerIdentity,
-            attesterPublicIdentity
+            identityFromStore,
+            attesterPublicIdentity!
           )
         }
       } else {

@@ -21,7 +21,6 @@ import TokenTransferDialog from '../components/TokenTransferDialog'
 import StyledButton from '../components/StyledButton'
 import BalanceDisplay from '../components/Balance'
 import { asMicroKiltCoins } from '../services/service.balance'
-import { fromStoredIdentity } from '../utils/utils.identity'
 import { AsyncStatus } from '../enums'
 import { callWithDelay } from '../utils/utils.async'
 import { decodePublicIdentity } from '../utils/utils.encoding'
@@ -113,7 +112,7 @@ class Account extends Component<Props, State> {
       try {
         console.info('[TRANSFER] Trying transfer...')
         await Balance.makeTransfer(
-          fromStoredIdentity(identityFromStore),
+          identityFromStore,
           tokenRecipientAddress,
           transferAmount
         )

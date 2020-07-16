@@ -12,7 +12,6 @@ import {
 } from '@kiltprotocol/sdk-js'
 import { IMessageMapById } from '../types'
 import { CONFIG_CONNECT } from '../config'
-import { fromStoredIdentity } from '../utils/utils.identity'
 
 export const BaseFetchParams: Partial<RequestInit> = {
   cache: 'no-cache',
@@ -42,7 +41,7 @@ export interface IContact {
   metaData: {
     name: string
     addedAt?: number
-    addedBy?: IMyIdentity['identity']['address']
+    addedBy?: string
     unregistered?: boolean
   }
   did?: {
@@ -79,7 +78,7 @@ export async function singleSend(
       `${serviceAddress || CONFIG_CONNECT.MESSAGING_SERVICE_URL_FALLBACK}`,
       {
         ...BasePostParams,
-        body: JSON.stringify(message.getEncryptedMessage()),
+        body: JSON.stringify(message.encrypt()),
       }
     )
       .then(response => {
@@ -114,7 +113,7 @@ export async function fetchAndDecryptNewMessages(
 ): Promise<IMessage[]> {
   console.info('[MESSAGES] Fetching messages...')
   return fetch(
-    `${CONFIG_CONNECT.MESSAGING_SERVICE_URL_FALLBACK}/inbox/${identity.address}`
+    `${CONFIG_CONNECT.MESSAGING_SERVICE_URL_FALLBACK}/inbox/${identity.getAddress()}`
   )
     .then(response => response.json())
     .then((encryptedMessages: IEncryptedMessage[]) => {
@@ -122,9 +121,9 @@ export async function fetchAndDecryptNewMessages(
         // for performance reasons, we wouldn't want to decrypt and process all messages this user has ever received; we onbly care about new messages. So we keep in this app track of the old messages (= that have already been processed) by the app
         .filter(message => isMessageNew(oldMessages, message.messageId))
         .map(message =>
-          Message.createFromEncryptedMessage(
+          Message.decrypt(
             message,
-            fromStoredIdentity(identity)
+            identity
           )
         )
       console.info('[MESSAGES] New messages: ', newDecryptedMessages.length)
@@ -202,7 +201,7 @@ export async function sendAttestedClaim(
   await singleSend(
     {
       content: [attestedClaim],
-      type: MessageBodyType.SUBMIT_CLAIMS_FOR_CTYPES,
+      type: MessageBodyType.SUBMIT_CLAIMS_FOR_CTYPES_PUBLIC,
     },
     sender,
     receiver,

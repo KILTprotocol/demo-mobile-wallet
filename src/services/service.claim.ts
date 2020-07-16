@@ -4,38 +4,35 @@ import {
   RequestForAttestation,
   Attestation,
   IClaim,
+  PublicIdentity,
 } from '@kiltprotocol/sdk-js'
-import { TClaimContents } from '../types'
-import { fromStoredIdentity } from '../utils/utils.identity'
 import { CONFIG_CLAIM } from '../config'
 
 function createClaim(
-  claimContents: TClaimContents,
-  claimerAddress: Identity['address'] | null
+  claimContents: IClaim['contents'],
+  claimerAddress: PublicIdentity['address'] | null
 ): Claim | null {
   const cType = CONFIG_CLAIM.CTYPE
   if (claimerAddress && cType) {
-    return new Claim({
-      cTypeHash: cType.hash,
-      contents: claimContents,
-      owner: claimerAddress,
-    })
+    return Claim.fromCTypeAndClaimContents(
+      cType,
+      claimContents,
+      claimerAddress,
+    )
   }
   return null
 }
 
-function createRequestForAttestation(
+async function createRequestForAttestation(
   claim: IClaim,
-  storedClaimerIdentity: Identity | null
-): RequestForAttestation | null {
-  if (storedClaimerIdentity) {
-    const claimerIdentity = fromStoredIdentity(storedClaimerIdentity)
-    return RequestForAttestation.fromClaimAndIdentity(
+  claimerIdentity: Identity | null
+): Promise<RequestForAttestation | null> {
+  if (claimerIdentity) {
+    const {message: request} = await RequestForAttestation.fromClaimAndIdentity(
       claim,
       claimerIdentity,
-      [],
-      null
     )
+    return request
   }
   return null
 }

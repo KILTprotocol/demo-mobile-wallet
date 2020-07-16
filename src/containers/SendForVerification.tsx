@@ -14,7 +14,6 @@ import {
   NavigationParams,
   ScrollView,
 } from 'react-navigation'
-import { fromStoredIdentity } from '../utils/utils.identity'
 import { sendAttestedClaim } from '../services/service.messaging'
 import { CLAIM_HASH } from '../navigationParameters'
 import StyledButton from '../components/StyledButton'
@@ -132,17 +131,18 @@ class SendForVerification extends React.Component<Props, State> {
                 isSending: true,
               })
               const attestedClaim = claimsMapFromStore[claimHash]
-              const claimerIdentity = fromStoredIdentity(identityFromStore)
-              await sendAttestedClaim(
-                attestedClaim.data as IAttestedClaim,
-                claimerIdentity,
-                verifierPublicIdentity
-              )
-              if (shouldAddToContacts) {
-                addContactInStore({
-                  publicIdentity: verifierPublicIdentity,
-                  name: newContactName,
-                })
+              if (identityFromStore && verifierPublicIdentity) {
+                await sendAttestedClaim(
+                  attestedClaim.data as IAttestedClaim,
+                  identityFromStore,
+                  verifierPublicIdentity
+                )
+                if (shouldAddToContacts) {
+                  addContactInStore({
+                    publicIdentity: verifierPublicIdentity,
+                    name: newContactName,
+                  })
+                }
               }
               navigation.goBack()
               this.setState({
