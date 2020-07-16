@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TextInput } from 'react-native'
+import { View, Text } from 'react-native'
 import { Identity } from '@kiltprotocol/sdk-js'
 import {
   NavigationScreenProp,
@@ -106,7 +106,7 @@ class MnemonicCreation extends React.Component<Props, State> {
                 returnKeyType="done"
                 multiline={true}
                 numberOfLines={3}
-                maxLength={80}
+                maxLength={100}
                 inverted
                 extraStyle={{ height: 80 }}
                 onChangeText={txt => this.onInputMnemonic(txt)}
