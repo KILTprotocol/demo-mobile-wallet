@@ -1,3 +1,4 @@
+import { CType } from '@kiltprotocol/sdk-js'
 const cType = require('./data/ctype.json')
 
 const CONFIG = Object.freeze({
@@ -10,7 +11,7 @@ const CONFIG = Object.freeze({
     POLLING_PERIOD_CHAIN_MS: 8000,
   },
   CLAIM: {
-    CTYPE: cType,
+    CTYPE: CType.fromSchema(cType),
     // display name: used in the Dashboard as a title for each claim card
     CLAIM_CARD_TITLE: 'Claim',
   },
