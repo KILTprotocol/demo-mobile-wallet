@@ -93,24 +93,24 @@ class IdentitySetup extends React.Component<Props, State> {
     const publicIdentity = new PublicIdentity(
       identity.getAddress(),
       identity.getBoxPublicKey(),
-      CONFIG_CONNECT.CLAIMER_SERVICE_ADDRESS_DEFAULT
+      CONFIG_CONNECT.CLAIMER_SERVICE_ADDRESS_DEFAULT,
     )
 
     if (identity && publicIdentity) {
       await delayAndCall(0, () =>
         this.setState({
           stepStatuses: getStateForStepIdx(0),
-        })
+        }),
       )
       await delayAndCall(1, () =>
         this.setState({
           stepStatuses: getStateForStepIdx(1),
-        })
+        }),
       )
       await delayAndCall(2, () =>
         this.setState({
           stepStatuses: getStateForStepIdx(2),
-        })
+        }),
       )
 
       await delayAndCall(3, async () => {
@@ -122,7 +122,7 @@ class IdentitySetup extends React.Component<Props, State> {
         }
         await saveIdentityAsContactInDemoServices(
           publicIdentity,
-          usernameFromStore
+          usernameFromStore,
         )
       })
     }
@@ -185,7 +185,7 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
 })
 
 const mapDispatchToProps = (
-  dispatch: Dispatch
+  dispatch: Dispatch,
 ): Partial<TMapDispatchToProps> => ({
   setPublicIdentityInStore: (publicIdentity: PublicIdentity) => {
     dispatch(setPublicIdentity(publicIdentity))
@@ -195,7 +195,4 @@ const mapDispatchToProps = (
   },
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IdentitySetup)
+export default connect(mapStateToProps, mapDispatchToProps)(IdentitySetup)

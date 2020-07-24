@@ -10,7 +10,7 @@ const INITIAL_STATE = {
 
 export default function publicIdentityReducer(
   state = INITIAL_STATE,
-  action: TAppAction
+  action: TAppAction,
 ): TAppState {
   switch (action.type) {
     case SET_PUBLIC_IDENTITY:

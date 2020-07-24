@@ -50,8 +50,11 @@ const IdentitySetupSubstep: React.FunctionComponent<Props> = ({
   <View style={flexRow}>
     <View style={iconContainer}>{statusToUiMapping[status].component}</View>
     <Text
-      style={[bodyTxt, bodyInvertedClrTxt, statusToUiMapping[status].statusTxt]}
-    >
+      style={[
+        bodyTxt,
+        bodyInvertedClrTxt,
+        statusToUiMapping[status].statusTxt,
+      ]}>
       {description}
     </Text>
   </View>

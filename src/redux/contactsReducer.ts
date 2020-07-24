@@ -10,7 +10,7 @@ const INITIAL_STATE = {
 
 export default function contactsReducer(
   state = INITIAL_STATE,
-  action: TAppAction
+  action: TAppAction,
 ): TAppState {
   switch (action.type) {
     case ADD_CONTACT:
@@ -22,7 +22,7 @@ export default function contactsReducer(
       const currentContacts = [...state.contacts]
       const contactToDelete = action.payload
       const updatedContacts = currentContacts.filter(
-        contact => contact.publicIdentity.address !== contactToDelete
+        contact => contact.publicIdentity.address !== contactToDelete,
       )
       return {
         ...state,

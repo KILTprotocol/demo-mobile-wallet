@@ -6,9 +6,9 @@
     },
     "extends": [
         "airbnb-typescript",
+        "@react-native-community",
         "prettier/react",
         "prettier/@typescript-eslint",
-        "@react-native-community",
         "eslint-config-prettier"
     ],
     "globals": {
@@ -22,32 +22,10 @@
     },
     "plugins": [
         "@typescript-eslint",
-        "prettier",
-        "@react-native-community"
+        "@react-native-community",
+        "prettier"
     ],
     "rules": {
-        "prettier/prettier": [
-            "error",
-            {
-                "semi": false,
-                "singleQuote": true,
-                "trailingComma": "es5"
-            }
-        ],
-        "arrow-parens": [
-            "error",
-            "as-needed"
-        ],
-        "comma-dangle": [
-            "error",
-            {
-                "arrays": "only-multiline",
-                "exports": "only-multiline",
-                "functions": "never",
-                "imports": "only-multiline",
-                "objects": "always-multiline"
-            }
-        ],
         "implicit-arrow-linebreak": [
             "off"
         ],

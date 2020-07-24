@@ -21,10 +21,10 @@ const getClaimContentsDefault = (claimProperties: object): object => {
       ...acc,
       [claimPropertyName]: getDefaultClaimPropertyValue(
         claimProperties[claimPropertyName].type,
-        claimProperties[claimPropertyName].format
+        claimProperties[claimPropertyName].format,
       ),
     }),
-    {}
+    {},
   )
 }
 

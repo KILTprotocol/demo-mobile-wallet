@@ -9,8 +9,8 @@
     "start": "node --max_old_space_size=8192 node_modules/react-native/local-cli/cli.js start",
     "bundle-ios": "node --max_old_space_size=8192 node_modules/react-native/local-cli/cli.js bundle --entry-file index.js  --platform ios --dev false --bundle-output ./ios/bundle/index.ios.jsbundle --assets-dest release_ios/",
     "postinstall": "sh postinstall.sh",
-    "lint": "eslint src/*.tsx",
-    "style": "eslint src/*.tsx"
+    "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
+    "style": "eslint src/*.tsx?"
   },
   "husky": {
     "hooks": {

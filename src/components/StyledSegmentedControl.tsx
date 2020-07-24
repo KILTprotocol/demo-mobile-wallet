@@ -9,7 +9,7 @@ import { CONFIG_THEME } from '../config'
 
 type Props = {
   onChange: (
-    event: NativeSyntheticEvent<NativeSegmentedControlIOSChangeEvent>
+    event: NativeSyntheticEvent<NativeSegmentedControlIOSChangeEvent>,
   ) => void
   values: string[]
   selectedIndex: number

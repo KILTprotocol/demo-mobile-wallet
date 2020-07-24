@@ -56,7 +56,7 @@ class AppStartup extends React.Component<Props> {
         ].includes(lastVisitedRouteFromStore)) ||
       (publicIdentityFromStore &&
         [MNEMONIC_CREATION, INTRODUCTION, USERNAME_SETUP].includes(
-          lastVisitedRouteFromStore
+          lastVisitedRouteFromStore,
         ))
     ) {
       navigation.navigate(lastVisitedRouteFromStore)
@@ -81,7 +81,4 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
   lastVisitedRouteFromStore: state.lastVisitedRouteReducer.lastVisitedRoute,
 })
 
-export default connect(
-  mapStateToProps,
-  null
-)(AppStartup)
+export default connect(mapStateToProps, null)(AppStartup)

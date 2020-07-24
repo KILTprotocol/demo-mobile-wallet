@@ -34,7 +34,7 @@ const claimFormItemMap = {
   [`${ClaimPropertyType.String}${ClaimPropertyFormat.Date}`]: (
     propertyName: string,
     onChangeValue,
-    value
+    value,
   ) => (
     <>
       <Text style={labelTxt}>{propertyName}:</Text>
@@ -55,8 +55,7 @@ const claimFormItemMap = {
         itemStyle={sPicker}
         style={sPicker}
         selectedValue={value}
-        onValueChange={bool => onChangeValue(bool, propertyName)}
-      >
+        onValueChange={bool => onChangeValue(bool, propertyName)}>
         <Picker.Item label="yes" value={true} />
         <Picker.Item label="no" value={false} />
       </Picker>

@@ -12,7 +12,7 @@ const RootSwitch = createSwitchNavigator(
   },
   {
     initialRouteName: APP_STARTUP,
-  }
+  },
 )
 
 export default RootSwitch

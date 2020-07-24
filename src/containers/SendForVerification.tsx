@@ -107,7 +107,7 @@ class SendForVerification extends React.Component<Props, State> {
               verifierPublicIdentity: new PublicIdentity(
                 publicIdentity.address,
                 publicIdentity.boxPublicKeyAsHex,
-                publicIdentity.serviceAddress
+                publicIdentity.serviceAddress,
               ),
             })
           }
@@ -135,7 +135,7 @@ class SendForVerification extends React.Component<Props, State> {
                 await sendAttestedClaim(
                   attestedClaim.data as IAttestedClaim,
                   identityFromStore,
-                  verifierPublicIdentity
+                  verifierPublicIdentity,
                 )
                 if (shouldAddToContacts) {
                   addContactInStore({
@@ -164,14 +164,11 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
 })
 
 const mapDispatchToProps = (
-  dispatch: Dispatch
+  dispatch: Dispatch,
 ): Partial<TMapDispatchToProps> => ({
   addContactInStore: (contact: TContact) => {
     dispatch(addContact(contact))
   },
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SendForVerification)
+export default connect(mapStateToProps, mapDispatchToProps)(SendForVerification)

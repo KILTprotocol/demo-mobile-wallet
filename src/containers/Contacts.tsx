@@ -121,14 +121,14 @@ class Contacts extends React.Component<Props, State> {
             onChangeContactName={name => this.setNewContactName(name)}
             onNewContactPublicIdentityRead={publicIdentityEncodedString => {
               const publicIdentityEncoded = JSON.parse(
-                publicIdentityEncodedString
+                publicIdentityEncodedString,
               )
               const publicIdentity = decodePublicIdentity(publicIdentityEncoded)
               this.setState({
                 newContactPublicIdentity: new PublicIdentity(
                   publicIdentity.address,
                   publicIdentity.boxPublicKeyAsHex,
-                  publicIdentity.serviceAddress
+                  publicIdentity.serviceAddress,
                 ),
               })
             }}
@@ -148,7 +148,7 @@ const mapStateToProps = (state: TAppState): TAppState => ({
 })
 
 const mapDispatchToProps = (
-  dispatch: Dispatch
+  dispatch: Dispatch,
 ): Partial<TMapDispatchToProps> => ({
   addContactInStore: (contact: TContact) => {
     dispatch(addContact(contact))
@@ -158,7 +158,4 @@ const mapDispatchToProps = (
   },
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Contacts)
+export default connect(mapStateToProps, mapDispatchToProps)(Contacts)

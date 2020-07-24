@@ -21,7 +21,9 @@ async function setIdentityEncrypted(identity: Identity): Promise<boolean> {
 async function promptUserAndGetIdentityDecrypted(): Promise<Identity | null> {
   // prompt the user for a secret depending on setIdentityEncrypted's parameters
   const identityWrapper = await getGenericPassword()
-  return identityWrapper ? fromStoredIdentity(JSON.parse(identityWrapper.password)) : null
+  return identityWrapper
+    ? fromStoredIdentity(JSON.parse(identityWrapper.password))
+    : null
 }
 
 export { promptUserAndGetIdentityDecrypted, setIdentityEncrypted }

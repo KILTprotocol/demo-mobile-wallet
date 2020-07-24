@@ -10,7 +10,7 @@ async function disconnect(): Promise<void> {
 }
 
 async function connectAndListen(
-  address: Kilt.IPublicIdentity['address']
+  address: Kilt.IPublicIdentity['address'],
 ): Promise<void> {
   console.info('[SOCKET] Connecting and listening...')
   await Kilt.default.connect(BLOCKCHAIN_NODE)

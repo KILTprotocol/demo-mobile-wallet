@@ -7,7 +7,7 @@ import { input } from '../sharedStyles/styles.form'
 type Props = TextInputProps & { inverted?: boolean; extraStyle?: object }
 
 const StyledTextInput: React.FunctionComponent<Props> = (
-  props
+  props,
 ): JSX.Element => {
   const { inverted, extraStyle } = props
   const style = inverted

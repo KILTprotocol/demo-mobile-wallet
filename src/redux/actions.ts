@@ -41,7 +41,7 @@ export const resetIdentity = (): TAppAction => ({
 })
 
 export const setPublicIdentity = (
-  publicIdentity: PublicIdentity | null
+  publicIdentity: PublicIdentity | null,
 ): TAppAction => ({
   type: SET_PUBLIC_IDENTITY,
   payload: publicIdentity,
@@ -61,14 +61,14 @@ export const addClaim = (claim: TClaim): TAppAction => ({
 })
 
 export const updateClaimStatus = (
-  hashAndStatus: THashAndClaimStatus
+  hashAndStatus: THashAndClaimStatus,
 ): TAppAction => ({
   type: UPDATE_CLAIM_STATUS,
   payload: hashAndStatus,
 })
 
 export const updateClaim = (
-  hashAndStatusAndData: THashAndClaimStatusAndData
+  hashAndStatusAndData: THashAndClaimStatusAndData,
 ): TAppAction => ({
   type: UPDATE_CLAIM,
   payload: hashAndStatusAndData,
@@ -88,7 +88,7 @@ export const addContact = (contact: TContact): TAppAction => ({
 })
 
 export const deleteContact = (
-  address: PublicIdentity['address']
+  address: PublicIdentity['address'],
 ): TAppAction => ({
   type: DELETE_CONTACT,
   payload: address,
@@ -129,7 +129,7 @@ export const resetUsername = (): TAppAction => ({
 /* ---------------------------------- */
 
 export const updateLastVisitedRoute = (
-  lastVisitedRoute: string
+  lastVisitedRoute: string,
 ): TAppAction => ({
   type: UPDATE_LAST_VISITED_ROUTE,
   payload: lastVisitedRoute,

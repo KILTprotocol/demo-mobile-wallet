@@ -21,8 +21,7 @@ const Mnemonic: React.FunctionComponent<Props> = ({
         // eslint-disable-next-line react/no-array-index-key
         key={`${word}${idx}`}
         delay={Math.random() * MAX_DELAY_MS}
-        duration={TOTAL_ANIM_DURATION_MS}
-      >
+        duration={TOTAL_ANIM_DURATION_MS}>
         <Text style={bodyEmphasizedTxt}>{word}</Text>
       </WithFadeInAnimation>
     ))}

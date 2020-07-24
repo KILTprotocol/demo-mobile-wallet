@@ -11,7 +11,7 @@ async function getBalanceRaw(address: IPublicIdentity['address']): Promise<BN> {
 }
 
 async function getBalanceInKiltCoins(
-  address: IPublicIdentity['address']
+  address: IPublicIdentity['address'],
 ): Promise<number> {
   const balanceRaw = await getBalanceRaw(address)
   return asKiltCoins(balanceRaw)
@@ -28,11 +28,11 @@ function asKiltCoins(balance: BN): number {
 function balanceListener(
   address: PublicIdentity['address'],
   balance: BN,
-  change: BN
+  change: BN,
 ): void {
   if (!change.isZero()) {
     console.info(
-      `[BALANCE LISTENER] Balance has changed by ${change} to ${balance}`
+      `[BALANCE LISTENER] Balance has changed by ${change} to ${balance}`,
     )
     // save new balance in store
     store.dispatch(updateBalance(asKiltCoins(balance)))

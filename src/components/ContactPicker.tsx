@@ -26,14 +26,13 @@ const ContactPicker: React.FunctionComponent<Props> = ({
     itemStyle={itemStyle}
     style={sPicker}
     selectedValue={selectedAddress}
-    onValueChange={onChangeAddress}
-  >
+    onValueChange={onChangeAddress}>
     <Picker.Item label="(↓ Select a contact)" value={null} />
     {contacts.map(contact => (
       <Picker.Item
         label={`${contact.name}  (${truncateAddress(
           contact.publicIdentity.address,
-          2
+          2,
         )})${
           contact.publicIdentity.serviceAddress
             ? CONFIG_THEME.SYMBOL_SERVICE_ADDRESS

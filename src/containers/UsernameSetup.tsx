@@ -91,7 +91,7 @@ class UsernameSetup extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (
-  dispatch: Dispatch
+  dispatch: Dispatch,
 ): Partial<TMapDispatchToProps> => {
   return {
     setUsernameInStore: (username: string) => {
@@ -100,7 +100,4 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(UsernameSetup)
+export default connect(null, mapDispatchToProps)(UsernameSetup)

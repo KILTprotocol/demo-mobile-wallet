@@ -81,7 +81,7 @@ class Account extends Component<Props, State> {
   }
 
   setTokenRecipientAddress(
-    tokenRecipientAddress: IPublicIdentity['address']
+    tokenRecipientAddress: IPublicIdentity['address'],
   ): void {
     this.setState({ tokenRecipientAddress })
   }
@@ -107,14 +107,14 @@ class Account extends Component<Props, State> {
       this.setState({ transferAsyncStatus: AsyncStatus.Pending })
       const transferAmount = asMicroKiltCoins(tokenAmountToTransfer)
       console.info(
-        `[TRANSFER] Transferring ${tokenAmountToTransfer} (${transferAmount})...`
+        `[TRANSFER] Transferring ${tokenAmountToTransfer} (${transferAmount})...`,
       )
       try {
         console.info('[TRANSFER] Trying transfer...')
         await Balance.makeTransfer(
           identityFromStore,
           tokenRecipientAddress,
-          transferAmount
+          transferAmount,
         )
         this.setState({ transferAsyncStatus: AsyncStatus.Success })
       } catch (error) {
@@ -124,7 +124,7 @@ class Account extends Component<Props, State> {
     } else {
       this.setState({ transferAsyncStatus: AsyncStatus.Error })
       console.info(
-        `[TRANSFER] App error: No identity or no tokenRecipientAddress found (tokenRecipientAddress: ${tokenRecipientAddress}, identityFromStore: ${identityFromStore})`
+        `[TRANSFER] App error: No identity or no tokenRecipientAddress found (tokenRecipientAddress: ${tokenRecipientAddress}, identityFromStore: ${identityFromStore})`,
       )
     }
     // delay in order to let the user see the error message
@@ -133,7 +133,7 @@ class Account extends Component<Props, State> {
         this.closeDialog()
       },
       [],
-      1200
+      1200,
     )
   }
 
@@ -189,7 +189,7 @@ class Account extends Component<Props, State> {
             }
             onRecipientPublicIdentityRead={publicIdentityEncodedString => {
               const publicIdentityEncoded = JSON.parse(
-                publicIdentityEncodedString
+                publicIdentityEncodedString,
               )
               const publicIdentity = decodePublicIdentity(publicIdentityEncoded)
               this.setTokenRecipientAddress(publicIdentity.address)
@@ -211,7 +211,4 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
   balanceFromStore: state.balanceReducer.balance,
 })
 
-export default connect(
-  mapStateToProps,
-  null
-)(Account)
+export default connect(mapStateToProps, null)(Account)

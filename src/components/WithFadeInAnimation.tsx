@@ -28,8 +28,7 @@ const WithFadeInAnimation: React.FunctionComponent<Props> = ({
       style={{
         ...style,
         opacity: fadeAnim,
-      }}
-    >
+      }}>
       {children}
     </Animated.View>
   )

@@ -10,8 +10,8 @@ import {
   RequestForAttestation,
   IAttestedClaim,
 } from '@kiltprotocol/sdk-js'
-import {IMessageMapById} from '../types'
-import {CONFIG_CONNECT} from '../config'
+import { IMessageMapById } from '../types'
+import { CONFIG_CONNECT } from '../config'
 
 export const BaseFetchParams: Partial<RequestInit> = {
   cache: 'no-cache',
@@ -168,7 +168,7 @@ export async function sendRequestForAttestation(
   }
   await singleSend(
     {
-      content: {requestForAttestation},
+      content: { requestForAttestation },
       type: MessageBodyType.REQUEST_ATTESTATION_FOR_CLAIM,
     },
     sender,

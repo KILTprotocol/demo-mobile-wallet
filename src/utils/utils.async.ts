@@ -4,10 +4,10 @@ const DEFAULT_TIMEOUT = 800
 async function callWithDelay<T>(
   func: (...args: any[]) => T,
   params: any[] = [],
-  timeout = DEFAULT_TIMEOUT
+  timeout = DEFAULT_TIMEOUT,
 ): Promise<T> {
   return new Promise(resolve =>
-    setTimeout(() => resolve(func(...params)), timeout)
+    setTimeout(() => resolve(func(...params)), timeout),
   )
 }
 

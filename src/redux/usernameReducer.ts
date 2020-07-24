@@ -10,7 +10,7 @@ const INITIAL_STATE = {
 
 export default function usernameReducer(
   state = INITIAL_STATE,
-  action: TAppAction
+  action: TAppAction,
 ): TAppState {
   switch (action.type) {
     case SET_USERNAME:

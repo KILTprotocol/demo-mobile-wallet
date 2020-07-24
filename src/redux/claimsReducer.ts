@@ -13,7 +13,7 @@ const INITIAL_STATE = {
 
 export default function claimsReducer(
   state = INITIAL_STATE,
-  action: TAppAction
+  action: TAppAction,
 ): TAppState {
   switch (action.type) {
     case ADD_CLAIM:
@@ -50,7 +50,7 @@ export default function claimsReducer(
     case UPDATE_CLAIM_STATUS: {
       console.info(
         '[CLAIM REDUCER] Updating claim status:',
-        action.payload.hash
+        action.payload.hash,
       )
       const { hash: claimHash, status: claimStatus } = action.payload
       const claimToUpdate = state.claimsMap[claimHash]

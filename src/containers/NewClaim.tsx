@@ -78,7 +78,7 @@ class NewClaim extends React.Component<Props, State> {
 
   onChangeClaimContentsInputs = (
     inputValue: string,
-    claimPropertyId: string
+    claimPropertyId: string,
   ): void => {
     this.setState(state => ({
       claimContents: {
@@ -108,20 +108,20 @@ class NewClaim extends React.Component<Props, State> {
           [propertyName]: propertyValue,
         }
       },
-      {}
+      {},
     )
     try {
       if (identityFromStore && attesterPublicIdentity) {
         const claim = createClaim(
           formattedClaimContents as TClaimContents,
-          identityFromStore.getAddress()
+          identityFromStore.getAddress(),
         )
         if (!claim || !identityFromStore) {
           return
         }
         const requestForAttestation = await createRequestForAttestation(
           claim,
-          identityFromStore
+          identityFromStore,
         )
         if (requestForAttestation && attesterPublicIdentity) {
           addClaimInStore({
@@ -135,7 +135,7 @@ class NewClaim extends React.Component<Props, State> {
           await sendRequestForAttestation(
             requestForAttestation,
             identityFromStore,
-            attesterPublicIdentity!
+            attesterPublicIdentity!,
           )
         }
       } else {
@@ -190,7 +190,7 @@ class NewClaim extends React.Component<Props, State> {
                 attesterPublicIdentity: new PublicIdentity(
                   publicIdentity.address,
                   publicIdentity.boxPublicKeyAsHex,
-                  publicIdentity.serviceAddress
+                  publicIdentity.serviceAddress,
                 ),
               })
             }
@@ -241,7 +241,7 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
 })
 
 const mapDispatchToProps = (
-  dispatch: Dispatch
+  dispatch: Dispatch,
 ): Partial<TMapDispatchToProps> => ({
   addClaimInStore: (claim: TClaim) => {
     dispatch(addClaim(claim))
@@ -251,7 +251,4 @@ const mapDispatchToProps = (
   },
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NewClaim)
+export default connect(mapStateToProps, mapDispatchToProps)(NewClaim)
