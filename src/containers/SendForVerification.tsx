@@ -7,6 +7,7 @@ import {
   IPublicIdentity,
   PublicIdentity,
   IAttestedClaim,
+  AttestedClaim,
 } from '@kiltprotocol/sdk-js'
 import {
   NavigationScreenProp,
@@ -130,10 +131,14 @@ class SendForVerification extends React.Component<Props, State> {
               this.setState({
                 isSending: true,
               })
-              const attestedClaim = claimsMapFromStore[claimHash]
-              if (identityFromStore && verifierPublicIdentity) {
+              const storedClaim = claimsMapFromStore[claimHash]
+              if (identityFromStore && verifierPublicIdentity && storedClaim.attestation) {
+                const attestedClaim = AttestedClaim.fromRequestAndAttestation(
+                  storedClaim.req4Att,
+                  storedClaim.attestation,
+                )
                 await sendAttestedClaim(
-                  attestedClaim.data as IAttestedClaim,
+                  attestedClaim,
                   identityFromStore,
                   verifierPublicIdentity,
                 )

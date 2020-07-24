@@ -31,7 +31,12 @@ export default function claimsReducer(
       }
     case UPDATE_CLAIM: {
       console.info('[CLAIM REDUCER] Updating claim:', action.payload.hash)
-      const { hash: claimHash, status: claimStatus, data } = action.payload
+      const {
+        hash: claimHash,
+        status: claimStatus,
+        req4Att,
+        attestation,
+      } = action.payload
       const claimToUpdate = state.claimsMap[claimHash]
       return {
         ...state,
@@ -41,7 +46,8 @@ export default function claimsReducer(
             [claimHash]: {
               ...claimToUpdate,
               status: claimStatus,
-              data,
+              req4Att: req4Att ? req4Att : claimToUpdate.req4Att,
+              attestation: attestation ? attestation : claimToUpdate.attestation,
             },
           }),
         },

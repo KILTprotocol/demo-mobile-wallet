@@ -13,6 +13,8 @@ import {
   IMessage,
   MessageBodyType,
   Message,
+  AttestedClaim,
+  IRequestForAttestation,
 } from '@kiltprotocol/sdk-js'
 import { ClaimStatus } from '../enums'
 import { TAppState } from '../redux/reducers'
@@ -116,7 +118,7 @@ class Dashboard extends React.Component<Props> {
             status: attestation.revoked
               ? ClaimStatus.Revoked
               : ClaimStatus.Valid,
-            data: message.body.content,
+            attestation: message.body.content.attestation,
           }
           updateClaimInStore(hashAndStatusAndData)
         } else {

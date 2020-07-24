@@ -130,7 +130,7 @@ class NewClaim extends React.Component<Props, State> {
             status: ClaimStatus.AttestationPending,
             contents: requestForAttestation.claim.contents,
             requestTimestamp: Date.now(),
-            data: requestForAttestation,
+            req4Att: requestForAttestation,
           })
           await sendRequestForAttestation(
             requestForAttestation,
