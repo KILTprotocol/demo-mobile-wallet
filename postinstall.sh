@@ -5,5 +5,3 @@ sed -i -e $'s/var randomBytes = require(\'randombytes\')*/var randomBytes = requ
 
 # node modules shim
 # All shims are now applied via babel.config.js
-
-cd node_modules/jsonabc && mkdir -p dist && npm run build

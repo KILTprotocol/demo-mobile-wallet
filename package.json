@@ -95,7 +95,6 @@
     "@typescript-eslint/parser": "^2.19.2",
     "babel-jest": "^24.9.0",
     "babel-plugin-rewrite-require": "^1.14.5",
-    "browserify": "^16.5.1",
     "eslint": "^6.7.2",
     "eslint-config-airbnb-typescript": "^7.0.0",
     "eslint-config-prettier": "^6.10.1",
