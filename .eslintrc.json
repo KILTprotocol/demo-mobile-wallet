@@ -79,7 +79,9 @@
                     "Button"
                 ]
             }
-        ]
+        ],
+        "react/sort-comp": "off",
+        "import/no-cycle": "warn"
     },
     "overrides": [
         {
