@@ -20,7 +20,7 @@ import { TMapStateToProps } from '../types'
 import TokenTransferDialog from '../components/TokenTransferDialog'
 import StyledButton from '../components/StyledButton'
 import BalanceDisplay from '../components/Balance'
-import { asMicroKiltCoins } from '../services/service.balance'
+import { asFemtoKilt } from '../services/service.balance'
 import { AsyncStatus } from '../enums'
 import { callWithDelay } from '../utils/utils.async'
 import { decodePublicIdentity } from '../utils/utils.encoding'
@@ -105,7 +105,7 @@ class Account extends Component<Props, State> {
     const { identityFromStore } = this.props
     if (identityFromStore && tokenRecipientAddress) {
       this.setState({ transferAsyncStatus: AsyncStatus.Pending })
-      const transferAmount = asMicroKiltCoins(tokenAmountToTransfer)
+      const transferAmount = asFemtoKilt(tokenAmountToTransfer)
       console.info(
         `[TRANSFER] Transferring ${tokenAmountToTransfer} (${transferAmount})...`,
       )
