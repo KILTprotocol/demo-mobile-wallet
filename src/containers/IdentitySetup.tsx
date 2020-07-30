@@ -91,7 +91,7 @@ class IdentitySetup extends React.Component<Props, State> {
     const mnemonic: string = navigation.getParam(MNEMONIC)
     const identity = await createIdentity(mnemonic)
     const publicIdentity = new PublicIdentity(
-      identity.getAddress(),
+      identity.address,
       identity.getBoxPublicKey(),
       CONFIG_CONNECT.CLAIMER_SERVICE_ADDRESS_DEFAULT,
     )

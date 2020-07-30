@@ -113,9 +113,7 @@ export async function fetchAndDecryptNewMessages(
 ): Promise<IMessage[]> {
   console.info('[MESSAGES] Fetching messages...')
   return fetch(
-    `${
-      CONFIG_CONNECT.MESSAGING_SERVICE_URL_FALLBACK
-    }/inbox/${identity.getAddress()}`,
+    `${CONFIG_CONNECT.MESSAGING_SERVICE_URL_FALLBACK}/inbox/${identity.address}`,
   )
     .then(response => response.json())
     .then((encryptedMessages: IEncryptedMessage[]) => {

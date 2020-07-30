@@ -23,7 +23,6 @@ import {
   TMapStateToProps,
   TMapDispatchToProps,
   TClaim,
-  TClaimContents,
   TContact,
 } from '../types'
 import { ClaimStatus, ClaimPropertyFormat } from '../enums'
@@ -113,8 +112,8 @@ class NewClaim extends React.Component<Props, State> {
     try {
       if (identityFromStore && attesterPublicIdentity) {
         const claim = createClaim(
-          formattedClaimContents as TClaimContents,
-          identityFromStore.getAddress(),
+          formattedClaimContents,
+          identityFromStore.address,
         )
         if (!claim || !identityFromStore) {
           return
