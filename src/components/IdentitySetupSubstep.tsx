@@ -38,7 +38,13 @@ const statusToUiMapping = {
     statusTxt: txtSuccess,
   },
   [AsyncStatus.Error]: {
-    component: <TxtCentered>❌</TxtCentered>,
+    component: (
+      <TxtCentered>
+        <span role="img" aria-label="failed icon">
+          ❌
+        </span>
+      </TxtCentered>
+    ),
     statusTxt: txtError,
   },
 }

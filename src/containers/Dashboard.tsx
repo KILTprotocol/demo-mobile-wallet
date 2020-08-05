@@ -13,8 +13,6 @@ import {
   IMessage,
   MessageBodyType,
   Message,
-  AttestedClaim,
-  IRequestForAttestation,
 } from '@kiltprotocol/sdk-js'
 import { ClaimStatus } from '../enums'
 import { TAppState } from '../redux/reducers'

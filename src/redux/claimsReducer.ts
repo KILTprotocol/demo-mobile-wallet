@@ -46,8 +46,8 @@ export default function claimsReducer(
             [claimHash]: {
               ...claimToUpdate,
               status: claimStatus,
-              req4Att: req4Att ? req4Att : claimToUpdate.req4Att,
-              attestation: attestation ? attestation : claimToUpdate.attestation,
+              req4Att: req4Att || claimToUpdate.req4Att,
+              attestation: attestation || claimToUpdate.attestation,
             },
           }),
         },

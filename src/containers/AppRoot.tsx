@@ -162,9 +162,7 @@ class AppRoot extends React.Component<Props> {
             currentRoute ? currentRoute.routeName : '',
           )
         }}
-        ref={navigatorRef => {
-          navigatorRef && setTopLevelNavigator(navigatorRef)
-        }}
+        ref={navigatorRef => navigatorRef && setTopLevelNavigator(navigatorRef)}
       />
     )
   }

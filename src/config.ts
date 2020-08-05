@@ -1,4 +1,5 @@
 import { CType } from '@kiltprotocol/sdk-js'
+
 const cType = require('./data/ctype.json')
 
 const CONFIG = Object.freeze({
