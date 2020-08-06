@@ -61,11 +61,11 @@ class Dashboard extends React.Component<Props> {
   async componentDidMount(): Promise<void> {
     Dashboard.intervalFetchMessages = setInterval(
       this.fetchMessagesAndUpdateClaimsInStore,
-      CONFIG_CONNECT.POLLING_PERIOD_MESSAGES_MS
+      CONFIG_CONNECT.POLLING_PERIOD_MESSAGES_MS,
     )
     Dashboard.intervalQueryChain = setInterval(
       this.queryChainAndUpdateClaimsInStore,
-      CONFIG_CONNECT.POLLING_PERIOD_CHAIN_MS
+      CONFIG_CONNECT.POLLING_PERIOD_CHAIN_MS,
     )
   }
 
@@ -88,7 +88,7 @@ class Dashboard extends React.Component<Props> {
       } else {
         console.info(
           '[ATTESTATION] Not found on chain aka PENDING',
-          attestation
+          attestation,
         )
       }
     })
@@ -103,7 +103,7 @@ class Dashboard extends React.Component<Props> {
     } = this.props
     const newAttestationMessages = await fetchAndDecryptNewAttestationMessages(
       identityFromStore,
-      oldMessagesFromStore
+      oldMessagesFromStore,
     )
     newAttestationMessages.forEach(async (message: IMessage) => {
       if (message.body.type === MessageBodyType.SUBMIT_ATTESTATION_FOR_CLAIM) {
@@ -116,13 +116,13 @@ class Dashboard extends React.Component<Props> {
             status: attestation.revoked
               ? ClaimStatus.Revoked
               : ClaimStatus.Valid,
-            data: message.body.content,
+            attestation: message.body.content.attestation,
           }
           updateClaimInStore(hashAndStatusAndData)
         } else {
           console.info(
             '[ATTESTATION] Not found on chain aka PENDING',
-            attestation
+            attestation,
           )
         }
       } else if (
@@ -166,7 +166,7 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
 })
 
 const mapDispatchToProps = (
-  dispatch: Dispatch
+  dispatch: Dispatch,
 ): Partial<TMapDispatchToProps> => ({
   updateClaimInStore: (hashAndStatusAndData: THashAndClaimStatusAndData) => {
     dispatch(updateClaim(hashAndStatusAndData))
@@ -179,7 +179,4 @@ const mapDispatchToProps = (
   },
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Dashboard)
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)

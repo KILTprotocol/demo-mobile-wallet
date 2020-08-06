@@ -23,7 +23,6 @@ import {
   TMapStateToProps,
   TMapDispatchToProps,
   TClaim,
-  TClaimContents,
   TContact,
 } from '../types'
 import { ClaimStatus, ClaimPropertyFormat } from '../enums'
@@ -33,7 +32,6 @@ import {
   createClaim,
   createRequestForAttestation,
 } from '../services/service.claim'
-import { fromStoredIdentity } from '../utils/utils.identity'
 import { getClaimContentsDefault } from '../utils/utils.claim'
 import { formatDateForClaim } from '../utils/utils.formatting'
 import { sendRequestForAttestation } from '../services/service.messaging'
@@ -79,7 +77,7 @@ class NewClaim extends React.Component<Props, State> {
 
   onChangeClaimContentsInputs = (
     inputValue: string,
-    claimPropertyId: string
+    claimPropertyId: string,
   ): void => {
     this.setState(state => ({
       claimContents: {
@@ -109,20 +107,20 @@ class NewClaim extends React.Component<Props, State> {
           [propertyName]: propertyValue,
         }
       },
-      {}
+      {},
     )
     try {
       if (identityFromStore && attesterPublicIdentity) {
         const claim = createClaim(
-          formattedClaimContents as TClaimContents,
-          identityFromStore.address
+          formattedClaimContents,
+          identityFromStore.address,
         )
         if (!claim || !identityFromStore) {
           return
         }
-        const requestForAttestation = createRequestForAttestation(
+        const requestForAttestation = await createRequestForAttestation(
           claim,
-          identityFromStore
+          identityFromStore,
         )
         if (requestForAttestation && attesterPublicIdentity) {
           addClaimInStore({
@@ -131,13 +129,12 @@ class NewClaim extends React.Component<Props, State> {
             status: ClaimStatus.AttestationPending,
             contents: requestForAttestation.claim.contents,
             requestTimestamp: Date.now(),
-            data: requestForAttestation,
+            req4Att: requestForAttestation,
           })
-          const claimerIdentity = fromStoredIdentity(identityFromStore)
           await sendRequestForAttestation(
             requestForAttestation,
-            claimerIdentity,
-            attesterPublicIdentity
+            identityFromStore,
+            attesterPublicIdentity!,
           )
         }
       } else {
@@ -192,7 +189,7 @@ class NewClaim extends React.Component<Props, State> {
                 attesterPublicIdentity: new PublicIdentity(
                   publicIdentity.address,
                   publicIdentity.boxPublicKeyAsHex,
-                  publicIdentity.serviceAddress
+                  publicIdentity.serviceAddress,
                 ),
               })
             }
@@ -243,7 +240,7 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
 })
 
 const mapDispatchToProps = (
-  dispatch: Dispatch
+  dispatch: Dispatch,
 ): Partial<TMapDispatchToProps> => ({
   addClaimInStore: (claim: TClaim) => {
     dispatch(addClaim(claim))
@@ -253,7 +250,4 @@ const mapDispatchToProps = (
   },
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NewClaim)
+export default connect(mapStateToProps, mapDispatchToProps)(NewClaim)

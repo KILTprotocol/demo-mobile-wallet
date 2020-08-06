@@ -6,7 +6,7 @@ import {
   Identity,
   IPublicIdentity,
   PublicIdentity,
-  IAttestedClaim,
+  AttestedClaim,
 } from '@kiltprotocol/sdk-js'
 import {
   NavigationScreenProp,
@@ -14,7 +14,6 @@ import {
   NavigationParams,
   ScrollView,
 } from 'react-navigation'
-import { fromStoredIdentity } from '../utils/utils.identity'
 import { sendAttestedClaim } from '../services/service.messaging'
 import { CLAIM_HASH } from '../navigationParameters'
 import StyledButton from '../components/StyledButton'
@@ -108,7 +107,7 @@ class SendForVerification extends React.Component<Props, State> {
               verifierPublicIdentity: new PublicIdentity(
                 publicIdentity.address,
                 publicIdentity.boxPublicKeyAsHex,
-                publicIdentity.serviceAddress
+                publicIdentity.serviceAddress,
               ),
             })
           }
@@ -131,18 +130,27 @@ class SendForVerification extends React.Component<Props, State> {
               this.setState({
                 isSending: true,
               })
-              const attestedClaim = claimsMapFromStore[claimHash]
-              const claimerIdentity = fromStoredIdentity(identityFromStore)
-              await sendAttestedClaim(
-                attestedClaim.data as IAttestedClaim,
-                claimerIdentity,
-                verifierPublicIdentity
-              )
-              if (shouldAddToContacts) {
-                addContactInStore({
-                  publicIdentity: verifierPublicIdentity,
-                  name: newContactName,
-                })
+              const storedClaim = claimsMapFromStore[claimHash]
+              if (
+                identityFromStore &&
+                verifierPublicIdentity &&
+                storedClaim.attestation
+              ) {
+                const attestedClaim = AttestedClaim.fromRequestAndAttestation(
+                  storedClaim.req4Att,
+                  storedClaim.attestation,
+                )
+                await sendAttestedClaim(
+                  attestedClaim,
+                  identityFromStore,
+                  verifierPublicIdentity,
+                )
+                if (shouldAddToContacts) {
+                  addContactInStore({
+                    publicIdentity: verifierPublicIdentity,
+                    name: newContactName,
+                  })
+                }
               }
               navigation.goBack()
               this.setState({
@@ -164,14 +172,11 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
 })
 
 const mapDispatchToProps = (
-  dispatch: Dispatch
+  dispatch: Dispatch,
 ): Partial<TMapDispatchToProps> => ({
   addContactInStore: (contact: TContact) => {
     dispatch(addContact(contact))
   },
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SendForVerification)
+export default connect(mapStateToProps, mapDispatchToProps)(SendForVerification)

@@ -101,7 +101,10 @@ const TokenTransferDialog: React.FunctionComponent<Props> = ({
       component: (
         <View style={contentContainer}>
           <TxtCentered style={[bodyTxt, txtError]}>
-            ❌ Transfer failed
+            <span role="img" aria-label="failed icon">
+              ❌
+            </span>{' '}
+            Transfer failed
           </TxtCentered>
         </View>
       ),

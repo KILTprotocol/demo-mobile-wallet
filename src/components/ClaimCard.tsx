@@ -81,7 +81,7 @@ const statusToUiMapping = {
 
 function sortAlphanumericallyByPropertyName(claimContents: object[]): object[] {
   return [...claimContents].sort(
-    (entryA, entryB) => entryA[0].charCodeAt(0) - entryB[0].charCodeAt(0)
+    (entryA, entryB) => entryA[0].charCodeAt(0) - entryB[0].charCodeAt(0),
   )
 }
 
@@ -102,8 +102,7 @@ const ClaimCard: React.FunctionComponent<Props> = ({
       <ImageBackground
         source={statusToUiMapping[status].imgSrc}
         style={fill}
-        imageStyle={bordered}
-      >
+        imageStyle={bordered}>
         <View style={[cardContent, fill]}>
           <View>
             <View style={[flexRowSpaceBetween, paddedBottomS]}>

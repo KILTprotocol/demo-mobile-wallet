@@ -1,7 +1,7 @@
 import { IPublicIdentity } from '@kiltprotocol/sdk-js'
 
 const encodePublicIdentity = (
-  publicIdentity: IPublicIdentity
+  publicIdentity: IPublicIdentity,
 ): Array<string> => [
   publicIdentity.address,
   publicIdentity.boxPublicKeyAsHex,
@@ -9,7 +9,7 @@ const encodePublicIdentity = (
 ]
 
 const decodePublicIdentity = (
-  publicIdentityEncoded: Array<string>
+  publicIdentityEncoded: Array<string>,
 ): IPublicIdentity => ({
   address: publicIdentityEncoded[0],
   boxPublicKeyAsHex: publicIdentityEncoded[1],

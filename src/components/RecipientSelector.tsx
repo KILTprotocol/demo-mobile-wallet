@@ -23,7 +23,7 @@ type Props = {
   setPublicIdentity: (publicIdentity: IPublicIdentity) => void
   setPublicIdentityFromContact: (contact: TContact) => void
   onChangeSelectionMethod: (
-    event: NativeSyntheticEvent<NativeSegmentedControlIOSChangeEvent>
+    event: NativeSyntheticEvent<NativeSegmentedControlIOSChangeEvent>,
   ) => void
 }
 
@@ -59,7 +59,7 @@ const RecipientSelector: React.FunctionComponent<Props> = ({
           selectedAddress={publicIdentity ? publicIdentity.address : null}
           onChangeAddress={address => {
             const contact = contacts.find(
-              c => c.publicIdentity.address === address
+              c => c.publicIdentity.address === address,
             )
             if (contact) {
               setPublicIdentityFromContact(contact)

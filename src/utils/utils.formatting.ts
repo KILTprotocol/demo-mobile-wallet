@@ -15,11 +15,11 @@ const ADDRESS_DISPLAY_END_LENGTH = 4
 
 const truncateAddress = (
   address: IPublicIdentity['address'],
-  startLength = ADDRESS_DISPLAY_START_LENGTH
+  startLength = ADDRESS_DISPLAY_START_LENGTH,
 ): string =>
   `${address.substr(0, startLength)}...${address.substr(
     address.length - ADDRESS_DISPLAY_END_LENGTH,
-    ADDRESS_DISPLAY_END_LENGTH
+    ADDRESS_DISPLAY_END_LENGTH,
   )}`
 
 /* Generates a color from a string that will be different for different strings
@@ -38,8 +38,9 @@ const generateConstantColorFromStr = (str: string): string => {
 function formatDateForClaim(inputDate: number): string {
   const date = new Date(inputDate)
   const yy = date.getFullYear()
-  const mm = `${`${date.getMonth() + 1}`.length < 2 ? 0 : ''}${date.getMonth() +
-    1}`
+  const mm = `${`${date.getMonth() + 1}`.length < 2 ? 0 : ''}${
+    date.getMonth() + 1
+  }`
   const dd = `${`${date.getDate() + 1}`.length < 2 ? 0 : ''}${date.getDate()}`
   return `${yy}-${mm}-${dd}`
 }

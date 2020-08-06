@@ -68,7 +68,7 @@ const getStateForIdx = (idx: number, stepIdx: number): AsyncStatus => {
 const getStateForStepIdx = (stepIdx: number): AsyncStatus[] =>
   [...Array(3).keys()].map(k => getStateForIdx(k, stepIdx))
 
-const delayAndCall = (idx: number, cb): Promise<void> =>
+const delayAndCall = (idx: number, cb: Function): Promise<void> =>
   delay(BUFFER_MS * (idx < 0 ? 1 : 0) + STEP_DURATION_MS).then(() => cb())
 
 class IdentitySetup extends React.Component<Props, State> {
@@ -89,28 +89,28 @@ class IdentitySetup extends React.Component<Props, State> {
       usernameFromStore,
     } = this.props
     const mnemonic: string = navigation.getParam(MNEMONIC)
-    const identity = createIdentity(mnemonic)
+    const identity = await createIdentity(mnemonic)
     const publicIdentity = new PublicIdentity(
       identity.address,
-      identity.boxPublicKeyAsHex,
-      CONFIG_CONNECT.CLAIMER_SERVICE_ADDRESS_DEFAULT
+      identity.getBoxPublicKey(),
+      CONFIG_CONNECT.CLAIMER_SERVICE_ADDRESS_DEFAULT,
     )
 
     if (identity && publicIdentity) {
       await delayAndCall(0, () =>
         this.setState({
           stepStatuses: getStateForStepIdx(0),
-        })
+        }),
       )
       await delayAndCall(1, () =>
         this.setState({
           stepStatuses: getStateForStepIdx(1),
-        })
+        }),
       )
       await delayAndCall(2, () =>
         this.setState({
           stepStatuses: getStateForStepIdx(2),
-        })
+        }),
       )
 
       await delayAndCall(3, async () => {
@@ -122,7 +122,7 @@ class IdentitySetup extends React.Component<Props, State> {
         }
         await saveIdentityAsContactInDemoServices(
           publicIdentity,
-          usernameFromStore
+          usernameFromStore,
         )
       })
     }
@@ -185,7 +185,7 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => ({
 })
 
 const mapDispatchToProps = (
-  dispatch: Dispatch
+  dispatch: Dispatch,
 ): Partial<TMapDispatchToProps> => ({
   setPublicIdentityInStore: (publicIdentity: PublicIdentity) => {
     dispatch(setPublicIdentity(publicIdentity))
@@ -195,7 +195,4 @@ const mapDispatchToProps = (
   },
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IdentitySetup)
+export default connect(mapStateToProps, mapDispatchToProps)(IdentitySetup)

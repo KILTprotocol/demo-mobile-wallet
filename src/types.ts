@@ -3,8 +3,8 @@ import {
   PublicIdentity,
   IPublicIdentity,
   RequestForAttestation,
-  AttestedClaim,
   Message,
+  Attestation,
 } from '@kiltprotocol/sdk-js'
 import {
   SET_IDENTITY,
@@ -39,7 +39,8 @@ export type TClaim = {
   hash: string
   status: ClaimStatus
   requestTimestamp: number
-  data: RequestForAttestation | AttestedClaim
+  req4Att: RequestForAttestation
+  attestation?: Attestation
 }
 
 export type THashAndClaimStatus = {
@@ -50,7 +51,8 @@ export type THashAndClaimStatus = {
 export type THashAndClaimStatusAndData = {
   status: ClaimStatus
   hash: string
-  data: any
+  req4Att?: RequestForAttestation
+  attestation?: Attestation
 }
 
 export type TClaimContents = object

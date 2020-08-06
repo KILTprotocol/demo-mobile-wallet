@@ -48,7 +48,7 @@ const QrCodeSection: React.FunctionComponent<Props> = ({
         onBarCodeRead={barcode => {
           const publicIdentityEncoded = JSON.parse(barcode.data)
           const publicIdentityDecoded = decodePublicIdentity(
-            publicIdentityEncoded
+            publicIdentityEncoded,
           )
           setPublicIdentity(publicIdentityDecoded)
         }}

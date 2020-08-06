@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 
 export default function oldMessagesReducer(
   state = INITIAL_STATE,
-  action: TAppAction
+  action: TAppAction,
 ): TAppState {
   switch (action.type) {
     case ADD_OLD_MESSAGE:

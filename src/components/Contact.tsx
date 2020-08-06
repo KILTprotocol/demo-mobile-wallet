@@ -59,8 +59,7 @@ const Contact: React.FunctionComponent<Props> = ({
             {
               backgroundColor: generateConstantColorFromStr(address),
             },
-          ]}
-        >
+          ]}>
           <Text style={[bodyTxt, badgeTxt]}>{getFirstCharacter(name)}</Text>
         </View>
         <View style={flexRowSpaceBetween}>

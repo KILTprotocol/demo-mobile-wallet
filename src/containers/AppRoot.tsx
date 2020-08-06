@@ -36,8 +36,7 @@ type Props = {
 }
 
 class AppRoot extends React.Component<Props> {
-
-  private promptOpened: boolean = false;
+  private promptOpened: boolean = false
 
   state = {
     appUiState: AppState.currentState,
@@ -65,7 +64,7 @@ class AppRoot extends React.Component<Props> {
         await connectAndListen(publicIdentityFromStore.address)
         // eagerly get the balance
         const balance = await getBalanceInKiltCoins(
-          publicIdentityFromStore.address
+          publicIdentityFromStore.address,
         )
         updateBalanceInStore(balance)
       } else {
@@ -78,7 +77,7 @@ class AppRoot extends React.Component<Props> {
     await disconnect()
     AppState.removeEventListener(
       APP_STATE_CHANGE_EVENT,
-      this.handleAppStateChange
+      this.handleAppStateChange,
     )
   }
 
@@ -108,7 +107,7 @@ class AppRoot extends React.Component<Props> {
         nextAppUiState === AppUiState.Background)
     ) {
       console.info(
-        '[ENCRYPTION] App became inactive|background => reset identity'
+        '[ENCRYPTION] App became inactive|background => reset identity',
       )
       resetIdentityInStore()
     } else if (
@@ -116,7 +115,7 @@ class AppRoot extends React.Component<Props> {
       nextAppUiState === AppUiState.Active
     ) {
       console.info(
-        '[ENCRYPTION] App became active BUT no identity in store => prompt user and decrypt identity'
+        '[ENCRYPTION] App became active BUT no identity in store => prompt user and decrypt identity',
       )
       await this.promptAndSetDecryptedIdentity()
     }
@@ -160,12 +159,10 @@ class AppRoot extends React.Component<Props> {
         onNavigationStateChange={() => {
           const currentRoute = getCurrentRoute()
           updateLastVisitedRouteInStore(
-            currentRoute ? currentRoute.routeName : ''
+            currentRoute ? currentRoute.routeName : '',
           )
         }}
-        ref={navigatorRef => {
-          navigatorRef && setTopLevelNavigator(navigatorRef)
-        }}
+        ref={navigatorRef => navigatorRef && setTopLevelNavigator(navigatorRef)}
       />
     )
   }
@@ -177,7 +174,7 @@ const mapStateToProps = (state: TAppState): TAppState => ({
 })
 
 const mapDispatchToProps = (
-  dispatch: Dispatch
+  dispatch: Dispatch,
 ): Partial<TMapDispatchToProps> => ({
   setIdentityInStore: (identity: Identity) => {
     dispatch(setIdentity(identity))
@@ -193,7 +190,4 @@ const mapDispatchToProps = (
   },
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppRoot)
+export default connect(mapStateToProps, mapDispatchToProps)(AppRoot)

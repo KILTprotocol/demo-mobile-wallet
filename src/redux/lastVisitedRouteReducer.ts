@@ -14,7 +14,7 @@ const INITIAL_STATE = {
 
 export default function lastVisitedRouteReducer(
   state = INITIAL_STATE,
-  action: TAppAction
+  action: TAppAction,
 ): TAppState {
   switch (action.type) {
     case UPDATE_LAST_VISITED_ROUTE:

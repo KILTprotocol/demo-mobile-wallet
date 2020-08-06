@@ -1,21 +1,17 @@
 {
-  "schema": {
-    "$id": "membership",
-    "$schema": "http://kilt-protocol.org/draft-01/ctype#",
-    "properties": {
-      "birthday": {
-        "type": "string",
-        "format": "date"
-      },
-      "name": {
-        "type": "string"
-      },
-      "premium": {
-        "type": "boolean"
-      }
+  "$schema": "http://kilt-protocol.org/draft-01/ctype#",
+  "title": "membership",
+  "properties": {
+    "birthday": {
+      "type": "string",
+      "format": "date"
     },
-    "type": "object"
+    "name": {
+      "type": "string"
+    },
+    "premium": {
+      "type": "boolean"
+    }
   },
-  "owner": "5GFs8gCumJcZDDWof5ETFqDFEsNwCsVJUj2bX7y4xBLxN5qT",
-  "hash": "0x9b8e00820791f3c8bd92c06ab1b5d3e512778bf83a2e24cd153e442c914c5b8c"
+  "type": "object"
 }

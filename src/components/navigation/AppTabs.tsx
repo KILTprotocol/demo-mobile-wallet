@@ -33,7 +33,7 @@ const AppTabs = createBottomTabNavigator(
   },
   {
     tabBarOptions,
-  }
+  },
 )
 
 AppTabs.navigationOptions = {

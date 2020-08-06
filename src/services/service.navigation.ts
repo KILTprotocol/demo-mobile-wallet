@@ -6,7 +6,7 @@ import {
 let navigator: NavigationContainerComponent
 
 function setTopLevelNavigator(
-  navigatorRef: NavigationContainerComponent
+  navigatorRef: NavigationContainerComponent,
 ): void {
   navigator = navigatorRef
 }
@@ -16,7 +16,7 @@ function navigate(routeName: string, params: any): void {
     NavigationActions.navigate({
       routeName,
       params,
-    })
+    }),
   )
 }
 

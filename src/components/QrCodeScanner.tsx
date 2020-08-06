@@ -41,7 +41,15 @@ const QrCodeScanner: React.FunctionComponent<Props> = ({
         style={fill}
         type={RNCamera.Constants.Type.back}
         flashMode={RNCamera.Constants.FlashMode.on}
-        onBarCodeRead={barcode => onBarCodeRead(barcode)}
+        onBarCodeRead={barcode => {
+          try {
+            return onBarCodeRead(barcode)
+          } catch (e) {
+            console.warn(
+              `Error when processing QR code data "${barcode.data}": ${e}`,
+            )
+          }
+        }}
         captureAudio={false}
       />
       <View style={[hintContainer, flexRowWrap]}>

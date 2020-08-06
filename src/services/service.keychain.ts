@@ -6,6 +6,7 @@ import {
   AUTHENTICATION_TYPE,
 } from 'react-native-keychain'
 import { Identity } from '@kiltprotocol/sdk-js'
+import { fromStoredIdentity } from '../utils/utils.identity'
 
 async function setIdentityEncrypted(identity: Identity): Promise<boolean> {
   // ⚠️ react-native-keychain's API namings are misleading, this is not a password but just an encrypted value
@@ -17,10 +18,12 @@ async function setIdentityEncrypted(identity: Identity): Promise<boolean> {
   })
 }
 
-async function promptUserAndGetIdentityDecrypted(): Promise<any> {
+async function promptUserAndGetIdentityDecrypted(): Promise<Identity | null> {
   // prompt the user for a secret depending on setIdentityEncrypted's parameters
   const identityWrapper = await getGenericPassword()
-  return identityWrapper ? JSON.parse(identityWrapper.password) : null
+  return identityWrapper
+    ? fromStoredIdentity(JSON.parse(identityWrapper.password))
+    : null
 }
 
 export { promptUserAndGetIdentityDecrypted, setIdentityEncrypted }

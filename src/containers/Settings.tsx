@@ -118,7 +118,7 @@ const mapStateToProps = (state: TAppState): Partial<TMapStateToProps> => {
 }
 
 const mapDispatchToProps = (
-  dispatch: Dispatch
+  dispatch: Dispatch,
 ): Partial<TMapDispatchToProps> => {
   return {
     resetIdentityInStore: () => {
@@ -139,7 +139,4 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Settings)
+export default connect(mapStateToProps, mapDispatchToProps)(Settings)

@@ -21,7 +21,7 @@ const ClaimList: React.FunctionComponent<Props> = ({
   // sort claims by creation date, newest on top
   const sortedClaims = [
     ...claims.sort((claimA, claimB) =>
-      claimA.requestTimestamp > claimB.requestTimestamp ? -1 : 1
+      claimA.requestTimestamp > claimB.requestTimestamp ? -1 : 1,
     ),
   ]
   return (
