@@ -5,7 +5,7 @@
 
 ## About
 
-This repository is the **deprecated** demo mobile wallet for a KILT Claimer. It was originally planned to be used for claiming KILTs. **Please use the Sporran Browser extension ([👉 Firefox](https://addons.mozilla.org/de/firefox/addon/sporran/), [👉 Chrome](https://chrome.google.com/webstore/detail/sporran/djdnajgjcbjhhbdblkegbcgodlkkfhcl))**.
+This repository is the **deprecated** demo mobile wallet for a KILT Claimer. It was originally planned to be used for claiming KILTs. **Please use the official Sporran Browser extension instead: It is available on [👉 Firefox](https://addons.mozilla.org/de/firefox/addon/sporran/) and [👉 Chrome](https://chrome.google.com/webstore/detail/sporran/djdnajgjcbjhhbdblkegbcgodlkkfhcl))**.
 
 <p align="center">
 <img width="300" src="https://user-images.githubusercontent.com/9762897/71015282-9d837000-20f3-11ea-88a8-16c39a74f10a.jpg">  
