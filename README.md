@@ -7,22 +7,22 @@
 
 This repository is the **deprecated** demo mobile wallet for a KILT Claimer. It was originally planned to be used for claiming KILTs. **Please use the official Sporran Browser extension instead: It is available on [👉 Firefox](https://addons.mozilla.org/de/firefox/addon/sporran/) and [👉 Chrome](https://chrome.google.com/webstore/detail/sporran/djdnajgjcbjhhbdblkegbcgodlkkfhcl))**.
 
+## Disclaimer
+
+⚠️ **This app was designed to demo the core feature set of KILT. We don't recommend using it in production and it is a Work In Progress.
+However, feel free to open issues if you note that something is off.**
+
+## Planned demo functionality
+
 <p align="center">
 <img width="300" src="https://user-images.githubusercontent.com/9762897/71015282-9d837000-20f3-11ea-88a8-16c39a74f10a.jpg">  
 </p>
-
-## Planned demo functionality
 
 - Create an identity and store it encrypted on the device;
 - Create claims;
 - Request attestations for these claims to specific attesters by scanning their public identity QR Code;
 - Add contacts by scanning their public identity as a QR Code;
 - Transfer KILT Tokens.
-
-## Disclaimer
-
-⚠️ **This app was designed to demo the core feature set of KILT. We don't recommend using it in production and it is a Work In Progress.
-However, feel free to open issues if you note that something is off.**
 
 ## Specifications
 
