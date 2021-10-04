@@ -1,13 +1,17 @@
 [![](https://user-images.githubusercontent.com/39338561/122415864-8d6a7c00-cf88-11eb-846f-a98a936f88da.png)
 ](https://kilt.io)
 
-# KILT Demo Mobile Wallet (Sporran)
+# DEPRECATED: KILT Demo Mobile Wallet
 
 ## About
 
-_The sporran (/ˈspɒrən/; Scottish Gaelic for "purse"), a traditional part of Scottish Highland dress, is a pouch that performs the same function as pockets on the pocketless kilt. Made of leather or fur, the sporran serves as a **wallet** for any other necessary personal items._ ([Source](https://en.wikipedia.org/wiki/Sporran))
+This repository is the **deprecated** demo mobile wallet for a KILT Claimer. It was originally planned to be used for claiming KILTs. **Please use the Sporran Browser extension ([👉 Firefox](https://addons.mozilla.org/de/firefox/addon/sporran/), [👉 Chrome](https://chrome.google.com/webstore/detail/sporran/djdnajgjcbjhhbdblkegbcgodlkkfhcl))**.
 
-**Sporran** is the demo mobile wallet for a KILT Claimer. A claimer can use Sporran to:
+<p align="center">
+<img width="300" src="https://user-images.githubusercontent.com/9762897/71015282-9d837000-20f3-11ea-88a8-16c39a74f10a.jpg">  
+</p>
+
+## Planned demo functionality
 
 - Create an identity and store it encrypted on the device;
 - Create claims;
@@ -15,14 +19,10 @@ _The sporran (/ˈspɒrən/; Scottish Gaelic for "purse"), a traditional part of 
 - Add contacts by scanning their public identity as a QR Code;
 - Transfer KILT Tokens.
 
-<p align="center">
-<img width="300" src="https://user-images.githubusercontent.com/9762897/71015282-9d837000-20f3-11ea-88a8-16c39a74f10a.jpg">  
-</p>
-
 ## Disclaimer
 
-⚠️ This app was designed to demo the core feature set of KILT. We don't recommend using it in production and it is a Work In Progress.
-However, feel free to open issues if you note that something is off.
+⚠️ **This app was designed to demo the core feature set of KILT. We don't recommend using it in production and it is a Work In Progress.
+However, feel free to open issues if you note that something is off.**
 
 ## Specifications
 
@@ -37,7 +37,7 @@ You can demo the mobile wallet as a claimer, and use the demo-client to demo the
 
 ## Make it yours!
 
-You can configure Sporran to fit your needs and branding in a few minutes!
+You can configure the demo wallet to fit your needs and branding in a few minutes!
 
 You can customize the logos and theme, endpoints, and most importantly the business logic (credential type = claim type = CTYPE) super easily.
 
